@@ -1,10 +1,11 @@
-﻿// <copyright file="Author.cs" company="Васильева М.А">
-// Copyright (c) Васильева М.А. All rights reserved.
+﻿// <copyright file="Author.cs" company="Васильева Марина Алексеевна">
+// Copyright (c) Васильева Марина Алексеевна 2024. Library.
 // </copyright>
 
 namespace Domain
 {
     using System;
+    using Staff;
 
     /// <summary>
     /// Класс Автор.
@@ -22,10 +23,15 @@ namespace Domain
         /// <exception cref="ArgumentNullException">
         /// Если имя или фамилия <see langword="null"/>.
         /// </exception>
-        public Author(string familyName, string firstName, string? patronicName, DateOnly? dateBirth, DateOnly? dateDeath)
+        public Author(
+            string familyName,
+            string firstName,
+            string? patronicName = null,
+            DateOnly? dateBirth = null,
+            DateOnly? dateDeath = null)
         {
-            this.FamilyName = familyName ?? throw new ArgumentNullException(nameof(familyName));
-            this.FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
+            this.FamilyName = familyName.TrimOrNull() ?? throw new ArgumentNullException(nameof(familyName));
+            this.FirstName = firstName.TrimOrNull() ?? throw new ArgumentNullException(nameof(firstName));
             this.PatronicName = patronicName;
             this.DateBirth = dateBirth;
             this.DateDeath = dateDeath;
@@ -64,18 +70,30 @@ namespace Domain
         /// <inheritdoc/>
         public bool Equals(Author? other)
         {
-            throw new NotImplementedException();
+           return other is not null
+                && this.FamilyName == other.FamilyName
+                && this.FirstName == other.FirstName
+                && this.PatronicName == other.PatronicName
+                && this.DateBirth == other.DateBirth
+                && this.DateDeath == other.DateDeath;
         }
 
         /// <inheritdoc/>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            return Equals(obj as Author);
+            return this.Equals(obj as Author);
         }
 
-        public override int GetHashCode()
+        /// <inheritdoc/>
+        public override int GetHashCode() =>
+            HashCode.Combine(this.FamilyName, this.FirstName, this.PatronicName, this.DateBirth, this.DateDeath);
+
+        /// <inheritdoc/>
+        public override string ToString()
         {
-            throw new NotImplementedException();
+            return this.PatronicName is null
+               ? $"{this.FamilyName} {this.FirstName}"
+               : $"{this.FamilyName} {this.FirstName} {this.PatronicName}";
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿// <copyright file="StringExtensions.cs" company="Васильева М.А">
-// Copyright (c) Васильева М.А. All rights reserved.
+﻿// <copyright file="StringExtensions.cs" company="Васильева Марина Алексеевна">
+// Copyright (c) Васильева Марина Алексеевна 2024. Library.
 // </copyright>
 
 namespace Staff
@@ -12,7 +12,7 @@ namespace Staff
         /// <summary>
         /// Обертка над <see cref="string.IsNullOrEmpty(string?)"/>.
         /// </summary>
-        /// <param name="value"> Параметр. </param>
+        /// <param name="value">  Параметр. </param>
         /// <returns> <see langword="true"/> если параметр
         /// <see langword="null"/>или пустая строка. </returns>
         public static bool IsNullOrEmpty(this string? value) => string.IsNullOrEmpty(value);

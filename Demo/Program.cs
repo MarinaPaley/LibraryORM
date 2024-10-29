@@ -1,5 +1,5 @@
-﻿// <copyright file="Program.cs" company="Васильева М.А">
-// Copyright (c) Васильева М.А. All rights reserved.
+﻿// <copyright file="Program.cs" company="Васильева Марина Алексеевна">
+// Copyright (c) Васильева Марина Алексеевна 2024. Library.
 // </copyright>
 
 namespace Demo
