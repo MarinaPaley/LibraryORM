@@ -5,6 +5,7 @@
 namespace Domain
 {
     using System;
+    using System.Collections.Generic;
     using System.Text;
     using Staff;
 
@@ -52,6 +53,43 @@ namespace Domain
         /// Дата смерти.
         /// </summary>
         public DateOnly? DateDeath { get; set; }
+
+        /// <summary>
+        /// Книги.
+        /// </summary>
+        public ISet<Book> Books { get; } = new HashSet<Book>();
+
+        /// <summary>
+        /// Добавляем книгу автору.
+        /// </summary>
+        /// <param name="book"> Книга. </param>
+        /// <returns><see langword="true"/> если добавили. </returns>
+        public bool AddBook(Book book)
+        {
+            if (this.Books.Add(book))
+            {
+                _ = book.Authors.Add(this);
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Удаляем книгу у Автора.
+        /// </summary>
+        /// <param name="book">Книга.</param>
+        /// <returns><see langword="true"/> если убрали.</returns>
+        public bool RemoveBook(Book book)
+        {
+            if (this.Books.Remove(book))
+            {
+                book.Authors.Remove(this);
+                return true;
+            }
+
+            return false;
+        }
 
         /// <inheritdoc/>
         public bool Equals(Author? other)

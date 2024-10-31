@@ -5,6 +5,8 @@
 namespace Domain
 {
     using System;
+    using System.Collections.Generic;
+    using System.Net.Sockets;
     using Staff;
 
     /// <summary>
@@ -31,6 +33,43 @@ namespace Domain
         /// Название полки.
         /// </summary>
         public string Name { get; }
+
+        /// <summary>
+        ///  Книги.
+        /// </summary>
+        public ISet<Book> Books { get; } = new HashSet<Book>();
+
+        /// <summary>
+        /// Добавляет книгу на полку.
+        /// </summary>
+        /// <param name="book">Книга</param>
+        /// <returns><see langword="true"/> если добавили.</returns>
+        public bool AddBook(Book book)
+        {
+            if (this.Books.Add(book))
+            {
+                book.Shelf = this;
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Снимаем книгу с полки.
+        /// </summary>
+        /// <param name="book">Книга.</param>
+        /// <returns><see langword="true"/> если убрали.</returns>
+        public bool RemoveBook(Book book)
+        {
+            if (this.Books.Remove(book))
+            {
+                book.Shelf = null;
+                return true;
+            }
+
+            return false;
+        }
 
         /// <inheritdoc />
         public bool Equals(Shelf? other)
