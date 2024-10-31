@@ -66,6 +66,11 @@ namespace Domain
         /// <returns><see langword="true"/> если добавили. </returns>
         public bool AddBook(Book book)
         {
+            if (book is null)
+            {
+                return false;
+            }
+
             if (this.Books.Add(book))
             {
                 _ = book.Authors.Add(this);
@@ -82,6 +87,11 @@ namespace Domain
         /// <returns><see langword="true"/> если убрали.</returns>
         public bool RemoveBook(Book book)
         {
+            if (book is null)
+            {
+                return false;
+            }
+
             if (this.Books.Remove(book))
             {
                 book.Authors.Remove(this);

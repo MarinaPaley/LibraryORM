@@ -42,10 +42,15 @@ namespace Domain
         /// <summary>
         /// Добавляет книгу на полку.
         /// </summary>
-        /// <param name="book">Книга</param>
+        /// <param name="book">Книга. </param>
         /// <returns><see langword="true"/> если добавили.</returns>
         public bool AddBook(Book book)
         {
+            if (book is null)
+            {
+                return false;
+            }
+
             if (this.Books.Add(book))
             {
                 book.Shelf = this;
@@ -62,6 +67,11 @@ namespace Domain
         /// <returns><see langword="true"/> если убрали.</returns>
         public bool RemoveBook(Book book)
         {
+            if (book is null)
+            {
+                return false;
+            }
+
             if (this.Books.Remove(book))
             {
                 book.Shelf = null;
@@ -74,17 +84,7 @@ namespace Domain
         /// <inheritdoc />
         public bool Equals(Shelf? other)
         {
-            if (other is null)
-            {
-                return false;
-            }
-
-            if (ReferenceEquals(this, other))
-            {
-                return true;
-            }
-
-            return this.Name == other.Name;
+            return ReferenceEquals(this, other) || ((other is not null) && (this.Name == other.Name));
         }
 
         /// <inheritdoc />
@@ -97,6 +97,11 @@ namespace Domain
         public override int GetHashCode() => this.Name.GetHashCode();
 
         /// <inheritdoc cref="object.ToString()"/>
-        public override string ToString() => $"Название полки {this.Name}";
+        public override string ToString()
+        {
+            return this.Books.Count == 0
+                ? $"Название полки: {this.Name}"
+                : $"Название полки: {this.Name} Книги: {this.Books.Join()}";
+        }
     }
 }

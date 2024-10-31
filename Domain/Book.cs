@@ -96,22 +96,7 @@ namespace Domain
         /// <inheritdoc/>
         public bool Equals(Book? other)
         {
-            if (other is null)
-            {
-                return false;
-            }
-
-            if (ReferenceEquals(this, other))
-            {
-                return true;
-            }
-
-            if (this.Title == other.Title)
-            {
-                return true;
-            }
-
-            return false;
+            return ReferenceEquals(this, other) || ((other is not null) && (this.Title == other.Title));
         }
 
         /// <inheritdoc/>
@@ -129,7 +114,9 @@ namespace Domain
         /// <inheritdoc/>
         public override string ToString()
         {
-            return this.Title;
+            return this.Authors.Count > 0
+                ? $"{this.Title} {this.Authors.Join()}"
+                : this.Title;
         }
     }
 }
