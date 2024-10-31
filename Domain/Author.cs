@@ -27,6 +27,7 @@ namespace Domain
             DateOnly? dateBirth = null,
             DateOnly? dateDeath = null)
         {
+            this.Id = Guid.Empty;
             this.FullName = fullName ?? throw new ArgumentNullException(nameof(fullName));
             this.DateBirth = dateBirth;
             this.DateDeath = dateDeath;
