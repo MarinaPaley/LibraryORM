@@ -5,6 +5,8 @@
 namespace Domain
 {
     using System;
+    using System.Collections.Generic;
+    using System.Net.Sockets;
     using Staff;
 
     /// <summary>
@@ -32,20 +34,57 @@ namespace Domain
         /// </summary>
         public string Name { get; }
 
-        /// <inheritdoc />
-        public bool Equals(Shelf? other)
+        /// <summary>
+        ///  Книги.
+        /// </summary>
+        public ISet<Book> Books { get; } = new HashSet<Book>();
+
+        /// <summary>
+        /// Добавляет книгу на полку.
+        /// </summary>
+        /// <param name="book">Книга. </param>
+        /// <returns><see langword="true"/> если добавили.</returns>
+        public bool AddBook(Book book)
         {
-            if (other is null)
+            if (book is null)
             {
                 return false;
             }
 
-            if (ReferenceEquals(this, other))
+            if (this.Books.Add(book))
             {
+                book.Shelf = this;
                 return true;
             }
 
-            return this.Name == other.Name;
+            return false;
+        }
+
+        /// <summary>
+        /// Снимаем книгу с полки.
+        /// </summary>
+        /// <param name="book">Книга.</param>
+        /// <returns><see langword="true"/> если убрали.</returns>
+        public bool RemoveBook(Book book)
+        {
+            if (book is null)
+            {
+                return false;
+            }
+
+            if (this.Books.Remove(book))
+            {
+                book.Shelf = null;
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <inheritdoc />
+        public bool Equals(Shelf? other)
+        {
+            return ReferenceEquals(this, other) || ((other is not null) && (this.Name == other.Name));
         }
 
         /// <inheritdoc />
@@ -58,6 +97,11 @@ namespace Domain
         public override int GetHashCode() => this.Name.GetHashCode();
 
         /// <inheritdoc cref="object.ToString()"/>
-        public override string ToString() => $"Название полки {this.Name}";
+        public override string ToString()
+        {
+            return this.Books.Count == 0
+                ? $"Название полки: {this.Name}"
+                : $"Название полки: {this.Name} Книги: {this.Books.Join()}";
+        }
     }
 }

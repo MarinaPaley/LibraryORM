@@ -6,8 +6,8 @@ namespace TestDomain
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.CompilerServices;
     using Domain;
+    using NUnit.Framework.Interfaces;
 
     [TestFixture]
     /// <summary>
@@ -15,9 +15,9 @@ namespace TestDomain
     /// </summary>
     public sealed class AuthorTests
     {
-        private static readonly Name NameValue = new Name("Толстой", "Лев", "Николаевич");
-        private static readonly Name NullPatrioicName = new Name("Толстой", "Лев");
-        private static readonly Name OtherName = new Name("Пушкин", "Александр", "Сергеевич");
+        private static readonly Name NameValue = new ("Толстой", "Лев", "Николаевич");
+        private static readonly Name NullPatrioicName = new ("Толстой", "Лев");
+        private static readonly Name OtherName = new ("Пушкин", "Александр", "Сергеевич");
 
         /// <summary>
         /// Тест на конструктор с неизвестными датами жизни.
@@ -94,8 +94,38 @@ namespace TestDomain
         [TestCaseSource(nameof(Authors))]
         public void ToString_ValidData_Success(Author author, string expected)
         {
-            var actual = author.ToString();
-            Assert.That(actual, Is.EqualTo(expected));
+            Assert.That(author.ToString(), Is.EqualTo(expected));
+        }
+
+        [TestCaseSource(nameof(Books))]
+        public void AddBook_Data_Success(Book? book, bool expected)
+        {
+            var author = new Author(NameValue);
+            Assert.That(expected, Is.EqualTo(author.AddBook(book!)));
+        }
+
+        [Test]
+        public void RemoveBook_HasBook_True()
+        {
+            // Arrange
+            Name tolstoy = new ("Толстой", "Лев", "Николаевич");
+            Author author = new (tolstoy);
+            var book = new Book("Анна Каренина", 250, "123", null, author);
+            var other = new Book("12 стульев", 250, "123");
+
+            // Act & Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(author.RemoveBook(book), Is.True);
+                Assert.That(author.RemoveBook(null!), Is.False);
+                Assert.That(author.RemoveBook(other), Is.False);
+            });
+        }
+
+        private static IEnumerable<TestCaseData> Books()
+        {
+            yield return new TestCaseData(new Book("12 стульев", 250, "123"), true);
+            yield return new TestCaseData(null, false);
         }
 
         private static IEnumerable<TestCaseData> Authors()

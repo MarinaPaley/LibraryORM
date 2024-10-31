@@ -5,8 +5,10 @@
 namespace DomainTest
 {
     using System;
+    using System.Collections.Generic;
     using Domain;
     using NUnit.Framework;
+    using NUnit.Framework.Constraints;
 
     /// <summary>
     /// Тесты на полку <see cref="Domain.Shelf"/>.
@@ -30,29 +32,101 @@ namespace DomainTest
         [TestCase("1", "2", false)]
         public void Equals_ValidData_Success(string name1, string name2, bool expected)
         {
-            // arrange
+            // Arrange
             var shelf1 = new Shelf(name1);
             var shelf2 = new Shelf(name2);
 
-            // act
+            // Act
             var actual = shelf1.Equals(shelf2);
 
-            // assert
+            // Assert
             Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
-        public void ToString_ValidData_Success()
+        public void ToString_NoBook_Success()
         {
-            // arrange
-            const string expected = "Название полки Полка 1";
+            // Arrange
+            const string expected = "Название полки: Полка 1";
             var shelf = new Shelf("Полка 1");
 
-            // act
+            // Act
             var actual = shelf.ToString();
 
-            // assert
+            // Assert
             Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void ToString_WithBooksNoAuthors_Success()
+        {
+            // Arrange
+            const string expected = "Название полки: Полка 1 Книги: Анна Каренина, 12 стульев";
+            var shelf = new Shelf("Полка 1");
+            var book = new Book("Анна Каренина", 250, "123", shelf);
+            var other = new Book("12 стульев", 250, "123", shelf);
+
+            // Act
+            var actual = shelf.ToString();
+
+            // Assert
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void ToString_WithBooks_Success()
+        {
+            // Arrange
+            const string expected = "Название полки: Полка 1 Книги: Анна Каренина Толстой Лев Николаевич, " +
+                "12 стульев Ильф Илья, Петров Евгений";
+            var shelf = new Shelf("Полка 1");
+            Name tolstoy = new ("Толстой", "Лев", "Николаевич");
+            Author author1 = new (tolstoy);
+            Name ilf = new ("Ильф", "Илья");
+            Name petrov = new ("Петров", "Евгений");
+            Author author2 = new (ilf);
+            Author author3 = new (petrov);
+            _ = new Book("Анна Каренина", 250, "123", shelf, author1);
+            _ = new Book("12 стульев", 250, "123", shelf, author2, author3);
+
+            // Act
+            var actual = shelf.ToString();
+
+            // Assert
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [TestCaseSource(nameof(Books))]
+        public void AddBook_Book_Success(Book? book, bool expected)
+        {
+            // Arrange
+            var shelf = new Shelf("Полка 1");
+
+            // Act & Assert
+            Assert.That(shelf.AddBook(book!), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void RemoveBook_ValidData_Success()
+        {
+            // Arrange
+            var shelf = new Shelf("Полка 1");
+            var book = new Book("Анна Каренина", 250, "123", shelf);
+            var other = new Book("12 стульев", 250, "123");
+
+            // Act & Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(shelf.RemoveBook(book), Is.True);
+                Assert.That(shelf.RemoveBook(null!), Is.False);
+                Assert.That(shelf.RemoveBook(other), Is.False);
+            });
+        }
+
+        private static IEnumerable<TestCaseData> Books()
+        {
+            yield return new TestCaseData(new Book("12 стульев", 250, "123"), true);
+            yield return new TestCaseData(null, false);
         }
     }
 }
