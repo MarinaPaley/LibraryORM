@@ -55,9 +55,6 @@ namespace Domain
         protected DateOnly? DateDeath { get; set; }
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj) => this.Equals(obj as Author);
-
-        /// <inheritdoc/>
         public bool Equals(Person? lha, Person? rha)
         {
             if (lha is null || rha is null)
@@ -65,15 +62,11 @@ namespace Domain
                 return false;
             }
 
-            return lha.Equals(rha);
+            return lha.FullName == rha.FullName && lha.DateBirth == rha.DateBirth && lha.DateDeath == rha.DateDeath;
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode() =>
-            HashCode.Combine(this.FullName, this.DateBirth, this.DateDeath);
-
-        /// <inheritdoc/>
-        public int GetHashCode([DisallowNull] Person obj) => obj.GetHashCode();
+        public int GetHashCode([DisallowNull] Person obj) => HashCode.Combine(obj.FullName, obj.DateBirth, obj.DateDeath);
 
         /// <inheritdoc/>
         public override string ToString()
@@ -91,19 +84,6 @@ namespace Domain
             }
 
             return buffer.ToString();
-        }
-
-        /// <summary>
-        /// Метод сравнения двух сущностей типа <see cref="Person"/>.
-        /// </summary>
-        /// <param name="other"> Другая сущность. </param>
-        /// <returns> <see langword="true"/> если равны, иначе <see langword="false"/>.</returns>
-        protected bool Equals(Author? other)
-        {
-            return other is not null
-                 && this.FullName == other.FullName
-                 && this.DateBirth == other.DateBirth
-                 && this.DateDeath == other.DateDeath;
         }
     }
 }
