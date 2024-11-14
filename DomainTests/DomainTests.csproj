@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <AdditionalFiles Include="$(SolutionDir)_stylecop\stylecop.json" Link="_stylecop\stylecop.json" />
-    <AdditionalFiles Include="$(SolutionDir)_stylecop\tests.ruleset" Link="_stylecop\develop.ruleset" />
+    <AdditionalFiles Include="$(SolutionDir)_stylecop\tests.ruleset" Link="_stylecop\tests.ruleset" />
   </ItemGroup>
 
   <ItemGroup>

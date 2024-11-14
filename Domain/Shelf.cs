@@ -43,7 +43,7 @@ namespace Domain
         /// Добавляет книгу на полку.
         /// </summary>
         /// <param name="book">Книга. </param>
-        /// <returns><see langword="true"/> если добавили.</returns>
+        /// <returns><see langword="true"/> если добавили, иначе <see langword="false"/>..</returns>
         public bool AddBook(Book book)
         {
             if (book is null)
@@ -64,7 +64,7 @@ namespace Domain
         /// Снимаем книгу с полки.
         /// </summary>
         /// <param name="book">Книга.</param>
-        /// <returns><see langword="true"/> если убрали.</returns>
+        /// <returns><see langword="true"/> если убрали, иначе <see langword="false"/>..</returns>
         public bool RemoveBook(Book book)
         {
             if (book is null)

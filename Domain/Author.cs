@@ -6,13 +6,11 @@ namespace Domain
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
-    using Staff;
 
     /// <summary>
     /// Класс Автор.
     /// </summary>
-    public class Author : IEquatable<Author>
+    public sealed class Author : Person
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Author"/>.
@@ -27,32 +25,9 @@ namespace Domain
             Name fullName,
             DateOnly? dateBirth = null,
             DateOnly? dateDeath = null)
+            : base(fullName, dateBirth, dateDeath)
         {
-            this.Id = Guid.Empty;
-            this.FullName = fullName ?? throw new ArgumentNullException(nameof(fullName));
-            this.DateBirth = dateBirth;
-            this.DateDeath = dateDeath;
         }
-
-        /// <summary>
-        /// Идентификатор.
-        /// </summary>
-        public Guid Id { get; }
-
-        /// <summary>
-        /// Полное имя.
-        /// </summary>
-        public Name FullName { get; }
-
-        /// <summary>
-        /// Дата рождения.
-        /// </summary>
-        public DateOnly? DateBirth { get; set; }
-
-        /// <summary>
-        /// Дата смерти.
-        /// </summary>
-        public DateOnly? DateDeath { get; set; }
 
         /// <summary>
         /// Книги.
@@ -63,7 +38,7 @@ namespace Domain
         /// Добавляем книгу автору.
         /// </summary>
         /// <param name="book"> Книга. </param>
-        /// <returns><see langword="true"/> если добавили. </returns>
+        /// <returns><see langword="true"/> если добавили, иначе <see langword="false"/>.. </returns>
         public bool AddBook(Book book)
         {
             if (book is null)
@@ -84,7 +59,7 @@ namespace Domain
         /// Удаляем книгу у Автора.
         /// </summary>
         /// <param name="book">Книга.</param>
-        /// <returns><see langword="true"/> если убрали.</returns>
+        /// <returns><see langword="true"/> если убрали, иначе <see langword="false"/>..</returns>
         public bool RemoveBook(Book book)
         {
             if (book is null)
@@ -102,40 +77,9 @@ namespace Domain
         }
 
         /// <inheritdoc/>
-        public bool Equals(Author? other)
-        {
-           return other is not null
-                && this.FullName == other.FullName
-                && this.DateBirth == other.DateBirth
-                && this.DateDeath == other.DateDeath;
-        }
+        public override bool Equals(object? obj) => this.Equals(obj as Author);
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj)
-        {
-            return this.Equals(obj as Author);
-        }
-
-        /// <inheritdoc/>
-        public override int GetHashCode() =>
-            HashCode.Combine(this.FullName, this.DateBirth, this.DateDeath);
-
-        /// <inheritdoc/>
-        public override string ToString()
-        {
-            var buffer = new StringBuilder();
-            buffer.Append(this.FullName);
-            if (this.DateBirth is not null)
-            {
-                _ = buffer.Append($" Год рождения: {this.DateBirth}");
-            }
-
-            if (this.DateDeath is not null)
-            {
-                _ = buffer.Append($" Год смерти: {this.DateDeath}");
-            }
-
-            return buffer.ToString();
-        }
+        public override int GetHashCode() => base.GetHashCode();
     }
 }
