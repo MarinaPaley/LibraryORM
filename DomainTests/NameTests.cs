@@ -2,16 +2,15 @@
 // Copyright (c) Васильева Марина Алексеевна 2024. Library.
 // </copyright>
 
-namespace TestDomain
+namespace DomainTests
 {
     using System;
     using System.Collections.Generic;
-    using System.Xml.Linq;
     using Domain;
 
     [TestFixture]
     /// <summary>
-    /// Тесты для клсса <see cref="Domain.Name"/>.
+    /// Тесты для клсса <see cref="Name"/>.
     /// </summary>
     public sealed class NameTests
     {
@@ -43,6 +42,8 @@ namespace TestDomain
         /// <param name="firstName"> Имя.</param>
         [TestCase(null, "")]
         [TestCase("", null)]
+        [TestCase(" Антон ", "")]
+        [TestCase("", " ")]
         public void Ctor_WrongData_ExpectedException(string? familyName, string? firstName) =>
             Assert.Throws<ArgumentNullException>(
                   () => _ = new Name(familyName!, firstName!));
