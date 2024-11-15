@@ -6,18 +6,17 @@ namespace Domain
 {
     using System;
     using System.Collections.Generic;
-    using System.Net.Sockets;
     using Staff;
 
     /// <summary>
-    /// Класс Полка.
+    /// Полка.
     /// </summary>
     public sealed class Shelf : IEquatable<Shelf>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Shelf"/>.
         /// </summary>
-        /// <param name="name"> Название полки.</param>
+        /// <param name="name"> Название полки. </param>
         public Shelf(string name)
         {
             this.Id = Guid.Empty;
@@ -43,42 +42,24 @@ namespace Domain
         /// Добавляет книгу на полку.
         /// </summary>
         /// <param name="book">Книга. </param>
-        /// <returns><see langword="true"/> если добавили, иначе <see langword="false"/>..</returns>
+        /// <returns><see langword="true"/> если добавили, иначе <see langword="false"/>.</returns>
         public bool AddBook(Book book)
         {
-            if (book is null)
-            {
-                return false;
-            }
-
-            if (this.Books.Add(book))
-            {
-                book.Shelf = this;
-                return true;
-            }
-
-            return false;
+            return book is not null
+                && this.Books.Add(book)
+                && (book.Shelf = this) is not null;
         }
 
         /// <summary>
         /// Снимаем книгу с полки.
         /// </summary>
         /// <param name="book">Книга.</param>
-        /// <returns><see langword="true"/> если убрали, иначе <see langword="false"/>..</returns>
+        /// <returns><see langword="true"/> если убрали, иначе <see langword="false"/>.</returns>
         public bool RemoveBook(Book book)
         {
-            if (book is null)
-            {
-                return false;
-            }
-
-            if (this.Books.Remove(book))
-            {
-                book.Shelf = null;
-                return true;
-            }
-
-            return false;
+            return book is not null
+                && this.Books.Remove(book)
+                && (book.Shelf = null) is null;
         }
 
         /// <inheritdoc />

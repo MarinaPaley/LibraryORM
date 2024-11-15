@@ -2,22 +2,23 @@
 // Copyright (c) Васильева Марина Алексеевна 2024. Library.
 // </copyright>
 
-namespace TestDomain
+namespace Domain.Tests
 {
     using System;
     using System.Collections.Generic;
-    using System.Security.Cryptography.X509Certificates;
     using Domain;
-    using NUnit.Framework.Interfaces;
+    using NUnit.Framework;
 
-    [TestFixture]
     /// <summary>
-    /// Тесты для клсса <see cref="Domain.Author"/>.
+    /// Модульные тесты для класса <see cref="Author"/>.
     /// </summary>
+    [TestFixture]
     public sealed class AuthorTests
     {
         private static readonly Name NameValue = new ("Толстой", "Лев", "Николаевич");
+
         private static readonly Name NullPatrioicName = new ("Толстой", "Лев");
+
         private static readonly Name OtherName = new ("Пушкин", "Александр", "Сергеевич");
 
         /// <summary>
@@ -28,8 +29,7 @@ namespace TestDomain
         [TestCaseSource(nameof(ValidDateData))]
         public void Ctor_DateLiveNull_DoesNotThrow(DateOnly? dateBirth, DateOnly? dateDeath)
         {
-            Assert.DoesNotThrow(() =>
-                _ = new Author(NameValue, dateBirth, dateDeath));
+            Assert.DoesNotThrow(() => _ = new Author(NameValue, dateBirth, dateDeath));
         }
 
         [Test]
@@ -131,11 +131,18 @@ namespace TestDomain
 
         private static IEnumerable<TestCaseData> Authors()
         {
-            yield return new TestCaseData(new Author(NullPatrioicName), "Толстой Лев");
-            yield return new TestCaseData(new Author(NameValue), "Толстой Лев Николаевич");
+            yield return new TestCaseData(
+                new Author(NullPatrioicName),
+                "Толстой Лев");
+
+            yield return new TestCaseData(
+                new Author(NameValue),
+                "Толстой Лев Николаевич");
+
             yield return new TestCaseData(
                 new Author(NameValue, new DateOnly(1828, 09, 28)),
                 "Толстой Лев Николаевич Год рождения: 28.09.1828");
+
             yield return new TestCaseData(
                 new Author(NameValue, new DateOnly(1828, 09, 28), new DateOnly(1910, 10, 20)),
                 "Толстой Лев Николаевич Год рождения: 28.09.1828 Год смерти: 20.10.1910");

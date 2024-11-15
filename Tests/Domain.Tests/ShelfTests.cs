@@ -2,16 +2,15 @@
 // Copyright (c) Васильева Марина Алексеевна 2024. Library.
 // </copyright>
 
-namespace DomainTest
+namespace Domain.Tests
 {
     using System;
     using System.Collections.Generic;
     using Domain;
     using NUnit.Framework;
-    using NUnit.Framework.Constraints;
 
     /// <summary>
-    /// Тесты на полку <see cref="Domain.Shelf"/>.
+    /// Модульные тесты для класса <see cref="Shelf"/>.
     /// </summary>
     [TestFixture]
     public sealed class ShelfTests
@@ -66,6 +65,9 @@ namespace DomainTest
             var book = new Book("Анна Каренина", 250, "123", shelf);
             var other = new Book("12 стульев", 250, "123", shelf);
 
+            _ = shelf.AddBook(book);
+            _ = shelf.AddBook(other);
+
             // Act
             var actual = shelf.ToString();
 
@@ -79,6 +81,7 @@ namespace DomainTest
             // Arrange
             const string expected = "Название полки: Полка 1 Книги: Анна Каренина Толстой Лев Николаевич, " +
                 "12 стульев Ильф Илья, Петров Евгений";
+
             var shelf = new Shelf("Полка 1");
             Name tolstoy = new ("Толстой", "Лев", "Николаевич");
             Author author1 = new (tolstoy);

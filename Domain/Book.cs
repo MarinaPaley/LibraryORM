@@ -9,31 +9,34 @@ namespace Domain
     using Staff;
 
     /// <summary>
-    /// Класс Книга.
+    /// Книга.
     /// </summary>
     public sealed class Book : IEquatable<Book>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Book"/>.
         /// </summary>
-        /// <param name="title"> Название.</param>
+        /// <param name="title"> Название. </param>
         /// <param name="pages"> Количество страниц. </param>
         /// <param name="ibsn"> Код IBSN. </param>
-        /// <param name="authors">Авторы.</param>
-        /// <param name="shelf">Полка. </param>
-        /// <exception cref="ArgumentNullException">Если название книги или код <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"> Если количество страниц меньше или равно нулю.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"> Если полка <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"> Если авторы <see langword="null"/>.</exception>
+        /// <param name="authors"> Авторы. </param>
+        /// <param name="shelf"> Полка. </param>
+        /// <exception cref="ArgumentNullException">Если название книги или код <see langword="null"/>. </exception>
+        /// <exception cref="ArgumentOutOfRangeException"> Если количество страниц меньше или равно нулю. </exception>
+        /// <exception cref="ArgumentOutOfRangeException"> Если полка <see langword="null"/>. </exception>
+        /// <exception cref="ArgumentOutOfRangeException"> Если авторы <see langword="null"/>. </exception>
         public Book(string title, int pages, string ibsn, ISet<Author> authors, Shelf? shelf = null)
         {
-            this.Title = title.TrimOrNull() ?? throw new ArgumentNullException(nameof(title));
-            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pages);
-
-            this.Pages = pages;
-            this.Authors = authors ?? throw new ArgumentNullException(nameof(authors));
-            this.IBSN = ibsn.TrimOrNull() ?? throw new ArgumentNullException(nameof(ibsn));
             this.Id = Guid.Empty;
+
+            this.Title = title.TrimOrNull() ?? throw new ArgumentNullException(nameof(title));
+
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pages);
+            this.Pages = pages;
+
+            this.IBSN = ibsn.TrimOrNull() ?? throw new ArgumentNullException(nameof(ibsn));
+
+            this.Authors = authors ?? throw new ArgumentNullException(nameof(authors));
             foreach (var author in authors)
             {
                 author.AddBook(this);

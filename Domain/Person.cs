@@ -5,17 +5,17 @@
 namespace Domain
 {
     using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Text;
 
     /// <summary>
-    /// Класс Персона.
+    /// Персона.
     /// </summary>
-    public abstract class Person : IEqualityComparer<Person>
+    /// <typeparam name="TPerson"> Конкретный тип персоны. </typeparam>
+    public abstract class Person<TPerson> : IEquatable<TPerson>
+        where TPerson : Person<TPerson>
     {
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="Person"/>.
+        /// Инициализирует новый экземпляр класса <see cref="Person{TPerson}"/>.
         /// </summary>
         /// <param name="fullName"> Полное имя.</param>
         /// <param name="dateBirth"> Дата рождения. </param>
@@ -37,42 +37,48 @@ namespace Domain
         /// <summary>
         /// Идентификатор.
         /// </summary>
-        protected Guid Id { get; }
+        public Guid Id { get; }
 
         /// <summary>
         /// Полное имя.
         /// </summary>
-        protected Name FullName { get; }
+        public Name FullName { get; }
 
         /// <summary>
         /// Дата рождения.
         /// </summary>
-        protected DateOnly? DateBirth { get; set; }
+        public DateOnly? DateBirth { get; set; }
 
         /// <summary>
         /// Дата смерти.
         /// </summary>
-        protected DateOnly? DateDeath { get; set; }
+        public DateOnly? DateDeath { get; set; }
 
         /// <inheritdoc/>
-        public bool Equals(Person? lha, Person? rha)
+        public override bool Equals(object? obj) => obj is TPerson person && this.Equals(person);
+
+        /// <inheritdoc/>
+        public virtual bool Equals(TPerson? other)
         {
-            if (lha is null || rha is null)
+            if (other is null)
             {
                 return false;
             }
 
-            return lha.FullName == rha.FullName && lha.DateBirth == rha.DateBirth && lha.DateDeath == rha.DateDeath;
+            return this.FullName == other.FullName
+                && this.DateBirth == other.DateBirth
+                && this.DateDeath == other.DateDeath;
         }
 
         /// <inheritdoc/>
-        public int GetHashCode([DisallowNull] Person obj) => HashCode.Combine(obj.FullName, obj.DateBirth, obj.DateDeath);
+        public override int GetHashCode() => HashCode.Combine(this.FullName, this.DateBirth, this.DateDeath);
 
         /// <inheritdoc/>
         public override string ToString()
         {
             var buffer = new StringBuilder();
-            buffer.Append(this.FullName);
+            _ = buffer.Append(this.FullName);
+
             if (this.DateBirth is not null)
             {
                 _ = buffer.Append($" Год рождения: {this.DateBirth}");
