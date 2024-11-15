@@ -18,6 +18,14 @@ namespace DataAccessLibrary.Configurations
         {
             _ = builder.HasKey(author => author.Id);
 
+            _ = builder.Property(author => author.DateBirth)
+                .IsRequired(false)
+                .HasComment("Дата рождения");
+
+            _ = builder.Property(author => author.DateDeath)
+                .IsRequired(false)
+                .HasComment("Дата смерти");
+
             _ = builder.OwnsOne(
                 author => author.FullName,
                 nameBuilder =>

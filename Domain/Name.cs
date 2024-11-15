@@ -13,6 +13,11 @@ namespace Domain
     public sealed class Name : IEquatable<Name>
     {
         /// <summary>
+        /// Имя-заглушка.
+        /// </summary>
+        public static readonly Name Unknown = new ("Неизвестно", "Неизвестно");
+
+        /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Name"/>.
         /// </summary>
         /// <param name="familyName">Фамилия.</param>

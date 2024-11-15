@@ -34,7 +34,7 @@ namespace Domain
         /// </summary>
         [Obsolete("For ORM only", true)]
         private Author()
-            : base(null!)
+            : base(Name.Unknown)
         {
         }
 
