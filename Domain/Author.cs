@@ -30,6 +30,15 @@ namespace Domain
         }
 
         /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="Author"/>.
+        /// </summary>
+        [Obsolete("For ORM only", true)]
+        private Author()
+            : base(null!)
+        {
+        }
+
+        /// <summary>
         /// Книги.
         /// </summary>
         public ISet<Book> Books { get; } = new HashSet<Book>();

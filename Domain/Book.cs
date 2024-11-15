@@ -18,7 +18,7 @@ namespace Domain
         /// </summary>
         /// <param name="title"> Название. </param>
         /// <param name="pages"> Количество страниц. </param>
-        /// <param name="ibsn"> Код IBSN. </param>
+        /// <param name="ibsn"> Код ibsn. </param>
         /// <param name="authors"> Авторы. </param>
         /// <param name="shelf"> Полка. </param>
         /// <exception cref="ArgumentNullException">Если название книги или код <see langword="null"/>. </exception>
@@ -67,6 +67,14 @@ namespace Domain
         }
 
         /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="Book"/>.
+        /// </summary>
+        [Obsolete("For ORM only", true)]
+        private Book()
+        {
+        }
+
+        /// <summary>
         /// Идентификатор.
         /// </summary>
         public Guid Id { get; }
@@ -82,7 +90,7 @@ namespace Domain
         public int Pages { get; }
 
         /// <summary>
-        /// Код IBSN.
+        /// Код ibsn.
         /// </summary>
         public string IBSN { get; }
 
