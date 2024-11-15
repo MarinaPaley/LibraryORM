@@ -23,16 +23,19 @@ namespace DataAccessLibrary.Configurations
                 nameBuilder =>
                 {
                     _ = nameBuilder.Property(name => name.FamilyName)
+                        .HasColumnName(nameof(Name.FamilyName))
                         .HasMaxLength(100)
                         .IsRequired()
                         .HasComment("Фамилия");
 
                     _ = nameBuilder.Property(name => name.FirstName)
+                        .HasColumnName(nameof(Name.FirstName))
                         .HasMaxLength(100)
                         .IsRequired()
                         .HasComment("Имя");
 
                     _ = nameBuilder.Property(name => name.PatronicName)
+                        .HasColumnName(nameof(Name.PatronicName))
                         .HasMaxLength(100)
                         .IsRequired(false)
                         .HasComment("Отчество");
