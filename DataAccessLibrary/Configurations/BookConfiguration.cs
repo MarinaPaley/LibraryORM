@@ -32,7 +32,6 @@ namespace DataAccessLibrary.Configurations
 
             _ = builder.HasOne(book => book.Shelf)
                 .WithMany(shelf => shelf.Books)
-                .HasForeignKey()
                 .IsRequired(false);
 
             _ = builder.HasMany(book => book.Authors)
