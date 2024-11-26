@@ -8,9 +8,9 @@ namespace Domain
     using System.Collections.Generic;
 
     /// <summary>
-    /// Класс Автор.
+    /// Автор.
     /// </summary>
-    public sealed class Author : Person
+    public sealed class Author : Person<Author>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Author"/>.
@@ -30,6 +30,15 @@ namespace Domain
         }
 
         /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="Author"/>.
+        /// </summary>
+        [Obsolete("For ORM only", true)]
+        private Author()
+            : base(Name.Unknown)
+        {
+        }
+
+        /// <summary>
         /// Книги.
         /// </summary>
         public ISet<Book> Books { get; } = new HashSet<Book>();
@@ -38,48 +47,24 @@ namespace Domain
         /// Добавляем книгу автору.
         /// </summary>
         /// <param name="book"> Книга. </param>
-        /// <returns><see langword="true"/> если добавили, иначе <see langword="false"/>.. </returns>
+        /// <returns><see langword="true"/> если добавили, иначе <see langword="false"/>.</returns>
         public bool AddBook(Book book)
         {
-            if (book is null)
-            {
-                return false;
-            }
-
-            if (this.Books.Add(book))
-            {
-                _ = book.Authors.Add(this);
-                return true;
-            }
-
-            return false;
+            return book is not null
+                && this.Books.Add(book)
+                && book.Authors.Add(this);
         }
 
         /// <summary>
-        /// Удаляем книгу у Автора.
+        /// Удаляем книгу у автора.
         /// </summary>
-        /// <param name="book">Книга.</param>
-        /// <returns><see langword="true"/> если убрали, иначе <see langword="false"/>..</returns>
+        /// <param name="book"> Книга. </param>
+        /// <returns><see langword="true"/> если убрали, иначе <see langword="false"/>.</returns>
         public bool RemoveBook(Book book)
         {
-            if (book is null)
-            {
-                return false;
-            }
-
-            if (this.Books.Remove(book))
-            {
-                book.Authors.Remove(this);
-                return true;
-            }
-
-            return false;
+            return book is not null
+                && this.Books.Remove(book)
+                && book.Authors.Remove(this);
         }
-
-        /// <inheritdoc/>
-        public override bool Equals(object? obj) => this.Equals(obj as Author);
-
-        /// <inheritdoc/>
-        public override int GetHashCode() => base.GetHashCode();
     }
 }

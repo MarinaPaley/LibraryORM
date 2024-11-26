@@ -9,9 +9,9 @@ namespace Demo
     /// <summary>
     /// Точка входа в программу.
     /// </summary>
-    internal class Program
+    internal static class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             Console.WriteLine("Hello, World!");
         }

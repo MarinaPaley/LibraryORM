@@ -2,7 +2,7 @@
 // Copyright (c) Васильева Марина Алексеевна 2024. Library.
 // </copyright>
 
-namespace DomainTest
+namespace Domain.Tests
 {
     using System;
     using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace DomainTest
     using NUnit.Framework;
 
     /// <summary>
-    /// Тесты для класса <see cref="Domain.Book"/>.
+    /// Модульные тесты для класса <see cref="Book"/>.
     /// </summary>
     [TestFixture]
     public sealed class BookTests
@@ -25,37 +25,32 @@ namespace DomainTest
         [Test]
         public void Ctor_NullTitle_ExpectedArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(
-                () => _ = new Book(null!, 100, "1"));
+            Assert.Throws<ArgumentNullException>(() => _ = new Book(null!, 100, "1"));
         }
 
         [Test]
         public void Ctor_NullISBN_ExpectedArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(
-                () => _ = new Book("Тестовое название", 100, null!));
+            Assert.Throws<ArgumentNullException>(() => _ = new Book("Тестовое название", 100, null!));
         }
 
         [TestCase(0)]
         [TestCase(-1)]
         public void Ctor_NegativePages_ExpectedArgumentOutOfRangeException(int pages)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(
-                () => _ = new Book("Тестовое название", pages, "1"));
+            Assert.Throws<ArgumentOutOfRangeException>(() => _ = new Book("Тестовое название", pages, "1"));
         }
 
         [TestCaseSource(nameof(BookWithAuthors))]
-        public void ToString_ValidData_Success(Book book, string expected)
-        {
-            Assert.That(book.ToString(), Is.EqualTo(expected));
-        }
+        public string ToString_ValidData_Success(Book book) => book.ToString();
 
         private static IEnumerable<TestCaseData> BookWithAuthors()
         {
-            yield return new TestCaseData(
-                new Book("Анна Каренина", 250, "123", null, Lev), "Анна Каренина Толстой Лев Николаевич");
-            yield return new TestCaseData(
-                new Book("12 стульев", 250, "1456", null, Ilia, Evgen), "12 стульев Ильф Илья, Петров Евгений");
+            yield return new TestCaseData(new Book("Анна Каренина", 250, "123", null, Lev))
+                .Returns("Анна Каренина Толстой Лев Николаевич");
+
+            yield return new TestCaseData(new Book("12 стульев", 250, "1456", null, Ilia, Evgen))
+                .Returns("12 стульев Ильф Илья, Петров Евгений");
         }
     }
 }

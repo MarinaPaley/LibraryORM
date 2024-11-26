@@ -2,16 +2,17 @@
 // Copyright (c) Васильева Марина Алексеевна 2024. Library.
 // </copyright>
 
-namespace DomainTests
+namespace Domain.Tests
 {
     using System;
     using System.Collections.Generic;
     using Domain;
+    using NUnit.Framework;
 
-    [TestFixture]
     /// <summary>
-    /// Тесты для клсса <see cref="Name"/>.
+    /// Модульные тесты для класса <see cref="Name"/>.
     /// </summary>
+    [TestFixture]
     public sealed class NameTests
     {
         /// <summary>
@@ -31,8 +32,7 @@ namespace DomainTests
         [TestCase(null)]
         public void Ctor_ValidPatronicName_DoesNotThrow(string? patronicName)
         {
-            Assert.DoesNotThrow(() =>
-            _ = new Name("Толстой", "Лев", patronicName));
+            Assert.DoesNotThrow(() => _ = new Name("Толстой", "Лев", patronicName));
         }
 
         /// <summary>
@@ -44,9 +44,10 @@ namespace DomainTests
         [TestCase("", null)]
         [TestCase(" Антон ", "")]
         [TestCase("", " ")]
-        public void Ctor_WrongData_ExpectedException(string? familyName, string? firstName) =>
-            Assert.Throws<ArgumentNullException>(
-                  () => _ = new Name(familyName!, firstName!));
+        public void Ctor_WrongData_ExpectedException(string? familyName, string? firstName)
+        {
+            Assert.Throws<ArgumentNullException>(() => _ = new Name(familyName!, firstName!));
+        }
 
         [Test]
         public void Equals_SameNames_True()
@@ -88,19 +89,32 @@ namespace DomainTests
         }
 
         [TestCaseSource(nameof(ValidNames))]
-        public void EqualsOperator_ValidData_Success(Name? name1, Name? name2, bool expected) =>
-            Assert.That(name1 == name2, Is.EqualTo(expected));
+        public bool EqualsOperator_ValidData_Success(Name? name1, Name? name2) => name1 == name2;
 
         [TestCaseSource(nameof(ValidNames))]
-        public void NotEqualsOperator_ValidData_Success(Name? name1, Name? name2, bool expected) =>
-            Assert.That(name1 != name2, !Is.EqualTo(expected));
+        public bool NotEqualsOperator_ValidData_Success(Name? name1, Name? name2) => !(name1 != name2);
 
         private static IEnumerable<TestCaseData> ValidNames()
         {
-            yield return new TestCaseData(new Name("Толстой", "Лев", "Николаевич"), new Name("Толстой", "Лев", "Николаевич"), true);
-            yield return new TestCaseData(new Name("Толстой", "Лев", "Николаевич"), new Name("Пушкин", "Александр", "Сергеевич"), false);
-            yield return new TestCaseData(new Name("Толстой", "Лев", "Николаевич"), null, false);
-            yield return new TestCaseData(null, new Name("Пушкин", "Александр", "Сергеевич"), false);
+            yield return new TestCaseData(
+                    new Name("Толстой", "Лев", "Николаевич"),
+                    new Name("Толстой", "Лев", "Николаевич"))
+                .Returns(true);
+
+            yield return new TestCaseData(
+                    new Name("Толстой", "Лев", "Николаевич"),
+                    new Name("Пушкин", "Александр", "Сергеевич"))
+                .Returns(false);
+
+            yield return new TestCaseData(
+                    new Name("Толстой", "Лев", "Николаевич"),
+                    null)
+                .Returns(false);
+
+            yield return new TestCaseData(
+                    null,
+                    new Name("Пушкин", "Александр", "Сергеевич"))
+                .Returns(false);
         }
     }
 }

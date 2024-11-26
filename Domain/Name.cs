@@ -5,8 +5,6 @@
 namespace Domain
 {
     using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using Staff;
 
     /// <summary>
@@ -14,6 +12,11 @@ namespace Domain
     /// </summary>
     public sealed class Name : IEquatable<Name>
     {
+        /// <summary>
+        /// Имя-заглушка.
+        /// </summary>
+        public static readonly Name Unknown = new ("Неизвестно", "Неизвестно");
+
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Name"/>.
         /// </summary>
@@ -65,10 +68,7 @@ namespace Domain
         }
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj)
-        {
-            return this.Equals(obj as Name);
-        }
+        public override bool Equals(object? obj) => this.Equals(obj as Name);
 
         /// <inheritdoc/>
         public override int GetHashCode() =>

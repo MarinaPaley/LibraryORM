@@ -25,6 +25,7 @@ namespace Staff
         public static string? TrimOrNull(this string value)
         {
             var trimmed = value?.Trim();
+
             return trimmed.IsNullOrEmpty()
                  ? null
                  : trimmed;
