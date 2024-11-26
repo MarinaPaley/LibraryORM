@@ -13,10 +13,17 @@ namespace DataAccessLibrary
     /// </summary>
     public sealed class DataContext : DbContext
     {
+        private static readonly string ConnectionString = "User ID=postgres;Password=1;Host=localhost;Port=5432;Database=Library;";
+
+        private static readonly DbContextOptions<DataContext> Options = new DbContextOptionsBuilder<DataContext>()
+            .UseNpgsql(ConnectionString)
+            .Options;
+
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="DataContext"/>.
         /// </summary>
         public DataContext()
+            : this(Options)
         {
         }
 
@@ -48,12 +55,6 @@ namespace DataAccessLibrary
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             _ = modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        }
-
-        /// <inheritdoc/>
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            _ = optionsBuilder.UseNpgsql("User ID=postgres;Password=1;Host=localhost;Port=5432;Database=Library;");
         }
     }
 }
