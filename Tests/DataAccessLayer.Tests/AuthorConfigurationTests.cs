@@ -2,13 +2,13 @@
 // Copyright (c) Васильева Марина Алексеевна 2024. Library.
 // </copyright>
 
-namespace DataAccessLibrary.Tests
+namespace DataAccessLayer.Tests
 {
     using Domain;
     using NUnit.Framework;
 
     /// <summary>
-    /// Тесты для <see cref="DataAccessLibrary.Configurations.AuthorConfiguration"/>.
+    /// Тесты для <see cref="DataAccessLayer.Configurations.AuthorConfiguration"/>.
     /// </summary>
     [TestFixture]
     internal sealed class AuthorConfigurationTests : BaseConfigurationTests

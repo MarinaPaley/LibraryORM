@@ -2,7 +2,7 @@
 // Copyright (c) Васильева Марина Алексеевна 2024. Library.
 // </copyright>
 
-namespace DataAccessLibrary.Configurations
+namespace DataAccessLayer.Configurations
 {
     using Domain;
     using Microsoft.EntityFrameworkCore;
