@@ -5,6 +5,10 @@
 namespace Demo
 {
     using System;
+    using System.Linq;
+    using DataAccessLayer;
+    using Domain;
+    using Repository;
 
     /// <summary>
     /// Точка входа в программу.
@@ -13,7 +17,23 @@ namespace Demo
     {
         private static void Main()
         {
-            Console.WriteLine("Hello, World!");
+            var dataContext = new DataContext();
+
+            try
+            {
+                var shelfRepository = new ShelfRepository(dataContext);
+                _ = shelfRepository.Create(new Shelf("Полка"));
+                _ = shelfRepository.Save();
+
+                foreach (var shelf in shelfRepository.GetAll())
+                {
+                    Console.WriteLine($"{shelf.Id} --> {shelf.Name}");
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.Error.WriteLine(exception.Message);
+            }
         }
     }
 }
