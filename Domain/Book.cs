@@ -66,6 +66,7 @@ namespace Domain
         {
         }
 
+#pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Book"/>.
         /// </summary>
@@ -73,6 +74,7 @@ namespace Domain
         private Book()
         {
         }
+#pragma warning restore CS8618
 
         /// <summary>
         /// Идентификатор.

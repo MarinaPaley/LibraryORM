@@ -2,9 +2,10 @@
 // Copyright (c) Васильева Марина Алексеевна 2024. Library.
 // </copyright>
 
-namespace DataAccessLibrary.Tests
+namespace DataAccessLayer.Tests
 {
     using System;
+    using DataAccessLayer;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
@@ -14,22 +15,30 @@ namespace DataAccessLibrary.Tests
     /// </summary>
     internal abstract class BaseConfigurationTests
     {
-        private readonly IServiceCollection services;
-
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="BaseConfigurationTests"/>.
+        /// </summary>
+        /// <param name="minimumLogLevel"> Минимальный уровень логируемых сообщений. </param>
+        /// <exception cref="Exception">
+        /// В случае невозможности построения/получения контекста доступа к данным.
+        /// </exception>
         protected BaseConfigurationTests(LogLevel minimumLogLevel = LogLevel.Debug)
         {
-            this.services = new ServiceCollection()
+            this.DataContext = new ServiceCollection()
                 .AddDbContext<DataContext>(
                     options => options
                         .UseInMemoryDatabase($"InMemoryDB_{Guid.NewGuid()}")
                         .EnableDetailedErrors()
                         .EnableSensitiveDataLogging()
-                        .LogTo(Console.WriteLine, minimumLogLevel));
-
-            this.DataContext = this.services.BuildServiceProvider().GetService<DataContext>()
-                ?? throw new Exception("Cannot get DataContext");
+                        .LogTo(Console.WriteLine, minimumLogLevel))
+                .BuildServiceProvider()
+                .GetService<DataContext>()
+                ?? throw new Exception($"Cannot get {typeof(DataContext).FullName} from DI");
         }
 
+        /// <summary>
+        /// Контекст доступа к данным.
+        /// </summary>
         protected DataContext DataContext { get; }
     }
 }
