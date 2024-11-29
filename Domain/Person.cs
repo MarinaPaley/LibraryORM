@@ -11,7 +11,7 @@ namespace Domain
     /// Персона.
     /// </summary>
     /// <typeparam name="TPerson"> Конкретный тип персоны. </typeparam>
-    public abstract class Person<TPerson> : IEquatable<TPerson>
+    public abstract class Person<TPerson> : Entity<TPerson>, IEquatable<TPerson>
         where TPerson : Person<TPerson>
     {
         /// <summary>

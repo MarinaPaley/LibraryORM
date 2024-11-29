@@ -11,7 +11,7 @@ namespace Domain
     /// <summary>
     /// Полка.
     /// </summary>
-    public sealed class Shelf : IEquatable<Shelf>
+    public sealed class Shelf : Entity<Shelf>, IEquatable<Shelf>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Shelf"/>.
@@ -19,14 +19,8 @@ namespace Domain
         /// <param name="name"> Название полки. </param>
         public Shelf(string name)
         {
-            this.Id = Guid.Empty;
             this.Name = name.TrimOrNull() ?? throw new ArgumentNullException(nameof(name));
         }
-
-        /// <summary>
-        /// Идентификатор.
-        /// </summary>
-        public Guid Id { get; }
 
         /// <summary>
         /// Название полки.
@@ -63,7 +57,7 @@ namespace Domain
         }
 
         /// <inheritdoc />
-        public bool Equals(Shelf? other)
+        public override bool Equals(Shelf? other)
         {
             return ReferenceEquals(this, other) || ((other is not null) && (this.Name == other.Name));
         }
