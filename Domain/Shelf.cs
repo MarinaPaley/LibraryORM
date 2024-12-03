@@ -25,7 +25,7 @@ namespace Domain
         /// <summary>
         /// Название полки.
         /// </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary>
         ///  Книги.

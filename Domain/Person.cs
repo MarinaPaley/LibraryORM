@@ -28,16 +28,10 @@ namespace Domain
             DateOnly? dateBirth = null,
             DateOnly? dateDeath = null)
         {
-            this.Id = Guid.Empty;
             this.FullName = fullName ?? throw new ArgumentNullException(nameof(fullName));
             this.DateBirth = dateBirth;
             this.DateDeath = dateDeath;
         }
-
-        /// <summary>
-        /// Идентификатор.
-        /// </summary>
-        public Guid Id { get; }
 
         /// <summary>
         /// Полное имя.
@@ -55,17 +49,16 @@ namespace Domain
         public DateOnly? DateDeath { get; set; }
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj) => obj is TPerson person && this.Equals(person);
+        public override bool Equals(object? obj)
+        {
+            return obj is TPerson person && this.Equals(person);
+        }
 
         /// <inheritdoc/>
-        public virtual bool Equals(TPerson? other)
+        public override bool Equals(TPerson? other)
         {
-            if (other is null)
-            {
-                return false;
-            }
-
-            return this.FullName == other.FullName
+            return base.Equals(other)
+                && this.FullName == other.FullName
                 && this.DateBirth == other.DateBirth
                 && this.DateDeath == other.DateDeath;
         }

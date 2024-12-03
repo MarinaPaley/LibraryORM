@@ -5,7 +5,6 @@
 namespace Demo
 {
     using System;
-    using System.Linq;
     using DataAccessLayer;
     using Domain;
     using Repository;
@@ -23,7 +22,6 @@ namespace Demo
             {
                 var shelfRepository = new ShelfRepository(dataContext);
                 _ = shelfRepository.Create(new Shelf("Полка"));
-                _ = shelfRepository.Save();
 
                 foreach (var shelf in shelfRepository.GetAll())
                 {

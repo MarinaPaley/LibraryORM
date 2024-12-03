@@ -1,4 +1,4 @@
-﻿// <copyright file="Interface1.cs" company="Васильева Марина Алексеевна">
+﻿// <copyright file="IEntity.cs" company="Васильева Марина Алексеевна">
 // Copyright (c) Васильева Марина Алексеевна 2024. Library.
 // </copyright>
 

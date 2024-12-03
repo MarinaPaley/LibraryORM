@@ -27,7 +27,6 @@ namespace Domain
         /// <exception cref="ArgumentOutOfRangeException"> Если авторы <see langword="null"/>. </exception>
         public Book(string title, int pages, string ibsn, ISet<Author> authors, Shelf? shelf = null)
         {
-
             this.Title = title.TrimOrNull() ?? throw new ArgumentNullException(nameof(title));
 
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pages);

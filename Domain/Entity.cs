@@ -39,6 +39,7 @@ namespace Domain
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode() => base.GetHashCode();
+        // @NOTE: В случае проблемы заменить на object.GetHashCode().
+        public override int GetHashCode() => this.Id.GetHashCode();
     }
 }
