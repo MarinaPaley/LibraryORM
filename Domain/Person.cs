@@ -6,12 +6,13 @@ namespace Domain
 {
     using System;
     using System.Text;
+    using Staff;
 
     /// <summary>
     /// Персона.
     /// </summary>
     /// <typeparam name="TPerson"> Конкретный тип персоны. </typeparam>
-    public abstract class Person<TPerson> : Entity<TPerson>, IEquatable<TPerson>
+    public abstract class Person<TPerson> : Entity<TPerson>
         where TPerson : Person<TPerson>
     {
         /// <summary>
@@ -69,20 +70,11 @@ namespace Domain
         /// <inheritdoc/>
         public override string ToString()
         {
-            var buffer = new StringBuilder();
-            _ = buffer.Append(this.FullName);
-
-            if (this.DateBirth is not null)
-            {
-                _ = buffer.Append($" Год рождения: {this.DateBirth}");
-            }
-
-            if (this.DateDeath is not null)
-            {
-                _ = buffer.Append($" Год смерти: {this.DateDeath}");
-            }
-
-            return buffer.ToString();
+            return new StringBuilder()
+                .Append(this.FullName)
+                .AppendIf(this.DateBirth is not null, $" Год рождения: {this.DateBirth}")
+                .AppendIf(this.DateDeath is not null, $" Год смерти: {this.DateDeath}")
+                .ToString();
         }
     }
 }

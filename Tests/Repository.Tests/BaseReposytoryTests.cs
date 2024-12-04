@@ -20,15 +20,13 @@ namespace Repository.Tests
         where TRepository : BaseRepository<TEntity>
         where TEntity : class, IEntity<TEntity>
     {
-        private static readonly string ConnectionString = @"Data Source=.\tests.db";
-
         private readonly ServiceProvider serviceProvider;
 
         protected BaseReposytoryTests()
         {
             this.serviceProvider = new ServiceCollection()
                 .AddDbContext<DataContext>(
-                    builder => builder.UseSqlite(ConnectionString)
+                    builder => builder.UseSqlite(@"Data Source=.\tests.db")
                         .EnableDetailedErrors()
                         .EnableSensitiveDataLogging()
                         .LogTo(Console.WriteLine, LogLevel.Error))

@@ -39,9 +39,15 @@ namespace Domain
         /// <returns><see langword="true"/> если добавили, иначе <see langword="false"/>.</returns>
         public bool AddBook(Book book)
         {
-            return book is not null
-                && this.Books.Add(book)
-                && (book.Shelf = this) is not null;
+            var result = book is not null
+                && this.Books.Add(book);
+
+            if (result)
+            {
+                book!.Shelf = this;
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -51,22 +57,26 @@ namespace Domain
         /// <returns><see langword="true"/> если убрали, иначе <see langword="false"/>.</returns>
         public bool RemoveBook(Book book)
         {
-            return book is not null
-                && this.Books.Remove(book)
-                && (book.Shelf = null) is null;
+            var result = book is not null
+                && this.Books.Remove(book);
+
+            if (result)
+            {
+                book!.Shelf = null;
+            }
+
+            return result;
         }
 
         /// <inheritdoc />
         public override bool Equals(Shelf? other)
         {
-            return ReferenceEquals(this, other) || ((other is not null) && (this.Name == other.Name));
+            return ReferenceEquals(this, other)
+                || ((other is not null) && (this.Name == other.Name));
         }
 
         /// <inheritdoc />
-        public override bool Equals(object? obj)
-        {
-            return this.Equals(obj as Shelf);
-        }
+        public override bool Equals(object? obj) => this.Equals(obj as Shelf);
 
         /// <inheritdoc/>
         public override int GetHashCode() => this.Name.GetHashCode();
