@@ -21,6 +21,9 @@ namespace DataAccessLayer.Configurations
             _ = builder.Property(shelf => shelf.Name)
                 .IsRequired()
                 .HasComment("Название полки");
+
+            _ = builder.HasIndex(shelf => shelf.Name)
+                .IsUnique();
         }
     }
 }

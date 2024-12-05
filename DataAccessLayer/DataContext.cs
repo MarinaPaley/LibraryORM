@@ -17,6 +17,9 @@ namespace DataAccessLayer
 
         private static readonly DbContextOptions<DataContext> Options = new DbContextOptionsBuilder<DataContext>()
             .UseNpgsql(ConnectionString)
+            .EnableDetailedErrors()
+            .EnableSensitiveDataLogging()
+            .LogTo(System.Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Error)
             .Options;
 
         /// <summary>
@@ -39,17 +42,17 @@ namespace DataAccessLayer
         /// <summary>
         /// Авторы.
         /// </summary>
-        public DbSet<Author> Authors { get; } = default!;
+        public DbSet<Author> Authors { get; init; }
 
         /// <summary>
         /// Книги.
         /// </summary>
-        public DbSet<Book> Books { get; } = default!;
+        public DbSet<Book> Books { get; init; }
 
         /// <summary>
         /// Полки.
         /// </summary>
-        public DbSet<Shelf> Shelves { get; } = default!;
+        public DbSet<Shelf> Shelves { get; init; }
 
         /// <inheritdoc/>
         protected override void OnModelCreating(ModelBuilder modelBuilder)

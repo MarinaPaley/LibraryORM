@@ -11,7 +11,7 @@ namespace Domain
     /// <summary>
     /// Книга.
     /// </summary>
-    public sealed class Book : IEquatable<Book>
+    public sealed class Book : Entity<Book>, IEquatable<Book>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Book"/>.
@@ -27,8 +27,6 @@ namespace Domain
         /// <exception cref="ArgumentOutOfRangeException"> Если авторы <see langword="null"/>. </exception>
         public Book(string title, int pages, string ibsn, ISet<Author> authors, Shelf? shelf = null)
         {
-            this.Id = Guid.Empty;
-
             this.Title = title.TrimOrNull() ?? throw new ArgumentNullException(nameof(title));
 
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pages);
@@ -77,11 +75,6 @@ namespace Domain
 #pragma warning restore CS8618
 
         /// <summary>
-        /// Идентификатор.
-        /// </summary>
-        public Guid Id { get; }
-
-        /// <summary>
         /// Название.
         /// </summary>
         public string Title { get; }
@@ -107,7 +100,7 @@ namespace Domain
         public ISet<Author> Authors { get; } = new HashSet<Author>();
 
         /// <inheritdoc/>
-        public bool Equals(Book? other)
+        public override bool Equals(Book? other)
         {
             return ReferenceEquals(this, other) || ((other is not null) && (this.Title == other.Title));
         }
