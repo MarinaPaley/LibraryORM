@@ -1,6 +1,7 @@
 ﻿// <copyright file="AuthorRepository.cs" company="Васильева Марина Алексеевна">
 // Copyright (c) Васильева Марина Алексеевна 2024. Library.
 // </copyright>
+
 namespace Repository
 {
     using System;
@@ -8,6 +9,7 @@ namespace Repository
     using System.Linq;
     using DataAccessLayer;
     using Domain;
+    using Microsoft.EntityFrameworkCore;
 
     /// <summary>
     /// Репозиторий для класса <see cref="Domain.Author"/>.
@@ -30,21 +32,39 @@ namespace Repository
         /// Получает всех авторов.
         /// </summary>
         /// <returns>Авторы.</returns>
-        public override IQueryable<Author> GetAll() => this.DataContext.Authors;
+        public override IQueryable<Author> GetAll()
+        {
+            return this.DataContext.Authors
+                .Include(author => author.Books);
+        }
 
         /// <summary>
         /// Найти идентификатор автора по его фамилии.
         /// </summary>
         /// <param name="familyName">Фамилия автора.</param>
         /// <returns>Идентификатор.</returns>
-        public Guid? GetIdByName(string familyName) => this.Find(author => author.FullName.FamilyName == familyName)?.Id;
+        public Guid? GetIdByName(string familyName)
+        {
+            return this.Find(author => author.FullName.FamilyName == familyName)?.Id;
+        }
 
         /// <summary>
         /// Получить список книг автора по идентификатору.
         /// </summary>
         /// <param name="id">Идентификатор.</param>
         /// <returns>Книги автора.</returns>
-        public ISet<Book>? GetBooksById(Guid id) => this.Get(id)?.Books;
+        public ISet<Book> GetBooksByAuthorId(Guid id) => this.Get(id)?.Books ?? new HashSet<Book>();
 
+        /// <summary>
+        /// Показать соавторов указанного автора.
+        /// </summary>
+        /// <param name="id">Идентификатор автора.</param>
+        /// <returns>Соавторов данного автора.</returns>
+        public ISet<Author> GetCoAuthors(Guid id)
+        {
+            return this.GetBooksByAuthorId(id)
+                .SelectMany(book => book.Authors)
+                .ToHashSet();
+        }
     }
 }

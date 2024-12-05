@@ -4,9 +4,11 @@
 namespace Repository
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using DataAccessLayer;
     using Domain;
+    using Microsoft.EntityFrameworkCore;
 
     /// <summary>
     /// Репозиторий для класса <see cref="Domain.Book"/>.
@@ -56,6 +58,29 @@ namespace Repository
         /// Получает все книги.
         /// </summary>
         /// <returns>Книги.</returns>
-        public override IQueryable<Book> GetAll() => this.DataContext.Books;
+        public override IQueryable<Book> GetAll()
+        {
+            return this.DataContext.Books
+                .Include(book => book.Authors)
+                    .ThenInclude(author => author.Books)
+                .Include(book => book.Shelf);
+        }
+
+        /// <summary>
+        /// Получает список авторов по идентификатору.
+        /// </summary>
+        /// <param name="id">Идентификатор книги.</param>
+        /// <returns>Список авторов.</returns>
+        public ISet<Author>? GetAuthors(Guid id) => this.Find(book => book.Id == id)?.Authors;
+
+        /// <summary>
+        /// Показать все книги, написанные авторами выбранной книги.
+        /// </summary>
+        /// <param name="id">Идентификатор книги.</param>
+        /// <returns>Множество книг авторов данной книги.</returns>
+        public ISet<Book>? GetAllBooksCoAuthors(Guid id) =>
+            this.GetAuthors(id)?
+            .SelectMany(author => author.Books)
+            .ToHashSet();
     }
 }

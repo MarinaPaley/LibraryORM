@@ -91,7 +91,7 @@ namespace Repository.Tests
             // act
             _ = this.Repository.Delete(shelf);
 
-            // arrange
+            // assert
             var result = this.DataContext.Find<Shelf>(shelf.Id);
 
             Assert.That(result, Is.Null);
