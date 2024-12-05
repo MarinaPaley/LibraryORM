@@ -21,7 +21,7 @@ namespace Demo
             try
             {
                 var shelfRepository = new ShelfRepository(dataContext);
-                _ = shelfRepository.Create(new Shelf("Полка"));
+                _ = shelfRepository.Create(new Shelf("Вторая"));
 
                 foreach (var shelf in shelfRepository.GetAll())
                 {

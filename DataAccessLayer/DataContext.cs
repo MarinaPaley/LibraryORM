@@ -42,12 +42,12 @@ namespace DataAccessLayer
         /// <summary>
         /// Авторы.
         /// </summary>
-        public DbSet<Author> Authors { get; set; }
+        public DbSet<Author> Authors { get; init; }
 
         /// <summary>
         /// Книги.
         /// </summary>
-        public DbSet<Book> Books { get; set; }
+        public DbSet<Book> Books { get; init; }
 
         /// <summary>
         /// Полки.
