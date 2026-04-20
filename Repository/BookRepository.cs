@@ -56,18 +56,6 @@ namespace Repository
         }
 
         /// <summary>
-        /// Получает все книги.
-        /// </summary>
-        /// <returns>Книги.</returns>
-        public override IQueryable<Book> GetAll()
-        {
-            return this.DataContext.Books
-                .Include(book => book.Authors)
-                    .ThenInclude(author => author.Books)
-                .Include(book => book.Shelf);
-        }
-
-        /// <summary>
         /// Получает список авторов по идентификатору.
         /// </summary>
         /// <param name="id">Идентификатор книги.</param>
@@ -83,5 +71,17 @@ namespace Repository
             this.GetAuthors(id)?
             .SelectMany(author => author.Books)
             .ToHashSet();
+
+        /// <summary>
+        /// Получает все книги.
+        /// </summary>
+        /// <returns>Книги.</returns>
+        protected override IQueryable<Book> GetAll()
+        {
+            return this.DataContext.Books
+                .Include(book => book.Authors)
+                    .ThenInclude(author => author.Books)
+                .Include(book => book.Shelf);
+        }
     }
 }

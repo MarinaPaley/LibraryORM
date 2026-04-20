@@ -5,6 +5,7 @@
 namespace Repository.Abstract
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
     using DataAccessLayer;
@@ -15,6 +16,7 @@ namespace Repository.Abstract
     /// </summary>
     /// <typeparam name="TEntity"> Целевой тип сущности. </typeparam>
     public abstract class BaseRepository<TEntity>
+        : IRepository<TEntity>
         where TEntity : class, IEntity<TEntity>
     {
         /// <summary>
@@ -23,20 +25,16 @@ namespace Repository.Abstract
         /// <param name="dataContext">Контекст доступа к данным.</param>
         protected BaseRepository(DataContext dataContext)
         {
-            this.DataContext = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
+            this.DataContext = dataContext
+                ?? throw new ArgumentNullException(nameof(dataContext));
         }
 
         /// <summary>
         /// Контекст доступа к данным.
         /// </summary>
-        public DataContext DataContext { get; }
+        protected DataContext DataContext { get; }
 
-        /// <summary>
-        /// Создает полку.
-        /// </summary>
-        /// <param name="entity">Сущность.</param>
-        /// <param name="saveNow">Надо ли сохранять сущность после изменения. </param>
-        /// <returns>Контекст доступа к сущности.</returns>
+        /// <inheritdoc/>
         public TEntity Create(TEntity entity, bool saveNow = true)
         {
             var result = this.DataContext.Add(entity).Entity;
@@ -44,52 +42,34 @@ namespace Repository.Abstract
             return result;
         }
 
-        /// <summary>
-        /// Удаляет полку.
-        /// </summary>
-        /// <param name="entity"> Сущность.</param>
-        /// <param name="saveNow"> Надо ли сохранять сущность после изменения. </param>
-        /// <returns> Измененный контекст доступа к сущности.</returns>
-        public TEntity Delete(TEntity entity, bool saveNow = true)
+        /// <inheritdoc/>
+        public bool Delete(TEntity entity, bool saveNow = true)
         {
-            var result = this.DataContext.Remove(entity).Entity;
-            _ = this.Save(saveNow);
-            return result;
+            try
+            {
+                _ = this.DataContext.Remove(entity);
+                return this.Save(saveNow) != 0;
+            }
+            catch
+            {
+                // @TODO: Что-то залогировать через логгер (добавить!).
+                return false;
+            }
         }
 
-        /// <summary>
-        /// Поиск множества сущностей по предикату (<paramref name="predicate"/>).
-        /// </summary>
-        /// <param name="predicate"> Предикат, которому должна удовлетворять сушность.</param>
-        /// <returns> Множество (<see cref="IQueryable{TEntity}"/>) всех сущностей.</returns>
-        public IQueryable<TEntity> Filter(Expression<Func<TEntity, bool>> predicate) => this.GetAll().Where(predicate);
+        /// <inheritdoc/>
+        public IEnumerable<TEntity> Filter(Expression<Func<TEntity, bool>>? predicate = null)
+            => predicate is not null
+            ? this.GetAll().Where(predicate)
+            : this.GetAll();
 
-        /// <summary>
-        /// Поиск полки по предикату (<paramref name="predicate"/>).
-        /// </summary>
-        /// <param name="predicate">Предикат, которому должна удовлетворять сущность.</param>
-        /// <returns>Сущность или <see langword="null"/>.</returns>
+        /// <inheritdoc/>
         public TEntity? Find(Expression<Func<TEntity, bool>> predicate) => this.GetAll().FirstOrDefault(predicate);
 
-        /// <summary>
-        /// Получение конкретной сущности по её идентификатору.
-        /// </summary>
-        /// <param name="id">Идентификатор сущности.</param>
-        /// <returns>Сушность.</returns>
+        /// <inheritdoc/>
         public TEntity? Get(Guid id) => this.GetAll().SingleOrDefault(entity => entity.Id == id);
 
-        /// <summary>
-        /// Получение всех сущностей.
-        /// </summary>
-        /// <returns> Множество (<see cref="IQueryable{TEntity}"/>) всех сущностей.</returns>
-        public abstract IQueryable<TEntity> GetAll();
-
-        /// <summary>
-        /// Изменяет Сущность.
-        /// </summary>
-        /// <param name="entity"> Сушность.</param>
-        /// <param name="saveNow"> Надо ли сохранять сущность после изменения. </param>
-        /// <returns> Измененный контекст доступа к сущности.</returns>
+        /// <inheritdoc/>
         public TEntity Update(TEntity entity, bool saveNow = true)
         {
             var result = this.DataContext.Update(entity).Entity;
@@ -98,10 +78,16 @@ namespace Repository.Abstract
         }
 
         /// <summary>
+        /// Получение всех сущностей.
+        /// </summary>
+        /// <returns> Множество (<see cref="IQueryable{TEntity}"/>) всех сущностей.</returns>
+        protected abstract IQueryable<TEntity> GetAll();
+
+        /// <summary>
         /// Сохраняет контекст в БД.
         /// </summary>
         /// <param name="saveNow"> Надо ли сохранять сущность после изменения. </param>
-        /// <returns> Количество измененных сущностей.</returns>
+        /// <returns> Количество измененных сущностей. </returns>
         private int Save(bool saveNow = true)
         {
             return saveNow

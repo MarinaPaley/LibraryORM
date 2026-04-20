@@ -8,6 +8,7 @@ namespace Repository
     using System.Linq;
     using DataAccessLayer;
     using Domain;
+    using Microsoft.EntityFrameworkCore;
     using Repository.Abstract;
 
     /// <summary>
@@ -27,16 +28,12 @@ namespace Repository
         {
         }
 
-        /// <inheritdoc/>
-        // @NOTE: IgnoreAutoIncludes()
-        public override IQueryable<Shelf> GetAll() => this.DataContext.Shelves;
-
         /// <summary>
         /// Показать количество книг, стоящих на данной полке.
         /// </summary>
         /// <param name="id">Идентификатор полки.</param>
         /// <returns> Количество книг.</returns>
-        public int? GetCountBooks(Guid id) => this.Get(id)?.Books.Count;
+        public int? GetBooksCount(Guid id) => this.Get(id)?.Books.Count;
 
         /// <summary>
         /// Показать количество книг, стоящих на полке.
@@ -48,7 +45,7 @@ namespace Repository
             var id = this.GetIdByName(name);
 
             return id.HasValue
-                ? this.GetCountBooks(id.Value)
+                ? this.GetBooksCount(id.Value)
                 : null;
         }
 
@@ -58,5 +55,9 @@ namespace Repository
         /// <param name="name">Название полки.</param>
         /// <returns>Идентификатор.</returns>
         public Guid? GetIdByName(string name) => this.Find(shelf => shelf.Name == name)?.Id;
+
+        /// <inheritdoc/>
+        // @NOTE: IgnoreAutoIncludes()
+        protected override IQueryable<Shelf> GetAll() => this.DataContext.Shelves;
     }
 }
