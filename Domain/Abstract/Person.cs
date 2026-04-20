@@ -5,6 +5,7 @@
 namespace Domain.Abstract
 {
     using System;
+    using System.Globalization;
     using System.Text;
     using Domain;
     using Staff;
@@ -34,6 +35,8 @@ namespace Domain.Abstract
             this.DateBirth = dateBirth;
             this.DateDeath = dateDeath;
         }
+
+        private CultureInfo culture = new ("ru-RU");
 
         /// <summary>
         /// Полное имя.
@@ -73,8 +76,8 @@ namespace Domain.Abstract
         {
             return new StringBuilder()
                 .Append(this.FullName)
-                .AppendIf(this.DateBirth is not null, $" Год рождения: {this.DateBirth}")
-                .AppendIf(this.DateDeath is not null, $" Год смерти: {this.DateDeath}")
+                .AppendIf(this.DateBirth is not null, $" Год рождения: {this.DateBirth!.Value.ToString("dd.MM.yyyy", this.culture)}")
+                .AppendIf(this.DateDeath is not null, $" Год смерти: {this.DateDeath!.Value.ToString("dd.MM.yyyy", this.culture)}")
                 .ToString();
         }
     }
