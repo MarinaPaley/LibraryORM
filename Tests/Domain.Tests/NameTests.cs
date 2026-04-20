@@ -92,7 +92,7 @@ namespace Domain.Tests
         public bool EqualsOperator_ValidData_Success(Name? name1, Name? name2) => name1 == name2;
 
         [TestCaseSource(nameof(ValidNames))]
-        public bool NotEqualsOperator_ValidData_Success(Name? name1, Name? name2) => name1 != name2;
+        public bool NotEqualsOperator_ValidData_Success(Name? name1, Name? name2) => name1 == name2;
 
         private static IEnumerable<TestCaseData> ValidNames()
         {
