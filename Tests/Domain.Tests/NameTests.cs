@@ -1,5 +1,5 @@
-﻿// <copyright file="NameTests.cs" company="Васильева Марина Алексеевна">
-// Copyright (c) Васильева Марина Алексеевна 2024. Library.
+﻿// <copyright file="NameTests.cs" company="Филипченко Марина Алексеевна">
+// Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
 namespace Domain.Tests
@@ -92,7 +92,7 @@ namespace Domain.Tests
         public bool EqualsOperator_ValidData_Success(Name? name1, Name? name2) => name1 == name2;
 
         [TestCaseSource(nameof(ValidNames))]
-        public bool NotEqualsOperator_ValidData_Success(Name? name1, Name? name2) => !(name1 != name2);
+        public bool NotEqualsOperator_ValidData_Success(Name? name1, Name? name2) => name1 != name2;
 
         private static IEnumerable<TestCaseData> ValidNames()
         {

@@ -1,14 +1,14 @@
-﻿// <copyright file="BaseRepository.cs" company="Васильева Марина Алексеевна">
-// Copyright (c) Васильева Марина Алексеевна 2024. Library.
+﻿// <copyright file="BaseRepository.cs" company="Филипченко Марина Алексеевна">
+// Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
-namespace Repository
+namespace Repository.Abstract
 {
     using System;
     using System.Linq;
     using System.Linq.Expressions;
     using DataAccessLayer;
-    using Domain;
+    using Domain.Abstract;
 
     /// <summary>
     /// Базовый класс репозиториев.
@@ -47,9 +47,9 @@ namespace Repository
         /// <summary>
         /// Удаляет полку.
         /// </summary>
-        /// <param name="entity">Сущность.</param>
-        /// <param name="saveNow">Надо ли сохранять сущность после изменения. </param>
-        /// <returns>Измененный контекст доступа к сущности.</returns>
+        /// <param name="entity"> Сущность.</param>
+        /// <param name="saveNow"> Надо ли сохранять сущность после изменения. </param>
+        /// <returns> Измененный контекст доступа к сущности.</returns>
         public TEntity Delete(TEntity entity, bool saveNow = true)
         {
             var result = this.DataContext.Remove(entity).Entity;
@@ -60,8 +60,8 @@ namespace Repository
         /// <summary>
         /// Поиск множества сущностей по предикату (<paramref name="predicate"/>).
         /// </summary>
-        /// <param name="predicate">Предикат, которому должна удовлетворять сушность.</param>
-        /// <returns>Множество (<see cref="IQueryable{TEntity}"/>) всех сущностей.</returns>
+        /// <param name="predicate"> Предикат, которому должна удовлетворять сушность.</param>
+        /// <returns> Множество (<see cref="IQueryable{TEntity}"/>) всех сущностей.</returns>
         public IQueryable<TEntity> Filter(Expression<Func<TEntity, bool>> predicate) => this.GetAll().Where(predicate);
 
         /// <summary>
@@ -87,9 +87,9 @@ namespace Repository
         /// <summary>
         /// Изменяет Сущность.
         /// </summary>
-        /// <param name="entity">Сушность.</param>
-        /// <param name="saveNow">Надо ли сохранять сущность после изменения. </param>
-        /// <returns>Измененный контекст доступа к сущности.</returns>
+        /// <param name="entity"> Сушность.</param>
+        /// <param name="saveNow"> Надо ли сохранять сущность после изменения. </param>
+        /// <returns> Измененный контекст доступа к сущности.</returns>
         public TEntity Update(TEntity entity, bool saveNow = true)
         {
             var result = this.DataContext.Update(entity).Entity;
@@ -100,8 +100,8 @@ namespace Repository
         /// <summary>
         /// Сохраняет контекст в БД.
         /// </summary>
-        /// <param name="saveNow">Надо ли сохранять сущность после изменения. </param>
-        /// <returns>Количество измененных сущностей.</returns>
+        /// <param name="saveNow"> Надо ли сохранять сущность после изменения. </param>
+        /// <returns> Количество измененных сущностей.</returns>
         private int Save(bool saveNow = true)
         {
             return saveNow

@@ -1,8 +1,8 @@
-﻿// <copyright file="Entity.cs" company="Васильева Марина Алексеевна">
-// Copyright (c) Васильева Марина Алексеевна 2024. Library.
+﻿// <copyright file="Entity.cs" company="Филипченко Марина Алексеевна">
+// Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
-namespace Domain
+namespace Domain.Abstract
 {
     using System;
 

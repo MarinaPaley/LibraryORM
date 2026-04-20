@@ -2,7 +2,7 @@
 // Copyright (c) Васильева Марина Алексеевна 2024. Library.
 // </copyright>
 
-namespace Domain
+namespace Domain.Abstract
 {
     using System;
 

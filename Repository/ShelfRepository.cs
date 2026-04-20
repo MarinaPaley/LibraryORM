@@ -1,5 +1,5 @@
-﻿// <copyright file="ShelfRepository.cs" company="Васильева Марина Алексеевна">
-// Copyright (c) Васильева Марина Алексеевна 2024. Library.
+﻿// <copyright file="ShelfRepository.cs" company="Филипченко Марина Алексеевна">
+// Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
 namespace Repository
@@ -8,6 +8,7 @@ namespace Repository
     using System.Linq;
     using DataAccessLayer;
     using Domain;
+    using Repository.Abstract;
 
     /// <summary>
     /// Репозиторий для класса <see cref="Domain.Shelf"/>.
@@ -40,8 +41,8 @@ namespace Repository
         /// <summary>
         /// Показать количество книг, стоящих на полке.
         /// </summary>
-        /// <param name="name">Название полки.</param>
-        /// <returns>Количество книг.</returns>
+        /// <param name="name"> Название полки.</param>
+        /// <returns> Количество книг.</returns>
         public int? GetCountBooks(string name)
         {
             var id = this.GetIdByName(name);

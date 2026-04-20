@@ -1,5 +1,5 @@
-﻿// <copyright file="AuthorRepository.cs" company="Васильева Марина Алексеевна">
-// Copyright (c) Васильева Марина Алексеевна 2024. Library.
+﻿// <copyright file="AuthorRepository.cs" company="Филипченко Марина Алексеевна">
+// Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
 namespace Repository
@@ -10,6 +10,7 @@ namespace Repository
     using DataAccessLayer;
     using Domain;
     using Microsoft.EntityFrameworkCore;
+    using Repository.Abstract;
 
     /// <summary>
     /// Репозиторий для класса <see cref="Domain.Author"/>.
@@ -31,7 +32,7 @@ namespace Repository
         /// <summary>
         /// Получает всех авторов.
         /// </summary>
-        /// <returns>Авторы.</returns>
+        /// <returns> Авторы.</returns>
         public override IQueryable<Author> GetAll()
         {
             return this.DataContext.Authors
@@ -41,8 +42,8 @@ namespace Repository
         /// <summary>
         /// Найти идентификатор автора по его фамилии.
         /// </summary>
-        /// <param name="familyName">Фамилия автора.</param>
-        /// <returns>Идентификатор.</returns>
+        /// <param name="familyName"> Фамилия автора.</param>
+        /// <returns> Идентификатор.</returns>
         public Guid? GetIdByName(string familyName)
         {
             return this.Find(author => author.FullName.FamilyName == familyName)?.Id;
@@ -58,8 +59,8 @@ namespace Repository
         /// <summary>
         /// Показать соавторов указанного автора.
         /// </summary>
-        /// <param name="id">Идентификатор автора.</param>
-        /// <returns>Соавторов данного автора.</returns>
+        /// <param name="id"> Идентификатор автора.</param>
+        /// <returns> Соавторов данного автора.</returns>
         public ISet<Author> GetCoAuthors(Guid id)
         {
             return this.GetBooksByAuthorId(id)

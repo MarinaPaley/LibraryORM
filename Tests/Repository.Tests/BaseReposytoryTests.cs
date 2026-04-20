@@ -6,10 +6,11 @@ namespace Repository.Tests
 {
     using System;
     using DataAccessLayer;
-    using Domain;
+    using Domain.Abstract;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using Repository.Abstract;
 
     /// <summary>
     /// Базовый тип тестов для репозиториев.
