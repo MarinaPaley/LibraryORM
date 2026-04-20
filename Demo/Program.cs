@@ -1,5 +1,5 @@
-﻿// <copyright file="Program.cs" company="Васильева Марина Алексеевна">
-// Copyright (c) Васильева Марина Алексеевна 2024. Library.
+﻿// <copyright file="Program.cs" company="Филипченко Марина Алексеевна">
+// Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
 namespace Demo
@@ -21,7 +21,7 @@ namespace Demo
             try
             {
                 var shelfRepository = new ShelfRepository(dataContext);
-                _ = shelfRepository.Create(new Shelf("Вторая"));
+               // _ = shelfRepository.Create(new Shelf("Вторая"));
 
                 foreach (var shelf in shelfRepository.GetAll())
                 {

@@ -1,5 +1,5 @@
-﻿// <copyright file="BookConfiguration.cs" company="Васильева Марина Алексеевна">
-// Copyright (c) Васильева Марина Алексеевна 2024. Library.
+﻿// <copyright file="BookConfiguration.cs" company="Филипченко Марина Алексеевна">
+// Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
 namespace DataAccessLayer.Configurations

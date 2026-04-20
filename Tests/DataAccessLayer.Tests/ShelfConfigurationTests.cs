@@ -1,9 +1,10 @@
-﻿// <copyright file="ShelfConfigurationTests.cs" company="Васильева Марина Алексеевна">
-// Copyright (c) Васильева Марина Алексеевна 2024. Library.
+﻿// <copyright file="ShelfConfigurationTests.cs" company="Филипченко Марина Алексеевна">
+// Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
 namespace DataAccessLayer.Tests
 {
+    using DataAccessLayer.Tests.Abstract;
     using Domain;
     using NUnit.Framework;
 

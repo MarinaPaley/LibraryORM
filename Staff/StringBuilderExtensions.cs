@@ -1,5 +1,5 @@
-﻿// <copyright file="StringBuilderExtensions.cs" company="Васильева Марина Алексеевна">
-// Copyright (c) Васильева Марина Алексеевна 2024. Library.
+﻿// <copyright file="StringBuilderExtensions.cs" company="Филипченко Марина Алексеевна">
+// Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
 namespace Staff
@@ -7,7 +7,7 @@ namespace Staff
     using System.Text;
 
     /// <summary>
-    /// 
+    /// Класс-расшмрение для работы со построителями строк.
     /// </summary>
     public static class StringBuilderExtensions
     {

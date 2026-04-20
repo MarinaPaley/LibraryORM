@@ -1,11 +1,13 @@
-﻿// <copyright file="Person.cs" company="Васильева Марина Алексеевна">
-// Copyright (c) Васильева Марина Алексеевна 2024. Library.
+﻿// <copyright file="Person.cs" company="Филипченко Марина Алексеевна">
+// Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
-namespace Domain
+namespace Domain.Abstract
 {
     using System;
+    using System.Globalization;
     using System.Text;
+    using Domain;
     using Staff;
 
     /// <summary>
@@ -15,6 +17,8 @@ namespace Domain
     public abstract class Person<TPerson> : Entity<TPerson>
         where TPerson : Person<TPerson>
     {
+        private readonly CultureInfo culture = new ("ru-RU");
+
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Person{TPerson}"/>.
         /// </summary>
@@ -70,10 +74,18 @@ namespace Domain
         /// <inheritdoc/>
         public override string ToString()
         {
+            var dateBirth = this.DateBirth.HasValue
+                ? $" Год рождения: {this.DateBirth.Value.ToString("dd.MM.yyyy", this.culture)}"
+                : string.Empty;
+
+            var dateDeath = this.DateDeath.HasValue
+                ? $" Год смерти: {this.DateDeath.Value.ToString("dd.MM.yyyy", this.culture)}"
+                : string.Empty;
+
             return new StringBuilder()
                 .Append(this.FullName)
-                .AppendIf(this.DateBirth is not null, $" Год рождения: {this.DateBirth}")
-                .AppendIf(this.DateDeath is not null, $" Год смерти: {this.DateDeath}")
+                .AppendIf(this.DateBirth is not null, dateBirth)
+                .AppendIf(this.DateDeath is not null, dateDeath)
                 .ToString();
         }
     }

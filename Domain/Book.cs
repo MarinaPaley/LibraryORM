@@ -1,11 +1,12 @@
-﻿// <copyright file="Book.cs" company="Васильева Марина Алексеевна">
-// Copyright (c) Васильева Марина Алексеевна 2024. Library.
+﻿// <copyright file="Book.cs" company="Филипченко Марина Алексеевна">
+// Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
 namespace Domain
 {
     using System;
     using System.Collections.Generic;
+    using Domain.Abstract;
     using Staff;
 
     /// <summary>
@@ -18,7 +19,7 @@ namespace Domain
         /// </summary>
         /// <param name="title"> Название. </param>
         /// <param name="pages"> Количество страниц. </param>
-        /// <param name="ibsn"> Код ibsn. </param>
+        /// <param name="ibsn"> Код <c>IBSN</c>. </param>
         /// <param name="authors"> Авторы. </param>
         /// <param name="shelf"> Полка. </param>
         /// <exception cref="ArgumentNullException">Если название книги или код <see langword="null"/>. </exception>
@@ -52,14 +53,19 @@ namespace Domain
         /// </summary>
         /// <param name="title"> Название.</param>
         /// <param name="pages"> Количество страниц. </param>
-        /// <param name="ibsn"> Код IBSN. </param>
+        /// <param name="ibsn"> Код <c>IBSN</c>. </param>
         /// <param name="authors">Авторы.</param>
         /// <param name="shelf">Полка. </param>
         /// <exception cref="ArgumentNullException">Если название книги или код <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException"> Если количество страниц меньше или равно нулю.</exception>
         /// <exception cref="ArgumentOutOfRangeException"> Если полка <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException"> Если авторы <see langword="null"/>.</exception>
-        public Book(string title, int pages, string ibsn, Shelf? shelf = null, params Author[] authors)
+        public Book(
+            string title,
+            int pages,
+            string ibsn,
+            Shelf? shelf = null,
+            params Author[] authors)
             : this(title, pages, ibsn, new HashSet<Author>(authors), shelf)
         {
         }

@@ -1,5 +1,5 @@
-﻿// <copyright file="ShelfRepository.cs" company="Васильева Марина Алексеевна">
-// Copyright (c) Васильева Марина Алексеевна 2024. Library.
+﻿// <copyright file="ShelfRepository.cs" company="Филипченко Марина Алексеевна">
+// Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
 namespace Repository
@@ -8,6 +8,8 @@ namespace Repository
     using System.Linq;
     using DataAccessLayer;
     using Domain;
+    using Microsoft.EntityFrameworkCore;
+    using Repository.Abstract;
 
     /// <summary>
     /// Репозиторий для класса <see cref="Domain.Shelf"/>.
@@ -26,28 +28,24 @@ namespace Repository
         {
         }
 
-        /// <inheritdoc/>
-        // @NOTE: IgnoreAutoIncludes()
-        public override IQueryable<Shelf> GetAll() => this.DataContext.Shelves;
-
         /// <summary>
         /// Показать количество книг, стоящих на данной полке.
         /// </summary>
         /// <param name="id">Идентификатор полки.</param>
         /// <returns> Количество книг.</returns>
-        public int? GetCountBooks(Guid id) => this.Get(id)?.Books.Count;
+        public int? GetBooksCount(Guid id) => this.Get(id)?.Books.Count;
 
         /// <summary>
         /// Показать количество книг, стоящих на полке.
         /// </summary>
-        /// <param name="name">Название полки.</param>
-        /// <returns>Количество книг.</returns>
+        /// <param name="name"> Название полки.</param>
+        /// <returns> Количество книг.</returns>
         public int? GetCountBooks(string name)
         {
             var id = this.GetIdByName(name);
 
             return id.HasValue
-                ? this.GetCountBooks(id.Value)
+                ? this.GetBooksCount(id.Value)
                 : null;
         }
 
@@ -57,5 +55,9 @@ namespace Repository
         /// <param name="name">Название полки.</param>
         /// <returns>Идентификатор.</returns>
         public Guid? GetIdByName(string name) => this.Find(shelf => shelf.Name == name)?.Id;
+
+        /// <inheritdoc/>
+        // @NOTE: IgnoreAutoIncludes()
+        protected override IQueryable<Shelf> GetAll() => this.DataContext.Shelves;
     }
 }

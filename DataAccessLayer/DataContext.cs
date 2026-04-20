@@ -1,5 +1,5 @@
-﻿// <copyright file="DataContext.cs" company="Васильева Марина Алексеевна">
-// Copyright (c) Васильева Марина Алексеевна 2024. Library.
+﻿// <copyright file="DataContext.cs" company="Филипченко Марина Алексеевна">
+// Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
 namespace DataAccessLayer
@@ -13,23 +13,6 @@ namespace DataAccessLayer
     /// </summary>
     public sealed class DataContext : DbContext
     {
-        private static readonly string ConnectionString = "User ID=postgres;Password=1;Host=localhost;Port=5432;Database=Library;";
-
-        private static readonly DbContextOptions<DataContext> Options = new DbContextOptionsBuilder<DataContext>()
-            .UseNpgsql(ConnectionString)
-            .EnableDetailedErrors()
-            .EnableSensitiveDataLogging()
-            .LogTo(System.Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Error)
-            .Options;
-
-        /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="DataContext"/>.
-        /// </summary>
-        public DataContext()
-            : this(Options)
-        {
-        }
-
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="DataContext"/>.
         /// </summary>

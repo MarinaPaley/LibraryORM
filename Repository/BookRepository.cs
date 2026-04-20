@@ -1,5 +1,5 @@
-﻿// <copyright file="BookRepository.cs" company="Васильева Марина Алексеевна">
-// Copyright (c) Васильева Марина Алексеевна 2024. Library.
+﻿// <copyright file="BookRepository.cs" company="Филипченко Марина Алексеевна">
+// Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 namespace Repository
 {
@@ -9,6 +9,7 @@ namespace Repository
     using DataAccessLayer;
     using Domain;
     using Microsoft.EntityFrameworkCore;
+    using Repository.Abstract;
 
     /// <summary>
     /// Репозиторий для класса <see cref="Domain.Book"/>.
@@ -18,8 +19,8 @@ namespace Repository
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="BookRepository"/>.
         /// </summary>
-        /// <param name="dataContext">Контекст доступа к данным.</param>
-        /// /// <exception cref="ArgumentNullException">
+        /// <param name="dataContext"> Контекст доступа к данным.</param>
+        /// <exception cref="ArgumentNullException">
         /// В случае если <paramref name="dataContext"/> – <see langword="null"/>.
         /// </exception>
         public BookRepository(DataContext dataContext)
@@ -55,18 +56,6 @@ namespace Repository
         }
 
         /// <summary>
-        /// Получает все книги.
-        /// </summary>
-        /// <returns>Книги.</returns>
-        public override IQueryable<Book> GetAll()
-        {
-            return this.DataContext.Books
-                .Include(book => book.Authors)
-                    .ThenInclude(author => author.Books)
-                .Include(book => book.Shelf);
-        }
-
-        /// <summary>
         /// Получает список авторов по идентификатору.
         /// </summary>
         /// <param name="id">Идентификатор книги.</param>
@@ -82,5 +71,17 @@ namespace Repository
             this.GetAuthors(id)?
             .SelectMany(author => author.Books)
             .ToHashSet();
+
+        /// <summary>
+        /// Получает все книги.
+        /// </summary>
+        /// <returns>Книги.</returns>
+        protected override IQueryable<Book> GetAll()
+        {
+            return this.DataContext.Books
+                .Include(book => book.Authors)
+                    .ThenInclude(author => author.Books)
+                .Include(book => book.Shelf);
+        }
     }
 }
