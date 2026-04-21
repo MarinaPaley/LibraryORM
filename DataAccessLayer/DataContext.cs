@@ -47,6 +47,11 @@ namespace DataAccessLayer
         /// </summary>
         public DbSet<Street> Streets { get; init; }
 
+        /// <summary>
+        /// Адреса.
+        /// </summary>
+        public DbSet<Address> Adresses { get; set; }
+
         /// <inheritdoc/>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

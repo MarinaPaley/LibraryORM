@@ -127,7 +127,7 @@ namespace Domain
         public override string ToString()
         {
             return this.Authors.Count > 0
-                ? $"{this.Title.ToString()} {this.Authors.Join()}"
+                ? $"{this.Title} {this.Authors.Join()}"
                 : this.Title.ToString();
         }
     }

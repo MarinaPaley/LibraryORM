@@ -77,7 +77,7 @@ namespace Repository.Tests
             _ = this.Repository.Delete(city);
 
             // assert
-            var result = this.DataContext.Find<Book>(city.Id);
+            var result = this.DataContext.Find<City>(city.Id);
 
             Assert.That(result, Is.Null);
         }
