@@ -18,9 +18,14 @@ namespace DataAccessLayer.Configurations
         {
             _ = builder.HasKey(book => book.Id);
 
-            _ = builder.Property(book => book.Title)
-                .IsRequired()
-                .HasComment("Название книги");
+            _ = builder.OwnsOne(book => book.Title, titleBuilder =>
+            {
+                titleBuilder.Property(t => t.Value)
+                    .HasColumnName("Title")
+                    .IsRequired()
+                    .HasComment("Название книги")
+                    .HasMaxLength(200);
+            });
 
             _ = builder.Property(book => book.Pages)
                 .IsRequired()

@@ -1,5 +1,5 @@
-﻿// <copyright file="BookRepositoryTests.cs" company="Васильева Марина Алексеевна">
-// Copyright (c) Васильева Марина Алексеевна 2024. Library.
+﻿// <copyright file="BookRepositoryTests.cs" company="Филипченко Марина Алексеевна">
+// Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
 namespace Repository.Tests
@@ -92,7 +92,7 @@ namespace Repository.Tests
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = this.Repository.GetShelf(book.Title);
+            var result = this.Repository.GetShelf(book.Title.Value);
 
             // assert
             Assert.That(result, Is.EqualTo(shelf));
@@ -103,9 +103,12 @@ namespace Repository.Tests
         {
             // arrange
             var title = "Книга";
+
             var book = new Book(title, 100, "1");
+
             _ = this.DataContext.Add(book);
             _ = this.DataContext.SaveChanges();
+
             this.DataContext.ChangeTracker.Clear();
 
             // act

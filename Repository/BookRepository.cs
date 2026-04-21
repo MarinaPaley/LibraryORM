@@ -12,7 +12,7 @@ namespace Repository
     using Repository.Abstract;
 
     /// <summary>
-    /// Репозиторий для класса <see cref="Domain.Book"/>.
+    /// Репозиторий для класса <see cref="Book"/>.
     /// </summary>
     public sealed class BookRepository : BaseRepository<Book>
     {
@@ -33,14 +33,15 @@ namespace Repository
         /// </summary>
         /// <param name="id">Идентификатор.</param>
         /// <returns>Название книги.</returns>
-        public string? GetTitle(Guid id) => this.Find(book => book.Id == id)?.Title;
+        public string? GetTitle(Guid id) => this.Find(book => book.Id == id)?.Title.Value;
 
         /// <summary>
         /// Получает идентификатор по названию книги.
         /// </summary>
-        /// <param name="title">Название книги.</param>
-        /// <returns>Идентификатор.</returns>
-        public Guid? GetId(string title) => this.Find(book => book.Title == title)?.Id;
+        /// <param name="title"> Название книги. </param>
+        /// <returns> Идентификатор. </returns>
+        public Guid? GetId(string title)
+            => this.Find(book => book.Title.Value == title)?.Id;
 
         /// <summary>
         /// Получает полку, на которой стоит книга.

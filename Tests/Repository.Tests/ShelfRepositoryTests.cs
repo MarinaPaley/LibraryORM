@@ -1,5 +1,5 @@
-﻿// <copyright file="ShelfRepositoryTests.cs" company="Васильева Марина Алексеевна">
-// Copyright (c) Васильева Марина Алексеевна 2024. Library.
+﻿// <copyright file="ShelfRepositoryTests.cs" company="Филипченко Марина Алексеевна">
+// Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
 namespace Repository.Tests
@@ -71,12 +71,12 @@ namespace Repository.Tests
             this.DataContext.SaveChanges();
 
             // act
-            shelf.Name = newName;
+            shelf.Name = new Title(newName);
             var result = this.Repository.Update(shelf);
 
             // assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result!.Name, Is.EqualTo(newName));
+            Assert.That(result!.Name.Value, Is.EqualTo(newName));
         }
 
         [Test]

@@ -28,7 +28,7 @@ namespace Domain
         /// <exception cref="ArgumentOutOfRangeException"> Если авторы <see langword="null"/>. </exception>
         public Book(string title, int pages, string ibsn, ISet<Author> authors, Shelf? shelf = null)
         {
-            this.Title = title.TrimOrNull() ?? throw new ArgumentNullException(nameof(title));
+            this.Title = new Title (title);
 
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pages);
             this.Pages = pages;
@@ -83,7 +83,7 @@ namespace Domain
         /// <summary>
         /// Название.
         /// </summary>
-        public string Title { get; }
+        public Title Title { get; }
 
         /// <summary>
         /// Количество страниц.
@@ -127,8 +127,8 @@ namespace Domain
         public override string ToString()
         {
             return this.Authors.Count > 0
-                ? $"{this.Title} {this.Authors.Join()}"
-                : this.Title;
+                ? $"{this.Title.ToString()} {this.Authors.Join()}"
+                : this.Title.ToString();
         }
     }
 }

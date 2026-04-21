@@ -20,6 +20,9 @@ namespace DataAccessLayer.Configurations
 
             _ = builder.Property(shelf => shelf.Name)
                 .IsRequired()
+                .HasConversion(
+                    v => v.Value,
+                    v => new Title(v))
                 .HasComment("Название полки");
 
             _ = builder.HasIndex(shelf => shelf.Name)

@@ -20,13 +20,18 @@ namespace Domain
         /// <param name="name"> Название полки. </param>
         public Shelf(string name)
         {
-            this.Name = name.TrimOrNull() ?? throw new ArgumentNullException(nameof(name));
+            this.Name = new Title(name);
+        }
+
+        [Obsolete("For ORM only")]
+        private Shelf()
+        {
         }
 
         /// <summary>
         /// Название полки.
         /// </summary>
-        public string Name { get; set; }
+        public Title Name { get; set; }
 
         /// <summary>
         ///  Книги.

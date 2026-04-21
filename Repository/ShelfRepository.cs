@@ -54,7 +54,7 @@ namespace Repository
         /// </summary>
         /// <param name="name">Название полки.</param>
         /// <returns>Идентификатор.</returns>
-        public Guid? GetIdByName(string name) => this.Find(shelf => shelf.Name == name)?.Id;
+        public Guid? GetIdByName(string name) => this.Find(shelf => shelf.Name.Value == name)?.Id;
 
         /// <inheritdoc/>
         // @NOTE: IgnoreAutoIncludes()
