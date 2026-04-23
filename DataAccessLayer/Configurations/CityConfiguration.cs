@@ -21,10 +21,15 @@ namespace DataAccessLayer.Configurations
             _ = builder.OwnsOne(city => city.Name, titleBuilder =>
             {
                 titleBuilder.Property(t => t.Value)
-                    .HasColumnName("City")
+                    .HasColumnName("CityName")
                     .IsRequired()
                     .HasComment("Название города")
                     .HasMaxLength(200);
+                titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
+
+                titleBuilder.HasIndex(t => t.Value)
+                    .IsUnique()
+                    .HasDatabaseName("IX_City_Name");
             });
 
             _ = builder.HasMany(city => city.Streets)

@@ -21,10 +21,15 @@ namespace DataAccessLayer.Configurations
             _ = builder.OwnsOne(publisher => publisher.Name, titleBuilder =>
             {
                 titleBuilder.Property(t => t.Value)
-                    .HasColumnName("Name")
+                    .HasColumnName("PublisherName")
                     .IsRequired()
                     .HasComment("Название издательства")
                     .HasMaxLength(200);
+                titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
+
+                titleBuilder.HasIndex(t => t.Value)
+                    .IsUnique()
+                    .HasDatabaseName("IX_Publisher_Name");
             });
 
             _ = builder.HasOne(publisher => publisher.Address)
@@ -32,10 +37,6 @@ namespace DataAccessLayer.Configurations
                 .HasForeignKey("AddressId")
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
-
-            _ = builder.HasIndex(publisher => publisher.Name.Value)
-                .IsUnique()
-                .HasDatabaseName("IX_Publisher_Name");
         }
     }
 }

@@ -41,9 +41,6 @@ namespace DataAccessLayer.Configurations
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            _ = builder.HasIndex(address => new { address.City, address.Street, address.House, address.BuildingSuffix })
-                .IsUnique()
-                .HasDatabaseName("IX_Address_Unique");
         }
     }
 }

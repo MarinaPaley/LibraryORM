@@ -35,7 +35,7 @@ namespace Domain
         /// <summary>
         /// Название города.
         /// </summary>
-        public Title Name { get; }
+        public Title Name { get; set; }
 
         /// <summary>
         /// Улицы.
@@ -52,7 +52,7 @@ namespace Domain
         public override bool Equals(object? obj) => this.Equals(obj as City);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => this.Name.GetHashCode();
+        public override int GetHashCode() => this.Name?.GetHashCode() ?? 0;
 
         /// <inheritdoc/>
         public override string ToString() => this.Name.ToString();

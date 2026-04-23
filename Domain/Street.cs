@@ -55,7 +55,7 @@ namespace Domain
         public override bool Equals(object? obj) => this.Equals(obj as Street);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => this.Name.GetHashCode();
+        public override int GetHashCode() => this.Name?.GetHashCode() ?? 0;
 
         /// <inheritdoc/>
         public override string ToString() => this.Name.ToString();

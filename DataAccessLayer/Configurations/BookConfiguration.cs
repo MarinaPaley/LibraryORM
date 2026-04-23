@@ -21,10 +21,11 @@ namespace DataAccessLayer.Configurations
             _ = builder.OwnsOne(book => book.Title, titleBuilder =>
             {
                 titleBuilder.Property(t => t.Value)
-                    .HasColumnName("Title")
+                    .HasColumnName("TitleName")
                     .IsRequired()
                     .HasComment("Название книги")
                     .HasMaxLength(200);
+                titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
             });
 
             _ = builder.Property(book => book.Pages)

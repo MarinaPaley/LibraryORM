@@ -17,11 +17,10 @@ namespace Domain
         /// </summary>
         /// <param name="name"> Название. </param>
         /// <param name="address"> Адрес. </param>
-        /// <exception cref="ArgumentNullException"> если name или address <see langword="null"/>.</exception>
-        public Publisher(string name, Address address)
+        public Publisher(string name, Address? address = null)
         {
             this.Name = new Title(name);
-            this.Address = address ?? throw new ArgumentNullException(nameof(address));
+            this.Address = address;
         }
 
         [Obsolete("For ORM only")]
@@ -37,7 +36,7 @@ namespace Domain
         /// <summary>
         /// Адрес.
         /// </summary>
-        public Address Address { get; set; }
+        public Address? Address { get; set; }
 
         /// <inheritdoc/>
         public override bool Equals(Publisher? other)

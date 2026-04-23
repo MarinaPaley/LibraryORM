@@ -21,10 +21,11 @@ namespace DataAccessLayer.Configurations
             _ = builder.OwnsOne(street => street.Name, titleBuilder =>
             {
                 titleBuilder.Property(t => t.Value)
-                    .HasColumnName("Street")
+                    .HasColumnName("StreetName")
                     .IsRequired()
                     .HasComment("Название улицы")
                     .HasMaxLength(200);
+                titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
             });
         }
     }

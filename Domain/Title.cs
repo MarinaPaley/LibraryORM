@@ -29,7 +29,7 @@ namespace Domain
         public string Value
         {
             get => this.value;
-            set => this.value = value.TrimOrNull() ?? throw new ArgumentNullException(nameof(value));
+            private set => this.value = value.TrimOrNull() ?? throw new ArgumentNullException(nameof(value));
         }
 
         public static bool operator ==(Title? lha, Title? rha) => Equals(lha, rha);

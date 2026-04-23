@@ -120,7 +120,7 @@ namespace Domain
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return this.Title.GetHashCode();
+            return this.Id.GetHashCode();
         }
 
         /// <inheritdoc/>

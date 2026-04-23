@@ -86,14 +86,18 @@ namespace Domain
                 ? this.BuildingSuffix
                 : string.Empty;
             var apartment = this.Apartment.HasValue
-                ? this.Apartment.ToString()
+                ? $"кв. {this.Apartment}"
                 : string.Empty;
 
             return new StringBuilder()
                 .Append(this.City)
+                .Append(' ')
                 .Append(this.Street)
+                .Append(' ')
                 .Append(this.House)
+                .Append(' ')
                 .Append(buildingHouse)
+                .Append(' ')
                 .Append(apartment)
                 .ToString();
         }
