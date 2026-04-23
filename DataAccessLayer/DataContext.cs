@@ -52,6 +52,11 @@ namespace DataAccessLayer
         /// </summary>
         public DbSet<Address> Adresses { get; set; }
 
+        /// <summary>
+        /// Издательства.
+        /// </summary>
+        public DbSet<Publisher> Publishers { get; set; }
+
         /// <inheritdoc/>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

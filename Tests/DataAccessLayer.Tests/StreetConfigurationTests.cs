@@ -1,4 +1,4 @@
-﻿// <copyright file="AuthorConfigurationTests.cs" company="Филипченко Марина Алексеевна">
+﻿// <copyright file="StreetConfigurationTests.cs" company="Филипченко Марина Алексеевна">
 // Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
@@ -9,28 +9,28 @@ namespace DataAccessLayer.Tests
     using NUnit.Framework;
 
     /// <summary>
-    /// Тесты для <see cref="DataAccessLayer.Configurations.AuthorConfiguration"/>.
+    /// Тесты для <see cref="DataAccessLayer.Configurations.StreetConfiguration"/>.
     /// </summary>
     [TestFixture]
-    internal sealed class AuthorConfigurationTests : BaseConfigurationTests
+    internal sealed class StreetConfigurationTests : BaseConfigurationTests
     {
         [Test]
         public void AddEntityToDatabase_Success()
         {
             // arrange
-            var name = new Name("Толстой", "Лев");
-            var author = new Author(name);
+            var city = new City("Город");
+            var street = new Street("Город", city);
 
             // act
-            _ = this.DataContext.Add(author);
+            _ = this.DataContext.Add(street);
             _ = this.DataContext.SaveChanges(); // <-- если что-то плохо, то тут БУМ!
             this.DataContext.ChangeTracker.Clear();
 
             // assert
-            var result = this.DataContext.Find<Author>(author.Id);
+            var result = this.DataContext.Find<Street>(street.Id);
 
             Assert.That(result, Is.Not.Null);
-            Assert.That(result!.FullName, Is.EqualTo(author.FullName));
+            Assert.That(result!.Name, Is.EqualTo(street.Name));
         }
     }
 }
