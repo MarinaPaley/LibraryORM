@@ -1,5 +1,5 @@
-﻿// <copyright file="AuthorRepositotyTests.cs" company="Васильева Марина Алексеевна">
-// Copyright (c) Васильева Марина Алексеевна 2024. Library.
+﻿// <copyright file="AuthorRepositotyTests.cs" company="Филипченко Марина Алексеевна">
+// Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
 namespace Repository.Tests
@@ -30,7 +30,8 @@ namespace Repository.Tests
         {
             // arrange
             var name = new Name("Толстой", "Лев");
-            var author = new Author(name);
+            var person = new Person(name);
+            var author = new Author(person);
 
             // act
             _ = this.Repository.Create(author);
@@ -46,18 +47,19 @@ namespace Repository.Tests
         {
             // arrange
             var name = new Name("Толстой", "Лев");
-            var author = new Author(name);
+            var person = new Person(name);
+            var author = new Author(person);
             _ = this.DataContext.Add(author);
             _ = this.DataContext.SaveChanges();
 
             // act
-            author.DateBirth = new DateOnly(1828, 09, 28);
+            author.Person.DateBirth = new DateOnly(1828, 09, 28);
             _ = this.Repository.Update(author);
 
             // assert
-            var result = this.DataContext.Find<Author>(author.Id)?.DateBirth;
+            var result = this.DataContext.Find<Author>(author.Id)?.Person.DateBirth;
 
-            Assert.That(result, Is.EqualTo(author.DateBirth));
+            Assert.That(result, Is.EqualTo(author.Person.DateBirth));
         }
 
         [Test]
@@ -65,7 +67,8 @@ namespace Repository.Tests
         {
             // arrange
             var name = new Name("Толстой", "Лев");
-            var author = new Author(name);
+            var person = new Person(name);
+            var author = new Author(person);
             _ = this.DataContext.Add(author);
             _ = this.DataContext.SaveChanges();
 
@@ -86,9 +89,9 @@ namespace Repository.Tests
 
             var authors = new[]
             {
-                new Author(new Name(familyName, "Лев", "Николаевич")),
-                new Author(new Name(familyName, "Алексей", "Константинович")),
-                new Author(new Name(familyName, "Алексей", "Николаевич")),
+                new Author(new Person(new Name(familyName, "Лев", "Николаевич"))),
+                new Author(new Person(new Name(familyName, "Алексей", "Константинович"))),
+                new Author(new Person(new Name(familyName, "Алексей", "Николаевич"))),
             };
 
             this.DataContext.AddRange(authors);
@@ -109,13 +112,17 @@ namespace Repository.Tests
         public void GetBooksById_ValidData_Success()
         {
             var name = new Name("Толстой", "Лев");
-            var author = new Author(name);
-            var shelf = new Shelf("1");
+            var person = new Person(name);
+            var author = new Author(person);
+            var language = new Language("Русский");
 
-            var books = new HashSet<Book>
+            var manuscript1 = new Manuscript("Анна Каренина", language, new DateOnly(1873, 1, 1), new DateOnly(1877, 1, 1), author);
+            var manuscript2 = new Manuscript("Война и мир", language, new DateOnly(1863, 1, 1), new DateOnly(1869, 1, 1), author);
+
+            var manuscripts = new HashSet<Manuscript>
             {
-                new ("Анна Каренина", 100, "1", shelf, author),
-                new ("Война и мир", 1000, "2", shelf, author),
+                manuscript1,
+                manuscript2,
             };
 
             _ = this.DataContext.Add(author);
@@ -126,27 +133,29 @@ namespace Repository.Tests
             var result = this.Repository.GetBooksByAuthorId(author.Id);
 
             // assert
-            Assert.That(result, Is.EquivalentTo(books));
+            Assert.That(result, Is.EquivalentTo(manuscripts));
         }
 
         public void GetCoAuthors_ValidData_Success()
         {
             // arrange
-            var marina = new Name("Васильева", "Марина", "Алексеевна");
-            var constantin = new Name("Филипченко", "Константин", "Михайлович");
-            var ekaterina = new Name("Балакина", "Екатерина", "Петровна");
+            var language = new Language("Русский");
+
+            var marina = new Person(new Name("Васильева", "Марина", "Алексеевна"), new DateOnly(1976, 1, 11));
+            var constantin = new Person(new Name("Филипченко", "Константин", "Михайлович"), new DateOnly(1990, 4, 6));
+            var ekaterina = new Person(new Name("Балакина", "Екатерина", "Петровна"), new DateOnly(1982, 3, 22));
             var vasilyeva = new Author(marina);
             var philipchenko = new Author(constantin);
             var balakina = new Author(ekaterina);
             var authors = new HashSet<Author> { balakina, philipchenko };
 
-            var csv = new Book("Система контроля версий", 200, "1", null, vasilyeva, philipchenko);
-            var iscs = new Book("Информационное обеспечение систем управления", 150, "2", null, vasilyeva, philipchenko, balakina);
-            var term = new Book("Методические указания к курсовому проектированию", 50, "3", null, vasilyeva, balakina);
-            var article = new Book("Статья", 5, "4", null, vasilyeva);
-            var books = new HashSet<Book> { csv, iscs, term, article };
+            var csv = new Manuscript("Система контроля версий", language, new HashSet<Author>() { vasilyeva, philipchenko });
+            var iscs = new Manuscript("Информационное обеспечение систем управления", language, new HashSet<Author>() { vasilyeva, philipchenko, balakina });
+            var term = new Manuscript("Методические указания к курсовому проектированию", language, new HashSet<Author>() { vasilyeva, balakina });
+            var article = new Manuscript("Статья", language, new HashSet<Author>() { vasilyeva });
+            var manuscripts = new HashSet<Manuscript> { csv, iscs, term, article };
 
-            this.DataContext.AddRange(books);
+            this.DataContext.AddRange(manuscripts);
             _ = this.DataContext.SaveChanges();
             this.DataContext.ChangeTracker.Clear();
 

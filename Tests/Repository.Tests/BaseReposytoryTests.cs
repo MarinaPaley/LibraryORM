@@ -19,7 +19,7 @@ namespace Repository.Tests
     /// <typeparam name="TEntity"> Целевой тип сущности тестируемого репозитория. </typeparam>
     internal abstract class BaseReposytoryTests<TRepository, TEntity>
         where TRepository : BaseRepository<TEntity>
-        where TEntity : class, IEntity<TEntity>
+        where TEntity : class, IEntity
     {
         private readonly ServiceProvider serviceProvider;
 

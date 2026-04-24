@@ -62,8 +62,16 @@ namespace Domain.Tests
             // Arrange
             const string expected = "Название полки: Полка 1 Книги: Анна Каренина, 12 стульев";
             var shelf = new Shelf("Полка 1");
-            var book = new Book("Анна Каренина", 250, "123", shelf);
-            var other = new Book("12 стульев", 250, "123", shelf);
+            var language = new Language("Русский");
+            var publisher = new Publisher("Издательство");
+            var author = new Author(new Person(new Name("Толстой", "Лев")));
+            var bookType = new BookType("Книга");
+            var manuscript1 = new Manuscript("Анна Каренина", language, new HashSet<Author>() { author });
+            var manuscript2 = new Manuscript("12 стульев", language, new HashSet<Author>() { author });
+
+            var book = new Book(null, 1234, "12345", bookType, publisher, 2026, new HashSet<Manuscript>() { manuscript1 });
+  
+            var other = new Book(null, 1234, "12345", bookType, publisher, 2026, new HashSet<Manuscript>() { manuscript2 });
 
             _ = shelf.AddBook(book);
             _ = shelf.AddBook(other);
@@ -83,14 +91,21 @@ namespace Domain.Tests
                 "12 стульев Ильф Илья, Петров Евгений";
 
             var shelf = new Shelf("Полка 1");
-            Name tolstoy = new ("Толстой", "Лев", "Николаевич");
+            Person tolstoy = new (new Name("Толстой", "Лев", "Николаевич"));
             Author author1 = new (tolstoy);
-            Name ilf = new ("Ильф", "Илья");
-            Name petrov = new ("Петров", "Евгений");
+            Person ilf = new (new Name ("Ильф", "Илья"));
+            Person petrov = new (new Name("Петров", "Евгений"));
             Author author2 = new (ilf);
             Author author3 = new (petrov);
-            _ = new Book("Анна Каренина", 250, "123", shelf, author1);
-            _ = new Book("12 стульев", 250, "123", shelf, author2, author3);
+            var language = new Language("Русский");
+            var publisher = new Publisher("Издательство");
+            var bookType = new BookType("Книга");
+
+            var manuscript1 = new Manuscript("Анна Каренина", language, new HashSet<Author>() { author1 });
+            var manuscript2 = new Manuscript("12 стульев", language, new HashSet<Author>() { author2, author3 });
+
+            _ = new Book("Анна Каренина", 250, "123", bookType, publisher, 1925, new HashSet<Manuscript>() { manuscript1 }, shelf);
+            _ = new Book("12 стульев", 250, "123", bookType, publisher, 1925, new HashSet<Manuscript>() { manuscript2 }, shelf);
 
             // Act
             var actual = shelf.ToString();
@@ -114,8 +129,16 @@ namespace Domain.Tests
         {
             // Arrange
             var shelf = new Shelf("Полка 1");
-            var book = new Book("Анна Каренина", 250, "123", shelf);
-            var other = new Book("12 стульев", 250, "123");
+            var language = new Language("Русский");
+            var publisher = new Publisher("Издательство");
+            var author = new Author(new Person(new Name("Толстой", "Лев")));
+            var bookType = new BookType("Книга");
+            var manuscript1 = new Manuscript("Анна Каренина", language, new HashSet<Author>() { author });
+            var manuscript2 = new Manuscript("12 стульев", language, new HashSet<Author>() { author });
+
+            var book = new Book(null, 1234, "12345", bookType, publisher, 2026, new HashSet<Manuscript>() { manuscript1 });
+
+            var other = new Book(null, 1234, "12345", bookType, publisher, 2026, new HashSet<Manuscript>() { manuscript2 });
 
             // Act & Assert
             Assert.Multiple(() =>
@@ -128,7 +151,11 @@ namespace Domain.Tests
 
         private static IEnumerable<TestCaseData> Books()
         {
-            yield return new TestCaseData(new Book("12 стульев", 250, "123"), true);
+            yield return new TestCaseData(
+                new Book(null, 1234, "12345", new BookType("Книга"), 
+                new Publisher("Издательство"),
+                2026, 
+                new HashSet<Manuscript>() { new Manuscript("Анна Каренина", new Language("Русский"), new HashSet<Author>() { new Author(new Person(new Name("Толстой", "Лев"))) } )}), true);
             yield return new TestCaseData(null, false);
         }
     }

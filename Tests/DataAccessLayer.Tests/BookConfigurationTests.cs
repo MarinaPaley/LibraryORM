@@ -18,7 +18,9 @@ namespace DataAccessLayer.Tests
         public void AddEntityToDatabase_Success()
         {
             // arrange
-            var book = new Book("Тестовая", 100, "12345");
+            var bookType = new BookType("Книга");
+            var publisher = new Publisher("Издательство");
+            var book = new Book("Тестовая", 100, "12345", bookType, publisher, 2026);
 
             // act
             _ = this.DataContext.Add(book);

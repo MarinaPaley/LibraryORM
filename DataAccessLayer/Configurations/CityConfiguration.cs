@@ -9,7 +9,7 @@ namespace DataAccessLayer.Configurations
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     /// <summary>
-    /// Конфигурация правил отображения сущности (<see cref="City"/> в таблицк БД.
+    /// Конфигурация правил отображения сущности (<see cref="City"/> в таблицах БД.
     /// </summary>
     internal sealed class CityConfiguration : IEntityTypeConfiguration<City>
     {

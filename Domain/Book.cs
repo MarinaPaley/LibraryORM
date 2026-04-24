@@ -20,31 +20,39 @@ namespace Domain
         /// <param name="title"> Название. </param>
         /// <param name="pages"> Количество страниц. </param>
         /// <param name="ibsn"> Код <c>IBSN</c>. </param>
-        /// <param name="authors"> Авторы. </param>
+        /// <param name="bookType"> Тип книги. </param>
+        /// <param name="publisher"> Издательство.</param>
+        /// <param name="year"> Год издания. </param>
+        /// <param name="manuscripts"> Рукописи. </param>
         /// <param name="shelf"> Полка. </param>
-        /// <exception cref="ArgumentNullException">Если название книги или код <see langword="null"/>. </exception>
-        /// <exception cref="ArgumentOutOfRangeException"> Если количество страниц меньше или равно нулю. </exception>
-        /// <exception cref="ArgumentOutOfRangeException"> Если полка <see langword="null"/>. </exception>
-        /// <exception cref="ArgumentOutOfRangeException"> Если авторы <see langword="null"/>. </exception>
-        public Book(string title, int pages, string ibsn, ISet<Author> authors, Shelf? shelf = null)
+        /// <exception cref="ArgumentNullException">Если название книги или код <see langword="null"/> или
+        /// Издательство <see langword="null"/> или
+        /// Тип издания <see langword="null"/>. </exception>
+        /// <exception cref="ArgumentOutOfRangeException"> Если количество страниц меньше или равно нулю или год издания не валиден. </exception>
+        public Book(string? title, int pages, string ibsn, BookType bookType, Publisher publisher, int year, ISet<Manuscript> manuscripts, Shelf? shelf = null)
         {
-            this.Title = new Title (title);
+            this.BookType = bookType ?? throw new ArgumentNullException(nameof(bookType));
+            this.Publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
+            this.Title = title;
 
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pages);
             this.Pages = pages;
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(year);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(year, DateTime.Now.Year);
+            this.Year = year;
 
             this.IBSN = ibsn.TrimOrNull() ?? throw new ArgumentNullException(nameof(ibsn));
-
-            this.Authors = authors ?? throw new ArgumentNullException(nameof(authors));
-            foreach (var author in authors)
-            {
-                author.AddBook(this);
-            }
 
             this.Shelf = shelf;
             if (this.Shelf is not null)
             {
                 _ = this.Shelf.AddBook(this);
+            }
+
+            this.Manuscripts = manuscripts ?? throw new ArgumentNullException(nameof(manuscripts));
+            foreach (var manuscript in manuscripts)
+            {
+                manuscript.Books.Add(this);
             }
         }
 
@@ -54,19 +62,23 @@ namespace Domain
         /// <param name="title"> Название.</param>
         /// <param name="pages"> Количество страниц. </param>
         /// <param name="ibsn"> Код <c>IBSN</c>. </param>
-        /// <param name="authors">Авторы.</param>
-        /// <param name="shelf">Полка. </param>
-        /// <exception cref="ArgumentNullException">Если название книги или код <see langword="null"/>.</exception>
+        /// <param name="bookType"> Тип издания. </param>
+        /// <param name="publisher"> Издательство. </param>
+        /// <param name="year"> Год издания. </param>
+        /// <param name="manuscripts"> Рукописи. </param>
+        /// <param name="shelf" > Полка. </param>
+        /// <exception cref="ArgumentNullException"> Если название книги или код <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException"> Если количество страниц меньше или равно нулю.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"> Если полка <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"> Если авторы <see langword="null"/>.</exception>
         public Book(
             string title,
             int pages,
             string ibsn,
+            BookType bookType,
+            Publisher publisher,
+            int year,
             Shelf? shelf = null,
-            params Author[] authors)
-            : this(title, pages, ibsn, new HashSet<Author>(authors), shelf)
+            params Manuscript[] manuscripts)
+            : this(title, pages, ibsn, bookType, publisher, year, new HashSet<Manuscript>(manuscripts), shelf)
         {
         }
 
@@ -83,7 +95,7 @@ namespace Domain
         /// <summary>
         /// Название.
         /// </summary>
-        public Title Title { get; }
+        public string? Title { get; }
 
         /// <summary>
         /// Количество страниц.
@@ -101,9 +113,29 @@ namespace Domain
         public Shelf? Shelf { get; set; }
 
         /// <summary>
-        /// Авторы.
+        /// Издательство.
         /// </summary>
-        public ISet<Author> Authors { get; } = new HashSet<Author>();
+        public Publisher Publisher { get; set; }
+
+        /// <summary>
+        /// Тип книги.
+        /// </summary>
+        public BookType BookType { get; set; }
+
+        /// <summary>
+        /// Год издания.
+        /// </summary>
+        public int Year { get; set; }
+
+        /// <summary>
+        /// Рукописи в книге.
+        /// </summary>
+        public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>();
+
+        /// <summary>
+        /// Редактор.
+        /// </summary>
+        public Editor? Editor { get; set; }
 
         /// <inheritdoc/>
         public override bool Equals(Book? other)
@@ -112,23 +144,44 @@ namespace Domain
         }
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj)
-        {
-            return this.Equals(obj as Book);
-        }
+        public override bool Equals(object? obj) => this.Equals(obj as Book);
 
         /// <inheritdoc/>
-        public override int GetHashCode()
-        {
-            return this.Id.GetHashCode();
-        }
+        public override int GetHashCode() => HashCode.Combine(this.Manuscripts, this.IBSN, this.BookType);
 
         /// <inheritdoc/>
         public override string ToString()
         {
-            return this.Authors.Count > 0
-                ? $"{this.Title} {this.Authors.Join()}"
-                : this.Title.ToString();
+            var parts = this.Manuscripts.Join(", ");
+            return this.Title is not null
+                ? $"{this.Title} {parts}"
+                : parts;
+        }
+
+        /// <summary>
+        /// Добавить редактора.
+        /// </summary>
+        /// <param name="editor"> Редактор. </param>
+        /// <returns> Если добавили, то <see langword="true"/>, иначе - <see langword="false"/>. </returns>
+        public bool AddEditor(Editor editor)
+        {
+            this.Editor = editor;
+
+            return editor is not null
+                && editor.Books.Add(this);
+        }
+
+        /// <summary>
+        /// Удалили редактора.
+        /// </summary>
+        /// <param name="editor"> Редактор. </param>
+        /// <returns>  Если удалили, то <see langword="true"/>, иначе - <see langword="false"/>. </returns>
+        public bool RemoveEditor(Editor editor)
+        {
+            this.Editor = editor;
+
+            return editor is not null
+                && editor.Books.Remove(this);
         }
     }
 }

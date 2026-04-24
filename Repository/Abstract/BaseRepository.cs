@@ -15,9 +15,8 @@ namespace Repository.Abstract
     /// Базовый класс репозиториев.
     /// </summary>
     /// <typeparam name="TEntity"> Целевой тип сущности. </typeparam>
-    public abstract class BaseRepository<TEntity>
-        : IRepository<TEntity>
-        where TEntity : class, IEntity<TEntity>
+    public abstract class BaseRepository<TEntity> : IRepository<TEntity>
+        where TEntity : class, IEntity
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="BaseRepository{TEntity}"/>.

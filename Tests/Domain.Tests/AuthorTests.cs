@@ -17,7 +17,7 @@ namespace Domain.Tests
     {
         private static readonly Name NameValue = new ("Толстой", "Лев", "Николаевич");
 
-        private static readonly Name NullPatrioicName = new ("Толстой", "Лев");
+        private static readonly Name NullPatronicName = new ("Толстой", "Лев");
 
         private static readonly Name OtherName = new ("Пушкин", "Александр", "Сергеевич");
 
@@ -29,7 +29,7 @@ namespace Domain.Tests
         [TestCaseSource(nameof(ValidDateData))]
         public void Ctor_DateLiveNull_DoesNotThrow(DateOnly? dateBirth, DateOnly? dateDeath)
         {
-            Assert.DoesNotThrow(() => _ = new Author(NameValue, dateBirth, dateDeath));
+            Assert.DoesNotThrow(() => _ = new Author(new Person(NameValue, dateBirth, dateDeath)));
         }
 
         [Test]
@@ -45,8 +45,8 @@ namespace Domain.Tests
         public void Equals_DifferentAuthors_False()
         {
             // Arrange
-            var author1 = new Author(NameValue, new DateOnly(1828, 09, 28), null);
-            var author2 = new Author(OtherName, new DateOnly(1799, 06, 06), null);
+            var author1 = new Author(new Person(NameValue, new DateOnly(1828, 09, 28), null));
+            var author2 = new Author(new Person(OtherName, new DateOnly(1799, 06, 06), null));
 
             // Act & Assert
             Assert.That(author1, Is.Not.EqualTo(author2));
@@ -56,8 +56,8 @@ namespace Domain.Tests
         public void Equals_SameAuthors_True()
         {
             // Arrange
-            var author1 = new Author(NameValue);
-            var author2 = new Author(OtherName);
+            var author1 = new Author(new Person(NameValue));
+            var author2 = new Author(new Person(OtherName));
 
             // Act & Assert
             Assert.That(author1, Is.Not.EqualTo(author2));
@@ -70,8 +70,8 @@ namespace Domain.Tests
         public void Equals_SimilarAuthorsDiffernetPatronicName_False()
         {
             // Arrange
-            var author1 = new Author(NameValue);
-            var author2 = new Author(NullPatrioicName);
+            var author1 = new Author(new Person(NameValue));
+            var author2 = new Author(new Person(NullPatronicName));
 
             // Act & Assert
             Assert.That(author1, Is.Not.EqualTo(author2));
@@ -85,8 +85,8 @@ namespace Domain.Tests
             DateOnly? dateDeath2)
         {
             // Arrange
-            var author1 = new Author(NameValue, dateBirth1, dateDeath1);
-            var author2 = new Author(NameValue, dateBirth2, dateDeath2);
+            var author1 = new Author(new Person(NameValue, dateBirth1, dateDeath1));
+            var author2 = new Author(new Person(NameValue, dateBirth2, dateDeath2));
 
             // Act & Assert
             Assert.That(author1, Is.Not.EqualTo(author2));
@@ -99,10 +99,10 @@ namespace Domain.Tests
         }
 
         [TestCaseSource(nameof(Books))]
-        public void AddBook_Data_Success(Book? book, bool expected)
+        public void AddBook_Data_Success(Manuscript? book, bool expected)
         {
-            var author = new Author(NameValue);
-            Assert.That(expected, Is.EqualTo(author.AddBook(book!)));
+            var author = new Author(new Person(NameValue));
+            Assert.That(expected, Is.EqualTo(author.AddManuscript(book!)));
         }
 
         [Test]
@@ -110,9 +110,11 @@ namespace Domain.Tests
         {
             // Arrange
             Name tolstoy = new ("Толстой", "Лев", "Николаевич");
-            Author author = new (tolstoy);
-            var book = new Book("Анна Каренина", 250, "123", null, author);
-            var other = new Book("12 стульев", 250, "123");
+            Author author = new (new Person(tolstoy));
+            var language = new Language("Русский");
+
+            var book = new Manuscript("Анна Каренина", language, new DateOnly(1873, 1, 1), new DateOnly(1877, 1, 1), author);
+            var other = new Manuscript("12 стульев", language, new DateOnly(1927, 1, 9), new DateOnly(1927, 1, 12));
 
             // Act & Assert
             Assert.Multiple(() =>
@@ -125,26 +127,26 @@ namespace Domain.Tests
 
         private static IEnumerable<TestCaseData> Books()
         {
-            yield return new TestCaseData(new Book("12 стульев", 250, "123"), true);
+            yield return new TestCaseData(new Manuscript("12 стульев", new Language("Русский"), new DateOnly(1927, 1, 9), new DateOnly(1927, 1, 12)), true);
             yield return new TestCaseData(null, false);
         }
 
         private static IEnumerable<TestCaseData> Authors()
         {
             yield return new TestCaseData(
-                new Author(NullPatrioicName),
+                new Author(new Person(NullPatronicName)),
                 "Толстой Лев");
 
             yield return new TestCaseData(
-                new Author(NameValue),
+                new Author(new Person(NameValue)),
                 "Толстой Лев Николаевич");
 
             yield return new TestCaseData(
-                new Author(NameValue, new DateOnly(1828, 09, 28)),
+                new Author(new Person(NameValue, new DateOnly(1828, 09, 28))),
                 "Толстой Лев Николаевич Год рождения: 28.09.1828");
 
             yield return new TestCaseData(
-                new Author(NameValue, new DateOnly(1828, 09, 28), new DateOnly(1910, 10, 20)),
+                new Author(new Person(NameValue, new DateOnly(1828, 09, 28), new DateOnly(1910, 10, 20))),
                 "Толстой Лев Николаевич Год рождения: 28.09.1828 Год смерти: 20.10.1910");
         }
 

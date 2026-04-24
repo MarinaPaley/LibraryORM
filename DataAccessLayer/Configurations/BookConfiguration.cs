@@ -18,15 +18,8 @@ namespace DataAccessLayer.Configurations
         {
             _ = builder.HasKey(book => book.Id);
 
-            _ = builder.OwnsOne(book => book.Title, titleBuilder =>
-            {
-                titleBuilder.Property(t => t.Value)
-                    .HasColumnName("TitleName")
-                    .IsRequired()
-                    .HasComment("Название книги")
-                    .HasMaxLength(200);
-                titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-            });
+            _ = builder.Property(book => book.Title)
+                .HasComment("Название книги");
 
             _ = builder.Property(book => book.Pages)
                 .IsRequired()
@@ -40,8 +33,11 @@ namespace DataAccessLayer.Configurations
                 .WithMany(shelf => shelf.Books)
                 .IsRequired(false);
 
-            _ = builder.HasMany(book => book.Authors)
-                .WithMany(author => author.Books);
+            _ = builder.HasMany(book => book.Manuscripts)
+                .WithMany(manuscript => manuscript.Books);
+
+            _ = builder.HasOne(book => book.Editor)
+                .WithMany(editor => editor.Books);
         }
     }
 }

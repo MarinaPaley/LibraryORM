@@ -6,6 +6,7 @@ namespace DataAccessLayer
 {
     using System.Reflection;
     using Domain;
+    using Domain.Abstract;
     using Microsoft.EntityFrameworkCore;
 
     /// <summary>
@@ -23,9 +24,9 @@ namespace DataAccessLayer
         }
 
         /// <summary>
-        /// Авторы.
+        /// Авторы / Редакторы/ Переводчики.
         /// </summary>
-        public DbSet<Author> Authors { get; init; }
+        public DbSet<Contributor> Contributors { get; init; }
 
         /// <summary>
         /// Книги.
@@ -56,6 +57,21 @@ namespace DataAccessLayer
         /// Издательства.
         /// </summary>
         public DbSet<Publisher> Publishers { get; set; }
+
+        /// <summary>
+        /// Рукописи.
+        /// </summary>
+        public DbSet<Manuscript> Manuscripts { get; set; }
+
+        /// <summary>
+        /// Языки.
+        /// </summary>
+        public DbSet<Language> Languages { get; set; }
+
+        /// <summary>
+        /// Типы изданий.
+        /// </summary>
+        public DbSet<BookType> BookTypes { get; set; }
 
         /// <inheritdoc/>
         protected override void OnModelCreating(ModelBuilder modelBuilder)

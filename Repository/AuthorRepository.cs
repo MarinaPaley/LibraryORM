@@ -36,7 +36,7 @@ namespace Repository
         /// <returns> Идентификатор.</returns>
         public Guid? GetIdByName(string familyName)
         {
-            return this.Find(author => author.FullName.FamilyName == familyName)?.Id;
+            return this.Find(author => author.Person.FullName.FamilyName == familyName)?.Id;
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Repository
         /// </summary>
         /// <param name="id">Идентификатор.</param>
         /// <returns>Книги автора.</returns>
-        public ISet<Book> GetBooksByAuthorId(Guid id) => this.Get(id)?.Books ?? new HashSet<Book>();
+        public ISet<Manuscript> GetBooksByAuthorId(Guid id) => this.Get(id)?.Manuscripts ?? new HashSet<Manuscript>();
 
         /// <summary>
         /// Показать соавторов указанного автора.
@@ -64,8 +64,10 @@ namespace Repository
         /// <returns> Авторы.</returns>
         protected override IQueryable<Author> GetAll()
         {
-            return this.DataContext.Authors
-                .Include(author => author.Books);
+            return this.DataContext.Contributors
+                .OfType<Author>()
+                .Include(author => author.Person)
+                .Include(author => author.Manuscripts);
         }
     }
 }

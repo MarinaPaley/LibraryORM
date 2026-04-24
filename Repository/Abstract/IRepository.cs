@@ -14,7 +14,7 @@ namespace Repository.Abstract
     /// </summary>
     /// <typeparam name="TEntity"> Целевой тип сущности. </typeparam>
     public interface IRepository<TEntity>
-        where TEntity : class, IEntity<TEntity>
+        where TEntity : class, IEntity
     {
         /// <summary>
         /// Находит сущность по идентификатору.
