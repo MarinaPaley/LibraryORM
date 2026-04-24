@@ -40,7 +40,6 @@ namespace DataAccessLayer.Configurations
                 .HasForeignKey("StreetId")
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
-
         }
     }
 }

@@ -64,7 +64,6 @@ namespace Domain.Tests
             var shelf = new Shelf("Полка 1");
             var language = new Language("Русский");
             var publisher = new Publisher("Издательство");
-            var author = new Author(new Person(new Name("Толстой", "Лев")));
             var bookType = new BookType("Книга");
             var manuscript1 = new Manuscript("Анна Каренина", language, new HashSet<Author>());
             var manuscript2 = new Manuscript("12 стульев", language, new HashSet<Author>());
@@ -92,7 +91,7 @@ namespace Domain.Tests
             var shelf = new Shelf("Полка 1");
             Person tolstoy = new (new Name("Толстой", "Лев", "Николаевич"));
             Author author1 = new (tolstoy);
-            Person ilf = new (new Name ("Ильф", "Илья"));
+            Person ilf = new (new Name("Ильф", "Илья"));
             Person petrov = new (new Name("Петров", "Евгений"));
             Author author2 = new (ilf);
             Author author3 = new (petrov);
@@ -151,9 +150,7 @@ namespace Domain.Tests
         private static IEnumerable<TestCaseData> Books()
         {
             yield return new TestCaseData(
-                new Book(null, 1234, "12345", new BookType("Книга"), 
-                new Publisher("Издательство"),
-                2026, 
+                new Book(null, 1234, "12345",new BookType("Книга"), new Publisher("Издательство"), 2026,
                 new HashSet<Manuscript>() { new Manuscript("Анна Каренина", new Language("Русский"), new HashSet<Author>() { new Author(new Person(new Name("Толстой", "Лев"))) } )}), true);
             yield return new TestCaseData(null, false);
         }

@@ -273,7 +273,7 @@ namespace Domain
         /// <returns>  Если удалили, то <see langword="true"/>, иначе - <see langword="false"/>. </returns>
         public bool RemoveEditor(Editor editor)
         {
-            this.Editor = editor;
+            this.Editor = null;
 
             return editor is not null
                 && editor.Books.Remove(this);
