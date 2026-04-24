@@ -1,17 +1,15 @@
-﻿// <copyright file="ManucriptRepositoryTests.cs" company="Филипченко Марина Алексеевна">
+﻿// <copyright file="ManuscriptRepositoryTests.cs" company="Филипченко Марина Алексеевна">
 // Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
 namespace Repository.Tests
 {
-    using Domain;
-    using Microsoft.EntityFrameworkCore;
-    using NUnit.Framework;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Domain;
+    using NUnit.Framework;
 
-    internal sealed class ManucriptRepositoryTests : BaseReposytoryTests<ManuscriptRepository, Manuscript>
+    internal sealed class ManuscriptRepositoryTests : BaseReposytoryTests<ManuscriptRepository, Manuscript>
     {
         private ManuscriptRepository repository = null!;
 
@@ -19,6 +17,7 @@ namespace Repository.Tests
         public void SetUp()
         {
             this.repository = new ManuscriptRepository(this.DataContext);
+            _ = this.DataContext.Database.EnsureDeleted();
             _ = this.DataContext.Database.EnsureCreated();
         }
 
@@ -44,6 +43,7 @@ namespace Repository.Tests
             var result = this.repository.GetAuthors(manuscript.Id)?.FirstOrDefault();
 
             // assert
+            Assert.That(result, Is.Not.Null);
             Assert.That(result?.Person.FullName.FamilyName, Is.EqualTo("Толстой"));
         }
 
@@ -63,23 +63,11 @@ namespace Repository.Tests
             _ = this.DataContext.SaveChanges();
             this.DataContext.ChangeTracker.Clear();
 
-            // После SaveChanges() и Clear()
-            var debugManuscript = this.DataContext.Manuscripts
-                .Include(m => m.Authors)
-                .FirstOrDefault(m => m.Id == manuscript.Id);
-
-            Console.WriteLine($"🔍 Manuscript found: {debugManuscript != null}");
-            Console.WriteLine($"🔍 Authors count: {debugManuscript?.Authors?.Count ?? 0}");
-            if (debugManuscript?.Authors != null)
-            {
-                foreach (var a in debugManuscript.Authors)
-                    Console.WriteLine($"  • Author: {a.Person.FullName}");
-            }
-
             // act
             var result = this.repository.GetAuthors(manuscript.Id);
 
             // assert
+            Assert.That(result, Is.Not.Null);
             Assert.That(result, Has.Count.EqualTo(1));
             Assert.That(result.Any(a => a.Person.FullName.FamilyName == "Толстой"), Is.True);
         }
@@ -126,12 +114,14 @@ namespace Repository.Tests
             var result = this.repository.GetAllBooksCoAuthors(articleManuscript.Id);
 
             // assert
+            Assert.That(result, Is.Not.Null);
             Assert.That(result, Has.Count.EqualTo(3)); // csv, iscs, term (исключая саму article)
             Assert.Multiple(() =>
             {
                 Assert.That(result.Contains(csvManuscript), Is.True);
                 Assert.That(result.Contains(iscsManuscript), Is.True);
                 Assert.That(result.Contains(termManuscript), Is.True);
+                Assert.That(result.Any(m => m.Title.Value == "Статья"), Is.False);
             });
         }
     }

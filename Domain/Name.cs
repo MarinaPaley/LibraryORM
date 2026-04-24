@@ -17,34 +17,62 @@ namespace Domain
         /// </summary>
         public static readonly Name Unknown = new ("Неизвестно", "Неизвестно");
 
+        private string familyName;
+
+        private string firstName;
+
+        private string? patronymicName;
+
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Name"/>.
         /// </summary>
         /// <param name="familyName">Фамилия.</param>
         /// <param name="firstName">Имя.</param>
-        /// <param name="patronicName">Отчество.</param>
+        /// <param name="patronymicName">Отчество.</param>
         /// <exception cref="ArgumentNullException">Если имя или фамилия <see langword="null"/>.</exception>
-        public Name(string familyName, string firstName, string? patronicName = null)
+        public Name(string familyName, string firstName, string? patronymicName = null)
         {
-            this.FamilyName = familyName.TrimOrNull() ?? throw new ArgumentNullException(nameof(familyName));
-            this.FirstName = firstName.TrimOrNull() ?? throw new ArgumentNullException(nameof(firstName));
-            this.PatronicName = patronicName;
+            this.FamilyName = familyName;
+            this.FirstName = firstName;
+            this.PatronymicName = patronymicName;
+        }
+
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="Name"/>.
+        /// </summary>
+        [Obsolete("For ORN only", true)]
+        private Name()
+        {
         }
 
         /// <summary>
         /// Фамилия.
         /// </summary>
-        public string FamilyName { get; }
+        public string FamilyName
+        {
+            get => this.familyName;
+            private set => this.familyName = value.TrimOrNull()
+                ?? throw new ArgumentNullException(nameof(value));
+        }
 
         /// <summary>
         /// Имя.
         /// </summary>
-        public string FirstName { get; }
+        public string FirstName
+        {
+            get => this.firstName;
+            private set => this.firstName = value.TrimOrNull()
+                ?? throw new ArgumentNullException(nameof(value));
+        }
 
         /// <summary>
         /// Отчество.
         /// </summary>
-        public string? PatronicName { get; } = null;
+        public string? PatronymicName
+        {
+            get => this.patronymicName;
+            private set => this.patronymicName = value?.TrimOrNull();
+        }
 
         public static bool operator ==(Name? lha, Name? rha)
         {
@@ -64,7 +92,7 @@ namespace Domain
             return other is not null
                  && this.FamilyName == other.FamilyName
                  && this.FirstName == other.FirstName
-                 && this.PatronicName == other.PatronicName;
+                 && this.PatronymicName == other.PatronymicName;
         }
 
         /// <inheritdoc/>
@@ -72,14 +100,14 @@ namespace Domain
 
         /// <inheritdoc/>
         public override int GetHashCode() =>
-            HashCode.Combine(this.FamilyName, this.FirstName, this.PatronicName);
+            HashCode.Combine(this.FamilyName, this.FirstName, this.PatronymicName);
 
         /// <inheritdoc/>
         public override string ToString()
         {
-            return this.PatronicName is null
+            return this.PatronymicName is null
                ? $"{this.FamilyName} {this.FirstName}"
-               : $"{this.FamilyName} {this.FirstName} {this.PatronicName}";
+               : $"{this.FamilyName} {this.FirstName} {this.PatronymicName}";
         }
     }
 }

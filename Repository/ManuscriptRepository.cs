@@ -36,23 +36,33 @@ namespace Repository
         /// Показать все книги, написанные авторами выбранной книги.
         /// </summary>
         /// <param name="id">Идентификатор книги.</param>
-        /// <returns>Множество книг авторов данной книги.</returns>
-        public ISet<Manuscript>? GetAllBooksCoAuthors(Guid id) =>
-            this.GetAuthors(id)?
-            .SelectMany(author => author.Manuscripts)
-            .ToHashSet();
+        /// <returns> Множество книг авторов данной книги.</returns>
+        public ISet<Manuscript>? GetAllBooksCoAuthors(Guid id)
+        {
+            var authors = this.GetAuthors(id);
+            if (authors is null || authors.Count == 0)
+            {
+                return new HashSet<Manuscript>();
+            }
+
+            var authorIds = authors.Select(a => a.Id).ToList();
+            return this.DataContext.Manuscripts
+                .Include(m => m.Authors)
+                .Where(m => m.Id != id && m.Authors.Any(a => authorIds.Contains(a.Id)))
+                .ToHashSet();
+        }
 
         /// <inheritdoc/>
         protected override IQueryable<Manuscript> GetAll()
         {
             {
                 return this.DataContext.Manuscripts
-                    .Include(m => m.Authors)
-                        .ThenInclude(a => a.Person)
-                    .Include(m => m.Books)
-                    .Include(m => m.Genres)
-                    .Include(m => m.Translators)
-                        .ThenInclude(t => t.Person);
+                .Include(m => m.Authors)
+                    .ThenInclude(a => a.Person)
+                .Include(m => m.Translators)
+                    .ThenInclude(t => t.Person)
+                .Include(m => m.Genres)
+                .Include(m => m.Books);
             }
         }
     }

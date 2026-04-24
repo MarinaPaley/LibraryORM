@@ -41,16 +41,13 @@ namespace Domain
         /// <inheritdoc/>
         public bool Equals(Editor? other)
         {
-            return ReferenceEquals(this, other) || ((other is not null) && this.Person.Equals(other.Person));
+            return ReferenceEquals(this, other) || ((other is not null) && this.Person?.Equals(other.Person) == true);
         }
 
         /// <inheritdoc/>
         public override bool Equals(object? obj) => this.Equals(obj as Editor);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => this.Person?.GetHashCode() ?? 0;
-
-        /// <inheritdoc/>
-        public override string ToString() => this.Person.ToString();
+        public override int GetHashCode() => HashCode.Combine(this.GetType(), this.Person);
     }
 }

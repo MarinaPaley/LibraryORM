@@ -44,7 +44,7 @@ namespace Domain
         /// <summary>
         /// Полное имя.
         /// </summary>
-        public Name FullName { get; }
+        public Name FullName { get; private set; }
 
         /// <summary>
         /// Дата рождения.

@@ -14,14 +14,14 @@ namespace Domain
     public sealed class Address : Entity<Address>, IEquatable<Address>
     {
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="Address"./>
+        /// Инициализирует новый экземпляр класса <see cref="Address"/>.
         /// </summary>
         /// <param name="city"> Город. </param>
         /// <param name="street"> Улица. </param>
         /// <param name="house"> Дом. </param>
         /// <param name="buildingSuffix"> Корпус или владение. </param>
         /// <param name="apartment"> Квартира. </param>
-        /// <exception cref="ArgumentNullException"> Если <see cref="City"/> 
+        /// <exception cref="ArgumentNullException"> Если <see cref="City"/>. 
         /// или <see cref="Street"/> равны <see langword="null"/>.</exception>
         public Address(
             City city,
@@ -37,10 +37,16 @@ namespace Domain
             this.Apartment = apartment;
         }
 
+#pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
+
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="Address"/>.
+        /// </summary>
         [Obsolete("For ORV only")]
         private Address()
         {
         }
+#pragma warning restore CS8618
 
         /// <summary>
         /// Город.
