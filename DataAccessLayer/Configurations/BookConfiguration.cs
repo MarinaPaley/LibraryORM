@@ -25,9 +25,9 @@ namespace DataAccessLayer.Configurations
                 .IsRequired()
                 .HasComment("Количество страниц");
 
-            _ = builder.Property(book => book.IBSN)
+            _ = builder.Property(book => book.ISBN)
                 .IsRequired()
-                .HasComment("IBSN");
+                .HasComment("ISBN");
 
             _ = builder.HasOne(book => book.Shelf)
                 .WithMany(shelf => shelf.Books)
@@ -38,6 +38,28 @@ namespace DataAccessLayer.Configurations
 
             _ = builder.HasOne(book => book.Editor)
                 .WithMany(editor => editor.Books);
+
+            _ = builder.Property(book => book.Annotation)
+                .IsRequired(false)
+                .HasComment("Аннотация");
+
+            _ = builder.HasOne(book => book.Seria)
+                .WithMany(seria => seria.Books);
+
+            _ = builder.HasOne(book => book.BookType)
+                .WithMany(type => type.Books);
+
+            _ = builder.Property(book => book.Doi)
+                .IsRequired(false)
+                .HasComment("DOI");
+
+            _ = builder.Property(book => book.Url)
+                .IsRequired(false)
+                .HasComment("URL");
+
+            _ = builder.Property(book => book.Volume)
+                .IsRequired(false)
+                .HasComment("Том");
         }
     }
 }

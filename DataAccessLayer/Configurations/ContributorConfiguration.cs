@@ -24,7 +24,8 @@ namespace DataAccessLayer.Configurations
                 .HasDiscriminator<string>("ContributorType")
                 .HasValue<Author>("Author")
                 .HasValue<Translator>("Translator")
-                .HasValue<Editor>("Editor");
+                .HasValue<Editor>("Editor")
+                .HasValue<Reviewer>("Reviewer");
 
             // 📦 Общие поля
             _ = builder.HasOne(c => c.Person)

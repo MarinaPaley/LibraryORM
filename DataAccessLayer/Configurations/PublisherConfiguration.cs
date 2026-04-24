@@ -32,11 +32,11 @@ namespace DataAccessLayer.Configurations
                     .HasDatabaseName("IX_Publisher_Name");
             });
 
-            _ = builder.HasOne(publisher => publisher.Address)
+            builder.HasOne(p => p.Address)
                 .WithMany()
                 .HasForeignKey("AddressId")
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Restrict);
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

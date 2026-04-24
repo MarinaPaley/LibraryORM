@@ -75,6 +75,11 @@ namespace Domain
         public ISet<Translator> Translators { get; } = new HashSet<Translator>();
 
         /// <summary>
+        /// Рецензенты.
+        /// </summary>
+        public ISet<Reviewer> Reviewers { get; } = new HashSet<Reviewer>();
+
+        /// <summary>
         /// Дата создания произведения.
         /// </summary>
         public Range<DateOnly>? Dates { get; set; }
@@ -121,11 +126,21 @@ namespace Domain
         /// <returns> Если добавили, то <see langword="true"/>, иначе - <see langword="false"/>. </returns>
         public bool AddGenre(Genre genre)
         {
-            ArgumentNullException.ThrowIfNull(genre);
-            var result = this.Genres.Add(genre);
-            result &= genre.Manuscripts.Add(this);
+            return genre is not null
+                && this.Genres.Add(genre)
+                && genre.Manuscripts.Add(this);
+        }
 
-            return result;
+        /// <summary>
+        /// Удаляет жанр из произведения.
+        /// </summary>
+        /// <param name="genre"> Жанр. </param>
+        /// <returns> <see langword="true"/>, если удалили, иначе - <see langword="false"/>.</returns>
+        public bool RemoveGenre(Genre genre)
+        {
+            return genre is not null
+                && this.Genres.Remove(genre)
+                && genre.Manuscripts.Remove(this);
         }
     }
 }

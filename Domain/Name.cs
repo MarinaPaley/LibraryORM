@@ -1,4 +1,4 @@
-﻿// <copyright file="Name.cs" company="Филипченко Марина Алексеевна">
+﻿// <copyright file="BookTypeName.cs" company="Филипченко Марина Алексеевна">
 // Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
@@ -16,12 +16,6 @@ namespace Domain
         /// Имя-заглушка.
         /// </summary>
         public static readonly Name Unknown = new ("Неизвестно", "Неизвестно");
-
-        private string familyName;
-
-        private string firstName;
-
-        private string? patronymicName;
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Name"/>.
@@ -50,8 +44,8 @@ namespace Domain
         /// </summary>
         public string FamilyName
         {
-            get => this.familyName;
-            private set => this.familyName = value.TrimOrNull()
+            get => field;
+            private set => field = value.TrimOrNull()
                 ?? throw new ArgumentNullException(nameof(value));
         }
 
@@ -60,8 +54,8 @@ namespace Domain
         /// </summary>
         public string FirstName
         {
-            get => this.firstName;
-            private set => this.firstName = value.TrimOrNull()
+            get => field;
+            private set => field = value.TrimOrNull()
                 ?? throw new ArgumentNullException(nameof(value));
         }
 
@@ -70,8 +64,8 @@ namespace Domain
         /// </summary>
         public string? PatronymicName
         {
-            get => this.patronymicName;
-            private set => this.patronymicName = value?.TrimOrNull();
+            get => field;
+            private set => field = value?.TrimOrNull();
         }
 
         public static bool operator ==(Name? lha, Name? rha)

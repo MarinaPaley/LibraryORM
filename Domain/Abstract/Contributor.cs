@@ -42,6 +42,7 @@ namespace Domain.Abstract
         {
             return ReferenceEquals(this, other)
                 || (other is not null
+                    && this.GetType() == other.GetType()
                     && this.Person?.Equals(other.Person) == true);
         }
 

@@ -19,7 +19,7 @@ namespace DataAccessLayer.Configurations
             // 🔑 Первичный ключ (наследуется от Entity<Person>)
             _ = builder.HasKey(person => person.Id);
 
-            // 📝 Owned Type: FullName (Name)
+            // 📝 Owned Type: FullName (BookTypeName)
             _ = builder.OwnsOne(person => person.FullName, nameBuilder =>
             {
                 // Фамилия

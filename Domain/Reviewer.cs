@@ -1,4 +1,4 @@
-﻿// <copyright file="Author.cs" company="Филипченко Марина Алексеевна">
+﻿// <copyright file="Reviewer.cs" company="Филипченко Марина Алексеевна">
 // Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
@@ -9,27 +9,27 @@ namespace Domain
     using Domain.Abstract;
 
     /// <summary>
-    /// Автор.
+    /// Рецензент.
     /// </summary>
-    public sealed class Author : Contributor
+    public sealed class Reviewer : Contributor
     {
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="Author"/>.
+        /// Инициализирует новый экземпляр класса <see cref="Reviewer"/>.
         /// </summary>
         /// <param name="person"> Персона. </param>
         /// <exception cref="ArgumentNullException">
         /// Если Полное имя <see langword="null"/>.
         /// </exception>
-        public Author(Person person)
+        public Reviewer(Person person)
             : base(person)
         {
         }
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="Author"/>.
+        /// Инициализирует новый экземпляр класса <see cref="Reviewer"/>.
         /// </summary>
         [Obsolete("For ORM only", true)]
-        private Author()
+        private Reviewer()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Domain
         public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>();
 
         /// <summary>
-        /// Добавляем книгу автору.
+        /// Добавляем рукопись рецензенту.
         /// </summary>
         /// <param name="manuscript"> Книга. </param>
         /// <returns><see langword="true"/> если добавили, иначе <see langword="false"/>.</returns>
@@ -47,11 +47,11 @@ namespace Domain
         {
             return manuscript is not null
                 && this.Manuscripts.Add(manuscript)
-                && manuscript.Authors.Add(this);
+                && manuscript.Reviewers.Add(this);
         }
 
         /// <summary>
-        /// Удаляем рукопись у автора.
+        /// Удаляем рукопись у рецензента.
         /// </summary>
         /// <param name="manuscript"> Книга. </param>
         /// <returns><see langword="true"/> если убрали, иначе <see langword="false"/>.</returns>
@@ -59,7 +59,7 @@ namespace Domain
         {
             return manuscript is not null
                 && this.Manuscripts.Remove(manuscript)
-                && manuscript.Authors.Remove(this);
+                && manuscript.Reviewers.Remove(this);
         }
     }
 }

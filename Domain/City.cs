@@ -62,7 +62,7 @@ namespace Domain
         /// Добавить улицу.
         /// </summary>
         /// <param name="street"> Улица. </param>
-        /// <returns> <see langword="true"/>, если добавили, иначе - <see langword="false"/>ю </returns>
+        /// <returns> <see langword="true"/>, если добавили, иначе - <see langword="false"/>. </returns>
         public bool AddStreet(Street street)
         {
             var result = street is not null

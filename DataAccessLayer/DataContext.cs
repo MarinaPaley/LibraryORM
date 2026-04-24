@@ -51,7 +51,7 @@ namespace DataAccessLayer
         /// <summary>
         /// Адреса.
         /// </summary>
-        public DbSet<Address> Adresses { get; set; }
+        public DbSet<Address> Addresses { get; set; }
 
         /// <summary>
         /// Издательства.
@@ -72,6 +72,21 @@ namespace DataAccessLayer
         /// Типы изданий.
         /// </summary>
         public DbSet<BookType> BookTypes { get; set; }
+
+        /// <summary>
+        /// Серии.
+        /// </summary>
+        public DbSet<Seria> Serias { get; set; }
+
+        /// <summary>
+        /// Жанры.
+        /// </summary>
+        public DbSet<Genre> Genres { get; set; }
+
+        /// <summary>
+        /// Персоны.
+        /// </summary>
+        public DbSet<Person> Persons { get; set; }
 
         /// <inheritdoc/>
         protected override void OnModelCreating(ModelBuilder modelBuilder)

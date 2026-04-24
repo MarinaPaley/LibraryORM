@@ -5,6 +5,7 @@
 namespace Domain
 {
     using System;
+    using System.Collections.Generic;
     using Domain.Abstract;
 
     /// <summary>
@@ -38,6 +39,11 @@ namespace Domain
         /// </summary>
         public Address? Address { get; set; }
 
+        /// <summary>
+        /// Книги.
+        /// </summary>
+        public ISet<Book> Books { get; } = new HashSet<Book>();
+
         /// <inheritdoc/>
         public override bool Equals(Publisher? other)
         {
@@ -52,5 +58,29 @@ namespace Domain
 
         /// <inheritdoc/>
         public override string ToString() => $"{this.Name}";
+
+        /// <summary>
+        /// Добавить книгу.
+        /// </summary>
+        /// <param name="book"> Книга.</param>
+        /// <returns> <see langword="true"/>, если добавили, иначе - <see langword="false"/>.</returns>
+        public bool AddBook(Book book)
+        {
+            return book is not null
+                && this.Books.Add(book)
+                && book.Publishers.Add(this);
+        }
+
+        /// <summary>
+        /// Удаление книги из серии.
+        /// </summary>
+        /// <param name="book"> Книга.</param>
+        /// <returns> <see langword="true"/>, если удалили, иначе - <see langword="false"/>.</returns>
+        public bool RemoveBook(Book book)
+        {
+            return book is not null
+                && this.Books.Remove(book)
+                && book.Publishers.Remove(this);
+        }
     }
 }

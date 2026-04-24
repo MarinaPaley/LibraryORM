@@ -66,11 +66,10 @@ namespace Domain.Tests
             var publisher = new Publisher("Издательство");
             var author = new Author(new Person(new Name("Толстой", "Лев")));
             var bookType = new BookType("Книга");
-            var manuscript1 = new Manuscript("Анна Каренина", language, new HashSet<Author>() { author });
-            var manuscript2 = new Manuscript("12 стульев", language, new HashSet<Author>() { author });
+            var manuscript1 = new Manuscript("Анна Каренина", language, new HashSet<Author>());
+            var manuscript2 = new Manuscript("12 стульев", language, new HashSet<Author>());
 
             var book = new Book(null, 1234, "12345", bookType, publisher, 2026, new HashSet<Manuscript>() { manuscript1 });
-  
             var other = new Book(null, 1234, "12345", bookType, publisher, 2026, new HashSet<Manuscript>() { manuscript2 });
 
             _ = shelf.AddBook(book);
@@ -104,8 +103,8 @@ namespace Domain.Tests
             var manuscript1 = new Manuscript("Анна Каренина", language, new HashSet<Author>() { author1 });
             var manuscript2 = new Manuscript("12 стульев", language, new HashSet<Author>() { author2, author3 });
 
-            _ = new Book("Анна Каренина", 250, "123", bookType, publisher, 1925, new HashSet<Manuscript>() { manuscript1 }, shelf);
-            _ = new Book("12 стульев", 250, "123", bookType, publisher, 1925, new HashSet<Manuscript>() { manuscript2 }, shelf);
+            _ = new Book(null, 250, "123", bookType, publisher, 1925, new HashSet<Manuscript>() { manuscript1 }, shelf);
+            _ = new Book(null, 250, "123", bookType, publisher, 1925, new HashSet<Manuscript>() { manuscript2 }, shelf);
 
             // Act
             var actual = shelf.ToString();
@@ -136,17 +135,17 @@ namespace Domain.Tests
             var manuscript1 = new Manuscript("Анна Каренина", language, new HashSet<Author>() { author });
             var manuscript2 = new Manuscript("12 стульев", language, new HashSet<Author>() { author });
 
-            var book = new Book(null, 1234, "12345", bookType, publisher, 2026, new HashSet<Manuscript>() { manuscript1 });
+            var book = new Book(null, 1234, "12345", bookType, publisher, 2026, new HashSet<Manuscript>() { manuscript1 }, shelf);
 
             var other = new Book(null, 1234, "12345", bookType, publisher, 2026, new HashSet<Manuscript>() { manuscript2 });
 
             // Act & Assert
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(shelf.RemoveBook(book), Is.True);
                 Assert.That(shelf.RemoveBook(null!), Is.False);
                 Assert.That(shelf.RemoveBook(other), Is.False);
-            });
+            }
         }
 
         private static IEnumerable<TestCaseData> Books()

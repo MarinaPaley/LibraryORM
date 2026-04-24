@@ -51,5 +51,29 @@ namespace Domain
 
         /// <inheritdoc/>
         public override string ToString() => this.Name.ToString();
+
+        /// <summary>
+        /// Добавить книгу к жанрам.
+        /// </summary>
+        /// <param name="book"> Рукопись.</param>
+        /// <returns> <see langword="true"/>, если добавили, иначе - <see langword="false"/>.</returns>
+        public bool AddManuscropt(Manuscript book)
+        {
+            return book is not null
+                && this.Manuscripts.Add(book)
+                && book.Genres.Add(this);
+        }
+
+        /// <summary>
+        /// Удаление рукописи из жанра.
+        /// </summary>
+        /// <param name="book"> Рукопись. </param>
+        /// <returns> <see langword="true"/>, если удалили, иначе - <see langword="false"/>.</returns>
+        public bool RemoveManuscript(Manuscript book)
+        {
+            return book is not null
+                && this.Manuscripts.Remove(book)
+                && book.Genres.Remove(this);
+        }
     }
 }

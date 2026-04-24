@@ -22,6 +22,7 @@ namespace Repository.Tests
         public void SetUp()
         {
             this.repository = new BookRepository(this.DataContext);
+            _ = this.DataContext.Database.EnsureDeleted();
             _ = this.DataContext.Database.EnsureCreated();
         }
 
@@ -51,8 +52,11 @@ namespace Repository.Tests
 
             // assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.Id, Is.Not.EqualTo(Guid.Empty));
-            Assert.That(result.Title, Is.EqualTo("Книга"));
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(result.Id, Is.Not.EqualTo(Guid.Empty));
+                Assert.That(result.Title, Is.EqualTo("Книга"));
+            }
         }
 
         [Test]
@@ -104,12 +108,12 @@ namespace Repository.Tests
             // act
             var result = this.repository.Delete(book);
 
-            Assert.Multiple(() =>
+            // assert
+            using (Assert.EnterMultipleScope())
             {
-                // assert
                 Assert.That(result, Is.True);
                 Assert.That(this.repository.Get(book.Id), Is.Null);
-            });
+            }
         }
 
         [Test]

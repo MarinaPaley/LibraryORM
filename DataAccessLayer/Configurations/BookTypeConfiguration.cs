@@ -18,18 +18,18 @@ namespace DataAccessLayer.Configurations
         {
             _ = builder.HasKey(type => type.Id);
 
-            _ = builder.OwnsOne(type => type.Name, titleBuilder =>
+            _ = builder.OwnsOne(type => type.BookTypeName, titleBuilder =>
             {
                 titleBuilder.Property(t => t.Value)
-                    .HasColumnName("BookType")
+                    .HasColumnName("BookTypeName")
                     .IsRequired()
-                    .HasComment("Язык")
+                    .HasComment("Тип книги")
                     .HasMaxLength(200);
                 titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
 
                 titleBuilder.HasIndex(t => t.Value)
                     .IsUnique()
-                    .HasDatabaseName("IX_BookType_Name");
+                    .HasDatabaseName("IX_BookType_BookTypeName");
             });
         }
     }

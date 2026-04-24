@@ -21,7 +21,7 @@ namespace Domain
         /// <param name="house"> Дом. </param>
         /// <param name="buildingSuffix"> Корпус или владение. </param>
         /// <param name="apartment"> Квартира. </param>
-        /// <exception cref="ArgumentNullException"> Если <see cref="City"/>. 
+        /// <exception cref="ArgumentNullException"> Если <see cref="City"/>.
         /// или <see cref="Street"/> равны <see langword="null"/>.</exception>
         public Address(
             City city,

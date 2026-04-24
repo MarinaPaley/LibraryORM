@@ -11,7 +11,7 @@ namespace Domain
     /// <summary>
     /// Редактор.
     /// </summary>
-    public sealed class Editor : Contributor, IEquatable<Editor>
+    public sealed class Editor : Contributor
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Editor"/>.
@@ -38,16 +38,40 @@ namespace Domain
         /// </summary>
         public ISet<Book> Books { get; } = new HashSet<Book>();
 
-        /// <inheritdoc/>
-        public bool Equals(Editor? other)
+        /// <summary>
+        /// Добавляем книгу редактору.
+        /// </summary>
+        /// <param name="book"> Книга. </param>
+        /// <returns><see langword="true"/> если добавили, иначе <see langword="false"/>.</returns>
+        public bool AddBook(Book book)
         {
-            return ReferenceEquals(this, other) || ((other is not null) && this.Person?.Equals(other.Person) == true);
+            if (book is not null)
+            {
+                _ = this.Books.Add(book);
+                book.Editor = this;
+
+                return true;
+            }
+
+            return false;
         }
 
-        /// <inheritdoc/>
-        public override bool Equals(object? obj) => this.Equals(obj as Editor);
+        /// <summary>
+        /// Удаляем книгу у редактора.
+        /// </summary>
+        /// <param name="book"> Книга. </param>
+        /// <returns><see langword="true"/> если убрали, иначе <see langword="false"/>.</returns>
+        public bool RemoveBook(Book book)
+        {
+            if (book is not null)
+            {
+                _ = this.Books.Remove(book);
+                book.Editor = this;
 
-        /// <inheritdoc/>
-        public override int GetHashCode() => HashCode.Combine(this.GetType(), this.Person);
+                return true;
+            }
+
+            return false;
+        }
     }
 }
