@@ -34,6 +34,11 @@ namespace Domain
         public Title Name { get; set; }
 
         /// <summary>
+        /// Шкаф.
+        /// </summary>
+        public Cabinet? Cabinet { get; set; }
+
+        /// <summary>
         ///  Книги.
         /// </summary>
         public ISet<Book> Books { get; } = new HashSet<Book>();
@@ -78,21 +83,28 @@ namespace Domain
         public override bool Equals(Shelf? other)
         {
             return ReferenceEquals(this, other)
-                || ((other is not null) && (this.Name == other.Name));
+                || (other is not null
+                && this.Name == other.Name
+                && this.Cabinet is not null
+                && this.Cabinet.Equals(other.Cabinet));
         }
 
         /// <inheritdoc />
         public override bool Equals(object? obj) => this.Equals(obj as Shelf);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => this.Name.GetHashCode();
+        public override int GetHashCode() => this.Name?.GetHashCode() ?? 0;
 
         /// <inheritdoc cref="object.ToString()"/>
         public override string ToString()
         {
+            var location = this.Cabinet is not null
+                ? $" ({this.Cabinet.Name} → {this.Cabinet.Room?.Name})"
+                : string.Empty;
+
             return this.Books.Count == 0
-                ? $"Название полки: {this.Name}"
-                : $"Название полки: {this.Name} Книги: {this.Books.Join()}";
+                ? $"Полка: {this.Name}{location}"
+                : $"Полка: {this.Name}{location} | Книги: {this.Books.Join()}";
         }
     }
 }

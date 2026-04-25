@@ -79,18 +79,25 @@ namespace Domain
         /// <inheritdoc/>
         public override bool Equals(Address? other)
         {
-            return ReferenceEquals(this, other) || ((other is not null) && (this.Id == other.Id));
+            return ReferenceEquals(this, other)
+                || (other is not null
+                    && this.City.Equals(other.City)
+                    && this.Street.Equals(other.Street)
+                    && this.House == other.House
+                    && this.BuildingSuffix == other.BuildingSuffix
+                    && this.Apartment == other.Apartment);
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode() => this.Id.GetHashCode();
+        public override int GetHashCode() => HashCode.Combine(this.City, this.Street, this.House, this.BuildingSuffix, this.Apartment);
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="object.ToString()"/>
         public override string ToString()
         {
             var buildingHouse = this.BuildingSuffix is not null
                 ? this.BuildingSuffix
                 : string.Empty;
+
             var apartment = this.Apartment.HasValue
                 ? $"кв. {this.Apartment}"
                 : string.Empty;

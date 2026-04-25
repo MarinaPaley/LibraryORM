@@ -96,7 +96,7 @@ namespace Domain
         public override int GetHashCode() =>
             HashCode.Combine(this.FamilyName, this.FirstName, this.PatronymicName);
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="object.ToString()"/>
         public override string ToString()
         {
             return this.PatronymicName is null

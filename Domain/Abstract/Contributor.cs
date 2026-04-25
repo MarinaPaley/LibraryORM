@@ -52,7 +52,7 @@ namespace Domain.Abstract
         /// <inheritdoc/>
         public override int GetHashCode() => HashCode.Combine(this.GetType(), this.Person);
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="object.ToString()"/>
         public override string ToString() => this.Person.ToString();
     }
 }

@@ -71,7 +71,7 @@ namespace Domain
                 && this.DateDeath == other.DateDeath;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="object.ToString()"/>
         public override int GetHashCode() => HashCode.Combine(this.FullName, this.DateBirth, this.DateDeath);
 
         /// <inheritdoc/>

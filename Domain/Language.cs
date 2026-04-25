@@ -49,7 +49,7 @@ namespace Domain
         /// <inheritdoc/>
         public override int GetHashCode() => this.Name?.GetHashCode() ?? 0;
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="object.ToString()"/>
         public override string ToString() => this.Name.ToString();
     }
 }

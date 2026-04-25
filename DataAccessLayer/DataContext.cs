@@ -39,6 +39,16 @@ namespace DataAccessLayer
         public DbSet<Shelf> Shelves { get; init; }
 
         /// <summary>
+        /// Шкафы.
+        /// </summary>
+        public DbSet<Cabinet> Cabinets { get; init; }
+
+        /// <summary>
+        /// Комнаты.
+        /// </summary>
+        public DbSet<Room> Rooms { get; init; }
+
+        /// <summary>
         /// Города.
         /// </summary>
         public DbSet<City> Cities { get; init; }

@@ -56,7 +56,7 @@ namespace Domain
         /// <inheritdoc/>
         public override int GetHashCode() => this.Id.GetHashCode();
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="object.ToString()"/>
         public override string ToString() => $"{this.Name}";
 
         /// <summary>

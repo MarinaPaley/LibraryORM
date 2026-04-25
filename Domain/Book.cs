@@ -244,7 +244,7 @@ namespace Domain
         /// <inheritdoc/>
         public override int GetHashCode() => HashCode.Combine(this.Manuscripts, this.ISBN, this.BookType);
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="object.ToString()"/>
         public override string ToString()
         {
             var parts = this.Manuscripts.Join(", ");

@@ -54,7 +54,7 @@ namespace Domain
         /// <inheritdoc/>
         public override int GetHashCode() => this.SeriaName?.GetHashCode() ?? 0;
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="object.ToString()"/>
         public override string ToString() => this.SeriaName.ToString();
 
         /// <summary>
