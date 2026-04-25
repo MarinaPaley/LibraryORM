@@ -82,11 +82,16 @@ namespace Domain
         /// <inheritdoc />
         public override bool Equals(Shelf? other)
         {
-            return ReferenceEquals(this, other)
+            var result = ReferenceEquals(this, other)
                 || (other is not null
-                && this.Name == other.Name
-                && this.Cabinet is not null
-                && this.Cabinet.Equals(other.Cabinet));
+                && this.Name == other.Name);
+
+            if (this.Cabinet is not null)
+            {
+                result &= this.Cabinet.Equals(other?.Cabinet);
+            }
+
+            return result;
         }
 
         /// <inheritdoc />

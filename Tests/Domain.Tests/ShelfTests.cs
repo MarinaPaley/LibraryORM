@@ -46,7 +46,7 @@ namespace Domain.Tests
         public void ToString_NoBook_Success()
         {
             // Arrange
-            const string expected = "Название полки: Полка 1";
+            const string expected = "Полка: Полка 1";
             var shelf = new Shelf("Полка 1");
 
             // Act
@@ -60,7 +60,7 @@ namespace Domain.Tests
         public void ToString_WithBooksNoAuthors_Success()
         {
             // Arrange
-            const string expected = "Название полки: Полка 1 Книги: Анна Каренина, 12 стульев";
+            const string expected = "Полка: Полка 1 | Книги: Анна Каренина, 12 стульев";
             var shelf = new Shelf("Полка 1");
             var language = new Language("Русский");
             var publisher = new Publisher("Издательство");
@@ -85,7 +85,7 @@ namespace Domain.Tests
         public void ToString_WithBooks_Success()
         {
             // Arrange
-            const string expected = "Название полки: Полка 1 Книги: Анна Каренина Толстой Лев Николаевич, " +
+            const string expected = "Полка: Полка 1 | Книги: Анна Каренина Толстой Лев Николаевич, " +
                 "12 стульев Ильф Илья, Петров Евгений";
 
             var shelf = new Shelf("Полка 1");

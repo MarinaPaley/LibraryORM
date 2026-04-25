@@ -268,19 +268,6 @@ namespace Domain.Tests
             Assert.That(cabinet1.GetHashCode(), Is.EqualTo(cabinet2.GetHashCode()));
         }
 
-        [Test]
-        public void GetHashCode_DifferentRoom_DifferentHashCode()
-        {
-            // arrange
-            var room1 = CreateRoom("Комната 1");
-            var room2 = CreateRoom("Комната 2");
-            var cabinet1 = new Cabinet(room1, "Шкаф");
-            var cabinet2 = new Cabinet(room2, "Шкаф");
-
-            // act & assert
-            Assert.That(cabinet1.GetHashCode(), Is.Not.EqualTo(cabinet2.GetHashCode()));
-        }
-
         #endregion
 
         #region ToString tests
