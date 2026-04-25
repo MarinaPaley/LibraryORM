@@ -17,9 +17,9 @@ namespace Domain.Tests
         #region Test data helpers
 
         private static Address CreateAddress(string city = "Город", string street = "Улица", int house = 1) =>
-            new(new City(city), new Street(street, new City(city)), house);
+            new (new City(city), new Street(street, new City(city)), house);
 
-        private static Cabinet CreateCabinet(Room room, string name = "Шкаф") => new(room, name);
+        private static Cabinet CreateCabinet(Room room, string name = "Шкаф") => new (room, name);
 
         #endregion
 

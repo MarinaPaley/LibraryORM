@@ -17,21 +17,21 @@ namespace Domain.Tests
     {
         #region Test data helpers
 
-        private static Language CreateLanguage(string name = "Русский") => new(name);
+        private static Language CreateLanguage(string name = "Русский") => new (name);
 
         private static Person CreatePerson(string family, string given, string? patronymic = null) =>
-            new(new Name(family, given, patronymic));
+            new (new Name(family, given, patronymic));
 
         private static Author CreateAuthor(string family, string given, string? patronymic = null) =>
-            new(CreatePerson(family, given, patronymic));
+            new (CreatePerson(family, given, patronymic));
 
         private static Translator CreateTranslator(string family, string given) =>
-            new(CreatePerson(family, given));
+            new (CreatePerson(family, given));
 
         private static Reviewer CreateReviewer(string family, string given) =>
-            new(CreatePerson(family, given));
+            new (CreatePerson(family, given));
 
-        private static Genre CreateGenre(string name) => new(name);
+        private static Genre CreateGenre(string name) => new (name);
 
         #endregion
 

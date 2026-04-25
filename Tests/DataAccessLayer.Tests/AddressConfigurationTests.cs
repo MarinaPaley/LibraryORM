@@ -4,11 +4,11 @@
 
 namespace DataAccessLayer.Tests
 {
+    using System.Linq;
     using DataAccessLayer.Tests.Abstract;
     using Domain;
     using Microsoft.EntityFrameworkCore;
     using NUnit.Framework;
-    using System.Linq;
 
     /// <summary>
     /// Тесты для <see cref="DataAccessLayer.Configurations.AddressConfiguration"/>.

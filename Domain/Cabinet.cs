@@ -4,11 +4,11 @@
 
 namespace Domain
 {
-    using Domain.Abstract;
-    using Staff;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Domain.Abstract;
+    using Staff;
 
     /// <summary>
     /// Шкаф.
