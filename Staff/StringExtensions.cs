@@ -22,7 +22,7 @@ namespace Staff
         /// </summary>
         /// <param name="value"> Строка.</param>
         /// <returns> Или без начальных и конечных пробелов строка, или <see langword="null"/>.</returns>
-        public static string? TrimOrNull(this string value)
+        public static string? TrimOrNull(this string? value)
         {
             var trimmed = value?.Trim();
 

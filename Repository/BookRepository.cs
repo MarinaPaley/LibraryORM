@@ -4,7 +4,6 @@
 namespace Repository
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using DataAccessLayer;
     using Domain;
@@ -12,7 +11,7 @@ namespace Repository
     using Repository.Abstract;
 
     /// <summary>
-    /// Репозиторий для класса <see cref="Domain.Book"/>.
+    /// Репозиторий для класса <see cref="Book"/>.
     /// </summary>
     public sealed class BookRepository : BaseRepository<Book>
     {
@@ -38,9 +37,10 @@ namespace Repository
         /// <summary>
         /// Получает идентификатор по названию книги.
         /// </summary>
-        /// <param name="title">Название книги.</param>
-        /// <returns>Идентификатор.</returns>
-        public Guid? GetId(string title) => this.Find(book => book.Title == title)?.Id;
+        /// <param name="title"> Название книги. </param>
+        /// <returns> Идентификатор. </returns>
+        public Guid? GetId(string title)
+            => this.Find(book => book.Title == title)?.Id;
 
         /// <summary>
         /// Получает полку, на которой стоит книга.
@@ -56,30 +56,13 @@ namespace Repository
         }
 
         /// <summary>
-        /// Получает список авторов по идентификатору.
-        /// </summary>
-        /// <param name="id">Идентификатор книги.</param>
-        /// <returns>Список авторов.</returns>
-        public ISet<Author>? GetAuthors(Guid id) => this.Find(book => book.Id == id)?.Authors;
-
-        /// <summary>
-        /// Показать все книги, написанные авторами выбранной книги.
-        /// </summary>
-        /// <param name="id">Идентификатор книги.</param>
-        /// <returns>Множество книг авторов данной книги.</returns>
-        public ISet<Book>? GetAllBooksCoAuthors(Guid id) =>
-            this.GetAuthors(id)?
-            .SelectMany(author => author.Books)
-            .ToHashSet();
-
-        /// <summary>
         /// Получает все книги.
         /// </summary>
-        /// <returns>Книги.</returns>
+        /// <returns> Книги.</returns>
         protected override IQueryable<Book> GetAll()
         {
             return this.DataContext.Books
-                .Include(book => book.Authors)
+                .Include(book => book.Manuscripts)
                     .ThenInclude(author => author.Books)
                 .Include(book => book.Shelf);
         }

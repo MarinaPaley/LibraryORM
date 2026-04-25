@@ -10,8 +10,8 @@ namespace Domain.Abstract
     /// Базовая сущность.
     /// </summary>
     /// <typeparam name="TEntity"> Тип конкретной сущности. </typeparam>
-    public abstract class Entity<TEntity> : IEntity<TEntity>
-        where TEntity : class, IEntity<TEntity>
+    public abstract class Entity<TEntity> : IEntity<TEntity>, IEquatable<TEntity>
+        where TEntity : Entity<TEntity>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Entity{TEntity}"/>.

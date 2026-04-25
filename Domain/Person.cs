@@ -2,25 +2,23 @@
 // Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
-namespace Domain.Abstract
+namespace Domain
 {
     using System;
     using System.Globalization;
     using System.Text;
-    using Domain;
+    using Domain.Abstract;
     using Staff;
 
     /// <summary>
     /// Персона.
     /// </summary>
-    /// <typeparam name="TPerson"> Конкретный тип персоны. </typeparam>
-    public abstract class Person<TPerson> : Entity<TPerson>
-        where TPerson : Person<TPerson>
+    public sealed class Person : Entity<Person>, IEquatable<Person>
     {
         private readonly CultureInfo culture = new ("ru-RU");
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="Person{TPerson}"/>.
+        /// Инициализирует новый экземпляр класса <see cref="Person"/>.
         /// </summary>
         /// <param name="fullName"> Полное имя.</param>
         /// <param name="dateBirth"> Дата рождения. </param>
@@ -28,7 +26,7 @@ namespace Domain.Abstract
         /// <exception cref="ArgumentNullException">
         /// Если Полное имя <see langword="null"/>.
         /// </exception>
-        protected Person(
+        public Person(
             Name fullName,
             DateOnly? dateBirth = null,
             DateOnly? dateDeath = null)
@@ -38,10 +36,15 @@ namespace Domain.Abstract
             this.DateDeath = dateDeath;
         }
 
+        [Obsolete("For ORM only")]
+        private Person()
+        {
+        }
+
         /// <summary>
         /// Полное имя.
         /// </summary>
-        public Name FullName { get; }
+        public Name FullName { get; private set; }
 
         /// <summary>
         /// Дата рождения.
@@ -56,11 +59,11 @@ namespace Domain.Abstract
         /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
-            return obj is TPerson person && this.Equals(person);
+            return obj is Person person && this.Equals(person);
         }
 
         /// <inheritdoc/>
-        public override bool Equals(TPerson? other)
+        public override bool Equals(Person? other)
         {
             return base.Equals(other)
                 && this.FullName == other.FullName
@@ -68,7 +71,7 @@ namespace Domain.Abstract
                 && this.DateDeath == other.DateDeath;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="object.ToString()"/>
         public override int GetHashCode() => HashCode.Combine(this.FullName, this.DateBirth, this.DateDeath);
 
         /// <inheritdoc/>

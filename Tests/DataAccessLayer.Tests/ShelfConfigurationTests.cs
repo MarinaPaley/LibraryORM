@@ -14,12 +14,6 @@ namespace DataAccessLayer.Tests
     [TestFixture]
     internal sealed class ShelfConfigurationTests : BaseConfigurationTests
     {
-        [TearDown]
-        public void TearDown()
-        {
-            this.DataContext.ChangeTracker.Clear();
-        }
-
         [Test]
         public void AddEntityToDatabase_Success()
         {

@@ -19,23 +19,47 @@ namespace DataAccessLayer.Configurations
             _ = builder.HasKey(book => book.Id);
 
             _ = builder.Property(book => book.Title)
-                .IsRequired()
                 .HasComment("Название книги");
 
             _ = builder.Property(book => book.Pages)
                 .IsRequired()
                 .HasComment("Количество страниц");
 
-            _ = builder.Property(book => book.IBSN)
+            _ = builder.Property(book => book.ISBN)
                 .IsRequired()
-                .HasComment("IBSN");
+                .HasComment("ISBN");
 
             _ = builder.HasOne(book => book.Shelf)
                 .WithMany(shelf => shelf.Books)
                 .IsRequired(false);
 
-            _ = builder.HasMany(book => book.Authors)
-                .WithMany(author => author.Books);
+            _ = builder.HasMany(book => book.Manuscripts)
+                .WithMany(manuscript => manuscript.Books);
+
+            _ = builder.HasOne(book => book.Editor)
+                .WithMany(editor => editor.Books);
+
+            _ = builder.Property(book => book.Annotation)
+                .IsRequired(false)
+                .HasComment("Аннотация");
+
+            _ = builder.HasOne(book => book.Seria)
+                .WithMany(seria => seria.Books);
+
+            _ = builder.HasOne(book => book.BookType)
+                .WithMany(type => type.Books);
+
+            _ = builder.Property(book => book.Doi)
+                .IsRequired(false)
+                .HasComment("DOI");
+
+            _ = builder.Property(book => book.Url)
+                .IsRequired(false)
+                .HasComment("URL");
+
+            _ = builder.Property(book => book.Volume)
+                .IsRequired(false)
+                .HasComment("Том");
         }
     }
 }

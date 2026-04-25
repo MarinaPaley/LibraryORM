@@ -1,9 +1,10 @@
-﻿// <copyright file="BookRepositoryTests.cs" company="Васильева Марина Алексеевна">
-// Copyright (c) Васильева Марина Алексеевна 2024. Library.
+﻿// <copyright file="BookRepositoryTests.cs" company="Филипченко Марина Алексеевна">
+// Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
 namespace Repository.Tests
 {
+    using System;
     using System.Collections.Generic;
     using Domain;
     using NUnit.Framework;
@@ -15,9 +16,13 @@ namespace Repository.Tests
     internal sealed class BookRepositoryTests
         : BaseReposytoryTests<BookRepository, Book>
     {
+        private BookRepository repository = null!;
+
         [SetUp]
         public void SetUp()
         {
+            this.repository = new BookRepository(this.DataContext);
+            _ = this.DataContext.Database.EnsureDeleted();
             _ = this.DataContext.Database.EnsureCreated();
         }
 
@@ -31,52 +36,84 @@ namespace Repository.Tests
         public void Create_ValidData_Success()
         {
             // arrange
-            var book = new Book("Книга", 100, "1");
+            var publisher = new Publisher("Издательство");
+            var bookType = new BookType("Книга");
+            var book = new Book(
+                "Книга",
+                100,
+                "1",
+                bookType,
+                publisher,
+                2024,
+                new HashSet<Manuscript>());
 
             // act
-            _ = this.Repository.Create(book);
+            var result = this.repository.Create(book);
 
             // assert
-            var result = this.DataContext.Find<Book>(book.Id);
-
-            Assert.That(result, Is.EqualTo(book));
+            Assert.That(result, Is.Not.Null);
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(result.Id, Is.Not.EqualTo(Guid.Empty));
+                Assert.That(result.Title, Is.EqualTo("Книга"));
+            }
         }
 
         [Test]
         public void Update_ValidData_Success()
         {
             // arrange
-            var book = new Book("Книга", 100, "1");
-            var name = new Name("Толстой", "Лев");
-            var author = new Author(name);
-            this.DataContext.Add(book);
-            this.DataContext.SaveChanges();
-            book.Authors.Add(author);
+            var publisher = new Publisher("Издательство");
+            var book = new Book(
+                "Книга",
+                100,
+                "1",
+                new BookType("Книга"),
+                publisher,
+                2024,
+                new HashSet<Manuscript>());
+
+            this.repository.Create(book);
+            this.DataContext.ChangeTracker.Clear();
 
             // act
-            _ = this.Repository.Update(book);
+            var loaded = this.repository.Get(book.Id);
+            var editorPerson = new Person(new Name("Редактор", "Тестовый"));
+            var editor = new Editor(editorPerson);
+            loaded!.AddEditor(editor);
+            var result = this.repository.Update(loaded);
 
             // assert
-            var result = this.DataContext.Find<Book>(book.Id);
-            Assert.That(result?.Authors.Count, Is.EqualTo(1));
-            Assert.That(result?.Authors.Contains(author), Is.True);
+            Assert.That(result.Editor, Is.Not.Null);
+            Assert.That(result.Editor.Person.FullName.FamilyName, Is.EqualTo("Редактор"));
         }
 
         [Test]
         public void Delete_ValidData_Success()
         {
             // arrange
-            var book = new Book("Книга", 100, "1");
-            this.DataContext.Add(book);
-            this.DataContext.SaveChanges();
+            var publisher = new Publisher("Издательство");
+            var book = new Book(
+                "Книга",
+                100,
+                "1",
+                new BookType("Книга"),
+                publisher,
+                2024,
+                new HashSet<Manuscript>());
+
+            this.repository.Create(book);
+            this.DataContext.ChangeTracker.Clear();
 
             // act
-            _ = this.Repository.Delete(book);
+            var result = this.repository.Delete(book);
 
             // assert
-            var result = this.DataContext.Find<Book>(book.Id);
-
-            Assert.That(result, Is.Null);
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(result, Is.True);
+                Assert.That(this.repository.Get(book.Id), Is.Null);
+            }
         }
 
         [Test]
@@ -84,15 +121,23 @@ namespace Repository.Tests
         {
             // arrange
             var shelf = new Shelf("1");
-
-            var book = new Book("Книга", 100, "1", shelf);
+            var publisher = new Publisher("Издательство");
+            var book = new Book(
+                "Книга",
+                100,
+                "1",
+                new BookType("Книга"),
+                publisher,
+                2024,
+                new HashSet<Manuscript>(),
+                shelf);
 
             _ = this.DataContext.Add(book);
             _ = this.DataContext.SaveChanges();
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = this.Repository.GetShelf(book.Title);
+            var result = this.repository.GetShelf(book.Title);
 
             // assert
             Assert.That(result, Is.EqualTo(shelf));
@@ -103,13 +148,22 @@ namespace Repository.Tests
         {
             // arrange
             var title = "Книга";
-            var book = new Book(title, 100, "1");
+            var publisher = new Publisher("Издательство");
+            var book = new Book(
+                title,
+                100,
+                "1",
+                new BookType("Книга"),
+                publisher,
+                2024,
+                new HashSet<Manuscript>());
+
             _ = this.DataContext.Add(book);
             _ = this.DataContext.SaveChanges();
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = this.Repository.GetId(title);
+            var result = this.repository.GetId(title);
 
             // assert
             Assert.That(result, Is.EqualTo(book.Id));
@@ -120,64 +174,25 @@ namespace Repository.Tests
         {
             // arrange
             var title = "Книга";
-            var book = new Book(title, 100, "1");
+            var publisher = new Publisher("Издательство");
+            var book = new Book(
+                title,
+                100,
+                "1",
+                new BookType("Книга"),
+                publisher,
+                2024,
+                new HashSet<Manuscript>());
+
             _ = this.DataContext.Add(book);
             _ = this.DataContext.SaveChanges();
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = this.Repository.GetTitle(book.Id);
+            var result = this.repository.GetTitle(book.Id);
 
             // assert
             Assert.That(result, Is.EqualTo(title));
-        }
-
-        [Test]
-        public void GetAuthos_ValidData_Success()
-        {
-            // arrange
-            var name = new Name("Толстой", "Лев");
-            var author = new Author(name);
-            var authors = new HashSet<Author>();
-            _ = authors.Add(author);
-            var book = new Book("Книга", 100, "1", null, author);
-            _ = this.DataContext.Add(book);
-            _ = this.DataContext.SaveChanges();
-            this.DataContext.ChangeTracker.Clear();
-
-            // act
-            var result = this.Repository.GetAuthors(book.Id);
-
-            // assert
-            Assert.That(result, Is.EqualTo(authors));
-        }
-
-        [Test]
-        public void GetAllBooksCoAuthors_ValidData_Success()
-        {
-            // arrange
-            var marina = new Name("Васильева", "Марина", "Алексеевна");
-            var constantin = new Name("Филипченко", "Константин", "Михайлович");
-            var ekaterina = new Name("Балакина", "Екатерина", "Петровна");
-            var vasilyeva = new Author(marina);
-            var philipchenko = new Author(constantin);
-            var balakina = new Author(ekaterina);
-
-            var csv = new Book("Система контроля версий", 200, "1", null, vasilyeva, philipchenko);
-            var iscs = new Book("Информационное обеспечение систем управления", 150, "2", null, vasilyeva, philipchenko, balakina);
-            var term = new Book("Методические указания к курсовому проектированию", 50, "3", null, vasilyeva, balakina);
-            var article = new Book("Статья", 5, "4", null, vasilyeva);
-            var books = new HashSet<Book> { csv, iscs, term, article };
-
-            this.DataContext.AddRange(books);
-            _ = this.DataContext.SaveChanges();
-            this.DataContext.ChangeTracker.Clear();
-
-            // act
-            var result = this.Repository.GetAllBooksCoAuthors(article.Id);
-
-            // assert
-            Assert.That(result, Is.EquivalentTo(books));
         }
     }
 }

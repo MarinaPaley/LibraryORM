@@ -1,4 +1,4 @@
-﻿// <copyright file="Name.cs" company="Филипченко Марина Алексеевна">
+﻿// <copyright file="BookTypeName.cs" company="Филипченко Марина Алексеевна">
 // Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
@@ -22,29 +22,51 @@ namespace Domain
         /// </summary>
         /// <param name="familyName">Фамилия.</param>
         /// <param name="firstName">Имя.</param>
-        /// <param name="patronicName">Отчество.</param>
+        /// <param name="patronymicName">Отчество.</param>
         /// <exception cref="ArgumentNullException">Если имя или фамилия <see langword="null"/>.</exception>
-        public Name(string familyName, string firstName, string? patronicName = null)
+        public Name(string familyName, string firstName, string? patronymicName = null)
         {
-            this.FamilyName = familyName.TrimOrNull() ?? throw new ArgumentNullException(nameof(familyName));
-            this.FirstName = firstName.TrimOrNull() ?? throw new ArgumentNullException(nameof(firstName));
-            this.PatronicName = patronicName;
+            this.FamilyName = familyName;
+            this.FirstName = firstName;
+            this.PatronymicName = patronymicName;
+        }
+
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="Name"/>.
+        /// </summary>
+        [Obsolete("For ORN only", true)]
+        private Name()
+        {
         }
 
         /// <summary>
         /// Фамилия.
         /// </summary>
-        public string FamilyName { get; }
+        public string FamilyName
+        {
+            get => field;
+            private set => field = value.TrimOrNull()
+                ?? throw new ArgumentNullException(nameof(value));
+        }
 
         /// <summary>
         /// Имя.
         /// </summary>
-        public string FirstName { get; }
+        public string FirstName
+        {
+            get => field;
+            private set => field = value.TrimOrNull()
+                ?? throw new ArgumentNullException(nameof(value));
+        }
 
         /// <summary>
         /// Отчество.
         /// </summary>
-        public string? PatronicName { get; } = null;
+        public string? PatronymicName
+        {
+            get => field;
+            private set => field = value?.TrimOrNull();
+        }
 
         public static bool operator ==(Name? lha, Name? rha)
         {
@@ -64,7 +86,7 @@ namespace Domain
             return other is not null
                  && this.FamilyName == other.FamilyName
                  && this.FirstName == other.FirstName
-                 && this.PatronicName == other.PatronicName;
+                 && this.PatronymicName == other.PatronymicName;
         }
 
         /// <inheritdoc/>
@@ -72,14 +94,14 @@ namespace Domain
 
         /// <inheritdoc/>
         public override int GetHashCode() =>
-            HashCode.Combine(this.FamilyName, this.FirstName, this.PatronicName);
+            HashCode.Combine(this.FamilyName, this.FirstName, this.PatronymicName);
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="object.ToString()"/>
         public override string ToString()
         {
-            return this.PatronicName is null
+            return this.PatronymicName is null
                ? $"{this.FamilyName} {this.FirstName}"
-               : $"{this.FamilyName} {this.FirstName} {this.PatronicName}";
+               : $"{this.FamilyName} {this.FirstName} {this.PatronymicName}";
         }
     }
 }

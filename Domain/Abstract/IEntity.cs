@@ -1,5 +1,5 @@
-﻿// <copyright file="IEntity.cs" company="Васильева Марина Алексеевна">
-// Copyright (c) Васильева Марина Алексеевна 2024. Library.
+﻿// <copyright file="IEntity.cs" company="Филипченко Марина Алексеевна">
+// Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
 namespace Domain.Abstract
@@ -7,11 +7,9 @@ namespace Domain.Abstract
     using System;
 
     /// <summary>
-    /// Интерфейс базовой сущности.
+    /// Базовый интерфейс сущности.
     /// </summary>
-    /// <typeparam name="TEntity"> Тип конкретной сущности. </typeparam>
-    public interface IEntity<TEntity> : IEquatable<TEntity>
-        where TEntity : class, IEntity<TEntity>
+    public interface IEntity
     {
         /// <summary>
         /// Идентификатор.

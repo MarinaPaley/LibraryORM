@@ -11,22 +11,17 @@ namespace Domain
     /// <summary>
     /// Автор.
     /// </summary>
-    public sealed class Author : Person<Author>
+    public sealed class Author : Contributor
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Author"/>.
         /// </summary>
-        /// <param name="fullName"> Полное имя.</param>
-        /// <param name="dateBirth"> Дата рождения. </param>
-        /// <param name="dateDeath"> Дата смерти. </param>
+        /// <param name="person"> Персона. </param>
         /// <exception cref="ArgumentNullException">
         /// Если Полное имя <see langword="null"/>.
         /// </exception>
-        public Author(
-            Name fullName,
-            DateOnly? dateBirth = null,
-            DateOnly? dateDeath = null)
-            : base(fullName, dateBirth, dateDeath)
+        public Author(Person person)
+            : base(person)
         {
         }
 
@@ -35,37 +30,36 @@ namespace Domain
         /// </summary>
         [Obsolete("For ORM only", true)]
         private Author()
-            : base(Name.Unknown)
         {
         }
 
         /// <summary>
-        /// Книги.
+        /// Рукописи.
         /// </summary>
-        public ISet<Book> Books { get; } = new HashSet<Book>();
+        public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>();
 
         /// <summary>
         /// Добавляем книгу автору.
         /// </summary>
-        /// <param name="book"> Книга. </param>
+        /// <param name="manuscript"> Книга. </param>
         /// <returns><see langword="true"/> если добавили, иначе <see langword="false"/>.</returns>
-        public bool AddBook(Book book)
+        public bool AddManuscript(Manuscript manuscript)
         {
-            return book is not null
-                && this.Books.Add(book)
-                && book.Authors.Add(this);
+            return manuscript is not null
+                && this.Manuscripts.Add(manuscript)
+                && manuscript.Authors.Add(this);
         }
 
         /// <summary>
-        /// Удаляем книгу у автора.
+        /// Удаляем рукопись у автора.
         /// </summary>
-        /// <param name="book"> Книга. </param>
+        /// <param name="manuscript"> Книга. </param>
         /// <returns><see langword="true"/> если убрали, иначе <see langword="false"/>.</returns>
-        public bool RemoveBook(Book book)
+        public bool RemoveBook(Manuscript manuscript)
         {
-            return book is not null
-                && this.Books.Remove(book)
-                && book.Authors.Remove(this);
+            return manuscript is not null
+                && this.Manuscripts.Remove(manuscript)
+                && manuscript.Authors.Remove(this);
         }
     }
 }

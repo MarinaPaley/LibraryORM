@@ -17,27 +17,264 @@ namespace DataAccessLayer.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.11")
+                .HasAnnotation("ProductVersion", "10.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("AuthorBook", b =>
+            modelBuilder.Entity("AuthorManuscript", b =>
                 {
                     b.Property<Guid>("AuthorsId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("ManuscriptsId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("AuthorsId", "ManuscriptsId");
+
+                    b.HasIndex("ManuscriptsId");
+
+                    b.ToTable("AuthorManuscript");
+                });
+
+            modelBuilder.Entity("BookManuscript", b =>
+                {
                     b.Property<Guid>("BooksId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("AuthorsId", "BooksId");
+                    b.Property<Guid>("ManuscriptsId")
+                        .HasColumnType("uuid");
 
-                    b.HasIndex("BooksId");
+                    b.HasKey("BooksId", "ManuscriptsId");
 
-                    b.ToTable("AuthorBook");
+                    b.HasIndex("ManuscriptsId");
+
+                    b.ToTable("BookManuscript");
                 });
 
-            modelBuilder.Entity("Domain.Author", b =>
+            modelBuilder.Entity("BookPublisher", b =>
+                {
+                    b.Property<Guid>("BooksId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PublishersId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("BooksId", "PublishersId");
+
+                    b.HasIndex("PublishersId");
+
+                    b.ToTable("BookPublisher");
+                });
+
+            modelBuilder.Entity("Domain.Abstract.Contributor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ContributorType")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("character varying(13)");
+
+                    b.Property<Guid>("PersonId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("Contributors", (string)null);
+
+                    b.HasDiscriminator<string>("ContributorType").HasValue("Contributor");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("Domain.Address", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("Apartment")
+                        .HasColumnType("integer")
+                        .HasComment("Номер квартиры");
+
+                    b.Property<string>("BuildingSuffix")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasComment("Корпус или владение");
+
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("House")
+                        .HasColumnType("integer")
+                        .HasComment("Номер дома");
+
+                    b.Property<Guid>("StreetId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("StreetId");
+
+                    b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("Domain.Book", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Annotation")
+                        .HasColumnType("text")
+                        .HasComment("Аннотация");
+
+                    b.Property<Guid>("BookTypeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Doi")
+                        .HasColumnType("text")
+                        .HasComment("DOI");
+
+                    b.Property<string>("Edition")
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("EditorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ISBN")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasComment("ISBN");
+
+                    b.Property<int>("Pages")
+                        .HasColumnType("integer")
+                        .HasComment("Количество страниц");
+
+                    b.Property<Guid?>("SeriaId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("ShelfId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text")
+                        .HasComment("Название книги");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("text")
+                        .HasComment("URL");
+
+                    b.Property<int?>("Volume")
+                        .HasColumnType("integer")
+                        .HasComment("Том");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookTypeId");
+
+                    b.HasIndex("EditorId");
+
+                    b.HasIndex("SeriaId");
+
+                    b.HasIndex("ShelfId");
+
+                    b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("Domain.BookType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BookTypes");
+                });
+
+            modelBuilder.Entity("Domain.Cabinet", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("RoomId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Cabinets", null, t =>
+                        {
+                            t.HasComment("Шкафы в комнатах");
+                        });
+                });
+
+            modelBuilder.Entity("Domain.City", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("Domain.Genre", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genres");
+                });
+
+            modelBuilder.Entity("Domain.Language", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Languages");
+                });
+
+            modelBuilder.Entity("Domain.Manuscript", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("LanguageId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LanguageId");
+
+                    b.ToTable("Manuscripts", null, t =>
+                        {
+                            t.HasComment("Рукописи произведений");
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Person", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -53,43 +290,65 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Authors");
+                    b.ToTable("Persons", null, t =>
+                        {
+                            t.HasComment("Персоны: авторы, переводчики, редакторы");
+                        });
                 });
 
-            modelBuilder.Entity("Domain.Book", b =>
+            modelBuilder.Entity("Domain.Publisher", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("IBSN")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasComment("IBSN");
-
-                    b.Property<int>("Pages")
-                        .HasColumnType("integer")
-                        .HasComment("Количество страниц");
-
-                    b.Property<Guid?>("ShelfId")
+                    b.Property<Guid?>("AddressId")
                         .HasColumnType("uuid");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasComment("Название книги");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ShelfId");
+                    b.HasIndex("AddressId");
 
-                    b.ToTable("Books");
+                    b.ToTable("Publishers");
+                });
+
+            modelBuilder.Entity("Domain.Room", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AddressId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.ToTable("Rooms", null, t =>
+                        {
+                            t.HasComment("Комнаты в зданиях");
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Seria", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Serias");
                 });
 
             modelBuilder.Entity("Domain.Shelf", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("CabinetId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
@@ -99,13 +358,104 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CabinetId");
+
                     b.HasIndex("Name")
                         .IsUnique();
 
                     b.ToTable("Shelves");
                 });
 
-            modelBuilder.Entity("AuthorBook", b =>
+            modelBuilder.Entity("Domain.Street", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.ToTable("Streets");
+                });
+
+            modelBuilder.Entity("GenreManuscript", b =>
+                {
+                    b.Property<Guid>("GenresId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ManuscriptsId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("GenresId", "ManuscriptsId");
+
+                    b.HasIndex("ManuscriptsId");
+
+                    b.ToTable("GenreManuscript");
+                });
+
+            modelBuilder.Entity("ManuscriptReviewer", b =>
+                {
+                    b.Property<Guid>("ManuscriptsId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ReviewersId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("ManuscriptsId", "ReviewersId");
+
+                    b.HasIndex("ReviewersId");
+
+                    b.ToTable("ManuscriptReviewer");
+                });
+
+            modelBuilder.Entity("ManuscriptTranslator", b =>
+                {
+                    b.Property<Guid>("ManuscriptsId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("TranslatorsId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("ManuscriptsId", "TranslatorsId");
+
+                    b.HasIndex("TranslatorsId");
+
+                    b.ToTable("ManuscriptTranslator");
+                });
+
+            modelBuilder.Entity("Domain.Author", b =>
+                {
+                    b.HasBaseType("Domain.Abstract.Contributor");
+
+                    b.HasDiscriminator().HasValue("Author");
+                });
+
+            modelBuilder.Entity("Domain.Editor", b =>
+                {
+                    b.HasBaseType("Domain.Abstract.Contributor");
+
+                    b.HasDiscriminator().HasValue("Editor");
+                });
+
+            modelBuilder.Entity("Domain.Reviewer", b =>
+                {
+                    b.HasBaseType("Domain.Abstract.Contributor");
+
+                    b.HasDiscriminator().HasValue("Reviewer");
+                });
+
+            modelBuilder.Entity("Domain.Translator", b =>
+                {
+                    b.HasBaseType("Domain.Abstract.Contributor");
+
+                    b.HasDiscriminator().HasValue("Translator");
+                });
+
+            modelBuilder.Entity("AuthorManuscript", b =>
                 {
                     b.HasOne("Domain.Author", null)
                         .WithMany()
@@ -113,18 +463,325 @@ namespace DataAccessLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Manuscript", null)
+                        .WithMany()
+                        .HasForeignKey("ManuscriptsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BookManuscript", b =>
+                {
                     b.HasOne("Domain.Book", null)
                         .WithMany()
                         .HasForeignKey("BooksId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Domain.Manuscript", null)
+                        .WithMany()
+                        .HasForeignKey("ManuscriptsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Author", b =>
+            modelBuilder.Entity("BookPublisher", b =>
+                {
+                    b.HasOne("Domain.Book", null)
+                        .WithMany()
+                        .HasForeignKey("BooksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Publisher", null)
+                        .WithMany()
+                        .HasForeignKey("PublishersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Abstract.Contributor", b =>
+                {
+                    b.HasOne("Domain.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("Domain.Address", b =>
+                {
+                    b.HasOne("Domain.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Street", "Street")
+                        .WithMany()
+                        .HasForeignKey("StreetId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("City");
+
+                    b.Navigation("Street");
+                });
+
+            modelBuilder.Entity("Domain.Book", b =>
+                {
+                    b.HasOne("Domain.BookType", "BookType")
+                        .WithMany("Books")
+                        .HasForeignKey("BookTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Editor", "Editor")
+                        .WithMany("Books")
+                        .HasForeignKey("EditorId");
+
+                    b.HasOne("Domain.Seria", "Seria")
+                        .WithMany("Books")
+                        .HasForeignKey("SeriaId");
+
+                    b.HasOne("Domain.Shelf", "Shelf")
+                        .WithMany("Books")
+                        .HasForeignKey("ShelfId");
+
+                    b.Navigation("BookType");
+
+                    b.Navigation("Editor");
+
+                    b.Navigation("Seria");
+
+                    b.Navigation("Shelf");
+                });
+
+            modelBuilder.Entity("Domain.BookType", b =>
+                {
+                    b.OwnsOne("Domain.Title", "BookTypeName", b1 =>
+                        {
+                            b1.Property<Guid>("BookTypeId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("character varying(200)")
+                                .HasColumnName("BookTypeName")
+                                .HasComment("Тип книги");
+
+                            b1.HasKey("BookTypeId");
+
+                            b1.HasIndex("Value")
+                                .IsUnique()
+                                .HasDatabaseName("IX_BookType_BookTypeName");
+
+                            b1.ToTable("BookTypes");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BookTypeId");
+                        });
+
+                    b.Navigation("BookTypeName")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Cabinet", b =>
+                {
+                    b.HasOne("Domain.Room", "Room")
+                        .WithMany("Cabinets")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.OwnsOne("Domain.Title", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("CabinetId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("character varying(200)")
+                                .HasColumnName("CabinetName")
+                                .HasComment("Название шкафа");
+
+                            b1.HasKey("CabinetId");
+
+                            b1.HasIndex("Value")
+                                .HasDatabaseName("IX_Cabinet_Name");
+
+                            b1.ToTable("Cabinets");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CabinetId");
+                        });
+
+                    b.Navigation("Name")
+                        .IsRequired();
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("Domain.City", b =>
+                {
+                    b.OwnsOne("Domain.Title", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("CityId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("character varying(200)")
+                                .HasColumnName("CityName")
+                                .HasComment("Название города");
+
+                            b1.HasKey("CityId");
+
+                            b1.HasIndex("Value")
+                                .IsUnique()
+                                .HasDatabaseName("IX_City_Name");
+
+                            b1.ToTable("Cities");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CityId");
+                        });
+
+                    b.Navigation("Name")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Genre", b =>
+                {
+                    b.OwnsOne("Domain.Title", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("GenreId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("character varying(200)")
+                                .HasColumnName("GenreName")
+                                .HasComment("Жанр");
+
+                            b1.HasKey("GenreId");
+
+                            b1.HasIndex("Value")
+                                .IsUnique()
+                                .HasDatabaseName("IX_Genre_Name");
+
+                            b1.ToTable("Genres");
+
+                            b1.WithOwner()
+                                .HasForeignKey("GenreId");
+                        });
+
+                    b.Navigation("Name")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Language", b =>
+                {
+                    b.OwnsOne("Domain.Title", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("LanguageId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("character varying(200)")
+                                .HasColumnName("LanguageName")
+                                .HasComment("Язык");
+
+                            b1.HasKey("LanguageId");
+
+                            b1.HasIndex("Value")
+                                .IsUnique()
+                                .HasDatabaseName("IX_Language_Name");
+
+                            b1.ToTable("Languages");
+
+                            b1.WithOwner()
+                                .HasForeignKey("LanguageId");
+                        });
+
+                    b.Navigation("Name")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Manuscript", b =>
+                {
+                    b.HasOne("Domain.Language", "Language")
+                        .WithMany("Manuscripts")
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("Domain.Title", "Title", b1 =>
+                        {
+                            b1.Property<Guid>("ManuscriptId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("character varying(200)")
+                                .HasColumnName("ManuscriptTitle")
+                                .HasComment("Название произведения");
+
+                            b1.HasKey("ManuscriptId");
+
+                            b1.HasIndex("Value")
+                                .HasDatabaseName("IX_Manuscript_Title");
+
+                            b1.ToTable("Manuscripts");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ManuscriptId");
+                        });
+
+                    b.OwnsOne("Staff.Range<System.DateOnly>", "Dates", b1 =>
+                        {
+                            b1.Property<Guid>("ManuscriptId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<DateOnly>("From")
+                                .HasColumnType("date")
+                                .HasColumnName("DateFrom")
+                                .HasComment("Дата начала написания");
+
+                            b1.Property<DateOnly>("To")
+                                .HasColumnType("date")
+                                .HasColumnName("DateTo")
+                                .HasComment("Дата окончания написания");
+
+                            b1.HasKey("ManuscriptId");
+
+                            b1.ToTable("Manuscripts");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ManuscriptId");
+                        });
+
+                    b.Navigation("Dates");
+
+                    b.Navigation("Language");
+
+                    b.Navigation("Title")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Person", b =>
                 {
                     b.OwnsOne("Domain.Name", "FullName", b1 =>
                         {
-                            b1.Property<Guid>("AuthorId")
+                            b1.Property<Guid>("PersonId")
                                 .HasColumnType("uuid");
 
                             b1.Property<string>("FamilyName")
@@ -132,43 +789,262 @@ namespace DataAccessLayer.Migrations
                                 .HasMaxLength(100)
                                 .HasColumnType("character varying(100)")
                                 .HasColumnName("FamilyName")
-                                .HasComment("Фамилия");
+                                .HasComment("Фамилия персоны");
 
                             b1.Property<string>("FirstName")
                                 .IsRequired()
                                 .HasMaxLength(100)
                                 .HasColumnType("character varying(100)")
                                 .HasColumnName("FirstName")
-                                .HasComment("Имя");
+                                .HasComment("Имя персоны");
 
-                            b1.Property<string>("PatronicName")
+                            b1.Property<string>("PatronymicName")
                                 .HasMaxLength(100)
                                 .HasColumnType("character varying(100)")
-                                .HasColumnName("PatronicName")
-                                .HasComment("Отчество");
+                                .HasColumnName("PatronymicName")
+                                .HasComment("Отчество персоны");
 
-                            b1.HasKey("AuthorId");
+                            b1.HasKey("PersonId");
 
-                            b1.ToTable("Authors");
+                            b1.ToTable("Persons");
 
                             b1.WithOwner()
-                                .HasForeignKey("AuthorId");
+                                .HasForeignKey("PersonId");
                         });
 
                     b.Navigation("FullName")
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Book", b =>
+            modelBuilder.Entity("Domain.Publisher", b =>
                 {
-                    b.HasOne("Domain.Shelf", "Shelf")
-                        .WithMany("Books")
-                        .HasForeignKey("ShelfId");
+                    b.HasOne("Domain.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
-                    b.Navigation("Shelf");
+                    b.OwnsOne("Domain.Title", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("PublisherId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("character varying(200)")
+                                .HasColumnName("PublisherName")
+                                .HasComment("Название издательства");
+
+                            b1.HasKey("PublisherId");
+
+                            b1.HasIndex("Value")
+                                .IsUnique()
+                                .HasDatabaseName("IX_Publisher_Name");
+
+                            b1.ToTable("Publishers");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PublisherId");
+                        });
+
+                    b.Navigation("Address");
+
+                    b.Navigation("Name")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Room", b =>
+                {
+                    b.HasOne("Domain.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.OwnsOne("Domain.Title", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("RoomId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("character varying(200)")
+                                .HasColumnName("RoomName")
+                                .HasComment("Название комнаты");
+
+                            b1.HasKey("RoomId");
+
+                            b1.HasIndex("Value")
+                                .HasDatabaseName("IX_Room_Name");
+
+                            b1.ToTable("Rooms");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RoomId");
+                        });
+
+                    b.Navigation("Address");
+
+                    b.Navigation("Name")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Seria", b =>
+                {
+                    b.OwnsOne("Domain.Title", "SeriaName", b1 =>
+                        {
+                            b1.Property<Guid>("SeriaId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("character varying(200)")
+                                .HasColumnName("SeriaName")
+                                .HasComment("Серия");
+
+                            b1.HasKey("SeriaId");
+
+                            b1.HasIndex("Value")
+                                .IsUnique()
+                                .HasDatabaseName("IX_Seria_Name");
+
+                            b1.ToTable("Serias");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SeriaId");
+                        });
+
+                    b.Navigation("SeriaName")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Shelf", b =>
+                {
+                    b.HasOne("Domain.Cabinet", "Cabinet")
+                        .WithMany("Shelves")
+                        .HasForeignKey("CabinetId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Cabinet");
+                });
+
+            modelBuilder.Entity("Domain.Street", b =>
+                {
+                    b.HasOne("Domain.City", "City")
+                        .WithMany("Streets")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("Domain.Title", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("StreetId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("character varying(200)")
+                                .HasColumnName("StreetName")
+                                .HasComment("Название улицы");
+
+                            b1.HasKey("StreetId");
+
+                            b1.ToTable("Streets");
+
+                            b1.WithOwner()
+                                .HasForeignKey("StreetId");
+                        });
+
+                    b.Navigation("City");
+
+                    b.Navigation("Name")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GenreManuscript", b =>
+                {
+                    b.HasOne("Domain.Genre", null)
+                        .WithMany()
+                        .HasForeignKey("GenresId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Manuscript", null)
+                        .WithMany()
+                        .HasForeignKey("ManuscriptsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ManuscriptReviewer", b =>
+                {
+                    b.HasOne("Domain.Manuscript", null)
+                        .WithMany()
+                        .HasForeignKey("ManuscriptsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Reviewer", null)
+                        .WithMany()
+                        .HasForeignKey("ReviewersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ManuscriptTranslator", b =>
+                {
+                    b.HasOne("Domain.Manuscript", null)
+                        .WithMany()
+                        .HasForeignKey("ManuscriptsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Translator", null)
+                        .WithMany()
+                        .HasForeignKey("TranslatorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.BookType", b =>
+                {
+                    b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("Domain.Cabinet", b =>
+                {
+                    b.Navigation("Shelves");
+                });
+
+            modelBuilder.Entity("Domain.City", b =>
+                {
+                    b.Navigation("Streets");
+                });
+
+            modelBuilder.Entity("Domain.Language", b =>
+                {
+                    b.Navigation("Manuscripts");
+                });
+
+            modelBuilder.Entity("Domain.Room", b =>
+                {
+                    b.Navigation("Cabinets");
+                });
+
+            modelBuilder.Entity("Domain.Seria", b =>
+                {
+                    b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("Domain.Shelf", b =>
+                {
+                    b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("Domain.Editor", b =>
                 {
                     b.Navigation("Books");
                 });
