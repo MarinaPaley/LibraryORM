@@ -55,7 +55,7 @@ namespace Repository.Tests
             this.DataContext.SaveChanges();
 
             // act
-            _ = this.Repository.Update(city);
+            _ = this.Repository.UpdateAsync(city);
 
             // assert
             var result = this.DataContext.Find<City>(city.Id);

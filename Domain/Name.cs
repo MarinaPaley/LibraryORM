@@ -1,4 +1,4 @@
-﻿// <copyright file="BookTypeName.cs" company="Филипченко Марина Алексеевна">
+﻿// <copyright file="Name.cs" company="Филипченко Марина Алексеевна">
 // Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
@@ -20,10 +20,12 @@ namespace Domain
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Name"/>.
         /// </summary>
-        /// <param name="familyName">Фамилия.</param>
-        /// <param name="firstName">Имя.</param>
-        /// <param name="patronymicName">Отчество.</param>
-        /// <exception cref="ArgumentNullException">Если имя или фамилия <see langword="null"/>.</exception>
+        /// <param name="familyName"> Фамилия. </param>
+        /// <param name="firstName"> Имя. </param>
+        /// <param name="patronymicName"> Отчество. </param>
+        /// <exception cref="ArgumentNullException">
+        /// В случае если <paramref name="familyName"/> или <paramref name="firstName"/> – <see langword="null"/>.
+        /// </exception>
         public Name(string familyName, string firstName, string? patronymicName = null)
         {
             this.FamilyName = familyName;
@@ -68,6 +70,12 @@ namespace Domain
             private set => field = value?.TrimOrNull();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lha"></param>
+        /// <param name="rha"></param>
+        /// <returns></returns>
         public static bool operator ==(Name? lha, Name? rha)
         {
             if (lha is null || rha is null)
@@ -78,6 +86,12 @@ namespace Domain
             return lha.Equals(rha);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lha"></param>
+        /// <param name="rha"></param>
+        /// <returns></returns>
         public static bool operator !=(Name? lha, Name? rha) => !(lha == rha);
 
         /// <inheritdoc/>

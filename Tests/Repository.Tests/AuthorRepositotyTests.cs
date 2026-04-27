@@ -55,7 +55,7 @@ namespace Repository.Tests
 
             // act
             author.Person.DateBirth = new DateOnly(1828, 09, 28);
-            _ = this.Repository.Update(author);
+            _ = this.Repository.UpdateAsync(author);
 
             // assert
             var result = this.DataContext.Find<Author>(author.Id)?.Person.DateBirth;

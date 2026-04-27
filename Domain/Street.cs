@@ -20,6 +20,7 @@ namespace Domain
         public Street(string name, City city)
         {
             this.Name = new Title(name);
+
             ArgumentNullException.ThrowIfNull(city);
 
             city.AddStreet(this);
@@ -49,7 +50,8 @@ namespace Domain
         /// <inheritdoc/>
         public override bool Equals(Street? other)
         {
-            return ReferenceEquals(this, other) || ((other is not null) && (this.Name == other.Name));
+            return ReferenceEquals(this, other)
+                || ((other is not null) && (this.Name == other.Name));
         }
 
         /// <inheritdoc/>

@@ -23,7 +23,10 @@ namespace Repository.Abstract
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="BaseRepository{TEntity}"/>.
         /// </summary>
-        /// <param name="dataContext">Контекст доступа к данным.</param>
+        /// <param name="dataContext"> Контекст доступа к данным. </param>
+        /// <exception cref="ArgumentNullException">
+        /// В случае если <paramref name="dataContext"/> – <see langword="null"/>.
+        /// </exception>
         protected BaseRepository(DataContext dataContext)
         {
             this.DataContext = dataContext
@@ -39,7 +42,7 @@ namespace Repository.Abstract
         public async Task<TEntity> CreateAsync(TEntity entity, bool saveNow = true)
         {
             var result = this.DataContext.Add(entity).Entity;
-            _ = this.SaveAsync(saveNow);
+            _ = await this.SaveAsync(saveNow);
             return result;
         }
 
@@ -60,9 +63,11 @@ namespace Repository.Abstract
 
         /// <inheritdoc/>
         public IEnumerable<TEntity> Filter(Expression<Func<TEntity, bool>>? predicate = null)
-            => predicate is not null
-            ? this.GetAll().Where(predicate)
-            : this.GetAll();
+        {
+            return predicate is not null
+                ? this.GetAll().Where(predicate)
+                : this.GetAll();
+        }
 
         /// <inheritdoc/>
         public async Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate)
@@ -71,13 +76,16 @@ namespace Repository.Abstract
         }
 
         /// <inheritdoc/>
-        public async Task<TEntity?> GetAsync(Guid id) => await this.GetAll().SingleOrDefaultAsync(entity => entity.Id == id);
+        public async Task<TEntity?> GetAsync(Guid id)
+        {
+            return await this.GetAll().SingleOrDefaultAsync(entity => entity.Id == id);
+        }
 
         /// <inheritdoc/>
-        public async Task<TEntity> Update(TEntity entity, bool saveNow = true)
+        public async Task<TEntity> UpdateAsync(TEntity entity, bool saveNow = true)
         {
             var result = this.DataContext.Update(entity).Entity;
-            _ = this.SaveAsync(saveNow);
+            _ = await this.SaveAsync(saveNow);
             return result;
         }
 

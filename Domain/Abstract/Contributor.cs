@@ -16,13 +16,16 @@ namespace Domain.Abstract
         /// Инициализирует новый экземпляр класса <see cref="Contributor"/>.
         /// </summary>
         /// <param name="person"> Персона. </param>
-        /// <exception cref="ArgumentNullException"> если персона <see langword="null"/>. </exception>
+        /// <exception cref="ArgumentNullException">
+        /// В случае если <paramref name="person"/> – <see langword="null"/>.
+        /// </exception>
         protected Contributor(Person person)
         {
             this.Person = person ?? throw new ArgumentNullException(nameof(person));
         }
 
 #pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
+
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Contributor"/>.
         /// </summary>
@@ -30,6 +33,7 @@ namespace Domain.Abstract
         protected Contributor()
         {
         }
+
 #pragma warning restore CS8618
 
         /// <summary>

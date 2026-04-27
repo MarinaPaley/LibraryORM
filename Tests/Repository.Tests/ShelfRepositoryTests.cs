@@ -73,7 +73,7 @@ namespace Repository.Tests
 
             // act
             shelf.Name = new Title(newName);
-            var result = await this.Repository.Update(shelf);
+            var result = await this.Repository.UpdateAsync(shelf);
 
             // assert
             Assert.That(result, Is.Not.Null);

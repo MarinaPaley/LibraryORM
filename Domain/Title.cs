@@ -12,12 +12,13 @@ namespace Domain
     /// </summary>
     public sealed class Title : IEquatable<Title>
     {
-        private string value;
-
         /// <summary>
-        ///  Инициализирует новый экземпляр класса <see cref="Title"/>.
+        /// Инициализирует новый экземпляр класса <see cref="Title"/>.
         /// </summary>
         /// <param name="value"> Значение. </param>
+        /// <exception cref="ArgumentNullException">
+        /// В случае если <paramref name="value"/> – <see langword="null"/>.
+        /// </exception>
         public Title(string value)
         {
             this.Value = value;
@@ -26,20 +27,36 @@ namespace Domain
         /// <summary>
         /// Значение.
         /// </summary>
+        /// <exception cref="ArgumentNullException">
+        /// В случае если входное значение <see langword="null"/>.
+        /// </exception>
         public string Value
         {
-            get => this.value;
-            private set => this.value = value.TrimOrNull() ?? throw new ArgumentNullException(nameof(value));
+            get => field;
+            private set => field = value.TrimOrNull() ?? throw new ArgumentNullException(nameof(value));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lha"></param>
+        /// <param name="rha"></param>
+        /// <returns></returns>
         public static bool operator ==(Title? lha, Title? rha) => Equals(lha, rha);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lha"></param>
+        /// <param name="rha"></param>
+        /// <returns></returns>
         public static bool operator !=(Title? lha, Title? rha) => !Equals(lha, rha);
 
         /// <inheritdoc/>
         public bool Equals(Title? other)
         {
-            return ReferenceEquals(this, other) || ((other is not null) && (this.Value == other.Value));
+            return ReferenceEquals(this, other)
+                || ((other is not null) && (this.Value == other.Value));
         }
 
         /// <inheritdoc/>

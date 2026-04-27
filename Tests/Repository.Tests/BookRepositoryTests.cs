@@ -83,7 +83,7 @@ namespace Repository.Tests
             var editorPerson = new Person(new Name("Редактор", "Тестовый"));
             var editor = new Editor(editorPerson);
             loaded!.AddEditor(editor);
-            var result = await this.repository.Update(loaded);
+            var result = await this.repository.UpdateAsync(loaded);
 
             // assert
             Assert.That(result.Editor, Is.Not.Null);

@@ -30,7 +30,7 @@ namespace Repository.Abstract
         /// <param name="entity"> Сущность. </param>
         /// <param name="saveNow"> Надо ли сохранять сущность после изменения. </param>
         /// <returns> Контекст доступа к сущности.</returns>
-        Task<TEntity> Update(TEntity entity, bool saveNow = true);
+        Task<TEntity> UpdateAsync(TEntity entity, bool saveNow = true);
 
         /// <summary>
         /// Удаление сущности.

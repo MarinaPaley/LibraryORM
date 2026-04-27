@@ -16,7 +16,10 @@ namespace Domain
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="City"/>.
         /// </summary>
-        /// <param name="name"> Название города.</param>
+        /// <param name="name"> Название города. </param>
+        /// <exception cref="ArgumentNullException">
+        /// В случае если <paramref name="name"/> – <see langword="null"/>.
+        /// </exception>
         public City(string name)
         {
             this.Name = new Title(name);
@@ -31,6 +34,7 @@ namespace Domain
         private City()
         {
         }
+
 #pragma warning restore CS8618
 
         /// <summary>
@@ -46,7 +50,8 @@ namespace Domain
         /// <inheritdoc/>
         public override bool Equals(City? other)
         {
-            return ReferenceEquals(this, other) || ((other is not null) && (this.Name == other.Name));
+            return ReferenceEquals(this, other)
+                || ((other is not null) && (this.Name == other.Name));
         }
 
         /// <inheritdoc/>
@@ -65,9 +70,7 @@ namespace Domain
         /// <returns> <see langword="true"/>, если добавили, иначе - <see langword="false"/>. </returns>
         public bool AddStreet(Street street)
         {
-            var result = street is not null
-                && this.Streets.Add(street);
-
+            var result = street is not null && this.Streets.Add(street);
             if (result)
             {
                 street!.City = this;
