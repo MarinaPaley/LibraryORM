@@ -20,6 +20,7 @@ namespace Domain
         /// <param name="street"> Улица. </param>
         /// <param name="house"> Дом. </param>
         /// <param name="buildingSuffix"> Корпус или владение. </param>
+        /// <param name="floor"> Этаж. </param>
         /// <param name="apartment"> Квартира. </param>
         /// <exception cref="ArgumentNullException"> Если <see cref="City"/>.
         /// или <see cref="Street"/> равны <see langword="null"/>.</exception>
@@ -28,12 +29,14 @@ namespace Domain
             Street street,
             int house,
             string? buildingSuffix = null,
+            int? floor = null,
             int? apartment = null)
         {
             this.City = city ?? throw new ArgumentNullException(nameof(city));
             this.Street = street ?? throw new ArgumentNullException(nameof(street));
             this.House = house;
             this.BuildingSuffix = buildingSuffix;
+            this.Floor = floor;
             this.Apartment = apartment;
         }
 
@@ -67,6 +70,11 @@ namespace Domain
         /// Корпус.
         /// </summary>
         public string? BuildingSuffix { get; set; }
+
+        /// <summary>
+        /// Этаж.
+        /// </summary>
+        public int? Floor { get; set; }
 
         /// <summary>
         /// Квартира.
