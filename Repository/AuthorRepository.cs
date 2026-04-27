@@ -35,7 +35,7 @@ namespace Repository
         /// </summary>
         /// <param name="familyName"> Фамилия автора.</param>
         /// <returns> Идентификатор.</returns>
-        public async Task<Guid?> GetIdByNameAsunc(string familyName)
+        public async Task<Guid?> GetIdByNameAsync(string familyName)
         {
             return (await this.FindAsync(author => author.Person.FullName.FamilyName == familyName))?.Id;
         }
@@ -58,9 +58,10 @@ namespace Repository
         public async Task<ISet<Author>> GetCoAuthorsAsync(Guid id)
         {
             return await this.GetAll()
-                .Where(author => author.Id == id)
-                .SelectMany(author => author.Manuscripts)
-                .SelectMany(manuscript => manuscript.Authors)
+                .Where(coAuthor =>
+                    coAuthor.Id != id &&
+                    coAuthor.Manuscripts.Any(m => m.Authors.Any(a => a.Id == id)))
+                .Include(a => a.Person)
                 .ToHashSetAsync();
         }
 
@@ -73,6 +74,7 @@ namespace Repository
             return this.DataContext.Contributors
                 .OfType<Author>()
                 .Include(author => author.Person)
+                    .ThenInclude(person => person.FullName)
                 .Include(author => author.Manuscripts);
         }
     }

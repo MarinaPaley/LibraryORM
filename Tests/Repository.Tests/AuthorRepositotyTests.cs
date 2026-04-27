@@ -83,7 +83,7 @@ namespace Repository.Tests
         }
 
         [Test]
-        public void GetIdByName_FamilyName_Success()
+        public async Task GetIdByName_FamilyName_Success()
         {
             // arrange
             var familyName = "Толстой";
@@ -95,12 +95,12 @@ namespace Repository.Tests
                 new Author(new Person(new Name(familyName, "Алексей", "Николаевич"))),
             };
 
-            this.DataContext.AddRange(authors);
-            _ = this.DataContext.SaveChanges();
+            await this.DataContext.AddRangeAsync(authors);
+            _ = this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = this.Repository.GetIdByNameAsunc(familyName);
+            var result = await this.Repository.GetIdByNameAsync(familyName);
 
             // Act
             Assert.That(
@@ -110,7 +110,7 @@ namespace Repository.Tests
         }
 
         [Test]
-        public void GetBooksById_ValidData_Success()
+        public async Task GetBooksById_ValidData_Success()
         {
             var name = new Name("Толстой", "Лев");
             var person = new Person(name);
@@ -127,11 +127,11 @@ namespace Repository.Tests
             };
 
             _ = this.DataContext.Add(author);
-            _ = this.DataContext.SaveChanges();
+            _ = await this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = this.Repository.GetBooksByAuthorId(author.Id);
+            var result = await this.Repository.GetBooksByAuthorId(author.Id);
 
             // assert
             Assert.That(result, Is.EquivalentTo(manuscripts));
@@ -157,8 +157,8 @@ namespace Repository.Tests
             var article = new Manuscript("Статья", language, new HashSet<Author>() { vasilyeva });
             var manuscripts = new HashSet<Manuscript> { csv, iscs, term, article };
 
-            this.DataContext.AddRange(manuscripts);
-            _ = this.DataContext.SaveChangesAsync();
+            await this.DataContext.AddRangeAsync(manuscripts);
+            _ = await this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
