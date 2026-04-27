@@ -6,6 +6,7 @@ namespace Repository
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using DataAccessLayer;
     using Domain;
     using Microsoft.EntityFrameworkCore;
@@ -45,10 +46,10 @@ namespace Repository
         /// </summary>
         /// <param name="cityName"> Город. </param>
         /// <returns> Идентификатор города. </returns>
-        public Guid? GetId(string cityName)
+        public async Task<Guid?> GetIdAsync(string cityName)
         {
-            return this.GetAll()
-                .FirstOrDefault(city => city.Name.Value == cityName)?.Id;
+            return (await this.GetAll()
+                .FirstOrDefaultAsync(city => city.Name.Value == cityName))?.Id;
         }
 
         /// <summary>
@@ -56,11 +57,12 @@ namespace Repository
         /// </summary>
         /// <param name="id"> Идентификатор города. </param>
         /// <returns> Название города. </returns>
-        public string? GetCity(Guid id)
+        public async Task<string?> GetCityAsync(Guid id)
         {
-            return this.GetAll()
-                .FirstOrDefault(city => city.Id == id)
-                ?.Name?.Value;
+            return (await this.GetAll()
+                .FirstOrDefaultAsync(city => city.Id == id))
+                ?.Name?
+                .Value;
         }
 
         /// <summary>
@@ -68,10 +70,10 @@ namespace Repository
         /// </summary>
         /// <param name="id"> Идентификатор города. </param>
         /// <returns> Список улиц. </returns>
-        public IEnumerable<Street> GetStreets(Guid id)
+        public async Task<IEnumerable<Street>?> GetStreetsAsync(Guid id)
         {
-            return this.GetAll()
-                .FirstOrDefault(city => city.Id == id)
+            return (await this.GetAll()
+                .FirstOrDefaultAsync(city => city.Id == id))
                 ?.Streets
                 ?? Enumerable.Empty<Street>();
         }

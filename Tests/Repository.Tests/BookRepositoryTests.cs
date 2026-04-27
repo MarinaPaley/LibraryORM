@@ -6,6 +6,7 @@ namespace Repository.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Domain;
     using NUnit.Framework;
 
@@ -33,7 +34,7 @@ namespace Repository.Tests
         }
 
         [Test]
-        public void Create_ValidData_Success()
+        public async Task Create_ValidData_Success()
         {
             // arrange
             var publisher = new Publisher("Издательство");
@@ -48,7 +49,7 @@ namespace Repository.Tests
                 new HashSet<Manuscript>());
 
             // act
-            var result = this.repository.Create(book);
+            var result = await this.repository.CreateAsync(book);
 
             // assert
             Assert.That(result, Is.Not.Null);
@@ -60,7 +61,7 @@ namespace Repository.Tests
         }
 
         [Test]
-        public void Update_ValidData_Success()
+        public async Task Update_ValidData_Success()
         {
             // arrange
             var publisher = new Publisher("Издательство");
@@ -73,15 +74,15 @@ namespace Repository.Tests
                 2024,
                 new HashSet<Manuscript>());
 
-            this.repository.Create(book);
+            _ = this.repository.CreateAsync(book);
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var loaded = this.repository.Get(book.Id);
+            var loaded = await this.repository.GetAsync(book.Id);
             var editorPerson = new Person(new Name("Редактор", "Тестовый"));
             var editor = new Editor(editorPerson);
             loaded!.AddEditor(editor);
-            var result = this.repository.Update(loaded);
+            var result = await this.repository.Update(loaded);
 
             // assert
             Assert.That(result.Editor, Is.Not.Null);
@@ -102,22 +103,22 @@ namespace Repository.Tests
                 2024,
                 new HashSet<Manuscript>());
 
-            this.repository.Create(book);
+            _ = this.repository.CreateAsync(book);
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = this.repository.Delete(book);
+            var result = this.repository.DeleteAsync(book);
 
             // assert
             using (Assert.EnterMultipleScope())
             {
                 Assert.That(result, Is.True);
-                Assert.That(this.repository.Get(book.Id), Is.Null);
+                Assert.That(this.repository.GetAsync(book.Id), Is.Null);
             }
         }
 
         [Test]
-        public void GetShelf_ValidData_Success()
+        public async Task GetShelf_ValidData_Success()
         {
             // arrange
             var shelf = new Shelf("1");
@@ -133,18 +134,18 @@ namespace Repository.Tests
                 shelf);
 
             _ = this.DataContext.Add(book);
-            _ = this.DataContext.SaveChanges();
+            _ = this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = this.repository.GetShelf(book.Title);
+            var result = await this.repository.GetShelfAsync(book.Title!);
 
             // assert
             Assert.That(result, Is.EqualTo(shelf));
         }
 
         [Test]
-        public void GetId_ValidData_Success()
+        public async Task GetId_ValidData_Success()
         {
             // arrange
             var title = "Книга";
@@ -159,18 +160,18 @@ namespace Repository.Tests
                 new HashSet<Manuscript>());
 
             _ = this.DataContext.Add(book);
-            _ = this.DataContext.SaveChanges();
+            _ = this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = this.repository.GetId(title);
+            var result = await this.repository.GetIdAsync(title);
 
             // assert
             Assert.That(result, Is.EqualTo(book.Id));
         }
 
         [Test]
-        public void GetTitle_ValidData_Success()
+        public async Task GetTitle_ValidData_Success()
         {
             // arrange
             var title = "Книга";
@@ -185,11 +186,11 @@ namespace Repository.Tests
                 new HashSet<Manuscript>());
 
             _ = this.DataContext.Add(book);
-            _ = this.DataContext.SaveChanges();
+            _ = this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = this.repository.GetTitle(book.Id);
+            var result = await this.repository.GetTitleAsync(book.Id);
 
             // assert
             Assert.That(result, Is.EqualTo(title));

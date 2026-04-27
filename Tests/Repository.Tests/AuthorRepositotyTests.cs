@@ -34,7 +34,7 @@ namespace Repository.Tests
             var author = new Author(person);
 
             // act
-            _ = this.Repository.Create(author);
+            _ = this.Repository.CreateAsync(author);
 
             // assert
             var result = this.DataContext.Find<Author>(author.Id);
@@ -73,7 +73,7 @@ namespace Repository.Tests
             _ = this.DataContext.SaveChanges();
 
             // act
-            _ = this.Repository.Delete(author);
+            _ = this.Repository.DeleteAsync(author);
 
             // assert
             var result = this.DataContext.Find<Author>(author.Id);
@@ -99,7 +99,7 @@ namespace Repository.Tests
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = this.Repository.GetIdByName(familyName);
+            var result = this.Repository.GetIdByNameAsunc(familyName);
 
             // Act
             Assert.That(
@@ -160,7 +160,7 @@ namespace Repository.Tests
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = this.Repository.GetCoAuthors(vasilyeva.Id);
+            var result = this.Repository.GetCoAuthorsAsync(vasilyeva.Id);
 
             // assert
             Assert.That(result, Is.EquivalentTo(authors));

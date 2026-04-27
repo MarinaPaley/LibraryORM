@@ -6,6 +6,7 @@ namespace Repository
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using DataAccessLayer;
     using Domain;
     using Microsoft.EntityFrameworkCore;
@@ -29,27 +30,27 @@ namespace Repository
         /// Получает список авторов по идентификатору.
         /// </summary>
         /// <param name="id">Идентификатор книги.</param>
-        /// <returns>Список авторов.</returns>
-        public ISet<Author>? GetAuthors(Guid id) => this.Find(book => book.Id == id)?.Authors;
+        /// <returns> Список авторов.</returns>
+        public async Task<ISet<Author>?> GetAuthorsAsync(Guid id) => (await this.FindAsync(book => book.Id == id))?.Authors;
 
         /// <summary>
         /// Показать все книги, написанные авторами выбранной книги.
         /// </summary>
         /// <param name="id">Идентификатор книги.</param>
         /// <returns> Множество книг авторов данной книги.</returns>
-        public ISet<Manuscript>? GetAllBooksCoAuthors(Guid id)
+        public async Task<ISet<Manuscript>?> GetAllBooksCoAuthors(Guid id)
         {
-            var authors = this.GetAuthors(id);
+            var authors = await this.GetAuthorsAsync(id);
             if (authors is null || authors.Count == 0)
             {
                 return new HashSet<Manuscript>();
             }
 
             var authorIds = authors.Select(a => a.Id).ToList();
-            return this.DataContext.Manuscripts
+            return await this.DataContext.Manuscripts
                 .Include(m => m.Authors)
                 .Where(m => m.Id != id && m.Authors.Any(a => authorIds.Contains(a.Id)))
-                .ToHashSet();
+                .ToHashSetAsync();
         }
 
         /// <inheritdoc/>

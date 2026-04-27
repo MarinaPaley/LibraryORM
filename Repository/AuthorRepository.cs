@@ -7,6 +7,7 @@ namespace Repository
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using DataAccessLayer;
     using Domain;
     using Microsoft.EntityFrameworkCore;
@@ -34,26 +35,29 @@ namespace Repository
         /// </summary>
         /// <param name="familyName"> Фамилия автора.</param>
         /// <returns> Идентификатор.</returns>
-        public Guid? GetIdByName(string familyName)
+        public async Task<Guid?> GetIdByNameAsunc(string familyName)
         {
-            return this.Find(author => author.Person.FullName.FamilyName == familyName)?.Id;
+            return (await this.FindAsync(author => author.Person.FullName.FamilyName == familyName))?.Id;
         }
 
         /// <summary>
         /// Получить список книг автора по идентификатору.
         /// </summary>
-        /// <param name="id">Идентификатор.</param>
-        /// <returns>Книги автора.</returns>
-        public ISet<Manuscript> GetBooksByAuthorId(Guid id) => this.Get(id)?.Manuscripts ?? new HashSet<Manuscript>();
+        /// <param name="id"> Идентификатор автора.</param>
+        /// <returns> Книги автора.</returns>
+        public async Task<ISet<Manuscript>> GetBooksByAuthorId(Guid id)
+        {
+            return (await this.GetAsync(id))?.Manuscripts ?? new HashSet<Manuscript>();
+        }
 
         /// <summary>
         /// Показать соавторов указанного автора.
         /// </summary>
         /// <param name="id"> Идентификатор автора.</param>
         /// <returns> Соавторов данного автора.</returns>
-        public ISet<Author> GetCoAuthors(Guid id)
+        public async Task<ISet<Author>> GetCoAuthorsAsync(Guid id)
         {
-            return this.GetBooksByAuthorId(id)
+            return (await this.GetBooksByAuthorId(id))
                 .SelectMany(book => book.Authors)
                 .ToHashSet();
         }
