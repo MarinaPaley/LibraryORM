@@ -57,9 +57,11 @@ namespace Repository
         /// <returns> Соавторов данного автора.</returns>
         public async Task<ISet<Author>> GetCoAuthorsAsync(Guid id)
         {
-            return (await this.GetBooksByAuthorId(id))
-                .SelectMany(book => book.Authors)
-                .ToHashSet();
+            return await this.GetAll()
+                .Where(author => author.Id == id)
+                .SelectMany(author => author.Manuscripts)
+                .SelectMany(manuscript => manuscript.Authors)
+                .ToHashSetAsync();
         }
 
         /// <summary>

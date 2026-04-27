@@ -7,6 +7,7 @@ namespace Repository.Tests
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Domain;
     using NUnit.Framework;
 
@@ -136,7 +137,8 @@ namespace Repository.Tests
             Assert.That(result, Is.EquivalentTo(manuscripts));
         }
 
-        public void GetCoAuthors_ValidData_Success()
+        [Test]
+        public async Task GetCoAuthors_ValidData_Success()
         {
             // arrange
             var language = new Language("Русский");
@@ -156,11 +158,11 @@ namespace Repository.Tests
             var manuscripts = new HashSet<Manuscript> { csv, iscs, term, article };
 
             this.DataContext.AddRange(manuscripts);
-            _ = this.DataContext.SaveChanges();
+            _ = this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = this.Repository.GetCoAuthorsAsync(vasilyeva.Id);
+            var result = await this.Repository.GetCoAuthorsAsync(vasilyeva.Id);
 
             // assert
             Assert.That(result, Is.EquivalentTo(authors));
