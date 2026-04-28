@@ -7,6 +7,7 @@ namespace Repository.Abstract
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
+    using System.Threading.Tasks;
     using Domain.Abstract;
 
     /// <summary>
@@ -21,15 +22,15 @@ namespace Repository.Abstract
         /// </summary>
         /// <param name="id"> Идентификатор сущности. </param>
         /// <returns> Сущность. </returns>
-        TEntity? Get(Guid id);
+        Task<TEntity?> GetAsync(Guid id);
 
         /// <summary>
-        /// Обновдение сущности.
+        /// Обновление сущности.
         /// </summary>
         /// <param name="entity"> Сущность. </param>
         /// <param name="saveNow"> Надо ли сохранять сущность после изменения. </param>
         /// <returns> Контекст доступа к сущности.</returns>
-        TEntity Update(TEntity entity, bool saveNow = true);
+        Task<TEntity> UpdateAsync(TEntity entity, bool saveNow = true);
 
         /// <summary>
         /// Удаление сущности.
@@ -37,7 +38,7 @@ namespace Repository.Abstract
         /// <param name="entity"> Сущность. </param>
         /// <param name="saveNow"> Надо ли сохранять сущность после изменения. </param>
         /// <returns> <see langword="true"/>, если удалили, иначе - <see langword="false"/>.</returns>
-        bool Delete(TEntity entity, bool saveNow = true);
+        Task<bool> DeleteAsync(TEntity entity, bool saveNow = true);
 
         /// <summary>
         /// Создает сущность.
@@ -45,7 +46,7 @@ namespace Repository.Abstract
         /// <param name="entity"> Сущность.</param>
         /// <param name="saveNow"> Надо ли сохранять сущность после изменения. </param>
         /// <returns> Контекст доступа к сущности.</returns>
-        TEntity Create(TEntity entity, bool saveNow = true);
+        Task<TEntity> CreateAsync(TEntity entity, bool saveNow = true);
 
         /// <summary>
         /// Поиск множества сущностей по предикату (<paramref name="predicate"/>).
@@ -59,6 +60,6 @@ namespace Repository.Abstract
         /// </summary>
         /// <param name="predicate"> Предикат, которому должна удовлетворять сущность.</param>
         /// <returns> Сущность или <see langword="null"/>.</returns>
-        TEntity? Find(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate);
     }
 }

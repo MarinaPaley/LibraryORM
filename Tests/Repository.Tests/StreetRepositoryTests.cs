@@ -1,4 +1,4 @@
-﻿// <copyright file="CityRepositoryTests.cs" company="Филипченко Марина Алексеевна">
+﻿// <copyright file="StreetRepositoryTests.cs" company="Филипченко Марина Алексеевна">
 // Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
@@ -39,7 +39,7 @@ namespace Repository.Tests
             this.DataContext.SaveChanges();
 
             // act
-            _ = this.Repository.Delete(street);
+            _ = this.Repository.DeleteAsync(street);
 
             // assert
             var result = this.DataContext.Find<Street>(street.Id);
@@ -67,6 +67,5 @@ namespace Repository.Tests
             // assert
             Assert.That(result, Is.EqualTo(cities));
         }
-
     }
 }

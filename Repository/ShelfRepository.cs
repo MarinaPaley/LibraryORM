@@ -6,6 +6,7 @@ namespace Repository
 {
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
     using DataAccessLayer;
     using Domain;
     using Microsoft.EntityFrameworkCore;
@@ -33,28 +34,31 @@ namespace Repository
         /// </summary>
         /// <param name="id">Идентификатор полки.</param>
         /// <returns> Количество книг.</returns>
-        public int? GetBooksCount(Guid id) => this.Get(id)?.Books.Count;
+        public async Task<int?> GetBooksCountAsync(Guid id) => (await this.GetAsync(id))?.Books.Count;
 
         /// <summary>
         /// Показать количество книг, стоящих на полке.
         /// </summary>
         /// <param name="name"> Название полки.</param>
         /// <returns> Количество книг.</returns>
-        public int? GetCountBooks(string name)
+        public async Task<int?> GetCountBooksAsync(string name)
         {
-            var id = this.GetIdByName(name);
-
-            return id.HasValue
-                ? this.GetBooksCount(id.Value)
-                : null;
+            return (await this.GetAll()
+                .FirstOrDefaultAsync(shelf => shelf.Name.Value == name))
+                ?.Books
+                .Count;
         }
 
         /// <summary>
         /// Найти идентификатор по имени.
         /// </summary>
-        /// <param name="name">Название полки.</param>
-        /// <returns>Идентификатор.</returns>
-        public Guid? GetIdByName(string name) => this.Find(shelf => shelf.Name.Value == name)?.Id;
+        /// <param name="name"> Название полки.</param>
+        /// <returns> Идентификатор.</returns>
+        public async Task<Guid?> GetIdByName(string name)
+        {
+            return (await this.FindAsync(shelf => shelf.Name.Value == name))
+                ?.Id;
+        }
 
         /// <inheritdoc/>
         // @NOTE: IgnoreAutoIncludes()

@@ -21,15 +21,16 @@ namespace Domain
         /// <param name="room"> Комната. </param>
         /// <param name="name"> Название шкафа. </param>
         /// <exception cref="ArgumentNullException">
-        /// Если комната или название <see langword="null"/>.
+        /// В случае если <paramref name="room"/> или <paramref name="name"/> – <see langword="null"/>.
         /// </exception>
         public Cabinet(Room room, string name)
         {
             this.Room = room ?? throw new ArgumentNullException(nameof(room));
-            this.Name = new Title(name ?? throw new ArgumentNullException(nameof(name)));
+            this.Name = new Title(name);
         }
 
 #pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
+
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Cabinet"/>.
         /// </summary>
@@ -37,6 +38,7 @@ namespace Domain
         private Cabinet()
         {
         }
+
 #pragma warning restore CS8618
 
         /// <summary>
@@ -91,9 +93,9 @@ namespace Domain
         {
             return ReferenceEquals(this, other)
                 || (other is not null
-                && this.Name == other.Name
-                && this.Room is not null
-                && this.Room.Equals(other.Room));
+                    && this.Name == other.Name
+                    && this.Room is not null
+                    && this.Room.Equals(other.Room));
         }
 
         /// <inheritdoc/>

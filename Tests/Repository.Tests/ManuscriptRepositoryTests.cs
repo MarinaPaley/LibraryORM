@@ -6,6 +6,7 @@ namespace Repository.Tests
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Domain;
     using NUnit.Framework;
 
@@ -28,7 +29,7 @@ namespace Repository.Tests
         }
 
         [Test]
-        public void GetAuthors_FullNameIsLoaded()
+        public async Task GetAuthors_FullNameIsLoaded()
         {
             // arrange
             var person = new Person(new Name("Толстой", "Лев"));
@@ -36,11 +37,12 @@ namespace Repository.Tests
             var manuscript = new Manuscript("Тест", new Language("Русский"), new HashSet<Author> { author });
 
             this.DataContext.Add(manuscript);
-            _ = this.DataContext.SaveChanges();
+            _ = this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = this.repository.GetAuthors(manuscript.Id)?.FirstOrDefault();
+            var result = (await this.repository.GetAuthorsAsync(manuscript.Id))
+                ?.FirstOrDefault();
 
             // assert
             Assert.That(result, Is.Not.Null);
@@ -48,7 +50,7 @@ namespace Repository.Tests
         }
 
         [Test]
-        public void GetAuthors_ValidData_Success()
+        public async Task GetAuthors_ValidData_Success()
         {
             // arrange
             var person = new Person(new Name("Толстой", "Лев"));
@@ -60,11 +62,11 @@ namespace Repository.Tests
                 new HashSet<Author> { author });
 
             _ = this.DataContext.Add(manuscript);
-            _ = this.DataContext.SaveChanges();
+            _ = this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = this.repository.GetAuthors(manuscript.Id);
+            var result = await this.repository.GetAuthorsAsync(manuscript.Id);
 
             // assert
             Assert.That(result, Is.Not.Null);
@@ -73,7 +75,7 @@ namespace Repository.Tests
         }
 
         [Test]
-        public void GetAllBooksCoAuthors_ValidData_Success()
+        public async Task GetAllBooksCoAuthors_ValidData_Success()
         {
             // arrange
             var language = new Language("Русский");
@@ -107,22 +109,22 @@ namespace Repository.Tests
                 new HashSet<Author> { vasilyeva });
 
             this.DataContext.AddRange(csvManuscript, iscsManuscript, termManuscript, articleManuscript);
-            _ = this.DataContext.SaveChanges();
+            _ = this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = this.repository.GetAllBooksCoAuthors(articleManuscript.Id);
+            var result = await this.repository.GetAllBooksCoAuthors(articleManuscript.Id);
 
             // assert
             Assert.That(result, Is.Not.Null);
             Assert.That(result, Has.Count.EqualTo(3)); // csv, iscs, term (исключая саму article)
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(result.Contains(csvManuscript), Is.True);
                 Assert.That(result.Contains(iscsManuscript), Is.True);
                 Assert.That(result.Contains(termManuscript), Is.True);
                 Assert.That(result.Any(m => m.Title.Value == "Статья"), Is.False);
-            });
+            }
         }
     }
 }

@@ -23,10 +23,14 @@ namespace Domain
             this.Name = new Title(name);
         }
 
+#pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
+
         [Obsolete("For ORM only")]
         private Shelf()
         {
         }
+
+#pragma warning restore CS8618
 
         /// <summary>
         /// Название полки.

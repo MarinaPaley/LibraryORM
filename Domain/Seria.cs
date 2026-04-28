@@ -16,13 +16,17 @@ namespace Domain
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Seria"/>.
         /// </summary>
-        /// <param name="seriaName"> серия.</param>
+        /// <param name="seriaName"> Название серии. </param>
+        /// <exception cref="ArgumentNullException">
+        /// В случае если <paramref name="seriaName"/> – <see langword="null"/>.
+        /// </exception>
         public Seria(string seriaName)
         {
             this.SeriaName = new Title(seriaName);
         }
 
 #pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
+
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Seria"/>.
         /// </summary>
@@ -30,10 +34,11 @@ namespace Domain
         private Seria()
         {
         }
+
 #pragma warning restore CS8618
 
         /// <summary>
-        /// Серия.
+        /// Название серии.
         /// </summary>
         public Title SeriaName { get; set; }
 
@@ -45,7 +50,8 @@ namespace Domain
         /// <inheritdoc/>
         public override bool Equals(Seria? other)
         {
-            return ReferenceEquals(this, other) || ((other is not null) && (this.SeriaName == other.SeriaName));
+            return ReferenceEquals(this, other)
+                || ((other is not null) && (this.SeriaName == other.SeriaName));
         }
 
         /// <inheritdoc/>
@@ -61,12 +67,12 @@ namespace Domain
         /// Добавить книгу в серию.
         /// </summary>
         /// <param name="book"> Книга. </param>
-        /// <returns> <see langword="true"/>, если добавили, иначе - <see langword="false"/>. </returns>
+        /// <returns>
+        /// <see langword="true"/>, если добавили, иначе - <see langword="false"/>.
+        /// </returns>
         public bool AddBook(Book book)
         {
-            var result = book is not null
-                && this.Books.Add(book);
-
+            var result = book is not null && this.Books.Add(book);
             if (result)
             {
                 book!.Seria = this;
@@ -79,12 +85,12 @@ namespace Domain
         /// Удаление книги из серии.
         /// </summary>
         /// <param name="book"> Книга.</param>
-        /// <returns> <see langword="true"/>, если удалили, иначе - <see langword="false"/>.</returns>
+        /// <returns>
+        /// <see langword="true"/>, если удалили, иначе - <see langword="false"/>.
+        /// </returns>
         public bool RemoveBook(Book book)
         {
-            var result = book is not null
-                && this.Books.Remove(book);
-
+            var result = book is not null && this.Books.Remove(book);
             if (result)
             {
                 book?.Seria = null;

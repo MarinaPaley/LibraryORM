@@ -21,15 +21,16 @@ namespace Domain
         /// <param name="address"> Адрес. </param>
         /// <param name="name"> Название комнаты. </param>
         /// <exception cref="ArgumentNullException">
-        /// Если адрес или название <see langword="null"/>.
+        /// В случае если <paramref name="address"/> или <paramref name="name"/> – <see langword="null"/>.
         /// </exception>
         public Room(Address address, string name)
         {
             this.Address = address ?? throw new ArgumentNullException(nameof(address));
-            this.Name = new Title(name ?? throw new ArgumentNullException(nameof(name)));
+            this.Name = new Title(name);
         }
 
 #pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
+
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Room"/>.
         /// </summary>
@@ -37,6 +38,7 @@ namespace Domain
         private Room()
         {
         }
+
 #pragma warning restore CS8618
 
         /// <summary>
@@ -74,7 +76,9 @@ namespace Domain
         /// Удаляет шкаф из комнаты.
         /// </summary>
         /// <param name="cabinet"> Шкаф. </param>
-        /// <returns> <see langword="true"/>, если удалили, иначе - <see langword="false"/>. </returns>
+        /// <returns>
+        /// <see langword="true"/>, если удалили, иначе - <see langword="false"/>.
+        /// </returns>
         public bool RemoveCabinet(Cabinet cabinet)
         {
             var result = cabinet is not null && this.Cabinets.Remove(cabinet);

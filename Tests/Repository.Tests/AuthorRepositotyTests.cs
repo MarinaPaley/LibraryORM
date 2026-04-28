@@ -7,6 +7,7 @@ namespace Repository.Tests
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Domain;
     using NUnit.Framework;
 
@@ -34,7 +35,7 @@ namespace Repository.Tests
             var author = new Author(person);
 
             // act
-            _ = this.Repository.Create(author);
+            _ = this.Repository.CreateAsync(author);
 
             // assert
             var result = this.DataContext.Find<Author>(author.Id);
@@ -54,7 +55,7 @@ namespace Repository.Tests
 
             // act
             author.Person.DateBirth = new DateOnly(1828, 09, 28);
-            _ = this.Repository.Update(author);
+            _ = this.Repository.UpdateAsync(author);
 
             // assert
             var result = this.DataContext.Find<Author>(author.Id)?.Person.DateBirth;
@@ -73,7 +74,7 @@ namespace Repository.Tests
             _ = this.DataContext.SaveChanges();
 
             // act
-            _ = this.Repository.Delete(author);
+            _ = this.Repository.DeleteAsync(author);
 
             // assert
             var result = this.DataContext.Find<Author>(author.Id);
@@ -82,7 +83,7 @@ namespace Repository.Tests
         }
 
         [Test]
-        public void GetIdByName_FamilyName_Success()
+        public async Task GetIdByName_FamilyName_Success()
         {
             // arrange
             var familyName = "Толстой";
@@ -94,12 +95,12 @@ namespace Repository.Tests
                 new Author(new Person(new Name(familyName, "Алексей", "Николаевич"))),
             };
 
-            this.DataContext.AddRange(authors);
-            _ = this.DataContext.SaveChanges();
+            await this.DataContext.AddRangeAsync(authors);
+            _ = this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = this.Repository.GetIdByName(familyName);
+            var result = await this.Repository.GetIdByNameAsync(familyName);
 
             // Act
             Assert.That(
@@ -109,7 +110,7 @@ namespace Repository.Tests
         }
 
         [Test]
-        public void GetBooksById_ValidData_Success()
+        public async Task GetBooksById_ValidData_Success()
         {
             var name = new Name("Толстой", "Лев");
             var person = new Person(name);
@@ -126,17 +127,18 @@ namespace Repository.Tests
             };
 
             _ = this.DataContext.Add(author);
-            _ = this.DataContext.SaveChanges();
+            _ = await this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = this.Repository.GetBooksByAuthorId(author.Id);
+            var result = await this.Repository.GetBooksByAuthorId(author.Id);
 
             // assert
             Assert.That(result, Is.EquivalentTo(manuscripts));
         }
 
-        public void GetCoAuthors_ValidData_Success()
+        [Test]
+        public async Task GetCoAuthors_ValidData_Success()
         {
             // arrange
             var language = new Language("Русский");
@@ -155,12 +157,12 @@ namespace Repository.Tests
             var article = new Manuscript("Статья", language, new HashSet<Author>() { vasilyeva });
             var manuscripts = new HashSet<Manuscript> { csv, iscs, term, article };
 
-            this.DataContext.AddRange(manuscripts);
-            _ = this.DataContext.SaveChanges();
+            await this.DataContext.AddRangeAsync(manuscripts);
+            _ = await this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = this.Repository.GetCoAuthors(vasilyeva.Id);
+            var result = await this.Repository.GetCoAuthorsAsync(vasilyeva.Id);
 
             // assert
             Assert.That(result, Is.EquivalentTo(authors));

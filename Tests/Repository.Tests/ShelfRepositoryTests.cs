@@ -4,6 +4,7 @@
 
 namespace Repository.Tests
 {
+    using System.Threading.Tasks;
     using Domain;
     using NUnit.Framework;
 
@@ -33,7 +34,7 @@ namespace Repository.Tests
             var shelf = new Shelf("Тестовая");
 
             // act
-            _ = this.Repository.Create(shelf);
+            _ = this.Repository.CreateAsync(shelf);
 
             // arrange
             var result = this.DataContext.Find<Shelf>(shelf.Id);
@@ -43,16 +44,16 @@ namespace Repository.Tests
         }
 
         [Test]
-        public void Get_ValidData_Success()
+        public async Task Get_ValidData_Success()
         {
             // arrange
             var shelf = new Shelf("Тестовая");
 
             this.DataContext.Add(shelf);
-            this.DataContext.SaveChanges();
+            _ = this.DataContext.SaveChangesAsync();
 
             // act
-            var result = this.Repository.Get(shelf.Id);
+            var result = await this.Repository.GetAsync(shelf.Id);
 
             // assert
             Assert.That(result, Is.Not.Null);
@@ -60,7 +61,7 @@ namespace Repository.Tests
         }
 
         [Test]
-        public void Update_ValidData_Success()
+        public async Task Update_ValidData_Success()
         {
             // arrange
             var newName = "Новое имя";
@@ -68,11 +69,11 @@ namespace Repository.Tests
             var shelf = new Shelf("Тестовая");
 
             this.DataContext.Add(shelf);
-            this.DataContext.SaveChanges();
+            _ = this.DataContext.SaveChangesAsync();
 
             // act
             shelf.Name = new Title(newName);
-            var result = this.Repository.Update(shelf);
+            var result = await this.Repository.UpdateAsync(shelf);
 
             // assert
             Assert.That(result, Is.Not.Null);
@@ -89,7 +90,7 @@ namespace Repository.Tests
             this.DataContext.SaveChanges();
 
             // act
-            _ = this.Repository.Delete(shelf);
+            _ = this.Repository.DeleteAsync(shelf);
 
             // assert
             var result = this.DataContext.Find<Shelf>(shelf.Id);

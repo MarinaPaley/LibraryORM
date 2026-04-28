@@ -150,7 +150,7 @@ namespace Domain.Tests
         private static IEnumerable<TestCaseData> Books()
         {
             yield return new TestCaseData(
-                new Book(null, 1234, "12345",new BookType("Книга"), new Publisher("Издательство"), 2026,
+                new Book(null, 1234, "12345", new BookType("Книга"), new Publisher("Издательство"), 2026,
                 new HashSet<Manuscript>() { new Manuscript("Анна Каренина", new Language("Русский"), new HashSet<Author>() { new Author(new Person(new Name("Толстой", "Лев"))) }) }), true);
             yield return new TestCaseData(null, false);
         }
