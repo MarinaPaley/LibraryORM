@@ -37,19 +37,19 @@ namespace Domain
         }
 
         /// <summary>
-        /// 
+        /// Оператор равенства.
         /// </summary>
-        /// <param name="lha"></param>
-        /// <param name="rha"></param>
-        /// <returns></returns>
+        /// <param name="lha"> Левый операнд. </param>
+        /// <param name="rha"> Правый операнд. </param>
+        /// <returns>  В случае равенства – <see langword="true"/>. </returns>
         public static bool operator ==(Title? lha, Title? rha) => Equals(lha, rha);
 
         /// <summary>
-        /// 
+        /// Оператор неравенства.
         /// </summary>
-        /// <param name="lha"></param>
-        /// <param name="rha"></param>
-        /// <returns></returns>
+        /// <param name="lha"> Левый операнд.</param>
+        /// <param name="rha"> Правый операнд.</param>
+        /// <returns> В случае неравенства – <see langword="true"/>. </returns>
         public static bool operator !=(Title? lha, Title? rha) => !Equals(lha, rha);
 
         /// <inheritdoc/>

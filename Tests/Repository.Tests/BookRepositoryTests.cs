@@ -4,12 +4,11 @@
 
 namespace Repository.Tests
 {
-    using Domain;
-    using NUnit.Framework;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
+    using Domain;
+    using NUnit.Framework;
 
     /// <summary>
     /// Модульные тесты для <see cref="BookRepository"/>.
