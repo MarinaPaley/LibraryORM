@@ -27,6 +27,7 @@ namespace DataAccessLayer.Configurations
 
             _ = builder.Property(book => book.ISBN)
                 .IsRequired()
+                .HasMaxLength(25)
                 .HasComment("ISBN");
 
             _ = builder.HasOne(book => book.Shelf)
@@ -60,6 +61,10 @@ namespace DataAccessLayer.Configurations
             _ = builder.Property(book => book.Volume)
                 .IsRequired(false)
                 .HasComment("Том");
+
+            _ = builder.HasIndex(book => book.ISBN)
+                .IsUnique()
+                .HasDatabaseName("IX_Book_ISBN");
         }
     }
 }

@@ -12,30 +12,26 @@ namespace Domain
     /// <summary>
     /// Полка.
     /// </summary>
-    public sealed class Shelf : Entity<Shelf>, IEquatable<Shelf>
+    public sealed class Shelf : NamedEntity<Shelf>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Shelf"/>.
         /// </summary>
         /// <param name="name"> Название полки. </param>
         public Shelf(string name)
+            : base(name)
         {
-            this.Name = new Title(name);
         }
 
 #pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
 
         [Obsolete("For ORM only")]
         private Shelf()
+            : base("Не задано")
         {
         }
 
 #pragma warning restore CS8618
-
-        /// <summary>
-        /// Название полки.
-        /// </summary>
-        public Title Name { get; set; }
 
         /// <summary>
         /// Шкаф.
@@ -45,7 +41,7 @@ namespace Domain
         /// <summary>
         ///  Книги.
         /// </summary>
-        public ISet<Book> Books { get; } = new HashSet<Book>();
+        public ISet<Book> Books { get; } = new HashSet<Book>(EntityComparer<Book>.Instance);
 
         /// <summary>
         /// Добавляет книгу на полку.
@@ -97,12 +93,6 @@ namespace Domain
 
             return result;
         }
-
-        /// <inheritdoc />
-        public override bool Equals(object? obj) => this.Equals(obj as Shelf);
-
-        /// <inheritdoc/>
-        public override int GetHashCode() => this.Name?.GetHashCode() ?? 0;
 
         /// <inheritdoc cref="object.ToString()"/>
         public override string ToString()

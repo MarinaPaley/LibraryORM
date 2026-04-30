@@ -10,6 +10,7 @@ namespace Repository
     using DataAccessLayer;
     using Domain;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Query;
     using Repository.Abstract;
 
     /// <summary>
@@ -62,6 +63,9 @@ namespace Repository
 
         /// <inheritdoc/>
         // @NOTE: IgnoreAutoIncludes()
-        protected override IQueryable<Shelf> GetAll() => this.DataContext.Shelves;
+        protected override IQueryable<Shelf> GetAll()
+        {
+            return this.DataContext.Shelves;
+        }
     }
 }

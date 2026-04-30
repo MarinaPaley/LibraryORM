@@ -3,6 +3,7 @@ using System;
 using DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20260428163624_AdOroginalTitleMigration")]
+    partial class AdOroginalTitleMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,8 +157,7 @@ namespace DataAccessLayer.Migrations
 
                     b.Property<string>("ISBN")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("character varying(25)")
+                        .HasColumnType("text")
                         .HasComment("ISBN");
 
                     b.Property<int>("Pages")
@@ -188,10 +190,6 @@ namespace DataAccessLayer.Migrations
                     b.HasIndex("BookTypeId");
 
                     b.HasIndex("EditorId");
-
-                    b.HasIndex("ISBN")
-                        .IsUnique()
-                        .HasDatabaseName("IX_Book_ISBN");
 
                     b.HasIndex("SeriaId");
 

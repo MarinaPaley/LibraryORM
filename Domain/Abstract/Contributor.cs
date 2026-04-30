@@ -10,10 +10,12 @@ namespace Domain.Abstract
     /// <summary>
     /// Базовый класс для участников создания произведения.
     /// </summary>
-    public abstract class Contributor : Entity<Contributor>, IEquatable<Contributor>
+    /// <typeparam name="TEntity"> Тип конкретной сущности. </typeparam>
+    public abstract class Contributor<TEntity> : Entity<Contributor<TEntity>>, IPerson<TEntity>
+        where TEntity : class, IPerson<TEntity>
     {
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="Contributor"/>.
+        /// Инициализирует новый экземпляр класса <see cref="Contributor{TEntity}"/>.
         /// </summary>
         /// <param name="person"> Персона. </param>
         /// <exception cref="ArgumentNullException">
@@ -27,7 +29,7 @@ namespace Domain.Abstract
 #pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="Contributor"/>.
+        /// Инициализирует новый экземпляр класса <see cref="Contributor{TEntity}"/>.
         /// </summary>
         [Obsolete("For ORM only", true)]
         protected Contributor()
@@ -40,21 +42,6 @@ namespace Domain.Abstract
         /// Персона.
         /// </summary>
         public Person Person { get; set; }
-
-        /// <inheritdoc/>
-        public override bool Equals(Contributor? other)
-        {
-            return ReferenceEquals(this, other)
-                || (other is not null
-                    && this.GetType() == other.GetType()
-                    && this.Person?.Equals(other.Person) == true);
-        }
-
-        /// <inheritdoc/>
-        public override bool Equals(object? obj) => this.Equals(obj as Contributor);
-
-        /// <inheritdoc/>
-        public override int GetHashCode() => HashCode.Combine(this.GetType(), this.Person);
 
         /// <inheritdoc cref="object.ToString()"/>
         public override string ToString() => this.Person.ToString();

@@ -13,7 +13,7 @@ namespace Domain
     /// <summary>
     /// Комната.
     /// </summary>
-    public sealed class Room : Entity<Room>, IEquatable<Room>
+    public sealed class Room : NamedEntity<Room>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Room"/>.
@@ -24,9 +24,9 @@ namespace Domain
         /// В случае если <paramref name="address"/> или <paramref name="name"/> – <see langword="null"/>.
         /// </exception>
         public Room(Address address, string name)
+            : base(name)
         {
             this.Address = address ?? throw new ArgumentNullException(nameof(address));
-            this.Name = new Title(name);
         }
 
 #pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
@@ -36,6 +36,7 @@ namespace Domain
         /// </summary>
         [Obsolete("For ORM only", true)]
         private Room()
+            : base("НЕ задано")
         {
         }
 
@@ -47,14 +48,9 @@ namespace Domain
         public Address Address { get; set; }
 
         /// <summary>
-        /// Название комнаты.
-        /// </summary>
-        public Title Name { get; set; }
-
-        /// <summary>
         /// Шкафы в комнате.
         /// </summary>
-        public ISet<Cabinet> Cabinets { get; } = new HashSet<Cabinet>();
+        public ISet<Cabinet> Cabinets { get; } = new HashSet<Cabinet>(NamedEntityComparer<Cabinet>.Instance);
 
         /// <summary>
         /// Добавляет шкаф в комнату.
@@ -98,12 +94,6 @@ namespace Domain
                     && this.Name == other.Name
                     && this.Address.Equals(other.Address));
         }
-
-        /// <inheritdoc/>
-        public override bool Equals(object? obj) => this.Equals(obj as Room);
-
-        /// <inheritdoc/>
-        public override int GetHashCode() => this.Name?.GetHashCode() ?? 0;
 
         /// <inheritdoc cref="object.ToString()"/>
         public override string ToString()

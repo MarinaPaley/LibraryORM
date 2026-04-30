@@ -117,8 +117,8 @@ namespace Repository.Tests
             var author = new Author(person);
             var language = new Language("Русский");
 
-            var manuscript1 = new Manuscript("Анна Каренина", language, new DateOnly(1873, 1, 1), new DateOnly(1877, 1, 1), author);
-            var manuscript2 = new Manuscript("Война и мир", language, new DateOnly(1863, 1, 1), new DateOnly(1869, 1, 1), author);
+            var manuscript1 = new Manuscript("Анна Каренина", language, new DateOnly(1873, 1, 1), new DateOnly(1877, 1, 1), null,author);
+            var manuscript2 = new Manuscript("Война и мир", language, new DateOnly(1863, 1, 1), new DateOnly(1869, 1, 1), null,  author);
 
             var manuscripts = new HashSet<Manuscript>
             {

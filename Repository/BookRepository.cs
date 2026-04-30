@@ -62,7 +62,7 @@ namespace Repository
         public Task<List<Shelf>> GetShelvesByManucriptNameAsync(string title)
         {
             return this.GetAll()
-                .Where(book => book.Manuscripts.Any(manuscript => manuscript.Title.Value == title))
+                .Where(book => book.Manuscripts.Any(manuscript => manuscript.Name.Value == title))
                 .Select(book => book.Shelf)
                 .OfType<Shelf>()
                 .ToListAsync();

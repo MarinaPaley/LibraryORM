@@ -26,8 +26,15 @@ namespace Domain.Tests
         private static Author CreateAuthor(string family = "Фамилия", string given = "Имя") =>
             new (new Person(new Name(family, given)));
 
-        private static Manuscript CreateManuscript(string title = "Произведение", params Author[] authors) =>
-            new (title, CreateLanguage(), new HashSet<Author>(authors));
+        private static Manuscript CreateManuscript(string title = "Произведение", params Author[] authors)
+        {
+            if (authors.Length != 0)
+            {
+                return new (title, CreateLanguage(), new HashSet<Author>(authors));
+            }
+
+            return new Manuscript(title, CreateLanguage(), new HashSet<Author>() { CreateAuthor() });
+        }
 
         #endregion
 

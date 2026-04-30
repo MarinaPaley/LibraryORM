@@ -12,7 +12,7 @@ namespace Domain
     /// <summary>
     /// Книга.
     /// </summary>
-    public sealed class Book : Entity<Book>, IEquatable<Book>
+    public sealed class Book : Entity<Book>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Book"/>.
@@ -56,13 +56,13 @@ namespace Domain
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pages);
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(year);
             ArgumentNullException.ThrowIfNull(publisher);
+            ArgumentNullException.ThrowIfNull(bookType);
             ArgumentOutOfRangeException.ThrowIfGreaterThan(year, DateTime.Now.Year);
             if (volume.HasValue && volume <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(volume));
             }
 
-            this.BookType = bookType ?? throw new ArgumentNullException(nameof(bookType));
             this.ISBN = ibsn.TrimOrNull() ?? throw new ArgumentNullException(nameof(ibsn));
             this.Manuscripts = manuscripts ?? throw new ArgumentNullException(nameof(manuscripts));
 
@@ -89,6 +89,8 @@ namespace Domain
 
             this.Doi = doi;
             this.Url = url;
+            this.BookType = bookType;
+            bookType.Books.Add(this);
         }
 
         /// <summary>
@@ -180,7 +182,7 @@ namespace Domain
         /// <summary>
         /// Издательства.
         /// </summary>
-        public ISet<Publisher> Publishers { get; } = new HashSet<Publisher>();
+        public ISet<Publisher> Publishers { get; } = new HashSet<Publisher>(NamedEntityComparer<Publisher>.Instance);
 
         /// <summary>
         /// Тип книги.
@@ -195,7 +197,7 @@ namespace Domain
         /// <summary>
         /// Рукописи в книге.
         /// </summary>
-        public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>();
+        public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>(BilingualNamedEntityComparer<Manuscript>.Instance);
 
         /// <summary>
         /// Редактор.
@@ -242,7 +244,7 @@ namespace Domain
         public override bool Equals(object? obj) => this.Equals(obj as Book);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => HashCode.Combine(this.Manuscripts, this.ISBN, this.BookType);
+        public override int GetHashCode() => this.ISBN.GetHashCode();
 
         /// <inheritdoc cref="object.ToString()"/>
         public override string ToString()
@@ -277,6 +279,23 @@ namespace Domain
 
             return editor is not null
                 && editor.Books.Remove(this);
+        }
+
+        /// <summary>
+        /// Меняет тип издания.
+        /// </summary>
+        /// <param name="bookType"> Тип издания. </param>
+        /// <returns> Если изменили, то <see langword="true"/>, иначе - <see langword="false"/>.</returns>
+        public bool ChangeBookType(BookType bookType)
+        {
+            if (bookType is null)
+            {
+                return false;
+            }
+
+            var result = this.BookType.Books.Remove(this);
+            this.BookType = bookType;
+            return result && bookType.Books.Add(this);
         }
     }
 }

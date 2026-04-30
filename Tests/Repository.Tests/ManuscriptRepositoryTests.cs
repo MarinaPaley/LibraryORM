@@ -108,8 +108,8 @@ namespace Repository.Tests
                 language,
                 new HashSet<Author> { vasilyeva });
 
-            this.DataContext.AddRange(csvManuscript, iscsManuscript, termManuscript, articleManuscript);
-            _ = this.DataContext.SaveChangesAsync();
+            await this.DataContext.AddRangeAsync(csvManuscript, iscsManuscript, termManuscript, articleManuscript);
+            _ = await this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
@@ -123,7 +123,7 @@ namespace Repository.Tests
                 Assert.That(result.Contains(csvManuscript), Is.True);
                 Assert.That(result.Contains(iscsManuscript), Is.True);
                 Assert.That(result.Contains(termManuscript), Is.True);
-                Assert.That(result.Any(m => m.Title.Value == "Статья"), Is.False);
+                Assert.That(result.Any(m => m.Name.Value == "Статья"), Is.False);
             }
         }
     }

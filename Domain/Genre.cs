@@ -11,46 +11,29 @@ namespace Domain
     /// <summary>
     /// Жанр.
     /// </summary>
-    public sealed class Genre : Entity<Genre>, IEquatable<Genre>
+    public sealed class Genre : NamedEntity<Genre>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Genre"/>.
         /// </summary>
         /// <param name="name"> Жанр. </param>
         public Genre(string name)
+            : base(name)
         {
-            this.Name = new Title(name);
         }
 
+#pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
         [Obsolete("For ORM only")]
         private Genre()
+            : base("Не задано")
         {
         }
-
-        /// <summary>
-        /// Жанр.
-        /// </summary>
-        public Title Name { get; set; }
+#pragma warning restore CS8618
 
         /// <summary>
         /// Рукописи.
         /// </summary>
-        public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>();
-
-        /// <inheritdoc/>
-        public override bool Equals(Genre? other)
-        {
-            return ReferenceEquals(this, other) || ((other is not null) && (this.Name == other.Name));
-        }
-
-        /// <inheritdoc/>
-        public override bool Equals(object? obj) => this.Equals(obj as Genre);
-
-        /// <inheritdoc/>
-        public override int GetHashCode() => this.Name?.GetHashCode() ?? 0;
-
-        /// <inheritdoc cref="object.ToString()"/>
-        public override string ToString() => this.Name.ToString();
+        public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>(BilingualNamedEntityComparer<Manuscript>.Instance);
 
         /// <summary>
         /// Добавить книгу к жанрам.

@@ -1,14 +1,16 @@
-﻿// <copyright file="IEntity{TEntity}.cs" company="Филипченко Марина Алексеевна">
+﻿// <copyright file="IEntityComparer.cs" company="Филипченко Марина Алексеевна">
 // Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
 namespace Domain.Abstract
 {
+    using System.Collections.Generic;
+
     /// <summary>
-    /// Интерфейс базовой сущности.
+    /// Базовый интерфейс для компараторов сущности.
     /// </summary>
     /// <typeparam name="TEntity"> Тип конкретной сущности. </typeparam>
-    public interface IEntity<TEntity> : IEntity
+    public interface IEntityComparer<in TEntity> : IEqualityComparer<TEntity>
         where TEntity : class, IEntity<TEntity>
     {
     }

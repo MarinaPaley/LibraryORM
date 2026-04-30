@@ -11,45 +11,26 @@ namespace Domain
     /// <summary>
     /// Тип напечатанного произведения (книга, методичка, статья).
     /// </summary>
-    public sealed class BookType : Entity<BookType>, IEquatable<BookType>
+    public sealed class BookType : NamedEntity<BookType>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="BookType"/>.
         /// </summary>
         /// <param name="name"> Жанр. </param>
         public BookType(string name)
+            : base(name)
         {
-            this.BookTypeName = new Title(name);
         }
 
         [Obsolete("For ORM only")]
         private BookType()
+            : base("Не задано")
         {
         }
-
-        /// <summary>
-        /// Тип книги (книга, методичка, журнал).
-        /// </summary>
-        public Title BookTypeName { get; set; }
 
         /// <summary>
         /// Книги.
         /// </summary>
-        public ISet<Book> Books { get; } = new HashSet<Book>();
-
-        /// <inheritdoc/>
-        public override bool Equals(BookType? other)
-        {
-            return ReferenceEquals(this, other) || ((other is not null) && (this.BookTypeName == other.BookTypeName));
-        }
-
-        /// <inheritdoc/>
-        public override bool Equals(object? obj) => this.Equals(obj as BookType);
-
-        /// <inheritdoc/>
-        public override int GetHashCode() => this.BookTypeName?.GetHashCode() ?? 0;
-
-        /// <inheritdoc cref="object.ToString()"/>
-        public override string ToString() => this.BookTypeName.ToString();
+        public ISet<Book> Books { get; } = new HashSet<Book>(EntityComparer<Book>.Instance);
     }
 }

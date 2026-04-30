@@ -18,7 +18,7 @@ namespace DataAccessLayer.Configurations
         {
             _ = builder.HasKey(type => type.Id);
 
-            _ = builder.OwnsOne(type => type.BookTypeName, titleBuilder =>
+            _ = builder.OwnsOne(type => type.Name, titleBuilder =>
             {
                 titleBuilder.Property(t => t.Value)
                     .HasColumnName("BookTypeName")

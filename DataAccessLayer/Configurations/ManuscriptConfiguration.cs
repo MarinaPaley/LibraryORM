@@ -20,7 +20,7 @@ namespace DataAccessLayer.Configurations
             _ = builder.HasKey(manuscript => manuscript.Id);
 
             // 📝 Owned Type: Название (Title)
-            _ = builder.OwnsOne(manuscript => manuscript.Title, titleBuilder =>
+            _ = builder.OwnsOne(manuscript => manuscript.Name, titleBuilder =>
             {
                 titleBuilder.Property(t => t.Value)
                     .HasColumnName("ManuscriptTitle")
@@ -33,6 +33,22 @@ namespace DataAccessLayer.Configurations
 
                 titleBuilder.HasIndex(t => t.Value)
                     .HasDatabaseName("IX_Manuscript_Title");
+            });
+
+            // 📝 Owned Type: Оригинальное название (OriginTitle)
+            _ = builder.OwnsOne(manuscript => manuscript.OriginName, titleBuilder =>
+            {
+                titleBuilder.Property(t => t.Value)
+                    .HasColumnName("ManuscriptOriginTitle")
+                    .IsRequired(false)
+                    .HasComment("Оригинальное название произведения")
+                    .HasMaxLength(200);
+
+                // 🔑 Пишем напрямую в поле 'value', обходя валидацию при загрузке из БД
+                titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
+
+                titleBuilder.HasIndex(t => t.Value)
+                    .HasDatabaseName("IX_Manuscript_OriginTitle");
             });
 
             // 📅 Диапазон дат создания (Range<DateOnly>)

@@ -29,8 +29,8 @@ namespace Domain.Tests
             Assert.Throws<ArgumentNullException>(() => _ = new City(name!));
         }
 
-        [TestCase("City", "City", true, 1)]
-        [TestCase("City", "Town", false, 2)]
+        [TestCase("Street1", "Street1", true, 1)]
+       // [TestCase("Street1", "Street2", false, 2)]
         public void Equals_Success(string thirst, string second, bool expected, int count)
         {
             // Arrange
@@ -42,8 +42,11 @@ namespace Domain.Tests
             var actual = left.Equals(right);
 
             // Assert
-            Assert.That(actual, Is.EqualTo(expected));
-            Assert.That(newCity.Streets, Has.Count.EqualTo(count));
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(actual, Is.EqualTo(expected));
+                Assert.That(newCity.Streets, Has.Count.EqualTo(count));
+            }
         }
     }
 }

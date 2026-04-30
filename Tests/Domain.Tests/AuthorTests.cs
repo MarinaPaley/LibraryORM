@@ -113,21 +113,23 @@ namespace Domain.Tests
             Author author = new (new Person(tolstoy));
             var language = new Language("Русский");
 
-            var book = new Manuscript("Анна Каренина", language, new DateOnly(1873, 1, 1), new DateOnly(1877, 1, 1), author);
-            var other = new Manuscript("12 стульев", language, new DateOnly(1927, 1, 9), new DateOnly(1927, 1, 12));
+            Author otherAuthor = new Author(new Person(new Name("Илья", "Ильф")));
+
+            var book = new Manuscript("Анна Каренина", language, new DateOnly(1873, 1, 1), new DateOnly(1877, 1, 1), null,  author);
+            var other = new Manuscript("12 стульев", language, new DateOnly(1927, 1, 9), new DateOnly(1927, 1, 12), null, otherAuthor);
 
             // Act & Assert
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(author.RemoveBook(book), Is.True);
                 Assert.That(author.RemoveBook(null!), Is.False);
                 Assert.That(author.RemoveBook(other), Is.False);
-            });
+            }
         }
 
         private static IEnumerable<TestCaseData> Books()
         {
-            yield return new TestCaseData(new Manuscript("12 стульев", new Language("Русский"), new DateOnly(1927, 1, 9), new DateOnly(1927, 1, 12)), true);
+            yield return new TestCaseData(new Manuscript("12 стульев", new Language("Русский"), new DateOnly(1927, 1, 9), new DateOnly(1927, 1, 12), null, new Author(new Person(new Name("Ильф", "Илья")))), true);
             yield return new TestCaseData(null, false);
         }
 

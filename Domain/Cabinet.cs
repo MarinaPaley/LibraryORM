@@ -13,7 +13,7 @@ namespace Domain
     /// <summary>
     /// Шкаф.
     /// </summary>
-    public sealed class Cabinet : Entity<Cabinet>, IEquatable<Cabinet>
+    public sealed class Cabinet : NamedEntity<Cabinet>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Cabinet"/>.
@@ -24,9 +24,9 @@ namespace Domain
         /// В случае если <paramref name="room"/> или <paramref name="name"/> – <see langword="null"/>.
         /// </exception>
         public Cabinet(Room room, string name)
+            : base(name)
         {
             this.Room = room ?? throw new ArgumentNullException(nameof(room));
-            this.Name = new Title(name);
         }
 
 #pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
@@ -36,6 +36,7 @@ namespace Domain
         /// </summary>
         [Obsolete("For ORM only", true)]
         private Cabinet()
+            : base("Не задано")
         {
         }
 
@@ -47,14 +48,9 @@ namespace Domain
         public Room? Room { get; set; }
 
         /// <summary>
-        /// Название шкафа.
-        /// </summary>
-        public Title Name { get; set; }
-
-        /// <summary>
         /// Полки в шкафу.
         /// </summary>
-        public ISet<Shelf> Shelves { get; } = new HashSet<Shelf>();
+        public ISet<Shelf> Shelves { get; } = new HashSet<Shelf>(NamedEntityComparer<Shelf>.Instance);
 
         /// <summary>
         /// Добавляет полку в шкаф.
@@ -63,13 +59,13 @@ namespace Domain
         /// <returns> <see langword="true"/>, если добавили, иначе - <see langword="false"/>. </returns>
         public bool AddShelf(Shelf shelf)
         {
-            var result = shelf is not null && this.Shelves.Add(shelf);
-            if (result)
+            if (shelf is not null)
             {
                 shelf!.Cabinet = this;
+                return this.Shelves.Add(shelf);
             }
 
-            return result;
+            return false;
         }
 
         /// <summary>
@@ -97,12 +93,6 @@ namespace Domain
                     && this.Room is not null
                     && this.Room.Equals(other.Room));
         }
-
-        /// <inheritdoc/>
-        public override bool Equals(object? obj) => this.Equals(obj as Cabinet);
-
-        /// <inheritdoc/>
-        public override int GetHashCode() => this.Name?.GetHashCode() ?? 0;
 
         /// <inheritdoc cref="object.ToString()"/>
         public override string ToString()

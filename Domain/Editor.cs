@@ -11,7 +11,7 @@ namespace Domain
     /// <summary>
     /// Редактор.
     /// </summary>
-    public sealed class Editor : Contributor
+    public sealed class Editor : Contributor<Editor>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Editor"/>.
@@ -36,7 +36,7 @@ namespace Domain
         /// <summary>
         /// Книги.
         /// </summary>
-        public ISet<Book> Books { get; } = new HashSet<Book>();
+        public ISet<Book> Books { get; } = new HashSet<Book>(EntityComparer<Book>.Instance);
 
         /// <summary>
         /// Добавляем книгу редактору.

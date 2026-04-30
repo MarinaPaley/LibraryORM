@@ -11,7 +11,7 @@ namespace Domain
     /// <summary>
     /// Город.
     /// </summary>
-    public sealed class City : Entity<City>, IEquatable<City>
+    public sealed class City : NamedEntity<City>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="City"/>.
@@ -21,8 +21,8 @@ namespace Domain
         /// В случае если <paramref name="name"/> – <see langword="null"/>.
         /// </exception>
         public City(string name)
+            : base(name)
         {
-            this.Name = new Title(name);
         }
 
 #pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
@@ -32,36 +32,16 @@ namespace Domain
         /// </summary>
         [Obsolete("For ORM only", true)]
         private City()
+            : base("Не задано")
         {
         }
 
 #pragma warning restore CS8618
 
         /// <summary>
-        /// Название города.
-        /// </summary>
-        public Title Name { get; set; }
-
-        /// <summary>
         /// Улицы.
         /// </summary>
-        public ISet<Street> Streets { get; } = new HashSet<Street>();
-
-        /// <inheritdoc/>
-        public override bool Equals(City? other)
-        {
-            return ReferenceEquals(this, other)
-                || ((other is not null) && (this.Name == other.Name));
-        }
-
-        /// <inheritdoc/>
-        public override bool Equals(object? obj) => this.Equals(obj as City);
-
-        /// <inheritdoc/>
-        public override int GetHashCode() => this.Name?.GetHashCode() ?? 0;
-
-        /// <inheritdoc cref="object.ToString()"/>
-        public override string ToString() => this.Name.ToString();
+        public ISet<Street> Streets { get; } = new HashSet<Street>(NamedEntityComparer<Street>.Instance);
 
         /// <summary>
         /// Добавить улицу.
@@ -70,13 +50,13 @@ namespace Domain
         /// <returns> <see langword="true"/>, если добавили, иначе - <see langword="false"/>. </returns>
         public bool AddStreet(Street street)
         {
-            var result = street is not null && this.Streets.Add(street);
-            if (result)
+            if (street is not null)
             {
                 street!.City = this;
+                return this.Streets.Add(street);
             }
 
-            return result;
+            return false;
         }
     }
 }

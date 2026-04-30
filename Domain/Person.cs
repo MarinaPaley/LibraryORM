@@ -36,10 +36,12 @@ namespace Domain
             this.DateDeath = dateDeath;
         }
 
+#pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
         [Obsolete("For ORM only")]
         private Person()
         {
         }
+#pragma warning restore CS8618
 
         /// <summary>
         /// Полное имя.

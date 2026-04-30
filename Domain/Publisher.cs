@@ -11,7 +11,7 @@ namespace Domain
     /// <summary>
     /// Издательство.
     /// </summary>
-    public sealed class Publisher : Entity<Publisher>, IEquatable<Publisher>
+    public sealed class Publisher : NamedEntity<Publisher>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Publisher"/>.
@@ -19,20 +19,18 @@ namespace Domain
         /// <param name="name"> Название. </param>
         /// <param name="address"> Адрес. </param>
         public Publisher(string name, Address? address = null)
+            : base(name)
         {
-            this.Name = new Title(name);
             this.Address = address;
         }
 
+#pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
         [Obsolete("For ORM only")]
         private Publisher()
+            : base("Не задано")
         {
         }
-
-        /// <summary>
-        /// Название.
-        /// </summary>
-        public Title Name { get; set; }
+#pragma warning restore CS8618
 
         /// <summary>
         /// Адрес.
@@ -42,22 +40,7 @@ namespace Domain
         /// <summary>
         /// Книги.
         /// </summary>
-        public ISet<Book> Books { get; } = new HashSet<Book>();
-
-        /// <inheritdoc/>
-        public override bool Equals(Publisher? other)
-        {
-            return ReferenceEquals(this, other) || ((other is not null) && (this.Id == other.Id));
-        }
-
-        /// <inheritdoc/>
-        public override bool Equals(object? obj) => this.Equals(obj as Publisher);
-
-        /// <inheritdoc/>
-        public override int GetHashCode() => this.Id.GetHashCode();
-
-        /// <inheritdoc cref="object.ToString()"/>
-        public override string ToString() => $"{this.Name}";
+        public ISet<Book> Books { get; } = new HashSet<Book>(EntityComparer<Book>.Instance);
 
         /// <summary>
         /// Добавить книгу.

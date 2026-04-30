@@ -11,7 +11,7 @@ namespace Domain
     /// <summary>
     /// Переводчик.
     /// </summary>
-    public sealed class Translator : Contributor, IEquatable<Translator>
+    public sealed class Translator : Contributor<Translator>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Translator"/>.
@@ -36,7 +36,7 @@ namespace Domain
         /// <summary>
         /// Рукописи.
         /// </summary>
-        public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>();
+        public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>(BilingualNamedEntityComparer<Manuscript>.Instance);
 
         /// <summary>
         /// Добавляем рукопись переводчику.
@@ -61,17 +61,5 @@ namespace Domain
                 && this.Manuscripts.Remove(manuscript)
                 && manuscript.Translators.Remove(this);
         }
-
-        /// <inheritdoc/>
-        public bool Equals(Translator? other)
-        {
-            return ReferenceEquals(this, other) || ((other is not null) && this.Person?.Equals(other.Person) == true);
-        }
-
-        /// <inheritdoc/>
-        public override bool Equals(object? obj) => this.Equals(obj as Translator);
-
-        /// <inheritdoc/>
-        public override int GetHashCode() => HashCode.Combine(this.GetType(), this.Person);
     }
 }

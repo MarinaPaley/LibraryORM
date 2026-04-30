@@ -11,7 +11,7 @@ namespace Domain
     /// <summary>
     /// Автор.
     /// </summary>
-    public sealed class Author : Contributor
+    public sealed class Author : Contributor<Author>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Author"/>.
@@ -36,7 +36,7 @@ namespace Domain
         /// <summary>
         /// Рукописи.
         /// </summary>
-        public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>();
+        public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>(BilingualNamedEntityComparer<Manuscript>.Instance);
 
         /// <summary>
         /// Добавляем книгу автору.
@@ -46,8 +46,8 @@ namespace Domain
         public bool AddManuscript(Manuscript manuscript)
         {
             return manuscript is not null
-                && this.Manuscripts.Add(manuscript)
-                && manuscript.Authors.Add(this);
+                && manuscript.Authors.Add(this)
+                && this.Manuscripts.Add(manuscript);
         }
 
         /// <summary>

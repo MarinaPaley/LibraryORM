@@ -10,7 +10,7 @@ namespace Domain
     /// <summary>
     /// Улица.
     /// </summary>
-    public sealed class Street : Entity<Street>, IEquatable<Street>
+    public sealed class Street : NamedEntity<Street>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Street"/>.
@@ -18,11 +18,9 @@ namespace Domain
         /// <param name="name"> Название улицы.</param>
         /// <param name="city"> Город. </param>
         public Street(string name, City city)
+            : base(name)
         {
-            this.Name = new Title(name);
-
             ArgumentNullException.ThrowIfNull(city);
-
             city.AddStreet(this);
         }
 
@@ -33,34 +31,14 @@ namespace Domain
         /// </summary>
         [Obsolete("For ORM only", true)]
         private Street()
+            : base("Не задано")
         {
         }
 #pragma warning restore CS8618
 
         /// <summary>
-        /// Название улицы.
-        /// </summary>
-        public Title Name { get; set; }
-
-        /// <summary>
         /// Город.
         /// </summary>
         public City City { get; set; }
-
-        /// <inheritdoc/>
-        public override bool Equals(Street? other)
-        {
-            return ReferenceEquals(this, other)
-                || ((other is not null) && (this.Name == other.Name));
-        }
-
-        /// <inheritdoc/>
-        public override bool Equals(object? obj) => this.Equals(obj as Street);
-
-        /// <inheritdoc/>
-        public override int GetHashCode() => this.Name?.GetHashCode() ?? 0;
-
-        /// <inheritdoc/>
-        public override string ToString() => this.Name.ToString();
     }
 }

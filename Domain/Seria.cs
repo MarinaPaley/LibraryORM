@@ -11,7 +11,7 @@ namespace Domain
     /// <summary>
     /// Серия.
     /// </summary>
-    public sealed class Seria : Entity<Seria>, IEquatable<Seria>
+    public sealed class Seria : NamedEntity<Seria>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Seria"/>.
@@ -21,8 +21,8 @@ namespace Domain
         /// В случае если <paramref name="seriaName"/> – <see langword="null"/>.
         /// </exception>
         public Seria(string seriaName)
+            : base(seriaName)
         {
-            this.SeriaName = new Title(seriaName);
         }
 
 #pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
@@ -32,6 +32,7 @@ namespace Domain
         /// </summary>
         [Obsolete("For ORM only", true)]
         private Seria()
+            : base("Не задано")
         {
         }
 
@@ -45,23 +46,7 @@ namespace Domain
         /// <summary>
         /// Книги данной серии.
         /// </summary>
-        public ISet<Book> Books { get; } = new HashSet<Book>();
-
-        /// <inheritdoc/>
-        public override bool Equals(Seria? other)
-        {
-            return ReferenceEquals(this, other)
-                || ((other is not null) && (this.SeriaName == other.SeriaName));
-        }
-
-        /// <inheritdoc/>
-        public override bool Equals(object? obj) => this.Equals(obj as Seria);
-
-        /// <inheritdoc/>
-        public override int GetHashCode() => this.SeriaName?.GetHashCode() ?? 0;
-
-        /// <inheritdoc cref="object.ToString()"/>
-        public override string ToString() => this.SeriaName.ToString();
+        public ISet<Book> Books { get; } = new HashSet<Book>(EntityComparer<Book>.Instance);
 
         /// <summary>
         /// Добавить книгу в серию.
