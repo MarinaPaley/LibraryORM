@@ -8,6 +8,7 @@ namespace Repository.Abstract
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Reflection.Metadata.Ecma335;
     using System.Threading.Tasks;
     using DataAccessLayer;
     using Domain.Abstract;
@@ -51,7 +52,13 @@ namespace Repository.Abstract
         {
             try
             {
-                _ = this.DataContext.Remove(entity);
+                var existing = await this.FindAsync(e => e.Id == entity.Id);
+                if (existing is null)
+                {
+                    return false;
+                }
+
+                _ = this.DataContext.Remove(existing);
                 return await this.SaveAsync(saveNow) != 0;
             }
             catch
@@ -78,7 +85,7 @@ namespace Repository.Abstract
         /// <inheritdoc/>
         public async Task<TEntity?> GetAsync(Guid id)
         {
-            return await this.GetAll().SingleOrDefaultAsync(entity => entity.Id == id);
+            return await this.FindAsync(entity => entity.Id == id);
         }
 
         /// <inheritdoc/>

@@ -11,7 +11,7 @@ namespace Domain
     /// <summary>
     /// Город.
     /// </summary>
-    public sealed class City : NamedEntity<City>
+    public sealed class City : NamedEntity<City>, IEquatable<City>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="City"/>.
@@ -50,13 +50,26 @@ namespace Domain
         /// <returns> <see langword="true"/>, если добавили, иначе - <see langword="false"/>. </returns>
         public bool AddStreet(Street street)
         {
-            if (street is not null)
+            if (street is null)
             {
-                street!.City = this;
-                return this.Streets.Add(street);
+                return false;
             }
 
-            return false;
+            street.City = this;
+            return this.Streets.Add(street);
         }
+
+        /// <inheritdoc/>
+        public override bool Equals(City? other)
+        {
+            return ReferenceEquals(this, other)
+                || NamedEntityComparer<City>.Instance.Equals(this, other);
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object? obj) => this.Equals(obj as City);
+
+        /// <inheritdoc/>
+        public override int GetHashCode() => this.Name.GetHashCode();
     }
 }

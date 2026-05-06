@@ -25,8 +25,13 @@ namespace DataAccessLayer.Configurations
                     v => new Title(v))
                 .HasComment("Название полки");
 
-            _ = builder.HasIndex(shelf => shelf.Name)
-                .IsUnique();
+
+            // 🔗 Один-ко-многим: полки в шкафу
+            _ = builder.HasOne(shelf => shelf.Cabinet)
+                .WithMany(cabinet => cabinet.Shelves)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            _ = builder.ToTable("Shelves");
         }
     }
 }

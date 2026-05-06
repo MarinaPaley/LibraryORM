@@ -11,7 +11,7 @@ namespace Domain
     /// <summary>
     /// Серия.
     /// </summary>
-    public sealed class Seria : NamedEntity<Seria>
+    public sealed class Seria : NamedEntity<Seria>, IEquatable<Seria>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Seria"/>.
@@ -83,5 +83,18 @@ namespace Domain
 
             return result;
         }
+
+        /// <inheritdoc/>
+        public override bool Equals(Seria? other)
+        {
+            return ReferenceEquals(this, other)
+                || NamedEntityComparer<Seria>.Instance.Equals(this, other);
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object? obj) => this.Equals(obj as Seria);
+
+        /// <inheritdoc/>
+        public override int GetHashCode() => this.Name.GetHashCode();
     }
 }

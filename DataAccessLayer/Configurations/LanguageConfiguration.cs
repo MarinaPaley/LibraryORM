@@ -26,11 +26,9 @@ namespace DataAccessLayer.Configurations
                     .HasComment("Язык")
                     .HasMaxLength(200);
                 titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-
-                titleBuilder.HasIndex(t => t.Value)
-                    .IsUnique()
-                    .HasDatabaseName("IX_Language_Name");
             });
+
+            _ = builder.ToTable("Languages");
         }
     }
 }

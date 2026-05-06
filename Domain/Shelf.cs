@@ -41,39 +41,31 @@ namespace Domain
         /// <summary>
         ///  Книги.
         /// </summary>
-        public ISet<Book> Books { get; } = new HashSet<Book>(EntityComparer<Book>.Instance);
+        public IList<Item> Items { get; } = [];
 
         /// <summary>
         /// Добавляет книгу на полку.
         /// </summary>
-        /// <param name="book">Книга. </param>
-        /// <returns><see langword="true"/> если добавили, иначе <see langword="false"/>.</returns>
-        public bool AddBook(Book book)
+        /// <param name="item">Книга. </param>
+        public void AddBook(Item item)
         {
-            var result = book is not null
-                && this.Books.Add(book);
-
-            if (result)
-            {
-                book!.Shelf = this;
-            }
-
-            return result;
+            this.Items.Add(item);
+            item!.Shelf = this;
         }
 
         /// <summary>
         /// Снимаем книгу с полки.
         /// </summary>
-        /// <param name="book">Книга.</param>
+        /// <param name="item">Книга.</param>
         /// <returns><see langword="true"/> если убрали, иначе <see langword="false"/>.</returns>
-        public bool RemoveBook(Book book)
+        public bool RemoveBook(Item item)
         {
-            var result = book is not null
-                && this.Books.Remove(book);
+            var result = item is not null
+                && this.Items.Remove(item);
 
             if (result)
             {
-                book!.Shelf = null;
+                item!.Shelf = null;
             }
 
             return result;
@@ -82,17 +74,16 @@ namespace Domain
         /// <inheritdoc />
         public override bool Equals(Shelf? other)
         {
-            var result = ReferenceEquals(this, other)
-                || (other is not null
-                && this.Name == other.Name);
-
-            if (this.Cabinet is not null)
-            {
-                result &= this.Cabinet.Equals(other?.Cabinet);
-            }
-
-            return result;
+            return ReferenceEquals(this, other)
+                || (NamedEntityComparer<Shelf>.Instance.Equals(this, other)
+                && NamedEntityComparer<Cabinet>.Instance.Equals(this.Cabinet, other.Cabinet));
         }
+
+        /// <inheritdoc/>
+        public override bool Equals(object? obj) => this.Equals(obj as Shelf);
+
+        /// <inheritdoc/>
+        public override int GetHashCode() => HashCode.Combine(this.Name, this.Cabinet);
 
         /// <inheritdoc cref="object.ToString()"/>
         public override string ToString()
@@ -101,9 +92,9 @@ namespace Domain
                 ? $" ({this.Cabinet.Name} → {this.Cabinet.Room?.Name})"
                 : string.Empty;
 
-            return this.Books.Count == 0
+            return this.Items.Count == 0
                 ? $"Полка: {this.Name}{location}"
-                : $"Полка: {this.Name}{location} | Книги: {this.Books.Join()}";
+                : $"Полка: {this.Name}{location} | Книги: {this.Items.Join()}";
         }
     }
 }

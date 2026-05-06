@@ -9,6 +9,8 @@ namespace Repository.Tests
     using System.Linq;
     using System.Threading.Tasks;
     using Domain;
+    using Domain.Abstract;
+    using Microsoft.EntityFrameworkCore;
     using NUnit.Framework;
 
     internal sealed class AuthorRepositotyTests
@@ -112,29 +114,30 @@ namespace Repository.Tests
         [Test]
         public async Task GetBooksById_ValidData_Success()
         {
+            // arrange
             var name = new Name("Толстой", "Лев");
             var person = new Person(name);
             var author = new Author(person);
-            var language = new Language("Русский");
+            var language = new HashSet<Language>() { new ("Русский") };
+            var manuscript1 = new Manuscript("Анна Каренина", language, new DateOnly(1873, 1, 1), new DateOnly(1877, 1, 1), null, author);
+            var manuscript2 = new Manuscript("Война и мир", language, new DateOnly(1863, 1, 1), new DateOnly(1869, 1, 1), null, author);
 
-            var manuscript1 = new Manuscript("Анна Каренина", language, new DateOnly(1873, 1, 1), new DateOnly(1877, 1, 1), null,author);
-            var manuscript2 = new Manuscript("Война и мир", language, new DateOnly(1863, 1, 1), new DateOnly(1869, 1, 1), null,  author);
-
-            var manuscripts = new HashSet<Manuscript>
-            {
-                manuscript1,
-                manuscript2,
-            };
-
-            _ = this.DataContext.Add(author);
+            await this.DataContext.AddRangeAsync(author);
             _ = await this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
+            // ✅ Загружаем expected из БД (чистые данные)
+            var expected = await this.DataContext.Manuscripts
+                .Where(m => m.Authors.Any(a => a.Id == author.Id))
+                .ToListAsync();
+
             // act
-            var result = await this.Repository.GetBooksByAuthorId(author.Id);
+            var actual = await this.Repository.GetBooksByAuthorId(author.Id);
 
             // assert
-            Assert.That(result, Is.EquivalentTo(manuscripts));
+            var comparer = BilingualNamedEntityComparer<Manuscript>.Instance;
+            Assert.That(actual, Is.EquivalentTo(expected).Using(comparer));
+            Assert.That(actual, Has.Count.EqualTo(2));
         }
 
         [Test]
@@ -151,10 +154,10 @@ namespace Repository.Tests
             var balakina = new Author(ekaterina);
             var authors = new HashSet<Author> { balakina, philipchenko };
 
-            var csv = new Manuscript("Система контроля версий", language, new HashSet<Author>() { vasilyeva, philipchenko });
-            var iscs = new Manuscript("Информационное обеспечение систем управления", language, new HashSet<Author>() { vasilyeva, philipchenko, balakina });
-            var term = new Manuscript("Методические указания к курсовому проектированию", language, new HashSet<Author>() { vasilyeva, balakina });
-            var article = new Manuscript("Статья", language, new HashSet<Author>() { vasilyeva });
+            var csv = new Manuscript("Система контроля версий", new HashSet<Language>() { new ("Русский") }, new HashSet<Author>() { vasilyeva, philipchenko });
+            var iscs = new Manuscript("Информационное обеспечение систем управления", new HashSet<Language>() { new ("Русский") }, new HashSet<Author>() { vasilyeva, philipchenko, balakina });
+            var term = new Manuscript("Методические указания к курсовому проектированию", new HashSet<Language>() { new ("Русский") }, new HashSet<Author>() { vasilyeva, balakina });
+            var article = new Manuscript("Статья", new HashSet<Language>() { new ("Русский") }, new HashSet<Author>() { vasilyeva });
             var manuscripts = new HashSet<Manuscript> { csv, iscs, term, article };
 
             await this.DataContext.AddRangeAsync(manuscripts);

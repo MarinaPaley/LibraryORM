@@ -6,6 +6,7 @@ namespace Repository.Tests
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.InteropServices;
     using System.Threading.Tasks;
     using Domain;
     using NUnit.Framework;
@@ -32,21 +33,28 @@ namespace Repository.Tests
         public async Task GetAuthors_FullNameIsLoaded()
         {
             // arrange
-            var person = new Person(new Name("Толстой", "Лев"));
+            var person = new Person("Толстой", "Лев", birthYear: 1828, deathYear: 1910);
             var author = new Author(person);
-            var manuscript = new Manuscript("Тест", new Language("Русский"), new HashSet<Author> { author });
 
-            this.DataContext.Add(manuscript);
-            _ = this.DataContext.SaveChangesAsync();
+            var manuscript = new Manuscript(
+                "Тест",
+                new HashSet<Language>() { new ("Русский") },
+                new HashSet<Author> { author });
+
+            _ = await this.DataContext.AddAsync(manuscript);
+            _ = await this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = (await this.repository.GetAuthorsAsync(manuscript.Id))
-                ?.FirstOrDefault();
+            var result = await this.repository.GetAuthorsAsync(manuscript.Id);
 
             // assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result?.Person.FullName.FamilyName, Is.EqualTo("Толстой"));
+
+            var x = result.FirstOrDefault();
+            Assert.That(x, Is.Not.Null);
+            Assert.That(x.Person, Is.Not.Null);
+            Assert.That(x.Person.FullName.FamilyName, Is.EqualTo("Толстой"));
         }
 
         [Test]
@@ -58,11 +66,11 @@ namespace Repository.Tests
 
             var manuscript = new Manuscript(
                 "Произведение",
-                new Language("Русский"),
+                new HashSet<Language>() { new ("Русский") },
                 new HashSet<Author> { author });
 
-            _ = this.DataContext.Add(manuscript);
-            _ = this.DataContext.SaveChangesAsync();
+            _ = await this.DataContext.AddAsync(manuscript);
+            _ = await this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
@@ -78,7 +86,7 @@ namespace Repository.Tests
         public async Task GetAllBooksCoAuthors_ValidData_Success()
         {
             // arrange
-            var language = new Language("Русский");
+            var language = new HashSet<Language>() { new ("Русский") };
 
             var marina = new Person(new Name("Васильева", "Марина", "Алексеевна"));
             var constantin = new Person(new Name("Филипченко", "Константин", "Михайлович"));
@@ -120,9 +128,9 @@ namespace Repository.Tests
             Assert.That(result, Has.Count.EqualTo(3)); // csv, iscs, term (исключая саму article)
             using (Assert.EnterMultipleScope())
             {
-                Assert.That(result.Contains(csvManuscript), Is.True);
-                Assert.That(result.Contains(iscsManuscript), Is.True);
-                Assert.That(result.Contains(termManuscript), Is.True);
+                Assert.That(result.Any(m => m.Id == csvManuscript.Id), Is.True);
+                Assert.That(result.Any(m => m.Id == iscsManuscript.Id), Is.True);
+                Assert.That(result.Any(m => m.Id == termManuscript.Id), Is.True);
                 Assert.That(result.Any(m => m.Name.Value == "Статья"), Is.False);
             }
         }

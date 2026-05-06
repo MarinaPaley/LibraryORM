@@ -13,7 +13,7 @@ namespace Domain
     /// <summary>
     /// Шкаф.
     /// </summary>
-    public sealed class Cabinet : NamedEntity<Cabinet>
+    public sealed class Cabinet : NamedEntity<Cabinet>, IEquatable<Cabinet>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Cabinet"/>.
@@ -89,9 +89,17 @@ namespace Domain
         {
             return ReferenceEquals(this, other)
                 || (other is not null
-                    && this.Name == other.Name
-                    && this.Room is not null
-                    && this.Room.Equals(other.Room));
+                    && NamedEntityComparer<Cabinet>.Instance.Equals(this, other)
+                    && NamedEntityComparer<Room>.Instance.Equals(this.Room, other.Room));
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object? obj) => this.Equals(obj as Cabinet);
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(this.Name, this.Room);
         }
 
         /// <inheritdoc cref="object.ToString()"/>

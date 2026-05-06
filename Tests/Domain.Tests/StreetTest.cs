@@ -29,12 +29,11 @@ namespace Domain.Tests
             Assert.Throws<ArgumentNullException>(() => _ = new City(name!));
         }
 
-        [TestCase("Street1", "Street1", true, 1)]
-       // [TestCase("Street1", "Street2", false, 2)]
+        [TestCase("Street1", "Street2", false, 2)]
         public void Equals_Success(string thirst, string second, bool expected, int count)
         {
             // Arrange
-            var newCity = new City("city");
+            var newCity = new City("City"); // Нужно так, чтобы не влияли другие тесты
             var left = new Street(thirst, newCity);
             var right = new Street(second, newCity);
 

@@ -30,7 +30,7 @@ namespace Repository.Tests
                     builder => builder.UseSqlite(@"Data Source=.\tests.db")
                         .EnableDetailedErrors()
                         .EnableSensitiveDataLogging()
-                        .LogTo(Console.WriteLine, LogLevel.Error))
+                        .LogTo(Console.WriteLine, LogLevel.Trace))
                 .AddScoped<TRepository>()
                 .BuildServiceProvider();
         }

@@ -31,6 +31,14 @@ namespace Domain.Abstract
         public override bool Equals(object? obj) => this.Equals(obj as TEntity);
 
         /// <inheritdoc/>
+        public override bool Equals(TEntity? other)
+        {
+            return ReferenceEquals(this, other)
+                || (other is not null
+                && this.Name == other?.Name);
+        }
+
+        /// <inheritdoc/>
         public override int GetHashCode() => this.Name?.GetHashCode() ?? 0;
     }
 }

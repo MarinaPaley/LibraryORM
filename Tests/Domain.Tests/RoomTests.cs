@@ -14,17 +14,6 @@ namespace Domain.Tests
     [TestFixture]
     internal sealed class RoomTests
     {
-        #region Test data helpers
-
-        private static Address CreateAddress(string city = "Город", string street = "Улица", int house = 1) =>
-            new (new City(city), new Street(street, new City(city)), house);
-
-        private static Cabinet CreateCabinet(Room room, string name = "Шкаф") => new (room, name);
-
-        #endregion
-
-        #region Constructor validation tests
-
         [Test]
         public void Ctor_NullAddress_ThrowsArgumentNullException()
         {
@@ -65,14 +54,13 @@ namespace Domain.Tests
             var room = new Room(address, "Кабинет директора");
 
             // assert
-            Assert.That(room.Address, Is.SameAs(address));
-            Assert.That(room.Name.Value, Is.EqualTo("Кабинет директора"));
-            Assert.That(room.Cabinets, Is.Empty);
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(room.Address, Is.SameAs(address));
+                Assert.That(room.Name.Value, Is.EqualTo("Кабинет директора"));
+                Assert.That(room.Cabinets, Is.Empty);
+            }
         }
-
-        #endregion
-
-        #region Bidirectional relationship tests
 
         [Test]
         public void AddCabinet_ValidCabinet_AddsToBothCollections()
@@ -85,9 +73,12 @@ namespace Domain.Tests
             var result = room.AddCabinet(cabinet);
 
             // assert
-            Assert.That(result, Is.True);
-            Assert.That(room.Cabinets, Contains.Item(cabinet));
-            Assert.That(cabinet.Room, Is.SameAs(room));
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(result, Is.True);
+                Assert.That(room.Cabinets, Contains.Item(cabinet));
+                Assert.That(cabinet.Room, Is.SameAs(room));
+            }
         }
 
         [Test]
@@ -100,8 +91,11 @@ namespace Domain.Tests
             var result = room.AddCabinet(null!);
 
             // assert
-            Assert.That(result, Is.False);
-            Assert.That(room.Cabinets, Is.Empty);
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(result, Is.False);
+                Assert.That(room.Cabinets, Is.Empty);
+            }
         }
 
         [Test]
@@ -116,8 +110,11 @@ namespace Domain.Tests
             var result = room.AddCabinet(cabinet);
 
             // assert
-            Assert.That(result, Is.False);
-            Assert.That(room.Cabinets.Count, Is.EqualTo(1));
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(result, Is.False);
+                Assert.That(room.Cabinets.Count, Is.EqualTo(1));
+            }
         }
 
         [Test]
@@ -132,9 +129,12 @@ namespace Domain.Tests
             var result = room.RemoveCabinet(cabinet);
 
             // assert
-            Assert.That(result, Is.True);
-            Assert.That(room.Cabinets, Does.Not.Contain(cabinet));
-            Assert.That(cabinet.Room, Is.Null);
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(result, Is.True);
+                Assert.That(room.Cabinets, Does.Not.Contain(cabinet));
+                Assert.That(cabinet.Room, Is.Null);
+            }
         }
 
         [Test]
@@ -149,8 +149,11 @@ namespace Domain.Tests
             var result = room.RemoveCabinet(cabinet);
 
             // assert
-            Assert.That(result, Is.False);
-            Assert.That(cabinet.Room, Is.SameAs(otherRoom));
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(result, Is.False);
+                Assert.That(cabinet.Room, Is.SameAs(otherRoom));
+            }
         }
 
         [Test]
@@ -165,10 +168,6 @@ namespace Domain.Tests
             // assert
             Assert.That(result, Is.False);
         }
-
-        #endregion
-
-        #region Equality tests
 
         [Test]
         public void Equals_SameReference_ReturnsTrue()
@@ -216,13 +215,16 @@ namespace Domain.Tests
         public void Equals_DifferentAddress_ReturnsFalse()
         {
             // arrange
-            var address1 = CreateAddress("Москва");
-            var address2 = CreateAddress("Санкт-Петербург");
+            var address1 = CreateAddress(city: "Москва");
+            var address2 = CreateAddress(city: "Санкт-Петербург");
             var room1 = new Room(address1, "Кабинет");
             var room2 = new Room(address2, "Кабинет");
 
-            // act & assert
-            Assert.That(room1, Is.Not.EqualTo(room2));
+            // act
+            var actual = room1.Equals(room2);
+
+            // assert
+            Assert.That(actual, Is.False);
         }
 
         [Test]
@@ -260,11 +262,8 @@ namespace Domain.Tests
 
             // act & assert
             Assert.That(room1, Is.Not.EqualTo(room2));
+            Assert.That(room1.GetHashCode(), Is.Not.EqualTo(room2.GetHashCode()));
         }
-
-        #endregion
-
-        #region ToString tests
 
         [Test]
         public void ToString_WithoutCabinets_ReturnsRoomNameAndAddress()
@@ -298,10 +297,6 @@ namespace Domain.Tests
             Assert.That(result, Does.Contain("Шкаф 2"));
         }
 
-        #endregion
-
-        #region Collection property tests
-
         [Test]
         public void Cabinets_Collection_StartsEmpty()
         {
@@ -324,6 +319,9 @@ namespace Domain.Tests
             Assert.That(cabinetsReference, Is.InstanceOf<ISet<Cabinet>>());
         }
 
-        #endregion
+        private static Address CreateAddress(string city = "Город", string street = "Улица", int house = 1) =>
+            new (new Street(street, new City(city)), house);
+
+        private static Cabinet CreateCabinet(Room room, string name = "Шкаф") => new (room, name);
     }
 }

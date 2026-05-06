@@ -74,7 +74,7 @@ namespace Repository.Tests
                 2024,
                 new HashSet<Manuscript>());
 
-            _ = this.repository.CreateAsync(book);
+            _ = await this.repository.CreateAsync(book);
             this.DataContext.ChangeTracker.Clear();
 
             // act
@@ -130,18 +130,20 @@ namespace Repository.Tests
                 new BookType("Книга"),
                 publisher,
                 2024,
-                new HashSet<Manuscript>(),
-                shelf);
+                new HashSet<Manuscript>());
+            var item = new Item(book);
+            shelf.AddBook(item);
+            var expected = new List<Shelf>() { shelf };
 
-            _ = this.DataContext.Add(book);
-            _ = this.DataContext.SaveChangesAsync();
+            _ = await this.DataContext.AddAsync(book);
+            _ = await this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
             var result = await this.repository.GetShelfAsync(book.Title!);
 
             // assert
-            Assert.That(result, Is.EqualTo(shelf));
+            Assert.That(result, Is.EquivalentTo(expected));
         }
 
         [Test]
@@ -159,8 +161,8 @@ namespace Repository.Tests
                 2024,
                 new HashSet<Manuscript>());
 
-            _ = this.DataContext.Add(book);
-            _ = this.DataContext.SaveChangesAsync();
+            _ = await this.DataContext.AddAsync(book);
+            _ = await this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
@@ -185,8 +187,8 @@ namespace Repository.Tests
                 2024,
                 new HashSet<Manuscript>());
 
-            _ = this.DataContext.Add(book);
-            _ = this.DataContext.SaveChangesAsync();
+            _ = await this.DataContext.AddAsync(book);
+            _ = await this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
@@ -219,7 +221,7 @@ namespace Repository.Tests
             static Language NewLanguage(string name) => new (name);
             static Person NewPerson(string family, string given, string patronymic) => new (new Name(family, given, patronymic));
             static Author NewAuthor(string family, string given, string patronymic) => new (NewPerson(family, given, patronymic));
-            static Manuscript NewManuscript(string title, Language language, params Author[] authors)
+            static Manuscript NewManuscript(string title, ISet<Language> language, params Author[] authors)
                 => new (title, language, new HashSet<Author>(authors));
 
             // ── Тест-кейс 1: "Рукопись 1" → Полка 1, Полка 2 ──
@@ -228,17 +230,20 @@ namespace Repository.Tests
                 var shelf2 = NewShelf("Полка 2");
                 var publisher = NewPublisher("Издательство");
                 var bookType = NewBookType("Книга");
-                var language = NewLanguage("Русский");
+                var language = new HashSet<Language>() { NewLanguage("Русский") };
                 var author = NewAuthor("Фамилия", "Имя", "Отчество");
 
                 var manuscript1 = NewManuscript("Рукопись 1", language, author);
                 var manuscript2 = NewManuscript("Рукопись 2", language, author);
                 var manuscript3 = NewManuscript("Рукопись 3", language, author);
 
-                var book1 = new Book("Книга", 120, "12345", bookType, publisher, 2026,
-                    new HashSet<Manuscript> { manuscript1, manuscript2, manuscript3 }, shelf1);
-                var book3 = new Book(null, 50, "123", bookType, publisher, 2025,
-                    new HashSet<Manuscript> { manuscript1 }, shelf2);
+                var book1 = new Book("Книга", 120, "12345", bookType, publisher, 2026, new HashSet<Manuscript> { manuscript1, manuscript2, manuscript3 });
+                var item1 = new Item(book1);
+                shelf1.AddBook(item1);
+
+                var book3 = new Book(null, 50, "123", bookType, publisher, 2025, new HashSet<Manuscript> { manuscript1 });
+                var item2 = new Item(book3);
+                shelf2.AddBook(item2);
 
                 yield return new TestCaseData(
                     new List<Book> { book1, book3 },
@@ -249,14 +254,15 @@ namespace Repository.Tests
             // ── Тест-кейс 2: "Рукопись 3" → Полка 1 ──
             {
                 var shelf1 = NewShelf("Полка 1");
-                var publisher = NewPublisher("Издательство");
+                var publisher = NewPublisher("Издательство1");
                 var bookType = NewBookType("Книга");
-                var language = NewLanguage("Русский");
+                var language = new HashSet<Language>() { NewLanguage("Русский") };
                 var author = NewAuthor("Фамилия", "Имя", "Отчество");
 
                 var manuscript3 = NewManuscript("Рукопись 3", language, author);
-                var book2 = new Book(null, 100, "12", bookType, publisher, 2025,
-                    new HashSet<Manuscript> { manuscript3 }, shelf1);
+                var book2 = new Book(null, 100, "12", bookType, publisher, 2025, new HashSet<Manuscript> { manuscript3 });
+                var item = new Item(book2);
+                shelf1.AddBook(item);
 
                 yield return new TestCaseData(
                     new List<Book> { book2 },
@@ -268,36 +274,40 @@ namespace Repository.Tests
             {
                 var shelf1 = NewShelf("Полка 1");
                 var shelf2 = NewShelf("Полка 2");
-                var publisher = NewPublisher("Издательство");
+                var publisher = NewPublisher("Издательство2");
                 var bookType = NewBookType("Книга");
-                var language = NewLanguage("Русский");
+                var language = new HashSet<Language>() { NewLanguage("Русский") };
                 var author = NewAuthor("Фамилия", "Имя", "Отчество");
 
                 var manuscript1 = NewManuscript("Рукопись 1", language, author);
                 var manuscript2 = NewManuscript("Рукопись 2", language, author);
 
-                var book1 = new Book("Книга", 120, "12345", bookType, publisher, 2026,
-                    new HashSet<Manuscript> { manuscript1, manuscript2 }, shelf1);
-                var book3 = new Book(null, 50, "123", bookType, publisher, 2025,
-                    new HashSet<Manuscript> { manuscript1 }, shelf2);
+                var book1 = new Book("Книга", 120, "12345", bookType, publisher, 2026, new HashSet<Manuscript> { manuscript1, manuscript2 });
+                var item1 = new Item(book1);
+                shelf1.AddBook(item1);
+
+                var book3 = new Book(null, 50, "123", bookType, publisher, 2025, new HashSet<Manuscript> { manuscript1 });
+                var item3 = new Item(book3);
+                shelf2.AddBook(item3);
 
                 yield return new TestCaseData(
                     new List<Book> { book1, book3 },
                     "Рукопись 2",
-                    new HashSet<Shelf> { shelf1 });  // ✅ Исправлено: manuscript2 только в book1 (shelf1)
+                    new HashSet<Shelf> { shelf1 });
             }
 
             // ── Тест-кейс 4: "Рукопись 2" → пусто ──
             {
                 var shelf1 = NewShelf("Полка 1");
-                var publisher = NewPublisher("Издательство");
+                var publisher = NewPublisher("Издательство3");
                 var bookType = NewBookType("Книга");
-                var language = NewLanguage("Русский");
+                var language = new HashSet<Language>() { NewLanguage("Русский") };
                 var author = NewAuthor("Фамилия", "Имя", "Отчество");
 
                 var manuscript3 = NewManuscript("Рукопись 3", language, author);
-                var book2 = new Book(null, 100, "12", bookType, publisher, 2025,
-                    new HashSet<Manuscript> { manuscript3 }, shelf1);
+                var book2 = new Book(null, 100, "12", bookType, publisher, 2025, new HashSet<Manuscript> { manuscript3 });
+                var item = new Item(book2);
+                shelf1.AddBook(item);
 
                 yield return new TestCaseData(
                     new List<Book> { book2 },

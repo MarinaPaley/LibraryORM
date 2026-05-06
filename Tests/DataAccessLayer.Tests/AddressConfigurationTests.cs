@@ -22,7 +22,7 @@ namespace DataAccessLayer.Tests
             // arrange
             var city = new City("Город");
             var street = new Street("Улица", city);
-            var address = new Address(city, street, 21, "корп. 1", 34);
+            var address = new Address(street, 21, "корп. 1", 34);
 
             // act
             _ = this.DataContext.Add(address);
@@ -32,10 +32,11 @@ namespace DataAccessLayer.Tests
             // assert
             var result = this.DataContext
                 .Set<Address>()
-                .Include(a => a.City)
-                    .ThenInclude(c => c.Name)
                 .Include(a => a.Street)
                     .ThenInclude(c => c.Name)
+                .Include(a => a.Street)
+                    .ThenInclude(c => c.City)
+                        .ThenInclude(c => c.Name)
                 .First(a => a.Id == address.Id);
 
             Assert.That(result, Is.Not.Null);

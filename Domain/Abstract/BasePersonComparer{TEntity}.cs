@@ -19,15 +19,20 @@ namespace Domain.Abstract
         {
             return ReferenceEquals(x, y)
                 || ((x is not null)
-                && (y is not null)
-                && (x.Person.FullName == y.Person.FullName)
-                && (x.Person.DateBirth == y.Person.DateBirth));
+                    && (y is not null)
+                    && (x.Person.FullName == y.Person.FullName)
+                    && (x.Person?.DateBirth == y.Person?.DateBirth));
         }
 
         /// <inheritdoc/>
         public override int GetHashCode([DisallowNull] TEntity obj)
         {
-            return HashCode.Combine(obj.Person.FullName.GetHashCode(), obj.Person.DateBirth);
+            if (obj?.Person?.FullName is null)
+            {
+                return obj?.Id.GetHashCode() ?? 0;
+            }
+
+            return HashCode.Combine(obj.Person.FullName, obj.Person.DateBirth);
         }
     }
 }

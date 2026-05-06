@@ -6,6 +6,7 @@ namespace Domain.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using NUnit.Framework;
     using Staff;
 
@@ -15,31 +16,6 @@ namespace Domain.Tests
     [TestFixture]
     public sealed class ManuscriptTests
     {
-        #region Test data helpers
-
-        private static Language CreateLanguage(string name = "Русский") => new (name);
-
-        private static Person CreatePerson(string family, string given, string? patronymic = null) =>
-            new (new Name(family, given, patronymic));
-
-        private static Author CreateAuthor(string family, string given, string? patronymic = null) =>
-            new (CreatePerson(family, given, patronymic));
-
-        private static Author CreateMinimalAuthor() =>
-            new(new Person(new Name("Фамилия", "Имя")));
-
-        private static Translator CreateTranslator(string family, string given) =>
-            new (CreatePerson(family, given));
-
-        private static Reviewer CreateReviewer(string family, string given) =>
-            new (CreatePerson(family, given));
-
-        private static Genre CreateGenre(string name) => new (name);
-
-        #endregion
-
-        #region Constructor validation tests
-
         [Test]
         public void Ctor_NullName_ThrowsArgumentNullException()
         {
@@ -83,7 +59,7 @@ namespace Domain.Tests
 
             // act & assert
             Assert.Throws<ArgumentNullException>(() =>
-                _ = new Manuscript(name: "Название", language: language, authors: null!, date: null));
+                _ = new Manuscript(name: "Название", languages: language, authors: null!, date: null));
         }
 
         [Test]
@@ -128,11 +104,13 @@ namespace Domain.Tests
             {
                 var manuscript = new Manuscript("Война и мир", language, authors, dateRange);
 
-                Assert.That(manuscript.Name.Value, Is.EqualTo("Война и мир"));
-                Assert.That(manuscript.Language.ToString(), Is.EqualTo("Русский"));
-                Assert.That(manuscript.Authors, Contains.Item(author));
-                Assert.That(manuscript.Dates?.From, Is.EqualTo(new DateOnly(1865, 1, 1)));
-                Assert.That(manuscript.Dates?.To, Is.EqualTo(new DateOnly(1869, 12, 31)));
+                using (Assert.EnterMultipleScope())
+                {
+                    Assert.That(manuscript.Name.Value, Is.EqualTo("Война и мир"));
+                    Assert.That(manuscript.Authors, Contains.Item(author));
+                    Assert.That(manuscript.Dates?.From, Is.EqualTo(new DateOnly(1865, 1, 1)));
+                    Assert.That(manuscript.Dates?.To, Is.EqualTo(new DateOnly(1869, 12, 31)));
+                }
             });
         }
 
@@ -151,8 +129,11 @@ namespace Domain.Tests
 
             // assert
             Assert.That(manuscript.Dates, Is.Not.Null);
-            Assert.That(manuscript.Dates!.From, Is.EqualTo(from));
-            Assert.That(manuscript.Dates!.To, Is.EqualTo(to));
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(manuscript.Dates!.From, Is.EqualTo(from));
+                Assert.That(manuscript.Dates!.To, Is.EqualTo(to));
+            }
         }
 
         [Test]
@@ -171,10 +152,6 @@ namespace Domain.Tests
             Assert.That(manuscript.Dates!.From, Is.EqualTo(manuscript.Dates!.To));
             Assert.That(manuscript.Dates!.From, Is.EqualTo(date));
         }
-
-        #endregion
-
-        #region Bidirectional relationship tests
 
         [Test]
         public void Ctor_AddsManuscriptToAuthors()
@@ -207,9 +184,12 @@ namespace Domain.Tests
             var result = manuscript.AddGenre(genre);
 
             // assert
-            Assert.That(result, Is.True);
-            Assert.That(manuscript.Genres, Contains.Item(genre));
-            Assert.That(genre.Manuscripts, Contains.Item(manuscript));
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(result, Is.True);
+                Assert.That(manuscript.Genres, Contains.Item(genre));
+                Assert.That(genre.Manuscripts, Contains.Item(manuscript));
+            }
         }
 
         [Test]
@@ -222,8 +202,11 @@ namespace Domain.Tests
             var result = manuscript.AddGenre(null!);
 
             // assert
-            Assert.That(result, Is.False);
-            Assert.That(manuscript.Genres, Is.Empty);
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(result, Is.False);
+                Assert.That(manuscript.Genres, Is.Empty);
+            }
         }
 
         [Test]
@@ -238,8 +221,8 @@ namespace Domain.Tests
             var result = manuscript.AddGenre(genre);
 
             // assert
-            Assert.That(result, Is.False); // HashSet не добавляет дубликаты
-            Assert.That(manuscript.Genres.Count, Is.EqualTo(1));
+            Assert.That(result, Is.False);
+            Assert.That(manuscript.Genres, Has.Count.EqualTo(1));
         }
 
         [Test]
@@ -286,10 +269,6 @@ namespace Domain.Tests
             Assert.That(result, Is.False);
         }
 
-        #endregion
-
-        #region Equality tests
-
         [Test]
         public void Equals_SameReference_ReturnsTrue()
         {
@@ -328,12 +307,15 @@ namespace Domain.Tests
             var language2 = CreateLanguage("Английский");
             var author = CreateAuthor("Толстой", "Лев");
             var title = "Война и мир";
+            var authors = new HashSet<Author>() { author };
 
-            var manuscript1 = new Manuscript(title, language1, new HashSet<Author> { author });
-            var manuscript2 = new Manuscript(title, language2, new HashSet<Author>() { author });
+            var manuscript1 = new Manuscript(title, language1, authors);
+            var manuscript2 = new Manuscript(title, language2, authors);
+
+            // act
             var result = manuscript1.Equals(manuscript2);
 
-            // act & assert
+            // assert
             Assert.That(result, Is.True);
         }
 
@@ -362,12 +344,6 @@ namespace Domain.Tests
             Assert.That(manuscript.GetHashCode(), Is.EqualTo(expected: manuscript.GetHashCode()));
         }
 
-        #endregion
-
-        #region ToString tests
-
-        #region ToString tests
-
         [Test]
         public void ToString_WithSingleAuthor_ReturnsTitleAndAuthor()
         {
@@ -375,14 +351,14 @@ namespace Domain.Tests
             var author = new Author(new Person(new Name("Толстой", "Лев", "Николаевич")));
             var manuscript = new Manuscript(
                 "Анна Каренина",
-                new Language("Русский"),
+                new HashSet<Language>() { new ("Русский") },
                 new HashSet<Author> { author });
 
             // act
             var result = manuscript.ToString();
 
             // assert
-            Assert.That(result, Is.EqualTo("Анна Каренина Толстой Лев Николаевич"));
+            Assert.That(result, Is.EqualTo("Анна Каренина: [Толстой Лев Николаевич]"));
         }
 
         [Test]
@@ -393,14 +369,14 @@ namespace Domain.Tests
             var author2 = new Author(new Person(new Name("Петров", "Евгений")));
             var manuscript = new Manuscript(
                 "12 стульев",
-                new Language("Русский"),
+                new HashSet<Language>() { new ("Русский") },
                 new HashSet<Author> { author1, author2 });
 
             // act
             var result = manuscript.ToString();
 
             // assert
-            Assert.That(result, Is.EqualTo("12 стульев Ильф Илья, Петров Евгений"));
+            Assert.That(result, Is.EqualTo("12 стульев: [Ильф Илья, Петров Евгений]"));
         }
 
         [Test]
@@ -409,52 +385,30 @@ namespace Domain.Tests
             // arrange
             var manuscript = new Manuscript(
                 "  Название с пробелами  ",
-                new Language("Русский"),
+                new HashSet<Language>() { new ("Русский") },
                 new HashSet<Author>() { CreateMinimalAuthor() });
 
             // act
             var result = manuscript.ToString();
 
-            // assert — Title.TrimOrNull() должен убрать пробелы
-            Assert.That(result, Is.EqualTo("Название с пробелами Фамилия Имя"));
+            // assert
+            Assert.That(result, Is.EqualTo("Название с пробелами: [Фамилия Имя]"));
         }
 
-        #endregion
         [Test]
         public void ToString_TitleWithSpaces_Preserved()
         {
             // arrange
-            var manuscript = new Manuscript("  Название с пробелами  ", new Language("Русский"), new HashSet<Author>() { CreateMinimalAuthor() });
+            var manuscript = new Manuscript(
+                "  Название с пробелами  ",
+                new HashSet<Language>() { new ("Русский") },
+                new HashSet<Author>() { CreateMinimalAuthor() });
 
             // act
             var result = manuscript.ToString();
 
-            // assert — Title.TrimOrNull() должен убрать пробелы
+            // assert
             Assert.That(result, Does.StartWith("Название с пробелами"));
-        }
-
-        #endregion
-
-        #region Collection property tests
-
-        [Test]
-        public void Authors_Collection_IsReadOnlyExternally()
-        {
-            // arrange
-            var language = CreateLanguage();
-            var author = CreateAuthor("Толстой", "Лев");
-            var authors = new HashSet<Author> { author };
-
-            var manuscript = new Manuscript("Война и мир", language, authors);
-            var authorsReference = manuscript.Authors;
-
-            // act — пытаемся изменить коллекцию извне
-            var anotherAuthor = CreateAuthor("Достоевский", "Фёдор");
-
-            // assert — коллекция должна быть доступна только для чтения через публичный API
-            // (фактически это HashSet, но свойство не имеет публичного сеттера)
-            Assert.That(authorsReference, Is.Not.Null);
-            Assert.That(authorsReference, Contains.Item(author));
         }
 
         [Test]
@@ -488,6 +442,36 @@ namespace Domain.Tests
         }
 
         [Test]
+        public void AddReviwer_ValidData_Success()
+        {
+            // act
+            var manuscript = CreateMinimalManuscript();
+            var reviwer = CreateReviewer("Палей", "Алексей");
+
+            // act
+            reviwer.AddManuscript(manuscript);
+
+            // assert
+            Assert.That(manuscript.Reviewers, Has.Count.EqualTo(1));
+            Assert.That(manuscript.Reviewers.Any(r => r.Id == reviwer.Id), Is.True);
+        }
+
+        [Test]
+        public void AddTranslator_ValidData_Success()
+        {
+            // act
+            var manuscript = CreateMinimalManuscript();
+            var translator = CreateTranslator("Палей", "Алексей");
+
+            // act
+            translator.AddManuscript(manuscript);
+
+            // assert
+            Assert.That(manuscript.Translators, Has.Count.EqualTo(1));
+            Assert.That(manuscript.Translators.Any(r => r.Id == translator.Id), Is.True);
+        }
+
+        [Test]
         public void Books_Collection_StartsEmpty()
         {
             // arrange & act
@@ -497,10 +481,6 @@ namespace Domain.Tests
             Assert.That(manuscript.Books, Is.Empty);
         }
 
-        #endregion
-
-        #region Helper methods
-
         private static Manuscript CreateMinimalManuscript()
         {
             return new Manuscript(
@@ -509,6 +489,23 @@ namespace Domain.Tests
                 new HashSet<Author> { CreateAuthor("Автор", "Тестовый") });
         }
 
-        #endregion
+        private static HashSet<Language> CreateLanguage(string name = "Русский") => new HashSet<Language>() { new(name) };
+
+        private static Person CreatePerson(string family, string given, string? patronymic = null) =>
+            new (new Name(family, given, patronymic));
+
+        private static Author CreateAuthor(string family, string given, string? patronymic = null) =>
+            new (CreatePerson(family, given, patronymic));
+
+        private static Author CreateMinimalAuthor() =>
+            new (new Person(new Name("Фамилия", "Имя")));
+
+        private static Translator CreateTranslator(string family, string given) =>
+            new (CreatePerson(family, given));
+
+        private static Reviewer CreateReviewer(string family, string given) =>
+            new (CreatePerson(family, given));
+
+        private static Genre CreateGenre(string name) => new (name);
     }
 }

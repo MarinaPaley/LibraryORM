@@ -26,17 +26,24 @@ namespace DataAccessLayer.Configurations
                     .HasComment("Название издательства")
                     .HasMaxLength(200);
                 titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-
-                titleBuilder.HasIndex(t => t.Value)
-                    .IsUnique()
-                    .HasDatabaseName("IX_Publisher_Name");
             });
 
-            builder.HasOne(p => p.Address)
+            _ = builder.OwnsOne(publisher => publisher.OriginName, titleBuilder =>
+            {
+                titleBuilder.Property(t => t.Value)
+                    .HasColumnName("PublisheOriginName")
+                    .IsRequired(false)
+                    .HasComment("Оригинальное название издательства")
+                    .HasMaxLength(200);
+                titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
+            });
+
+            _ = builder.HasOne(p => p.Address)
                 .WithMany()
-                .HasForeignKey("AddressId")
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            _ = builder.ToTable("Publishers");
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Domain
     /// <summary>
     /// Комната.
     /// </summary>
-    public sealed class Room : NamedEntity<Room>
+    public sealed class Room : NamedEntity<Room>, IEquatable<Room>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Room"/>.
@@ -90,9 +90,18 @@ namespace Domain
         public override bool Equals(Room? other)
         {
             return ReferenceEquals(this, other)
-                || (other is not null
-                    && this.Name == other.Name
-                    && this.Address.Equals(other.Address));
+                || (NamedEntityComparer<Room>.Instance.Equals(this, other)
+                && other is not null
+                && this.Address.Equals(other.Address));
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object? obj) => this.Equals(obj as Room);
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(this.Name, this.Address.Street, this.Address.Street.City, this.Address.House, this.Address.BuildingSuffix, this.Address.House);
         }
 
         /// <inheritdoc cref="object.ToString()"/>

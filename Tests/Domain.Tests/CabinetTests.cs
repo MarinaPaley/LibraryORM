@@ -14,20 +14,6 @@ namespace Domain.Tests
     [TestFixture]
     internal sealed class CabinetTests
     {
-        #region Test data helpers
-
-        private static Address CreateAddress(string city = "Город", string street = "Улица", int house = 1) =>
-            new (new City(city), new Street(street, new City(city)), house);
-
-        private static Room CreateRoom(string name = "Комната") =>
-            new (CreateAddress(), name);
-
-        private static Shelf CreateShelf(Cabinet cabinet, string name = "Полка") => new (name);
-
-        #endregion
-
-        #region Constructor validation tests
-
         [Test]
         public void Ctor_NullRoom_ThrowsArgumentNullException()
         {
@@ -68,14 +54,13 @@ namespace Domain.Tests
             var cabinet = new Cabinet(room, "Книжный шкаф");
 
             // assert
-            Assert.That(cabinet.Room, Is.SameAs(room));
-            Assert.That(cabinet.Name.Value, Is.EqualTo("Книжный шкаф"));
-            Assert.That(cabinet.Shelves, Is.Empty);
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(cabinet.Room, Is.SameAs(room));
+                Assert.That(cabinet.Name.Value, Is.EqualTo("Книжный шкаф"));
+                Assert.That(cabinet.Shelves, Is.Empty);
+            }
         }
-
-        #endregion
-
-        #region Bidirectional relationship tests
 
         [Test]
         public void AddShelf_ValidShelf_AddsToBothCollections()
@@ -185,10 +170,6 @@ namespace Domain.Tests
             Assert.That(result, Is.False);
         }
 
-        #endregion
-
-        #region Equality tests
-
         [Test]
         public void Equals_SameReference_ReturnsTrue()
         {
@@ -268,10 +249,6 @@ namespace Domain.Tests
             Assert.That(cabinet1.GetHashCode(), Is.EqualTo(cabinet2.GetHashCode()));
         }
 
-        #endregion
-
-        #region ToString tests
-
         [Test]
         public void ToString_WithoutShelves_ReturnsCabinetNameAndRoom()
         {
@@ -303,10 +280,6 @@ namespace Domain.Tests
             Assert.That(result, Does.Contain("Полка 2"));
         }
 
-        #endregion
-
-        #region Collection property tests
-
         [Test]
         public void Shelves_Collection_StartsEmpty()
         {
@@ -328,10 +301,6 @@ namespace Domain.Tests
             Assert.That(shelvesReference, Is.Not.Null);
             Assert.That(shelvesReference, Is.InstanceOf<ISet<Shelf>>());
         }
-
-        #endregion
-
-        #region Integration tests
 
         [Test]
         public void FullHierarchy_Creation_Success()
@@ -395,6 +364,12 @@ namespace Domain.Tests
             }
         }
 
-        #endregion
+        private static Address CreateAddress(string city = "Город", string street = "Улица", int house = 1) =>
+            new (new Street(street, new City(city)), house);
+
+        private static Room CreateRoom(string name = "Комната") =>
+            new (CreateAddress(), name);
+
+        private static Shelf CreateShelf(Cabinet cabinet, string name = "Полка") => new (name);
     }
 }

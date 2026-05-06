@@ -11,7 +11,7 @@ namespace Domain
     /// <summary>
     /// Жанр.
     /// </summary>
-    public sealed class Genre : NamedEntity<Genre>
+    public sealed class Genre : NamedEntity<Genre>, IEquatable<Genre>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Genre"/>.
@@ -58,5 +58,18 @@ namespace Domain
                 && this.Manuscripts.Remove(book)
                 && book.Genres.Remove(this);
         }
+
+        /// <inheritdoc/>
+        public override bool Equals(Genre? other)
+        {
+            return ReferenceEquals(this, other)
+                || NamedEntityComparer<Genre>.Instance.Equals(this, other);
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object? obj) => this.Equals(obj as Genre);
+
+        /// <inheritdoc/>
+        public override int GetHashCode() => this.Name.GetHashCode();
     }
 }

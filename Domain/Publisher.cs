@@ -11,7 +11,7 @@ namespace Domain
     /// <summary>
     /// Издательство.
     /// </summary>
-    public sealed class Publisher : NamedEntity<Publisher>
+    public sealed class Publisher : BilingualNamedEntity<Publisher>, IEquatable<Publisher>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Publisher"/>.
@@ -65,5 +65,18 @@ namespace Domain
                 && this.Books.Remove(book)
                 && book.Publishers.Remove(this);
         }
+
+        /// <inheritdoc/>
+        public override bool Equals(object? obj) => this.Equals(obj as Publisher);
+
+        /// <inheritdoc/>
+        public override bool Equals(Publisher? other)
+        {
+            return ReferenceEquals(this, other)
+                || BilingualNamedEntityComparer<Publisher>.Instance.Equals(this, other);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode() => HashCode.Combine(this.Name, this.OriginName);
     }
 }

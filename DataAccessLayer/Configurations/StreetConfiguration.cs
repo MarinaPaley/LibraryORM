@@ -9,7 +9,7 @@ namespace DataAccessLayer.Configurations
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     /// <summary>
-    ///  Конфигурация правил отображения сущности (<see cref="Street"/> в таблицк БД.
+    ///  Конфигурация правил отображения сущности (<see cref="Street"/> в таблице БД.
     /// </summary>
     internal sealed class StreetConfiguration : IEntityTypeConfiguration<Street>
     {
@@ -25,8 +25,16 @@ namespace DataAccessLayer.Configurations
                     .IsRequired()
                     .HasComment("Название улицы")
                     .HasMaxLength(200);
+
                 titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
             });
+
+            _ = builder.HasOne(street => street.City)
+                .WithMany(city => city.Streets)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            _ = builder.ToTable("Streets");
         }
     }
 }

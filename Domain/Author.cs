@@ -11,7 +11,7 @@ namespace Domain
     /// <summary>
     /// Автор.
     /// </summary>
-    public sealed class Author : Contributor<Author>
+    public sealed class Author : Entity<Author>, IPerson<Author>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Author"/>.
@@ -21,8 +21,8 @@ namespace Domain
         /// Если Полное имя <see langword="null"/>.
         /// </exception>
         public Author(Person person)
-            : base(person)
         {
+            this.Person = person ?? throw new ArgumentNullException(nameof(person));
         }
 
         /// <summary>
@@ -39,27 +39,23 @@ namespace Domain
         public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>(BilingualNamedEntityComparer<Manuscript>.Instance);
 
         /// <summary>
-        /// Добавляем книгу автору.
+        /// Персона.
         /// </summary>
-        /// <param name="manuscript"> Книга. </param>
-        /// <returns><see langword="true"/> если добавили, иначе <see langword="false"/>.</returns>
-        public bool AddManuscript(Manuscript manuscript)
-        {
-            return manuscript is not null
-                && manuscript.Authors.Add(this)
-                && this.Manuscripts.Add(manuscript);
-        }
+        public Person Person { get; set; } = null!;
 
         /// <summary>
-        /// Удаляем рукопись у автора.
+        /// Явный внешний ключ (обязательно!).
         /// </summary>
-        /// <param name="manuscript"> Книга. </param>
-        /// <returns><see langword="true"/> если убрали, иначе <see langword="false"/>.</returns>
-        public bool RemoveBook(Manuscript manuscript)
+        public Guid PersonId { get; set; }
+
+        /// <inheritdoc cref="object.ToString()"/>
+        public override string ToString() => this.Person.ToString();
+
+        /// <inheritdoc/>
+        public override bool Equals(Author? other)
         {
-            return manuscript is not null
-                && this.Manuscripts.Remove(manuscript)
-                && manuscript.Authors.Remove(this);
+            return ReferenceEquals(this, other)
+                || PersonComparer<Author>.Instance.Equals(this, other);
         }
     }
 }

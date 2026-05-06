@@ -26,11 +26,9 @@ namespace DataAccessLayer.Configurations
                     .HasComment("Жанр")
                     .HasMaxLength(200);
                 titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-
-                titleBuilder.HasIndex(t => t.Value)
-                    .IsUnique()
-                    .HasDatabaseName("IX_Genre_Name");
             });
+
+            _ = builder.ToTable("Genres");
         }
     }
 }

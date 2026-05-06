@@ -4,6 +4,7 @@
 
 namespace Domain.Abstract
 {
+    using System;
     using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
@@ -21,6 +22,11 @@ namespace Domain.Abstract
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode([DisallowNull] TEntity obj) => obj.OriginName?.GetHashCode() ?? 0;
+        public override int GetHashCode([DisallowNull] TEntity obj)
+        {
+            return HashCode.Combine(
+                obj.Name,
+                obj.OriginName);
+        }
     }
 }

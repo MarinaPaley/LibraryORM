@@ -12,7 +12,7 @@ namespace Domain
     /// <summary>
     /// Рукопись.
     /// </summary>
-    public sealed class Manuscript : BilingualNamedEntity<Manuscript>
+    public sealed class Manuscript : BilingualNamedEntity<Manuscript>, IEquatable<Manuscript>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Manuscript"/>.
@@ -20,15 +20,15 @@ namespace Domain
         /// <param name="name"> Название произведения. </param>
         /// <param name="authors"> Авторы.</param>
         /// <param name="date"> Дата написания. </param>
-        /// <param name="language"> Язык.</param>
+        /// <param name="languages"> Язык.</param>
         /// <param name="origin"> Оригинальное название. </param>
         /// <exception cref="ArgumentNullException"> Если авторы или жанры <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException"> Если количество страниц равно ли меньше нуля.</exception>
-        public Manuscript(string name, Language language, ISet<Author> authors, Range<DateOnly>? date = null, string? origin = null)
+        public Manuscript(string name, ISet<Language> languages, ISet<Author> authors, Range<DateOnly>? date = null, string? origin = null)
             : base(name, origin)
         {
             this.Dates = date;
-            this.Language = language ?? throw new ArgumentNullException(nameof(language));
+            this.Languages = languages ?? throw new ArgumentNullException(nameof(languages));
             this.Authors = authors ?? throw new ArgumentNullException(nameof(authors));
             if (this.Authors.Count == 0)
             {
@@ -37,7 +37,7 @@ namespace Domain
 
             foreach (var author in authors)
             {
-                author.Manuscripts.Add(this);
+                _ = author.Manuscripts.Add(this);
             }
         }
 
@@ -47,11 +47,11 @@ namespace Domain
         /// <param name="name"> Название произведения.</param>
         /// <param name="from"> Дата начала написания. </param>
         /// <param name="to"> Дата конца написания. </param>
-        /// <param name="language"> Язык. </param
+        /// <param name="languages"> Язык. </param
         /// <param name="origin"> Оригинальное наименование. </param>
         /// <param name="authors"> Список авторов. </param>
-        public Manuscript(string name, Language language, DateOnly? from = null, DateOnly? to = null, string? origin = null, params Author[] authors)
-            : this(name, language, new HashSet<Author>(authors), new Range<DateOnly>(from, to), origin)
+        public Manuscript(string name, ISet<Language> languages, DateOnly? from = null, DateOnly? to = null, string? origin = null, params Author[] authors)
+            : this(name, new HashSet<Language>(languages), new HashSet<Author>(authors), new Range<DateOnly>(from, to), origin)
         {
         }
 
@@ -62,7 +62,7 @@ namespace Domain
         /// </summary>
         [Obsolete("For ORM only", true)]
         private Manuscript()
-            : base(name: "Не задано", origin: "No name")
+            : base(name: "Не задано", origin: null)
         {
         }
 #pragma warning restore CS8618
@@ -95,7 +95,7 @@ namespace Domain
         /// <summary>
         /// Язык.
         /// </summary>
-        public Language Language { get; set; }
+        public ISet<Language> Languages { get; } = new HashSet<Language>();
 
         /// <summary>
         /// Книги, в которых напечатано данное произведение.
@@ -105,7 +105,7 @@ namespace Domain
         /// <inheritdoc cref="object.ToString()"/>
         public override string ToString()
         {
-            return $"{base.ToString()} {this.Authors.Join()}";
+            return $"{base.ToString()}: [{this.Authors.Join()}]";
         }
 
         /// <inheritdoc/>
@@ -114,6 +114,9 @@ namespace Domain
             return base.Equals(other)
                 && this.Authors.SetEquals(other.Authors);
         }
+
+        /// <inheritdoc/>
+        public override bool Equals(object? obj) => this.Equals(obj as Manuscript);
 
         /// <summary>
         /// Добавляет жанр произведению.
@@ -137,6 +140,12 @@ namespace Domain
             return genre is not null
                 && this.Genres.Remove(genre)
                 && genre.Manuscripts.Remove(this);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(this.Name, this.Authors);
         }
     }
 }

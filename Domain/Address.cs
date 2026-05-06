@@ -16,7 +16,6 @@ namespace Domain
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Address"/>.
         /// </summary>
-        /// <param name="city"> Город. </param>
         /// <param name="street"> Улица. </param>
         /// <param name="house"> Дом. </param>
         /// <param name="buildingSuffix"> Корпус или владение. </param>
@@ -25,14 +24,12 @@ namespace Domain
         /// <exception cref="ArgumentNullException"> Если <see cref="City"/>.
         /// или <see cref="Street"/> равны <see langword="null"/>.</exception>
         public Address(
-            City city,
             Street street,
             int house,
             string? buildingSuffix = null,
             int? floor = null,
             int? apartment = null)
         {
-            this.City = city ?? throw new ArgumentNullException(nameof(city));
             this.Street = street ?? throw new ArgumentNullException(nameof(street));
             this.House = house;
             this.BuildingSuffix = buildingSuffix;
@@ -50,11 +47,6 @@ namespace Domain
         {
         }
 #pragma warning restore CS8618
-
-        /// <summary>
-        /// Город.
-        /// </summary>
-        public City City { get; set; }
 
         /// <summary>
         /// Улица.
@@ -89,15 +81,15 @@ namespace Domain
         {
             return ReferenceEquals(this, other)
                 || (other is not null
-                    && this.City.Equals(other.City)
-                    && this.Street.Equals(other.Street)
+                    && NamedEntityComparer<Street>.Instance.Equals(this.Street, other.Street)
+                    && NamedEntityComparer<City>.Instance.Equals(this.Street.City, other.Street.City)
                     && this.House == other.House
                     && this.BuildingSuffix == other.BuildingSuffix
                     && this.Apartment == other.Apartment);
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode() => HashCode.Combine(this.City, this.Street, this.House, this.BuildingSuffix, this.Apartment);
+        public override int GetHashCode() => HashCode.Combine(this.Street, this.House, this.BuildingSuffix, this.Apartment);
 
         /// <inheritdoc cref="object.ToString()"/>
         public override string ToString()
@@ -111,7 +103,7 @@ namespace Domain
                 : string.Empty;
 
             return new StringBuilder()
-                .Append(this.City)
+                .Append(this.Street.City)
                 .Append(' ')
                 .Append(this.Street)
                 .Append(' ')

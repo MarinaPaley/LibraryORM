@@ -26,11 +26,9 @@ namespace DataAccessLayer.Configurations
                     .HasComment("Тип книги")
                     .HasMaxLength(200);
                 titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-
-                titleBuilder.HasIndex(t => t.Value)
-                    .IsUnique()
-                    .HasDatabaseName("IX_BookType_BookTypeName");
             });
+
+            _ = builder.ToTable("BookTypes");
         }
     }
 }

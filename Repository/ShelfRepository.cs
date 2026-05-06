@@ -35,7 +35,10 @@ namespace Repository
         /// </summary>
         /// <param name="id">Идентификатор полки.</param>
         /// <returns> Количество книг.</returns>
-        public async Task<int?> GetBooksCountAsync(Guid id) => (await this.GetAsync(id))?.Books.Count;
+        public async Task<int?> GetBooksCountAsync(Guid id)
+        {
+            return (await this.GetAsync(id))?.Items.Count;
+        }
 
         /// <summary>
         /// Показать количество книг, стоящих на полке.
@@ -46,7 +49,7 @@ namespace Repository
         {
             return (await this.GetAll()
                 .FirstOrDefaultAsync(shelf => shelf.Name.Value == name))
-                ?.Books
+                ?.Items
                 .Count;
         }
 

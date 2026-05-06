@@ -26,14 +26,9 @@ namespace DataAccessLayer.Configurations
                     .HasComment("Название города")
                     .HasMaxLength(200);
                 titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-
-                titleBuilder.HasIndex(t => t.Value)
-                    .IsUnique()
-                    .HasDatabaseName("IX_City_Name");
             });
 
-            _ = builder.HasMany(city => city.Streets)
-                .WithOne(street => street.City);
+            _ = builder.ToTable("Cities");
         }
     }
 }

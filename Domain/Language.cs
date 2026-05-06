@@ -11,7 +11,7 @@ namespace Domain
     /// <summary>
     /// Язык.
     /// </summary>
-    public sealed class Language : NamedEntity<Language>
+    public sealed class Language : NamedEntity<Language>, IEquatable<Language>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Language"/>.
@@ -34,5 +34,21 @@ namespace Domain
         /// Рукописи.
         /// </summary>
         public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>(BilingualNamedEntityComparer<Manuscript>.Instance);
+
+        /// <inheritdoc/>
+        public override bool Equals(Language? other)
+        {
+            return ReferenceEquals(this, other)
+                || NamedEntityComparer<Language>.Instance.Equals(this, other);
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object? obj) => this.Equals(obj as Language);
+
+        /// <inheritdoc/>
+        public override int GetHashCode() => this.Name.GetHashCode();
+
+        /// <inheritdoc/>
+        public override string ToString() => this.Name.ToString();
     }
 }

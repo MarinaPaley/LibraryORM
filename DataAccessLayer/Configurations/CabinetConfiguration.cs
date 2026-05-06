@@ -29,23 +29,13 @@ namespace DataAccessLayer.Configurations
                     .HasMaxLength(200);
 
                 titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-
-                titleBuilder.HasIndex(t => t.Value)
-                    .HasDatabaseName("IX_Cabinet_Name");
             });
 
-            // 🔗 Связь с комнатой (опциональная для ORM, но логически желательная)
+            // 🔗 Связь с комнатой
             _ = builder.HasOne(cabinet => cabinet.Room)
                 .WithMany(room => room.Cabinets)
-                .HasForeignKey("RoomId")
-                .IsRequired(false)  // Позволяем null при загрузке, но валидируем в конструкторе
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.SetNull);
-
-            // 🔗 Один-ко-многим: полки в шкафу
-            _ = builder.HasMany(cabinet => cabinet.Shelves)
-                .WithOne(shelf => shelf.Cabinet)
-                .HasForeignKey("CabinetId")
-                .OnDelete(DeleteBehavior.Cascade);
 
             // 🗂 Имя таблицы
             _ = builder.ToTable("Cabinets", t => t.HasComment("Шкафы в комнатах"));

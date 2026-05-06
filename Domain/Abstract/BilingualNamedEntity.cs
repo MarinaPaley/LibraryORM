@@ -4,6 +4,8 @@
 
 namespace Domain.Abstract
 {
+    using System;
+
     /// <summary>
     /// Базовая именованная сущность с переводом.
     /// </summary>
@@ -36,5 +38,19 @@ namespace Domain.Abstract
 
             return base.ToString();
         }
+
+        /// <inheritdoc/>
+        public override bool Equals(object? obj) => this.Equals(obj as TEntity);
+
+        /// <inheritdoc/>
+        public override bool Equals(TEntity? other)
+        {
+            return base.Equals(other)
+                && (((this.OriginName is null) && (other!.OriginName is null))
+                || ((this.OriginName is not null) && this.OriginName.Equals(other?.OriginName)));
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode() => HashCode.Combine(this.Name, this?.OriginName);
     }
 }
