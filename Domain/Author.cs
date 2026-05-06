@@ -4,14 +4,14 @@
 
 namespace Domain
 {
+    using Domain.Abstract;
     using System;
     using System.Collections.Generic;
-    using Domain.Abstract;
 
     /// <summary>
     /// Автор.
     /// </summary>
-    public sealed class Author : Entity<Author>, IPerson<Author>
+    public sealed class Author : PersonRole<Author>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Author"/>.
@@ -21,8 +21,8 @@ namespace Domain
         /// Если Полное имя <see langword="null"/>.
         /// </exception>
         public Author(Person person)
+            : base(person)
         {
-            this.Person = person ?? throw new ArgumentNullException(nameof(person));
         }
 
         /// <summary>
@@ -34,28 +34,9 @@ namespace Domain
         }
 
         /// <summary>
-        /// Рукописи.
+        /// Рукописи, связанные с этой ролью.
         /// </summary>
-        public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>(BilingualNamedEntityComparer<Manuscript>.Instance);
-
-        /// <summary>
-        /// Персона.
-        /// </summary>
-        public Person Person { get; set; } = null!;
-
-        /// <summary>
-        /// Явный внешний ключ (обязательно!).
-        /// </summary>
-        public Guid PersonId { get; set; }
-
-        /// <inheritdoc cref="object.ToString()"/>
-        public override string ToString() => this.Person.ToString();
-
-        /// <inheritdoc/>
-        public override bool Equals(Author? other)
-        {
-            return ReferenceEquals(this, other)
-                || PersonComparer<Author>.Instance.Equals(this, other);
-        }
+        public ISet<Manuscript> Manuscripts { get; } =
+                new HashSet<Manuscript>(BilingualNamedEntityComparer<Manuscript>.Instance);
     }
 }

@@ -11,7 +11,7 @@ namespace Domain
     /// <summary>
     /// Редактор.
     /// </summary>
-    public sealed class Editor : Entity<Editor>, IPerson<Editor>
+    public sealed class Editor : PersonRole<Editor>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Editor"/>.
@@ -21,8 +21,8 @@ namespace Domain
         /// Если Полное имя <see langword="null"/>.
         /// </exception>
         public Editor(Person person)
+            : base(person)
         {
-            this.Person = person ?? throw new ArgumentNullException(nameof(person));
         }
 
         /// <summary>
@@ -34,29 +34,9 @@ namespace Domain
         }
 
         /// <summary>
-        /// Персона.
-        /// </summary>
-        public Person Person { get; set; }
-
-        /// <summary>
-        /// Явный внешний ключ (обязательно!).
-        /// </summary>
-        public Guid PersonId { get; set; }
-
-        /// <summary>
         /// Книги.
         /// </summary>
         public ISet<Book> Books { get; } = new HashSet<Book>(EntityComparer<Book>.Instance);
-
-        /// <inheritdoc cref="object.ToString()"/>
-        public override string ToString() => this.Person.ToString();
-
-        /// <inheritdoc/>
-        public override bool Equals(Editor? other)
-        {
-            return ReferenceEquals(this, other)
-                || PersonComparer<Editor>.Instance.Equals(this, other);
-        }
 
         /// <summary>
         /// Добавляем книгу редактору.

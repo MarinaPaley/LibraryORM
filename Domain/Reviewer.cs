@@ -11,7 +11,7 @@ namespace Domain
     /// <summary>
     /// Рецензент.
     /// </summary>
-    public sealed class Reviewer : Entity<Reviewer>, IPerson<Reviewer>
+    public sealed class Reviewer : PersonRole<Reviewer>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Reviewer"/>.
@@ -21,8 +21,8 @@ namespace Domain
         /// Если Полное имя <see langword="null"/>.
         /// </exception>
         public Reviewer(Person person)
+            : base(person)
         {
-            this.Person = person ?? throw new ArgumentNullException(nameof(person));
         }
 
 #pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
@@ -36,29 +36,9 @@ namespace Domain
 #pragma warning restore CS8618
 
         /// <summary>
-        /// Персона.
-        /// </summary>
-        public Person Person { get; set; }
-
-        /// <summary>
-        /// Явный внешний ключ (обязательно!).
-        /// </summary>
-        public Guid PersonId { get; set; }
-
-        /// <summary>
         /// Рукописи.
         /// </summary>
         public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>(BilingualNamedEntityComparer<Manuscript>.Instance);
-
-        /// <inheritdoc cref="object.ToString()"/>
-        public override string ToString() => this.Person.ToString();
-
-        /// <inheritdoc/>
-        public override bool Equals(Reviewer? other)
-        {
-            return ReferenceEquals(this, other)
-                || PersonComparer<Reviewer>.Instance.Equals(this, other);
-        }
 
         /// <summary>
         /// Добавляем рукопись рецензенту.

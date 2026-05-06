@@ -11,7 +11,7 @@ namespace Domain
     /// <summary>
     /// Переводчик.
     /// </summary>
-    public sealed class Translator : Entity<Translator>, IPerson<Translator>
+    public sealed class Translator : PersonRole<Translator>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Translator"/>.
@@ -21,8 +21,8 @@ namespace Domain
         /// Если Полное имя <see langword="null"/>.
         /// </exception>
         public Translator(Person person)
+            : base(person)
         {
-            this.Person = person ?? throw new ArgumentNullException(nameof(person));
         }
 
         /// <summary>
@@ -34,29 +34,9 @@ namespace Domain
         }
 
         /// <summary>
-        /// Персона.
-        /// </summary>
-        public Person Person { get; set; }
-
-        /// <summary>
-        /// Явный внешний ключ (обязательно!).
-        /// </summary>
-        public Guid PersonId { get; set; }
-
-        /// <summary>
         /// Рукописи.
         /// </summary>
         public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>(BilingualNamedEntityComparer<Manuscript>.Instance);
-
-        /// <inheritdoc cref="object.ToString()"/>
-        public override string ToString() => this.Person.ToString();
-
-        /// <inheritdoc/>
-        public override bool Equals(Translator? other)
-        {
-            return ReferenceEquals(this, other)
-                || PersonComparer<Translator>.Instance.Equals(this, other);
-        }
 
         /// <summary>
         /// Добавляем рукопись переводчику.
