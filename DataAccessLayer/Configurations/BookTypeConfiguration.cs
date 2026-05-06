@@ -18,7 +18,7 @@ namespace DataAccessLayer.Configurations
         {
             _ = builder.HasKey(type => type.Id);
 
-            _ = builder.OwnsOne(type => type.BookTypeName, titleBuilder =>
+            _ = builder.OwnsOne(type => type.Name, titleBuilder =>
             {
                 titleBuilder.Property(t => t.Value)
                     .HasColumnName("BookTypeName")
@@ -26,11 +26,9 @@ namespace DataAccessLayer.Configurations
                     .HasComment("Тип книги")
                     .HasMaxLength(200);
                 titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-
-                titleBuilder.HasIndex(t => t.Value)
-                    .IsUnique()
-                    .HasDatabaseName("IX_BookType_BookTypeName");
             });
+
+            _ = builder.ToTable("BookTypes");
         }
     }
 }

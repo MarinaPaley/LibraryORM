@@ -29,15 +29,21 @@ namespace Repository
         /// <summary>
         /// Получает список авторов по идентификатору.
         /// </summary>
-        /// <param name="id">Идентификатор книги.</param>
+        /// <param name="id"> Идентификатор книги.</param>
         /// <returns> Список авторов.</returns>
-        public async Task<ISet<Author>?> GetAuthorsAsync(Guid id) => (await this.FindAsync(book => book.Id == id))?.Authors;
+        public async Task<ISet<Author>> GetAuthorsAsync(Guid id)
+        {
+            var manuscript = await this.FindAsync(manuscript => manuscript.Id == id);
+
+            return manuscript?.Authors
+                ?? new HashSet<Author>();
+        }
 
         /// <summary>
-        /// Показать все книги, написанные авторами выбранной книги.
+        /// Показать все книги, написанные авторами выбранной рукописи.
         /// </summary>
-        /// <param name="id">Идентификатор книги.</param>
-        /// <returns> Множество книг авторов данной книги.</returns>
+        /// <param name="id"> Идентификатор рукописи.</param>
+        /// <returns> Множество книг авторов данной рукописи.</returns>
         public async Task<ISet<Manuscript>?> GetAllBooksCoAuthors(Guid id)
         {
             var authors = await this.GetAuthorsAsync(id);
@@ -56,15 +62,13 @@ namespace Repository
         /// <inheritdoc/>
         protected override IQueryable<Manuscript> GetAll()
         {
-            {
-                return this.DataContext.Manuscripts
+            return this.DataContext.Manuscripts
                 .Include(m => m.Authors)
                     .ThenInclude(a => a.Person)
                 .Include(m => m.Translators)
                     .ThenInclude(t => t.Person)
                 .Include(m => m.Genres)
                 .Include(m => m.Books);
-            }
         }
     }
 }

@@ -30,27 +30,16 @@ namespace DataAccessLayer.Configurations
 
                 // 🔑 Пишем напрямую в поле, обходя валидацию при загрузке
                 titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-
-                // Индекс для быстрого поиска по названию
-                titleBuilder.HasIndex(t => t.Value)
-                    .HasDatabaseName("IX_Room_Name");
             });
 
             // 🔗 Связь с адресом (обязательная)
             _ = builder.HasOne(room => room.Address)
-                .WithMany()  // или .WithMany(a => a.Rooms), если добавишь обратную навигацию в Address
-                .HasForeignKey("AddressId")
+                .WithMany()
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // 🔗 Один-ко-многим: шкафы в комнате
-            _ = builder.HasMany(room => room.Cabinets)
-                .WithOne(cabinet => cabinet.Room)
-                .HasForeignKey("RoomId")
-                .OnDelete(DeleteBehavior.Cascade);
-
             // 🗂 Имя таблицы
-            _ = builder.ToTable("Rooms", t => t.HasComment("Комнаты в зданиях"));
+            _ = builder.ToTable("Rooms", t => t.HasComment("Комнаты"));
         }
     }
 }

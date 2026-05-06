@@ -20,8 +20,8 @@ namespace Domain.Tests
             var city = new City("Москва");
             var street = new Street("Ленина", city);
 
-            var address1 = new Address(city, street, 10);
-            var address2 = new Address(city, street, 10);
+            var address1 = new Address(street, 10);
+            var address2 = new Address(street, 10);
 
             // act & assert
             Assert.That(address1, Is.EqualTo(address2));
@@ -31,11 +31,14 @@ namespace Domain.Tests
         public void Address_Equals_DifferentCity_ReturnsFalse()
         {
             // arrange
-            var address1 = new Address(new City("Москва"), new Street("Ленина", new City("Москва")), 10);
-            var address2 = new Address(new City("Санкт-Петербург"), new Street("Ленина", new City("Санкт-Петербург")), 10);
+            var address1 = new Address(new Street("Ленина", new City("Москва")), 10);
+            var address2 = new Address(new Street("Ленина", new City("Санкт-Петербург")), 10);
+
+            // act
+            var result = address1.Equals(address2);
 
             // act & assert
-            Assert.That(address1, Is.Not.EqualTo(address2));
+            Assert.That(result, Is.False);
         }
     }
 }

@@ -4,10 +4,12 @@
 
 namespace DataAccessLayer
 {
-    using System.Reflection;
     using Domain;
     using Domain.Abstract;
     using Microsoft.EntityFrameworkCore;
+    using System;
+    using System.Linq;
+    using System.Reflection;
 
     /// <summary>
     /// Контекст доступа к данным.
@@ -24,14 +26,34 @@ namespace DataAccessLayer
         }
 
         /// <summary>
-        /// Авторы / Редакторы/ Переводчики.
+        /// Авторы.
         /// </summary>
-        public DbSet<Contributor> Contributors { get; init; }
+        public DbSet<Author> Authors { get; init; }
+
+        /// <summary>
+        /// Редакторы.
+        /// </summary>
+        public DbSet<Editor> Editors { get; init; }
+
+        /// <summary>
+        /// Рецензенты.
+        /// </summary>
+        public DbSet<Reviewer> Reviewers { get; init; }
+
+        /// <summary>
+        /// Переводчики.
+        /// </summary>
+        public DbSet<Translator> Translations { get; init; }
 
         /// <summary>
         /// Книги.
         /// </summary>
         public DbSet<Book> Books { get; init; }
+
+        /// <summary>
+        /// Экземпляры книг.
+        /// </summary>
+        public DbSet<Item> Items { get; init; }
 
         /// <summary>
         /// Полки.

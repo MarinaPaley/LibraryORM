@@ -32,9 +32,12 @@ namespace Repository
         /// <summary>
         /// Найти название книги по идентификатору.
         /// </summary>
-        /// <param name="id">Идентификатор.</param>
-        /// <returns>Название книги.</returns>
-        public async Task<string?> GetTitleAsync(Guid id) => (await this.FindAsync(book => book.Id == id))?.Title;
+        /// <param name="id"> Идентификатор.</param>
+        /// <returns> Название книги.</returns>
+        public async Task<string?> GetTitleAsync(Guid id)
+        {
+            return (await this.FindAsync(book => book.Id == id))?.Title;
+        }
 
         /// <summary>
         /// Получает идентификатор по названию книги.
@@ -48,10 +51,18 @@ namespace Repository
         /// Получает полку, на которой стоит книга (по названию книги).
         /// </summary>
         /// <param name="title"> Название книги.</param>
-        /// <returns>Полка.</returns>
-        public async Task<Shelf?> GetShelfAsync(string title)
+        /// <returns> Полка.</returns>
+        public Task<List<Shelf>> GetShelfAsync(string title)
         {
-            return (await this.FindAsync(book => book.Title == title))?.Shelf;
+            var x =
+             this.GetAll()
+            .Where(book => book.Title == title);
+            var y = x
+            .SelectMany(book => book.Items);
+            return y
+            .Select(item => item.Shelf)
+            .OfType<Shelf>()
+            .ToListAsync();
         }
 
         /// <summary>
@@ -62,8 +73,9 @@ namespace Repository
         public Task<List<Shelf>> GetShelvesByManucriptNameAsync(string title)
         {
             return this.GetAll()
-                .Where(book => book.Manuscripts.Any(manuscript => manuscript.Title.Value == title))
-                .Select(book => book.Shelf)
+                .Where(book => book.Manuscripts.Any(manuscript => manuscript.Name.Value == title))
+                .SelectMany(book => book.Items)
+                .Select(item => item.Shelf)
                 .OfType<Shelf>()
                 .ToListAsync();
         }
@@ -77,7 +89,8 @@ namespace Repository
             return this.DataContext.Books
                 .Include(book => book.Manuscripts)
                     .ThenInclude(author => author.Books)
-                .Include(book => book.Shelf);
+                .Include(book => book.Items)
+                    .ThenInclude(item => item.Shelf);
         }
     }
 }

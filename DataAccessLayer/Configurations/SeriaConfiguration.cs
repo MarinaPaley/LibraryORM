@@ -26,14 +26,9 @@ namespace DataAccessLayer.Configurations
                     .HasComment("Серия")
                     .HasMaxLength(200);
                 titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-
-                titleBuilder.HasIndex(t => t.Value)
-                    .IsUnique()
-                    .HasDatabaseName("IX_Seria_Name");
             });
 
-            _ = builder.HasMany(seria => seria.Books)
-                .WithOne(book => book.Seria);
+            _ = builder.ToTable("Serias");
         }
     }
 }

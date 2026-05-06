@@ -11,7 +11,7 @@ namespace Domain
     /// <summary>
     /// Рецензент.
     /// </summary>
-    public sealed class Reviewer : Contributor
+    public sealed class Reviewer : PersonRole<Reviewer>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Reviewer"/>.
@@ -25,6 +25,7 @@ namespace Domain
         {
         }
 
+#pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Reviewer"/>.
         /// </summary>
@@ -32,11 +33,12 @@ namespace Domain
         private Reviewer()
         {
         }
+#pragma warning restore CS8618
 
         /// <summary>
         /// Рукописи.
         /// </summary>
-        public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>();
+        public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>(BilingualNamedEntityComparer<Manuscript>.Instance);
 
         /// <summary>
         /// Добавляем рукопись рецензенту.

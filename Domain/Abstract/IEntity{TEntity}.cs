@@ -4,8 +4,6 @@
 
 namespace Domain.Abstract
 {
-    using System;
-
     /// <summary>
     /// Интерфейс базовой сущности.
     /// </summary>

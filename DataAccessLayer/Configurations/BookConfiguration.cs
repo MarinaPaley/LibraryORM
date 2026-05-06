@@ -19,6 +19,8 @@ namespace DataAccessLayer.Configurations
             _ = builder.HasKey(book => book.Id);
 
             _ = builder.Property(book => book.Title)
+                .IsRequired(false)
+                .HasMaxLength(100)
                 .HasComment("Название книги");
 
             _ = builder.Property(book => book.Pages)
@@ -26,28 +28,34 @@ namespace DataAccessLayer.Configurations
                 .HasComment("Количество страниц");
 
             _ = builder.Property(book => book.ISBN)
-                .IsRequired()
+                .IsRequired(false)
+                .HasMaxLength(25)
                 .HasComment("ISBN");
-
-            _ = builder.HasOne(book => book.Shelf)
-                .WithMany(shelf => shelf.Books)
-                .IsRequired(false);
 
             _ = builder.HasMany(book => book.Manuscripts)
                 .WithMany(manuscript => manuscript.Books);
 
+            _ = builder.HasMany(book => book.Publishers)
+                .WithMany(p => p.Books);
+
             _ = builder.HasOne(book => book.Editor)
-                .WithMany(editor => editor.Books);
+                .WithMany(editor => editor.Books)
+                .OnDelete(DeleteBehavior.SetNull)
+                .IsRequired(false);
 
             _ = builder.Property(book => book.Annotation)
                 .IsRequired(false)
                 .HasComment("Аннотация");
 
             _ = builder.HasOne(book => book.Seria)
-                .WithMany(seria => seria.Books);
+                .WithMany(seria => seria.Books)
+                .OnDelete(DeleteBehavior.SetNull)
+                .IsRequired(false);
 
             _ = builder.HasOne(book => book.BookType)
-                .WithMany(type => type.Books);
+                .WithMany(type => type.Books)
+                .OnDelete(DeleteBehavior.SetNull)
+                .IsRequired();
 
             _ = builder.Property(book => book.Doi)
                 .IsRequired(false)
@@ -60,6 +68,8 @@ namespace DataAccessLayer.Configurations
             _ = builder.Property(book => book.Volume)
                 .IsRequired(false)
                 .HasComment("Том");
+
+            _ = builder.ToTable("Books");
         }
     }
 }

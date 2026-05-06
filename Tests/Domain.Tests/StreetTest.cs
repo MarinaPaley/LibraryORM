@@ -29,12 +29,11 @@ namespace Domain.Tests
             Assert.Throws<ArgumentNullException>(() => _ = new City(name!));
         }
 
-        [TestCase("City", "City", true, 1)]
-        [TestCase("City", "Town", false, 2)]
+        [TestCase("Street1", "Street2", false, 2)]
         public void Equals_Success(string thirst, string second, bool expected, int count)
         {
             // Arrange
-            var newCity = new City("city");
+            var newCity = new City("City"); // Нужно так, чтобы не влияли другие тесты
             var left = new Street(thirst, newCity);
             var right = new Street(second, newCity);
 
@@ -42,8 +41,11 @@ namespace Domain.Tests
             var actual = left.Equals(right);
 
             // Assert
-            Assert.That(actual, Is.EqualTo(expected));
-            Assert.That(newCity.Streets, Has.Count.EqualTo(count));
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(actual, Is.EqualTo(expected));
+                Assert.That(newCity.Streets, Has.Count.EqualTo(count));
+            }
         }
     }
 }

@@ -36,10 +36,54 @@ namespace Domain
             this.DateDeath = dateDeath;
         }
 
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="Person"/>.
+        /// </summary>
+        /// <param name="familyName"> Фамилия. </param>
+        /// <param name="firstName"> Имя. </param>
+        /// <param name="patronymicName"> Отчество. </param>
+        /// <param name="dateBirth"> Дата рождения. </param>
+        /// <param name="dateDeath"> Дата смерти. </param>
+        public Person(
+            string familyName,
+            string firstName,
+            string? patronymicName = null,
+            DateOnly? dateBirth = null,
+            DateOnly? dateDeath = null)
+            : this(new Name(familyName, firstName, patronymicName), dateBirth, dateDeath)
+        {
+        }
+
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="Person"/>.
+        /// </summary>
+        /// <param name="familyName">  Фамилия. </param>
+        /// <param name="firstName"> Имя.</param>
+        /// <param name="patronymicName"> Отчество. </param>
+        /// <param name="birthYear"> Дата рождения. </param>
+        /// <param name="deathYear"> Дата смерти. </param>
+        public Person(
+            string familyName,
+            string firstName,
+            string? patronymicName = null,
+            int? birthYear = null,
+            int? deathYear = null)
+            : this(
+                  new Name(familyName, firstName, patronymicName),
+                  birthYear.HasValue ? new DateOnly(birthYear.Value, 1, 1) : null,
+                  deathYear.HasValue ? new DateOnly(deathYear.Value, 1, 1) : null)
+        {
+        }
+
+#pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="Person"/>.
+        /// </summary>
         [Obsolete("For ORM only")]
         private Person()
         {
         }
+#pragma warning restore CS8618
 
         /// <summary>
         /// Полное имя.
@@ -55,6 +99,26 @@ namespace Domain
         /// Дата смерти.
         /// </summary>
         public DateOnly? DateDeath { get; set; }
+
+        /// <summary>
+        /// Персона является Автором.
+        /// </summary>
+        public Author? Author { get; set; }
+
+        /// <summary>
+        /// Персона является Редактором.
+        /// </summary>
+        public Editor? Editor { get; set; }
+
+        /// <summary>
+        /// Персона является переводчиком.
+        /// </summary>
+        public Translator? Translator { get; set; }
+
+        /// <summary>
+        /// Персона является Рецензентом.
+        /// </summary>
+        public Reviewer? Reviewer { get; set; }
 
         /// <inheritdoc/>
         public override bool Equals(object? obj)

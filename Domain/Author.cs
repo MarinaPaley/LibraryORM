@@ -4,14 +4,14 @@
 
 namespace Domain
 {
+    using Domain.Abstract;
     using System;
     using System.Collections.Generic;
-    using Domain.Abstract;
 
     /// <summary>
     /// Автор.
     /// </summary>
-    public sealed class Author : Contributor
+    public sealed class Author : PersonRole<Author>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Author"/>.
@@ -34,32 +34,9 @@ namespace Domain
         }
 
         /// <summary>
-        /// Рукописи.
+        /// Рукописи, связанные с этой ролью.
         /// </summary>
-        public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>();
-
-        /// <summary>
-        /// Добавляем книгу автору.
-        /// </summary>
-        /// <param name="manuscript"> Книга. </param>
-        /// <returns><see langword="true"/> если добавили, иначе <see langword="false"/>.</returns>
-        public bool AddManuscript(Manuscript manuscript)
-        {
-            return manuscript is not null
-                && this.Manuscripts.Add(manuscript)
-                && manuscript.Authors.Add(this);
-        }
-
-        /// <summary>
-        /// Удаляем рукопись у автора.
-        /// </summary>
-        /// <param name="manuscript"> Книга. </param>
-        /// <returns><see langword="true"/> если убрали, иначе <see langword="false"/>.</returns>
-        public bool RemoveBook(Manuscript manuscript)
-        {
-            return manuscript is not null
-                && this.Manuscripts.Remove(manuscript)
-                && manuscript.Authors.Remove(this);
-        }
+        public ISet<Manuscript> Manuscripts { get; } =
+                new HashSet<Manuscript>(BilingualNamedEntityComparer<Manuscript>.Instance);
     }
 }

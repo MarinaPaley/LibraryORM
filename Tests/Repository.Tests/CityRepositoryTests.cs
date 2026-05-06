@@ -29,56 +29,80 @@ namespace Repository.Tests
         }
 
         [Test]
-        public void Create_ValidData_Success()
+        public async Task Create_ValidData_Success()
         {
             // arrange
             var city = new City("Город");
 
             // act
-            _ = this.Repository.CreateAsync(city);
+            _ = await this.Repository.CreateAsync(city);
 
             // assert
-            var result = this.DataContext.Find<City>(city.Id);
+            var result = await this.DataContext.FindAsync<City>(city.Id);
 
             Assert.That(result, Is.EqualTo(city));
         }
 
         [Test]
-        public void Update_ValidData_Success()
+        public async Task Update_ValidData_Success()
         {
             // arrange
             var city = new City("Город");
             var street = new Street("Улица", city);
 
-            this.DataContext.Add(city);
-            this.DataContext.Add(street);
-            this.DataContext.SaveChanges();
+            _ = await this.DataContext.AddAsync(street);
+            _ = await this.DataContext.SaveChangesAsync();
 
             // act
             _ = this.Repository.UpdateAsync(city);
+            var result = await this.DataContext.FindAsync<City>(city.Id);
 
             // assert
-            var result = this.DataContext.Find<City>(city.Id);
-            Assert.That(result?.Streets.Count, Is.EqualTo(1));
-            Assert.That(result?.Streets.Contains(street), Is.True);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Streets.Count, Is.EqualTo(1));
+            Assert.That(result.Streets.Contains(street), Is.True);
         }
 
         [Test]
-        public void Delete_ValidData_Success()
+        public async Task Delete_CityWithStreet_Cascade()
         {
             // arrange
             var city = new City("Город");
             var street = new Street("Улица", city);
 
-            this.DataContext.Add(city);
-            this.DataContext.Add(street);
-            this.DataContext.SaveChanges();
+            _ = await this.DataContext.AddAsync(street);
+            _ = await this.DataContext.SaveChangesAsync();
+            this.DataContext.ChangeTracker.Clear();
+
+            // act
+            _ = await this.Repository.DeleteAsync(city);
+
+            // assert
+            var result = await this.DataContext.FindAsync<City>(city.Id);
+            var streets = await this.DataContext.FindAsync<Street>(street.Id);
+
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(result, Is.Null);
+                Assert.That(streets, Is.Null);
+            }
+        }
+
+        [Test]
+        public async Task Delete_CityNoStreet_Success()
+        {
+            // arrange
+            var city = new City("Город");
+
+            _ = await this.DataContext.AddAsync(city);
+            _ = await this.DataContext.SaveChangesAsync();
+            this.DataContext.ChangeTracker.Clear();
 
             // act
             _ = this.Repository.DeleteAsync(city);
 
             // assert
-            var result = this.DataContext.Find<City>(city.Id);
+            var result = await this.DataContext.FindAsync<City>(city.Id);
 
             Assert.That(result, Is.Null);
         }
@@ -91,9 +115,8 @@ namespace Repository.Tests
             var city = new City(name);
             var street = new Street("Улица", city);
 
-            _ = this.DataContext.Add(city);
-            _ = this.DataContext.Add(street);
-            _ = this.DataContext.SaveChangesAsync();
+            _ = await this.DataContext.AddAsync(street);
+            _ = await this.DataContext.SaveChangesAsync();
 
             this.DataContext.ChangeTracker.Clear();
 
@@ -111,8 +134,8 @@ namespace Repository.Tests
             var name = "Город";
             var city = new City(name);
 
-            _ = this.DataContext.Add(city);
-            _ = this.DataContext.SaveChangesAsync();
+            _ = await this.DataContext.AddAsync(city);
+            _ = await this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
@@ -131,9 +154,8 @@ namespace Repository.Tests
             var street = new Street("Улица", city);
             var streets = new List<Street> { street };
 
-            _ = this.DataContext.Add(city);
-            _ = this.DataContext.Add(city);
-            _ = this.DataContext.SaveChangesAsync();
+            _ = await this.DataContext.AddAsync(city);
+            _ = await this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act

@@ -6,7 +6,6 @@ namespace Domain.Tests
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using NUnit.Framework;
 
     /// <summary>
@@ -15,24 +14,6 @@ namespace Domain.Tests
     [TestFixture]
     internal sealed class BookTests
     {
-        #region Helper methods
-
-        private static BookType CreateBookType(string name = "Книга") => new (name);
-
-        private static Publisher CreatePublisher(string name = "Издательство") => new (name);
-
-        private static Language CreateLanguage(string name = "Русский") => new (name);
-
-        private static Author CreateAuthor(string family = "Фамилия", string given = "Имя") =>
-            new (new Person(new Name(family, given)));
-
-        private static Manuscript CreateManuscript(string title = "Произведение", params Author[] authors) =>
-            new (title, CreateLanguage(), new HashSet<Author>(authors));
-
-        #endregion
-
-        #region Constructor validation tests
-
         [Test]
         public void Ctor_ValidData_Success()
         {
@@ -80,7 +61,7 @@ namespace Domain.Tests
         }
 
         [Test]
-        public void Ctor_NullISBN_ThrowsArgumentNullException()
+        public void Ctor_NullISBN_DoesnotThrow()
         {
             // arrange
             var publisher = CreatePublisher();
@@ -88,12 +69,19 @@ namespace Domain.Tests
             var manuscript = CreateManuscript();
 
             // act & assert
-            Assert.Throws<ArgumentNullException>(() =>
-                _ = new Book("Книга", 300, null!, bookType, publisher, 2024, new HashSet<Manuscript> { manuscript }));
+            Assert.DoesNotThrow(() =>
+                _ = new Book(
+                    "Книга",
+                    300,
+                    null!,
+                    bookType,
+                    publisher,
+                    2024,
+                    new HashSet<Manuscript> { manuscript }));
         }
 
         [Test]
-        public void Ctor_EmptyISBN_AfterTrim_ThrowsArgumentNullException()
+        public void Ctor_EmptyISBN_AfterTrim_DoesnotThrow()
         {
             // arrange
             var publisher = CreatePublisher();
@@ -101,8 +89,15 @@ namespace Domain.Tests
             var manuscript = CreateManuscript();
 
             // act & assert
-            Assert.Throws<ArgumentNullException>(() =>
-                _ = new Book("Книга", 300, "   ", bookType, publisher, 2024, new HashSet<Manuscript> { manuscript }));
+            Assert.DoesNotThrow(() =>
+                _ = new Book(
+                    "Книга",
+                    300,
+                    "   ",
+                    bookType,
+                    publisher,
+                    2024,
+                    new HashSet<Manuscript> { manuscript }));
         }
 
         [Test]
@@ -114,7 +109,14 @@ namespace Domain.Tests
 
             // act & assert
             Assert.Throws<ArgumentNullException>(() =>
-                _ = new Book("Книга", 300, "123", bookType, null!, 2024, new HashSet<Manuscript> { manuscript }));
+                _ = new Book(
+                    "Книга",
+                    300,
+                    "123",
+                    bookType,
+                    null!,
+                    2024,
+                    new HashSet<Manuscript> { manuscript }));
         }
 
         [Test]
@@ -195,8 +197,15 @@ namespace Domain.Tests
 
             // act & assert
             Assert.Throws<ArgumentOutOfRangeException>(() =>
-                _ = new Book("Книга", 300, "123", bookType, publisher, 2024,
-                    new HashSet<Manuscript> { manuscript }, volume: volume));
+                _ = new Book(
+                    "Книга",
+                    300,
+                    "123",
+                    bookType,
+                    publisher,
+                    2024,
+                    new HashSet<Manuscript> { manuscript },
+                    volume: volume));
         }
 
         [Test]
@@ -206,18 +215,14 @@ namespace Domain.Tests
             var publisher = CreatePublisher();
             var bookType = CreateBookType();
             var manuscript = CreateManuscript();
+            var manuscripts = new HashSet<Manuscript> { manuscript };
 
             // act
-            var book = new Book("Книга", 300, "123", bookType, publisher, 2024,
-                new HashSet<Manuscript> { manuscript }, volume: null);
+            var book = new Book("Книга", 300, "123", bookType, publisher, 2024, manuscripts, volume: null);
 
             // assert
             Assert.That(book.Volume, Is.Null);
         }
-
-        #endregion
-
-        #region Business logic tests
 
         [Test]
         public void Ctor_Shelf_AddsBookToShelf()
@@ -227,13 +232,15 @@ namespace Domain.Tests
             var publisher = CreatePublisher();
             var bookType = CreateBookType();
             var manuscript = CreateManuscript();
+            var manuscripts = new HashSet<Manuscript> { manuscript };
+            var book = new Book("Книга", 300, "123", bookType, publisher, 2024, manuscripts);
+            var item = new Item(book);
 
             // act
-            var book = new Book("Книга", 300, "123", bookType, publisher, 2024,
-                new HashSet<Manuscript> { manuscript }, shelf: shelf);
+            shelf.AddBook(item);
 
             // assert
-            Assert.That(shelf.Books, Contains.Item(book));
+            Assert.That(shelf.Items, Contains.Item(item));
         }
 
         [Test]
@@ -244,10 +251,10 @@ namespace Domain.Tests
             var publisher = CreatePublisher();
             var bookType = CreateBookType();
             var manuscript = CreateManuscript();
+            var manuscripts = new HashSet<Manuscript> { manuscript };
 
             // act
-            var book = new Book("Книга", 300, "123", bookType, publisher, 2024,
-                new HashSet<Manuscript> { manuscript }, editor: editor);
+            var book = new Book("Книга", 300, "123", bookType, publisher, 2024, manuscripts, editor: editor);
 
             // assert
             Assert.That(editor.Books, Contains.Item(book));
@@ -261,10 +268,10 @@ namespace Domain.Tests
             var publisher = CreatePublisher();
             var bookType = CreateBookType();
             var manuscript = CreateManuscript();
+            var manuscripts = new HashSet<Manuscript> { manuscript };
 
             // act
-            var book = new Book("Книга", 300, "123", bookType, publisher, 2024,
-                new HashSet<Manuscript> { manuscript }, seria: seria);
+            var book = new Book("Книга", 300, "123", bookType, publisher, 2024, manuscripts, seria: seria);
 
             // assert
             Assert.That(seria.Books, Contains.Item(book));
@@ -277,10 +284,10 @@ namespace Domain.Tests
             var publisher = CreatePublisher();
             var bookType = CreateBookType();
             var manuscript = CreateManuscript();
+            var manuscripts = new HashSet<Manuscript> { manuscript };
 
             // act
-            var book = new Book("Книга", 300, "123", bookType, publisher, 2024,
-                new HashSet<Manuscript> { manuscript });
+            var book = new Book("Книга", 300, "123", bookType, publisher, 2024, manuscripts);
 
             // assert
             Assert.That(publisher.Books, Contains.Item(book));
@@ -300,8 +307,11 @@ namespace Domain.Tests
             var book = new Book("Книга", 300, "123", bookType, publisher, 2024, manuscripts);
 
             // assert
-            Assert.That(manuscript1.Books, Contains.Item(book));
-            Assert.That(manuscript2.Books, Contains.Item(book));
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(manuscript1.Books, Contains.Item(book));
+                Assert.That(manuscript2.Books, Contains.Item(book));
+            }
         }
 
         [Test]
@@ -315,9 +325,12 @@ namespace Domain.Tests
             var result = book.AddEditor(editor);
 
             // assert
-            Assert.That(result, Is.True);
-            Assert.That(book.Editor, Is.SameAs(editor));
-            Assert.That(editor.Books, Contains.Item(book));
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(result, Is.True);
+                Assert.That(book.Editor, Is.SameAs(editor));
+                Assert.That(editor.Books, Contains.Item(book));
+            }
         }
 
         [Test]
@@ -330,8 +343,11 @@ namespace Domain.Tests
             var result = book.AddEditor(null!);
 
             // assert
-            Assert.That(result, Is.False);
-            Assert.That(book.Editor, Is.Null);
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(result, Is.False);
+                Assert.That(book.Editor, Is.Null);
+            }
         }
 
         [Test]
@@ -367,10 +383,6 @@ namespace Domain.Tests
             Assert.That(result, Is.False);
         }
 
-        #endregion
-
-        #region Equality tests
-
         [Test]
         public void Equals_SameReference_ReturnsTrue()
         {
@@ -402,18 +414,19 @@ namespace Domain.Tests
         }
 
         [Test]
-        public void Equals_SameTitle_ReturnsTrue()
+        public void Equals_SameTitleDifferentOther_ReturnsFalse()
         {
             // arrange
             var publisher = CreatePublisher();
             var bookType = CreateBookType();
             var manuscript = CreateManuscript();
+            var manuscripts = new HashSet<Manuscript> { manuscript };
 
-            var book1 = new Book("Одинаковое название", 300, "111", bookType, publisher, 2024, new HashSet<Manuscript> { manuscript });
-            var book2 = new Book("Одинаковое название", 400, "222", bookType, publisher, 2024, new HashSet<Manuscript> { manuscript });
+            var book1 = new Book("Одинаковое название", 300, "111", bookType, publisher, 2024, manuscripts);
+            var book2 = new Book("Одинаковое название", 400, "222", bookType, publisher, 2024, manuscripts);
 
             // act & assert
-            Assert.That(book1.Equals(book2), Is.True);
+            Assert.That(book1.Equals(book2), Is.False);
         }
 
         [Test]
@@ -423,9 +436,10 @@ namespace Domain.Tests
             var publisher = CreatePublisher();
             var bookType = CreateBookType();
             var manuscript = CreateManuscript();
+            var manuscripts = new HashSet<Manuscript> { manuscript };
 
-            var book1 = new Book("Книга 1", 300, "111", bookType, publisher, 2024, new HashSet<Manuscript> { manuscript });
-            var book2 = new Book("Книга 2", 300, "111", bookType, publisher, 2024, new HashSet<Manuscript> { manuscript });
+            var book1 = new Book("Книга 1", 300, "111", bookType, publisher, 2024, manuscripts);
+            var book2 = new Book("Книга 2", 300, "111", bookType, publisher, 2024, manuscripts);
 
             // act & assert
             Assert.That(book1.Equals(book2), Is.False);
@@ -446,10 +460,6 @@ namespace Domain.Tests
             Assert.That(book1.GetHashCode(), Is.Not.EqualTo(book2.GetHashCode()));
         }
 
-        #endregion
-
-        #region ToString tests
-
         [Test]
         public void ToString_WithTitleAndManuscripts_ReturnsFormattedString()
         {
@@ -458,8 +468,9 @@ namespace Domain.Tests
             var bookType = CreateBookType();
             var author = CreateAuthor("Толстой", "Лев");
             var manuscript = CreateManuscript("Война и мир", author);
+            var manuscripts = new HashSet<Manuscript> { manuscript };
 
-            var book = new Book("Классика", 1000, "123", bookType, publisher, 1869, new HashSet<Manuscript> { manuscript });
+            var book = new Book("Классика", 1000, "123", bookType, publisher, 1869, manuscripts);
 
             // act
             var result = book.ToString();
@@ -477,8 +488,9 @@ namespace Domain.Tests
             var publisher = CreatePublisher();
             var bookType = CreateBookType();
             var manuscript = CreateManuscript("Без названия");
+            var manuscripts = new HashSet<Manuscript> { manuscript };
 
-            var book = new Book(null, 200, "456", bookType, publisher, 2024, new HashSet<Manuscript> { manuscript });
+            var book = new Book(null, 200, "456", bookType, publisher, 2024, manuscripts);
 
             // act
             var result = book.ToString();
@@ -494,8 +506,9 @@ namespace Domain.Tests
             // arrange
             var publisher = CreatePublisher();
             var bookType = CreateBookType();
+            var manuscripts = new HashSet<Manuscript>();
 
-            var book = new Book("Только название", 100, "789", bookType, publisher, 2024, new HashSet<Manuscript>());
+            var book = new Book("Только название", 100, "789", bookType, publisher, 2024, manuscripts);
 
             // act
             var result = book.ToString();
@@ -503,10 +516,6 @@ namespace Domain.Tests
             // assert
             Assert.That(result, Is.EqualTo("Только название "));
         }
-
-        #endregion
-
-        #region Helper methods
 
         private static Book CreateMinimalBook()
         {
@@ -520,6 +529,23 @@ namespace Domain.Tests
                 new HashSet<Manuscript> { CreateManuscript() });
         }
 
-        #endregion
+        private static BookType CreateBookType(string name = "Книга") => new (name);
+
+        private static Publisher CreatePublisher(string name = "Издательство") => new (name);
+
+        private static HashSet<Language> CreateLanguage(string name = "Русский") => new HashSet<Language>() { new (name) };
+
+        private static Author CreateAuthor(string family = "Фамилия", string given = "Имя") =>
+            new (new Person(new Name(family, given)));
+
+        private static Manuscript CreateManuscript(string title = "Произведение", params Author[] authors)
+        {
+            if (authors.Length != 0)
+            {
+                return new(title, CreateLanguage(), new HashSet<Author>(authors));
+            }
+
+            return new Manuscript(title, CreateLanguage(), new HashSet<Author>() { CreateAuthor() });
+        }
     }
 }

@@ -33,6 +33,8 @@ namespace Domain
             this.PatronymicName = patronymicName;
         }
 
+#pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
+
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Name"/>.
         /// </summary>
@@ -40,6 +42,8 @@ namespace Domain
         private Name()
         {
         }
+
+#pragma warning restore CS8618
 
         /// <summary>
         /// Фамилия.

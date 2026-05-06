@@ -11,45 +11,44 @@ namespace Domain
     /// <summary>
     /// Язык.
     /// </summary>
-    public sealed class Language : Entity<Language>, IEquatable<Language>
+    public sealed class Language : NamedEntity<Language>, IEquatable<Language>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Language"/>.
         /// </summary>
         /// <param name="name"> Язык. </param>
         public Language(string name)
+            : base(name)
         {
-            this.Name = new Title(name);
         }
 
+#pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
         [Obsolete("For ORM only")]
         private Language()
+            : base("Не задано")
         {
         }
-
-        /// <summary>
-        /// Язык.
-        /// </summary>
-        public Title Name { get; set; }
+#pragma warning restore CS8618
 
         /// <summary>
         /// Рукописи.
         /// </summary>
-        public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>();
+        public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>(BilingualNamedEntityComparer<Manuscript>.Instance);
 
         /// <inheritdoc/>
         public override bool Equals(Language? other)
         {
-            return ReferenceEquals(this, other) || ((other is not null) && (this.Name == other.Name));
+            return ReferenceEquals(this, other)
+                || NamedEntityComparer<Language>.Instance.Equals(this, other);
         }
 
         /// <inheritdoc/>
         public override bool Equals(object? obj) => this.Equals(obj as Language);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => this.Name?.GetHashCode() ?? 0;
+        public override int GetHashCode() => this.Name.GetHashCode();
 
-        /// <inheritdoc cref="object.ToString()"/>
+        /// <inheritdoc/>
         public override string ToString() => this.Name.ToString();
     }
 }

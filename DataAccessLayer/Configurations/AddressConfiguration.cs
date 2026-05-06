@@ -29,17 +29,12 @@ namespace DataAccessLayer.Configurations
             _ = builder.Property(address => address.Apartment)
                 .HasComment("Номер квартиры");
 
-            _ = builder.HasOne(address => address.City)
+            _ = builder.HasOne(address => address.Street)
                 .WithMany()
-                .HasForeignKey("CityId")
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            _ = builder.HasOne(address => address.Street)
-                .WithMany()
-                .HasForeignKey("StreetId")
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Restrict);
+            _ = builder.ToTable("Addresses");
         }
     }
 }

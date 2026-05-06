@@ -35,7 +35,8 @@ namespace Domain.Abstract
         public virtual bool Equals(TEntity? other)
         {
             return other is not null
-                && this.GetType() == other.GetType();
+                && this.GetType() == other.GetType()
+                && this.Id == other.Id;
         }
 
         /// <inheritdoc/>

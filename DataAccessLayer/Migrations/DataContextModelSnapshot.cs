@@ -34,7 +34,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("ManuscriptsId");
 
-                    b.ToTable("AuthorManuscript");
+                    b.ToTable("AuthorManuscript", (string)null);
                 });
 
             modelBuilder.Entity("BookManuscript", b =>
@@ -49,7 +49,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("ManuscriptsId");
 
-                    b.ToTable("BookManuscript");
+                    b.ToTable("BookManuscript", (string)null);
                 });
 
             modelBuilder.Entity("BookPublisher", b =>
@@ -64,32 +64,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("PublishersId");
 
-                    b.ToTable("BookPublisher");
-                });
-
-            modelBuilder.Entity("Domain.Abstract.Contributor", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("ContributorType")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("character varying(13)");
-
-                    b.Property<Guid>("PersonId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PersonId");
-
-                    b.ToTable("Contributors", (string)null);
-
-                    b.HasDiscriminator<string>("ContributorType").HasValue("Contributor");
-
-                    b.UseTphMappingStrategy();
+                    b.ToTable("BookPublisher", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Address", b =>
@@ -107,9 +82,6 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("character varying(50)")
                         .HasComment("Корпус или владение");
 
-                    b.Property<Guid>("CityId")
-                        .HasColumnType("uuid");
-
                     b.Property<int?>("Floor")
                         .HasColumnType("integer");
 
@@ -122,11 +94,26 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId");
-
                     b.HasIndex("StreetId");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Author", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PersonId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId")
+                        .IsUnique();
+
+                    b.ToTable("Authors", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Book", b =>
@@ -153,8 +140,8 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("ISBN")
-                        .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(25)
+                        .HasColumnType("character varying(25)")
                         .HasComment("ISBN");
 
                     b.Property<int>("Pages")
@@ -164,11 +151,9 @@ namespace DataAccessLayer.Migrations
                     b.Property<Guid?>("SeriaId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("ShelfId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Title")
-                        .HasColumnType("text")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasComment("Название книги");
 
                     b.Property<string>("Url")
@@ -190,9 +175,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("SeriaId");
 
-                    b.HasIndex("ShelfId");
-
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
                 });
 
             modelBuilder.Entity("Domain.BookType", b =>
@@ -203,7 +186,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BookTypes");
+                    b.ToTable("BookTypes", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Cabinet", b =>
@@ -233,7 +216,24 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cities");
+                    b.ToTable("Cities", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Editor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PersonId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId")
+                        .IsUnique();
+
+                    b.ToTable("Editors", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Genre", b =>
@@ -244,7 +244,28 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genres");
+                    b.ToTable("Genres", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Item", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("ShelfId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("ShelfId");
+
+                    b.ToTable("Items", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Language", b =>
@@ -255,7 +276,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Languages");
+                    b.ToTable("Languages", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Manuscript", b =>
@@ -264,12 +285,7 @@ namespace DataAccessLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("LanguageId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("LanguageId");
 
                     b.ToTable("Manuscripts", null, t =>
                         {
@@ -312,7 +328,24 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.ToTable("Publishers");
+                    b.ToTable("Publishers", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Reviewer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PersonId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId")
+                        .IsUnique();
+
+                    b.ToTable("Reviwers", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Room", b =>
@@ -330,7 +363,7 @@ namespace DataAccessLayer.Migrations
 
                     b.ToTable("Rooms", null, t =>
                         {
-                            t.HasComment("Комнаты в зданиях");
+                            t.HasComment("Комнаты");
                         });
                 });
 
@@ -342,7 +375,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Serias");
+                    b.ToTable("Serias", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Shelf", b =>
@@ -363,10 +396,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("CabinetId");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Shelves");
+                    b.ToTable("Shelves", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Street", b =>
@@ -382,7 +412,24 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("Streets");
+                    b.ToTable("Streets", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Translator", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PersonId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId")
+                        .IsUnique();
+
+                    b.ToTable("Translators", (string)null);
                 });
 
             modelBuilder.Entity("GenreManuscript", b =>
@@ -397,7 +444,22 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("ManuscriptsId");
 
-                    b.ToTable("GenreManuscript");
+                    b.ToTable("GenreManuscript", (string)null);
+                });
+
+            modelBuilder.Entity("LanguageManuscript", b =>
+                {
+                    b.Property<Guid>("LanguagesId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ManuscriptsId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("LanguagesId", "ManuscriptsId");
+
+                    b.HasIndex("ManuscriptsId");
+
+                    b.ToTable("LanguageManuscript", (string)null);
                 });
 
             modelBuilder.Entity("ManuscriptReviewer", b =>
@@ -412,7 +474,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("ReviewersId");
 
-                    b.ToTable("ManuscriptReviewer");
+                    b.ToTable("ManuscriptReviewer", (string)null);
                 });
 
             modelBuilder.Entity("ManuscriptTranslator", b =>
@@ -427,35 +489,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("TranslatorsId");
 
-                    b.ToTable("ManuscriptTranslator");
-                });
-
-            modelBuilder.Entity("Domain.Author", b =>
-                {
-                    b.HasBaseType("Domain.Abstract.Contributor");
-
-                    b.HasDiscriminator().HasValue("Author");
-                });
-
-            modelBuilder.Entity("Domain.Editor", b =>
-                {
-                    b.HasBaseType("Domain.Abstract.Contributor");
-
-                    b.HasDiscriminator().HasValue("Editor");
-                });
-
-            modelBuilder.Entity("Domain.Reviewer", b =>
-                {
-                    b.HasBaseType("Domain.Abstract.Contributor");
-
-                    b.HasDiscriminator().HasValue("Reviewer");
-                });
-
-            modelBuilder.Entity("Domain.Translator", b =>
-                {
-                    b.HasBaseType("Domain.Abstract.Contributor");
-
-                    b.HasDiscriminator().HasValue("Translator");
+                    b.ToTable("ManuscriptTranslator", (string)null);
                 });
 
             modelBuilder.Entity("AuthorManuscript", b =>
@@ -503,34 +537,26 @@ namespace DataAccessLayer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Abstract.Contributor", b =>
-                {
-                    b.HasOne("Domain.Person", "Person")
-                        .WithMany()
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Person");
-                });
-
             modelBuilder.Entity("Domain.Address", b =>
                 {
-                    b.HasOne("Domain.City", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Domain.Street", "Street")
                         .WithMany()
                         .HasForeignKey("StreetId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("City");
-
                     b.Navigation("Street");
+                });
+
+            modelBuilder.Entity("Domain.Author", b =>
+                {
+                    b.HasOne("Domain.Person", "Person")
+                        .WithOne("Author")
+                        .HasForeignKey("Domain.Author", "PersonId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("Domain.Book", b =>
@@ -538,33 +564,29 @@ namespace DataAccessLayer.Migrations
                     b.HasOne("Domain.BookType", "BookType")
                         .WithMany("Books")
                         .HasForeignKey("BookTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.HasOne("Domain.Editor", "Editor")
                         .WithMany("Books")
-                        .HasForeignKey("EditorId");
+                        .HasForeignKey("EditorId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("Domain.Seria", "Seria")
                         .WithMany("Books")
-                        .HasForeignKey("SeriaId");
-
-                    b.HasOne("Domain.Shelf", "Shelf")
-                        .WithMany("Books")
-                        .HasForeignKey("ShelfId");
+                        .HasForeignKey("SeriaId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("BookType");
 
                     b.Navigation("Editor");
 
                     b.Navigation("Seria");
-
-                    b.Navigation("Shelf");
                 });
 
             modelBuilder.Entity("Domain.BookType", b =>
                 {
-                    b.OwnsOne("Domain.Title", "BookTypeName", b1 =>
+                    b.OwnsOne("Domain.Title", "Name", b1 =>
                         {
                             b1.Property<Guid>("BookTypeId")
                                 .HasColumnType("uuid");
@@ -578,17 +600,13 @@ namespace DataAccessLayer.Migrations
 
                             b1.HasKey("BookTypeId");
 
-                            b1.HasIndex("Value")
-                                .IsUnique()
-                                .HasDatabaseName("IX_BookType_BookTypeName");
-
-                            b1.ToTable("BookTypes");
+                            b1.ToTable("BookTypes", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("BookTypeId");
                         });
 
-                    b.Navigation("BookTypeName")
+                    b.Navigation("Name")
                         .IsRequired();
                 });
 
@@ -597,7 +615,7 @@ namespace DataAccessLayer.Migrations
                     b.HasOne("Domain.Room", "Room")
                         .WithMany("Cabinets")
                         .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.OwnsOne("Domain.Title", "Name", b1 =>
                         {
@@ -613,10 +631,7 @@ namespace DataAccessLayer.Migrations
 
                             b1.HasKey("CabinetId");
 
-                            b1.HasIndex("Value")
-                                .HasDatabaseName("IX_Cabinet_Name");
-
-                            b1.ToTable("Cabinets");
+                            b1.ToTable("Cabinets", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("CabinetId");
@@ -644,11 +659,7 @@ namespace DataAccessLayer.Migrations
 
                             b1.HasKey("CityId");
 
-                            b1.HasIndex("Value")
-                                .IsUnique()
-                                .HasDatabaseName("IX_City_Name");
-
-                            b1.ToTable("Cities");
+                            b1.ToTable("Cities", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("CityId");
@@ -656,6 +667,17 @@ namespace DataAccessLayer.Migrations
 
                     b.Navigation("Name")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Editor", b =>
+                {
+                    b.HasOne("Domain.Person", "Person")
+                        .WithOne("Editor")
+                        .HasForeignKey("Domain.Editor", "PersonId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("Domain.Genre", b =>
@@ -674,11 +696,7 @@ namespace DataAccessLayer.Migrations
 
                             b1.HasKey("GenreId");
 
-                            b1.HasIndex("Value")
-                                .IsUnique()
-                                .HasDatabaseName("IX_Genre_Name");
-
-                            b1.ToTable("Genres");
+                            b1.ToTable("Genres", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("GenreId");
@@ -686,6 +704,24 @@ namespace DataAccessLayer.Migrations
 
                     b.Navigation("Name")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Item", b =>
+                {
+                    b.HasOne("Domain.Book", "Book")
+                        .WithMany("Items")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Shelf", "Shelf")
+                        .WithMany("Items")
+                        .HasForeignKey("ShelfId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Shelf");
                 });
 
             modelBuilder.Entity("Domain.Language", b =>
@@ -704,11 +740,7 @@ namespace DataAccessLayer.Migrations
 
                             b1.HasKey("LanguageId");
 
-                            b1.HasIndex("Value")
-                                .IsUnique()
-                                .HasDatabaseName("IX_Language_Name");
-
-                            b1.ToTable("Languages");
+                            b1.ToTable("Languages", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("LanguageId");
@@ -720,35 +752,6 @@ namespace DataAccessLayer.Migrations
 
             modelBuilder.Entity("Domain.Manuscript", b =>
                 {
-                    b.HasOne("Domain.Language", "Language")
-                        .WithMany("Manuscripts")
-                        .HasForeignKey("LanguageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.OwnsOne("Domain.Title", "Title", b1 =>
-                        {
-                            b1.Property<Guid>("ManuscriptId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasMaxLength(200)
-                                .HasColumnType("character varying(200)")
-                                .HasColumnName("ManuscriptTitle")
-                                .HasComment("Название произведения");
-
-                            b1.HasKey("ManuscriptId");
-
-                            b1.HasIndex("Value")
-                                .HasDatabaseName("IX_Manuscript_Title");
-
-                            b1.ToTable("Manuscripts");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ManuscriptId");
-                        });
-
                     b.OwnsOne("Staff.Range<System.DateOnly>", "Dates", b1 =>
                         {
                             b1.Property<Guid>("ManuscriptId")
@@ -766,7 +769,46 @@ namespace DataAccessLayer.Migrations
 
                             b1.HasKey("ManuscriptId");
 
-                            b1.ToTable("Manuscripts");
+                            b1.ToTable("Manuscripts", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("ManuscriptId");
+                        });
+
+                    b.OwnsOne("Domain.Title", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("ManuscriptId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("character varying(200)")
+                                .HasColumnName("ManuscriptTitle")
+                                .HasComment("Название произведения");
+
+                            b1.HasKey("ManuscriptId");
+
+                            b1.ToTable("Manuscripts", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("ManuscriptId");
+                        });
+
+                    b.OwnsOne("Domain.Title", "OriginName", b1 =>
+                        {
+                            b1.Property<Guid>("ManuscriptId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .HasMaxLength(200)
+                                .HasColumnType("character varying(200)")
+                                .HasColumnName("ManuscriptOriginTitle")
+                                .HasComment("Оригинальное название произведения");
+
+                            b1.HasKey("ManuscriptId");
+
+                            b1.ToTable("Manuscripts", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("ManuscriptId");
@@ -774,10 +816,10 @@ namespace DataAccessLayer.Migrations
 
                     b.Navigation("Dates");
 
-                    b.Navigation("Language");
-
-                    b.Navigation("Title")
+                    b.Navigation("Name")
                         .IsRequired();
+
+                    b.Navigation("OriginName");
                 });
 
             modelBuilder.Entity("Domain.Person", b =>
@@ -809,7 +851,7 @@ namespace DataAccessLayer.Migrations
 
                             b1.HasKey("PersonId");
 
-                            b1.ToTable("Persons");
+                            b1.ToTable("Persons", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("PersonId");
@@ -840,11 +882,26 @@ namespace DataAccessLayer.Migrations
 
                             b1.HasKey("PublisherId");
 
-                            b1.HasIndex("Value")
-                                .IsUnique()
-                                .HasDatabaseName("IX_Publisher_Name");
+                            b1.ToTable("Publishers", (string)null);
 
-                            b1.ToTable("Publishers");
+                            b1.WithOwner()
+                                .HasForeignKey("PublisherId");
+                        });
+
+                    b.OwnsOne("Domain.Title", "OriginName", b1 =>
+                        {
+                            b1.Property<Guid>("PublisherId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .HasMaxLength(200)
+                                .HasColumnType("character varying(200)")
+                                .HasColumnName("PublisheOriginName")
+                                .HasComment("Оригинальное название издательства");
+
+                            b1.HasKey("PublisherId");
+
+                            b1.ToTable("Publishers", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("PublisherId");
@@ -854,6 +911,19 @@ namespace DataAccessLayer.Migrations
 
                     b.Navigation("Name")
                         .IsRequired();
+
+                    b.Navigation("OriginName");
+                });
+
+            modelBuilder.Entity("Domain.Reviewer", b =>
+                {
+                    b.HasOne("Domain.Person", "Person")
+                        .WithOne("Reviewer")
+                        .HasForeignKey("Domain.Reviewer", "PersonId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("Domain.Room", b =>
@@ -878,10 +948,7 @@ namespace DataAccessLayer.Migrations
 
                             b1.HasKey("RoomId");
 
-                            b1.HasIndex("Value")
-                                .HasDatabaseName("IX_Room_Name");
-
-                            b1.ToTable("Rooms");
+                            b1.ToTable("Rooms", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("RoomId");
@@ -909,11 +976,7 @@ namespace DataAccessLayer.Migrations
 
                             b1.HasKey("SeriaId");
 
-                            b1.HasIndex("Value")
-                                .IsUnique()
-                                .HasDatabaseName("IX_Seria_Name");
-
-                            b1.ToTable("Serias");
+                            b1.ToTable("Serias", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("SeriaId");
@@ -928,7 +991,7 @@ namespace DataAccessLayer.Migrations
                     b.HasOne("Domain.Cabinet", "Cabinet")
                         .WithMany("Shelves")
                         .HasForeignKey("CabinetId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Cabinet");
                 });
@@ -955,7 +1018,7 @@ namespace DataAccessLayer.Migrations
 
                             b1.HasKey("StreetId");
 
-                            b1.ToTable("Streets");
+                            b1.ToTable("Streets", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("StreetId");
@@ -967,11 +1030,37 @@ namespace DataAccessLayer.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Domain.Translator", b =>
+                {
+                    b.HasOne("Domain.Person", "Person")
+                        .WithOne("Translator")
+                        .HasForeignKey("Domain.Translator", "PersonId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Person");
+                });
+
             modelBuilder.Entity("GenreManuscript", b =>
                 {
                     b.HasOne("Domain.Genre", null)
                         .WithMany()
                         .HasForeignKey("GenresId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Manuscript", null)
+                        .WithMany()
+                        .HasForeignKey("ManuscriptsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LanguageManuscript", b =>
+                {
+                    b.HasOne("Domain.Language", null)
+                        .WithMany()
+                        .HasForeignKey("LanguagesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1012,6 +1101,11 @@ namespace DataAccessLayer.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Domain.Book", b =>
+                {
+                    b.Navigation("Items");
+                });
+
             modelBuilder.Entity("Domain.BookType", b =>
                 {
                     b.Navigation("Books");
@@ -1027,9 +1121,20 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Streets");
                 });
 
-            modelBuilder.Entity("Domain.Language", b =>
+            modelBuilder.Entity("Domain.Editor", b =>
                 {
-                    b.Navigation("Manuscripts");
+                    b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("Domain.Person", b =>
+                {
+                    b.Navigation("Author");
+
+                    b.Navigation("Editor");
+
+                    b.Navigation("Reviewer");
+
+                    b.Navigation("Translator");
                 });
 
             modelBuilder.Entity("Domain.Room", b =>
@@ -1044,12 +1149,7 @@ namespace DataAccessLayer.Migrations
 
             modelBuilder.Entity("Domain.Shelf", b =>
                 {
-                    b.Navigation("Books");
-                });
-
-            modelBuilder.Entity("Domain.Editor", b =>
-                {
-                    b.Navigation("Books");
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

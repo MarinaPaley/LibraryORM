@@ -47,7 +47,8 @@ namespace Repository
         /// <returns> Книги автора.</returns>
         public async Task<ISet<Manuscript>> GetBooksByAuthorId(Guid id)
         {
-            return (await this.GetAsync(id))?.Manuscripts ?? new HashSet<Manuscript>();
+            return (await this.GetAsync(id))?.Manuscripts
+                ?? new HashSet<Manuscript>();
         }
 
         /// <summary>
@@ -71,8 +72,7 @@ namespace Repository
         /// <returns> Авторы.</returns>
         protected override IQueryable<Author> GetAll()
         {
-            return this.DataContext.Contributors
-                .OfType<Author>()
+            return this.DataContext.Authors
                 .Include(author => author.Person)
                     .ThenInclude(person => person.FullName)
                 .Include(author => author.Manuscripts);

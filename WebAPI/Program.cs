@@ -1,21 +1,30 @@
-
-using Microsoft.EntityFrameworkCore;
-using Repository;
-
+// <copyright file="Program.cs" company="Филипченко Марина Алексеевна">
+// Copyright (c) Филипченко Марина Алексеевна 2026. Library.
+// </copyright>
 namespace WebAPI
 {
-    public class Program
+    using Microsoft.EntityFrameworkCore;
+    using Repository;
+
+    /// <summary>
+    /// Программа.
+    /// </summary>
+    public static class Program
     {
+        /// <summary>
+        /// Точка вход в программу.
+        /// </summary>
+        /// <param name="args"> Список параметров. </param>
+        /// <exception cref="InvalidOperationException"> При невозможности создать программу. </exception>
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             var connectionString =
-    builder.Configuration.GetConnectionString("Default")
-        ?? throw new InvalidOperationException("Connection string"
-        + "'DefaultConnection' not found.");
+                builder.Configuration.GetConnectionString("Default")
+                ?? throw new InvalidOperationException("Connection string"
+                + "'DefaultConnection' not found.");
 
             builder.Services.AddDbContext<DataAccessLayer.DataContext>(
                 opt => opt.UseNpgsql(connectionString)
@@ -26,6 +35,7 @@ namespace WebAPI
             builder.Services.AddScoped<ShelfRepository>();
 
             builder.Services.AddControllers();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -42,7 +52,6 @@ namespace WebAPI
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

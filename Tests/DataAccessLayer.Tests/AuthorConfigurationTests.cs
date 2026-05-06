@@ -31,35 +31,12 @@ namespace DataAccessLayer.Tests
 
             // assert
             var result = this.DataContext
-                .Set<Author>()
+                .Authors
                 .Include(a => a.Person)
                 .First(a => a.Id == author.Id);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result!.Person.FullName, Is.EqualTo(author.Person.FullName));
-        }
-
-        [Test]
-        public void Discriminator_IsSetCorrectly()
-        {
-            // arrange
-            var person = new Person(new Name("Пастернак", "Борис"));
-            var author = new Author(person);
-
-            // act
-            _ = this.DataContext.Add(author);
-            _ = this.DataContext.SaveChanges();
-            this.DataContext.ChangeTracker.Clear();
-
-            // assert — проверяем через метаданные модели
-            var entityType = this.DataContext.Model.FindEntityType(typeof(Author));
-            var discriminator = entityType?.FindDiscriminatorProperty();
-
-            Assert.Multiple(() =>
-            {
-                Assert.That(discriminator, Is.Not.Null);
-                Assert.That(entityType?.GetDiscriminatorValue(), Is.EqualTo("Author"));
-            });
         }
     }
 }

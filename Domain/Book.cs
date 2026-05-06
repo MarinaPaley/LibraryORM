@@ -6,13 +6,14 @@ namespace Domain
 {
     using System;
     using System.Collections.Generic;
+    using System.Security;
     using Domain.Abstract;
     using Staff;
 
     /// <summary>
     /// Книга.
     /// </summary>
-    public sealed class Book : Entity<Book>, IEquatable<Book>
+    public sealed class Book : Entity<Book>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Book"/>.
@@ -24,7 +25,6 @@ namespace Domain
         /// <param name="publisher"> Издательство.</param>
         /// <param name="year"> Год издания. </param>
         /// <param name="manuscripts"> Рукописи. </param>
-        /// <param name="shelf"> Полка. </param>
         /// <param name="volume"> Том.</param>
         /// <param name="annotation"> Аннотация. </param>
         /// <param name="edition"> Редакция. </param>
@@ -32,10 +32,14 @@ namespace Domain
         /// <param name="seria"> Серия. </param>
         /// <param name="doi"> DOI. </param>
         /// <param name="url"> URL. </param>
-        /// <exception cref="ArgumentNullException">Если название книги или код <see langword="null"/> или
-        /// Издательство <see langword="null"/> или
-        /// Тип издания <see langword="null"/>. </exception>
-        /// <exception cref="ArgumentOutOfRangeException"> Если количество страниц меньше или равно нулю или год издания не валиден. </exception>
+        /// <exception cref="ArgumentNullException">
+        /// Если название книги или код <see langword="null"/>
+        /// или Издательство <see langword="null"/>
+        /// или Тип издания <see langword="null"/>.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Если количество страниц меньше или равно нулю или год издания не валиден.
+        /// </exception>
         public Book(
             string? title,
             int pages,
@@ -44,7 +48,6 @@ namespace Domain
             Publisher publisher,
             int year,
             ISet<Manuscript> manuscripts,
-            Shelf? shelf = null,
             int? volume = null,
             string? annotation = null,
             string? edition = null,
@@ -56,22 +59,19 @@ namespace Domain
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pages);
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(year);
             ArgumentNullException.ThrowIfNull(publisher);
+            ArgumentNullException.ThrowIfNull(bookType);
             ArgumentOutOfRangeException.ThrowIfGreaterThan(year, DateTime.Now.Year);
             if (volume.HasValue && volume <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(volume));
             }
 
-            this.BookType = bookType ?? throw new ArgumentNullException(nameof(bookType));
-            this.ISBN = ibsn.TrimOrNull() ?? throw new ArgumentNullException(nameof(ibsn));
+            this.ISBN = ibsn.TrimOrNull();
             this.Manuscripts = manuscripts ?? throw new ArgumentNullException(nameof(manuscripts));
 
             this.Title = title;
             this.Pages = pages;
             this.Year = year;
-            this.Shelf = shelf;
-
-            _ = shelf?.AddBook(this);
 
             foreach (var manuscript in manuscripts)
             {
@@ -89,6 +89,8 @@ namespace Domain
 
             this.Doi = doi;
             this.Url = url;
+            this.BookType = bookType;
+            bookType.Books.Add(this);
         }
 
         /// <summary>
@@ -101,7 +103,6 @@ namespace Domain
         /// <param name="publisher"> Издательство. </param>
         /// <param name="year"> Год издания. </param>
         /// <param name="manuscripts"> Рукописи. </param>
-        /// <param name="shelf" > Полка. </param>
         /// <param name="volume"> Том.</param>
         /// <param name="annotation"> Аннотация. </param>
         /// <param name="edition"> Редакция. </param>
@@ -118,7 +119,6 @@ namespace Domain
             BookType bookType,
             Publisher publisher,
             int year,
-            Shelf? shelf = null,
             int? volume = null,
             string? annotation = null,
             string? edition = null,
@@ -135,7 +135,6 @@ namespace Domain
                    publisher,
                    year,
                    new HashSet<Manuscript>(manuscripts),
-                   shelf,
                    volume,
                    annotation,
                    edition,
@@ -170,17 +169,12 @@ namespace Domain
         /// <summary>
         /// Код isbn.
         /// </summary>
-        public string ISBN { get; }
-
-        /// <summary>
-        /// Полка.
-        /// </summary>
-        public Shelf? Shelf { get; set; }
+        public string? ISBN { get; }
 
         /// <summary>
         /// Издательства.
         /// </summary>
-        public ISet<Publisher> Publishers { get; } = new HashSet<Publisher>();
+        public ISet<Publisher> Publishers { get; } = new HashSet<Publisher>(NamedEntityComparer<Publisher>.Instance);
 
         /// <summary>
         /// Тип книги.
@@ -195,7 +189,12 @@ namespace Domain
         /// <summary>
         /// Рукописи в книге.
         /// </summary>
-        public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>();
+        public ISet<Manuscript> Manuscripts { get; } = new HashSet<Manuscript>(BilingualNamedEntityComparer<Manuscript>.Instance);
+
+        /// <summary>
+        /// Экземпляры книги.
+        /// </summary>
+        public HashSet<Item> Items { get; set; } = new HashSet<Item>(EntityComparer<Item>.Instance);
 
         /// <summary>
         /// Редактор.
@@ -235,14 +234,19 @@ namespace Domain
         /// <inheritdoc/>
         public override bool Equals(Book? other)
         {
-            return ReferenceEquals(this, other) || ((other is not null) && (this.Title == other.Title));
-        }
+            return ReferenceEquals(this, other)
+                || (other is not null
+                    && this.Title == other.Title
+                    && this.Publishers.Equals(other.Publishers)
+                    && this.Year == other.Year
+                    && StringComparer.OrdinalIgnoreCase.Equals(this.Edition, other.Edition));
+            }
 
         /// <inheritdoc/>
         public override bool Equals(object? obj) => this.Equals(obj as Book);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => HashCode.Combine(this.Manuscripts, this.ISBN, this.BookType);
+        public override int GetHashCode() => HashCode.Combine(this.Title, this.Manuscripts, this.Publishers, this.Edition);
 
         /// <inheritdoc cref="object.ToString()"/>
         public override string ToString()
@@ -277,6 +281,23 @@ namespace Domain
 
             return editor is not null
                 && editor.Books.Remove(this);
+        }
+
+        /// <summary>
+        /// Меняет тип издания.
+        /// </summary>
+        /// <param name="bookType"> Тип издания. </param>
+        /// <returns> Если изменили, то <see langword="true"/>, иначе - <see langword="false"/>.</returns>
+        public bool ChangeBookType(BookType bookType)
+        {
+            if (bookType is null)
+            {
+                return false;
+            }
+
+            var result = this.BookType.Books.Remove(this);
+            this.BookType = bookType;
+            return result && bookType.Books.Add(this);
         }
     }
 }
