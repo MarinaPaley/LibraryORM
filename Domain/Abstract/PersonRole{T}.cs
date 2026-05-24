@@ -5,7 +5,6 @@
 namespace Domain.Abstract
 {
     using System;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Базовый класс для ролей персоны (автор, редактор, переводчик, рецензент).
