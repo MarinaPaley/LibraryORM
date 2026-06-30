@@ -12,6 +12,6 @@ namespace WebAPI.Mapping.Models.Abstract
         /// <summary>
         /// Получает или задает оригинальное имя.
         /// </summary>
-        string OriginName { get; set; }
+        string? OriginName { get; set; }
     }
 }

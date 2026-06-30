@@ -40,6 +40,8 @@ namespace WebAPI
                     .LogTo(Console.WriteLine, LogLevel.Error));
 
             builder.Services.AddScoped<ShelfRepository>();
+            builder.Services.AddScoped<CityRepository>();
+            builder.Services.AddScoped<StreetRepository>();
 
             builder.Services.AddControllers();
 

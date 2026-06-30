@@ -15,7 +15,7 @@ namespace Repository
     /// <summary>
     /// Репозиторий для класса <see cref="City"/>.
     /// </summary>
-    public sealed class CityRepository : BaseRepository<City>
+    public sealed class CityRepository : BaseRepository<City>, ICityRepository
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="CityRepository"/>.
@@ -29,34 +29,22 @@ namespace Repository
         {
         }
 
-        /// <summary>
-        /// Получает список городов, в которых есть указанная улица.
-        /// </summary>
-        /// <param name="street"> Название улицы.</param>
-        /// <returns> Список городов.</returns>
-        public IEnumerable<City> GetCities(string street)
+        /// <inheritdoc/>
+        public async Task<IEnumerable<City>> GetCities(string street)
         {
             return this.GetAll()
                 .Where(city => city.Streets
                     .Any(s => s.Name.Value.Contains(street)));
         }
 
-        /// <summary>
-        /// Получает идентификатор города.
-        /// </summary>
-        /// <param name="cityName"> Город. </param>
-        /// <returns> Идентификатор города. </returns>
+        /// <inheritdoc/>
         public async Task<Guid?> GetIdAsync(string cityName)
         {
             return (await this.GetAll()
                 .FirstOrDefaultAsync(city => city.Name.Value == cityName))?.Id;
         }
 
-        /// <summary>
-        /// Получает название города.
-        /// </summary>
-        /// <param name="id"> Идентификатор города. </param>
-        /// <returns> Название города. </returns>
+        /// <inheritdoc/>
         public async Task<string?> GetCityAsync(Guid id)
         {
             return (await this.GetAll()
@@ -65,11 +53,7 @@ namespace Repository
                 .Value;
         }
 
-        /// <summary>
-        /// Получает список улиц указанного города.
-        /// </summary>
-        /// <param name="id"> Идентификатор города. </param>
-        /// <returns> Список улиц. </returns>
+        /// <inheritdoc/>
         public async Task<IEnumerable<Street>?> GetStreetsAsync(Guid id)
         {
             return (await this.GetAll()

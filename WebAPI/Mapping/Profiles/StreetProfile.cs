@@ -14,5 +14,13 @@ namespace WebAPI.Mapping.Profiles
     /// </summary>
     public sealed class StreetProfile : NamedProfile<Street, StreetCreateModel, StreetUpdateModel, StreetOutMode>
     {
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="StreetProfile"/>.
+        /// </summary>
+        public StreetProfile()
+        {
+            this.CreateMap.ForMember(d => d.City, ops => ops.MapFrom(s => s.Name));
+            this.UpdateMap.ForMember(d => d.City, ops => ops.MapFrom(s => s.Name));
+        }
     }
 }

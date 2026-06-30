@@ -5,6 +5,7 @@
 namespace Repository.Tests
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Domain;
     using NUnit.Framework;
 
@@ -48,7 +49,7 @@ namespace Repository.Tests
         }
 
         [Test]
-        public void GetCities_ValidData_Success()
+        public async Task GetCities_ValidData_Success()
         {
             // arrange
             var name = "Улица";
@@ -58,11 +59,11 @@ namespace Repository.Tests
 
             _ = this.DataContext.Add(city);
             _ = this.DataContext.Add(street);
-            _ = this.DataContext.SaveChanges();
+            _ = this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = this.Repository.GetCities(name);
+            var result = await this.Repository.GetCities(name);
 
             // assert
             Assert.That(result, Is.EqualTo(cities));

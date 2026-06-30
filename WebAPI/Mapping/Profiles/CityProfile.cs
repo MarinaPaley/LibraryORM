@@ -14,10 +14,15 @@ namespace WebAPI.Mapping.Profiles
     /// </summary>
     public sealed class CityProfile : NamedProfile<City, CityCreateModel, CityUpdateModel, CityOutModel>
     {
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="CityProfile"/>.
+        /// </summary>
         public CityProfile()
             : base()
         {
-            this.CreateMap<
+            this.CreateMap.ForMember(d => d.Streets, opt => opt.Ignore());
+            this.UpdateMap.ForMember(d => d.Streets, opt => opt.Ignore());
+            this.OutputMap.ForSourceMember(s => s.Streets, opt => opt.DoNotValidate());
         }
     }
 }

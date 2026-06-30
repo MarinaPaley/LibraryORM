@@ -9,14 +9,12 @@ namespace Repository
     using System.Threading.Tasks;
     using DataAccessLayer;
     using Domain;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Query;
     using Repository.Abstract;
 
     /// <summary>
-    /// Репозиторий для класса <see cref="Domain.Shelf"/>.
+    /// Репозиторий для класса <see cref="Shelf"/>.
     /// </summary>
-    public sealed class ShelfRepository : BaseRepository<Shelf>
+    public sealed class ShelfRepository : BaseRepository<Shelf>, IShelfRepository
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="ShelfRepository"/>.
@@ -30,38 +28,30 @@ namespace Repository
         {
         }
 
-        /// <summary>
-        /// Показать количество книг, стоящих на данной полке.
-        /// </summary>
-        /// <param name="id">Идентификатор полки.</param>
-        /// <returns> Количество книг.</returns>
-        public async Task<int?> GetBooksCountAsync(Guid id)
+        /// <inheritdoc/>
+        public async Task<int?> GetCountBooksAsync(Guid id)
         {
-            return (await this.GetAsync(id))?.Items.Count;
-        }
-
-        /// <summary>
-        /// Показать количество книг, стоящих на полке.
-        /// </summary>
-        /// <param name="name"> Название полки.</param>
-        /// <returns> Количество книг.</returns>
-        public async Task<int?> GetCountBooksAsync(string name)
-        {
-            return (await this.GetAll()
-                .FirstOrDefaultAsync(shelf => shelf.Name.Value == name))
+            return (await this.GetAsync(id))
                 ?.Items
                 .Count;
         }
 
-        /// <summary>
-        /// Найти идентификатор по имени.
-        /// </summary>
-        /// <param name="name"> Название полки.</param>
-        /// <returns> Идентификатор.</returns>
+        /// <inheritdoc/>
+        public async Task<int?> GetCountBooksAsync(string name)
+        {
+            var id = await this.GetIdByName(name);
+
+            return id.HasValue
+                ? await this.GetCountBooksAsync(id.Value)
+                : null;
+        }
+
+        /// <inheritdoc/>
         public async Task<Guid?> GetIdByName(string name)
         {
-            return (await this.FindAsync(shelf => shelf.Name.Value == name))
-                ?.Id;
+            var result = await this.FindAsync(shelf => shelf.Name == new Title(name));
+
+            return result?.Id;
         }
 
         /// <inheritdoc/>

@@ -16,7 +16,7 @@ namespace Repository
     /// <summary>
     /// Репозиторий для класса <see cref="Domain.Author"/>.
     /// </summary>
-    public sealed class AuthorRepository : BaseRepository<Author>
+    public sealed class AuthorRepository : BaseRepository<Author>, IAuthorRepository
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="AuthorRepository"/>.
@@ -30,32 +30,20 @@ namespace Repository
         {
         }
 
-        /// <summary>
-        /// Найти идентификатор автора по его фамилии.
-        /// </summary>
-        /// <param name="familyName"> Фамилия автора.</param>
-        /// <returns> Идентификатор.</returns>
+        /// <inheritdoc/>
         public async Task<Guid?> GetIdByNameAsync(string familyName)
         {
             return (await this.FindAsync(author => author.Person.FullName.FamilyName == familyName))?.Id;
         }
 
-        /// <summary>
-        /// Получить список книг автора по идентификатору.
-        /// </summary>
-        /// <param name="id"> Идентификатор автора.</param>
-        /// <returns> Книги автора.</returns>
+        /// <inheritdoc/>
         public async Task<ISet<Manuscript>> GetBooksByAuthorId(Guid id)
         {
             return (await this.GetAsync(id))?.Manuscripts
                 ?? new HashSet<Manuscript>();
         }
 
-        /// <summary>
-        /// Показать соавторов указанного автора.
-        /// </summary>
-        /// <param name="id"> Идентификатор автора.</param>
-        /// <returns> Соавторов данного автора.</returns>
+        /// <inheritdoc/>
         public async Task<ISet<Author>> GetCoAuthorsAsync(Guid id)
         {
             return await this.GetAll()

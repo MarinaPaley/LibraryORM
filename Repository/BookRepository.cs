@@ -15,7 +15,7 @@ namespace Repository
     /// <summary>
     /// Репозиторий для класса <see cref="Book"/>.
     /// </summary>
-    public sealed class BookRepository : BaseRepository<Book>
+    public sealed class BookRepository : BaseRepository<Book>, IBookRepository
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="BookRepository"/>.
@@ -29,47 +29,29 @@ namespace Repository
         {
         }
 
-        /// <summary>
-        /// Найти название книги по идентификатору.
-        /// </summary>
-        /// <param name="id"> Идентификатор.</param>
-        /// <returns> Название книги.</returns>
+        /// <inheritdoc/>
         public async Task<string?> GetTitleAsync(Guid id)
         {
             return (await this.FindAsync(book => book.Id == id))?.Title;
         }
 
-        /// <summary>
-        /// Получает идентификатор по названию книги.
-        /// </summary>
-        /// <param name="title"> Название книги. </param>
-        /// <returns> Идентификатор. </returns>
+        /// <inheritdoc/>
         public async Task<Guid?> GetIdAsync(string title)
             => (await this.FindAsync(book => book.Title == title))?.Id;
 
-        /// <summary>
-        /// Получает полку, на которой стоит книга (по названию книги).
-        /// </summary>
-        /// <param name="title"> Название книги.</param>
-        /// <returns> Полка.</returns>
+        /// <inheritdoc/>
         public Task<List<Shelf>> GetShelfAsync(string title)
         {
-            var x =
+            return
              this.GetAll()
-            .Where(book => book.Title == title);
-            var y = x
-            .SelectMany(book => book.Items);
-            return y
-            .Select(item => item.Shelf)
-            .OfType<Shelf>()
-            .ToListAsync();
+                .Where(book => book.Title == title)
+                    .SelectMany(book => book.Items)
+                        .Select(item => item.Shelf)
+                        .OfType<Shelf>()
+                .ToListAsync();
         }
 
-        /// <summary>
-        /// Показать полки, на которых есть книги с указанной рукописью.
-        /// </summary>
-        /// <param name="title"> Название рукописи. </param>
-        /// <returns> Полки. </returns>
+        /// <inheritdoc/>
         public Task<List<Shelf>> GetShelvesByManucriptNameAsync(string title)
         {
             return this.GetAll()

@@ -6,6 +6,7 @@ namespace Repository
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using DataAccessLayer;
     using Domain;
     using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,7 @@ namespace Repository
     /// <summary>
     /// Репозиторий для класса <see cref="Street"/>.
     /// </summary>
-    public sealed class StreetRepository : BaseRepository<Street>
+    public sealed class StreetRepository : BaseRepository<Street>, IStreetRepository
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="StreetRepository"/>.
@@ -28,18 +29,14 @@ namespace Repository
         {
         }
 
-        /// <summary>
-        /// Показать список городов, имеющая указанную улицу.
-        /// </summary>
-        /// <param name="street"> Улица.</param>
-        /// <returns> Список городов, в которых имеется указанная улица. </returns>
-        public IEnumerable<City> GetCities(string street)
+        /// <inheritdoc/>
+        public async Task<IEnumerable<City>> GetCities(string streetName)
         {
-            return this.DataContext.Streets
-                .Where(s => s.Name.Value.Contains(street))
-                .Select(s => s.City)
+            return await this.GetAll()
+                .Where(street => street.Name.Value.Contains(streetName))
+                .Select(street => street.City)
                 .Distinct()
-                .ToList();
+                .ToListAsync();
         }
 
         /// <inheritdoc/>

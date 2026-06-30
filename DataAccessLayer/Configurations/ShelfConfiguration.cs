@@ -6,6 +6,7 @@ namespace DataAccessLayer.Configurations
 {
     using Domain;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     /// <summary>
@@ -18,13 +19,17 @@ namespace DataAccessLayer.Configurations
         {
             _ = builder.HasKey(shelf => shelf.Id);
 
-            _ = builder.Property(shelf => shelf.Name)
+            builder.Property(shelf => shelf.Name)
                 .IsRequired()
                 .HasConversion(
-                    v => v.Value,
-                    v => new Title(v))
-                .HasComment("Название полки");
-
+                    title => title.Value,
+                    value => new Title(value))
+                .HasComment("Название полки")
+                .Metadata.SetValueComparer(
+                    new ValueComparer<Title>(
+                        (lha, rha) => lha.Equals(rha),     // Твой Equals
+                        title => title.GetHashCode(),      // Твой GetHashCode
+                        title => new Title(title.Value))); // Метод клонирования (Snapshot)
 
             // 🔗 Один-ко-многим: полки в шкафу
             _ = builder.HasOne(shelf => shelf.Cabinet)
