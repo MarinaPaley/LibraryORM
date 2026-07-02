@@ -5,22 +5,18 @@
 namespace WebAPI.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Domain;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Repository;
+    using WebAPI.Controllers.Abstract;
 
     /// <summary>
     /// Контроллер для Городов.
     /// </summary>
     [Route("api/cities")]
     [ApiController]
-    public class CityController : ControllerBase
+    public class CityController : BaseController<CityRepository, City>
     {
-        private readonly CityRepository repository;
-
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="CityController"/>.
         /// </summary>
@@ -29,21 +25,8 @@ namespace WebAPI.Controllers
         /// В случае если <paramref name="repository"/> – <see langword="null"/>.
         /// </exception>
         public CityController(CityRepository repository)
+            : base(repository)
         {
-            this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        }
-
-        /// <summary>
-        /// Показывает все города.
-        /// </summary>
-        /// <returns> Результат выполнения запроса. </returns>
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<City>))]
-        public IActionResult Index()
-        {
-            var result = this.repository.Filter().ToList();
-
-            return this.Ok(result);
         }
     }
 }

@@ -5,22 +5,18 @@
 namespace WebAPI.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Domain;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Repository;
+    using WebAPI.Controllers.Abstract;
 
     /// <summary>
     /// Контроллер для Полок.
     /// </summary>
     [Route("api/shelves")]
     [ApiController]
-    public class ShelfController : ControllerBase
+    public class ShelfController : BaseController<ShelfRepository, Shelf>
     {
-        private readonly ShelfRepository repository;
-
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="ShelfController"/>.
         /// </summary>
@@ -29,21 +25,8 @@ namespace WebAPI.Controllers
         /// В случае если <paramref name="repository"/> – <see langword="null"/>.
         /// </exception>
         public ShelfController(ShelfRepository repository)
+            : base(repository)
         {
-            this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        }
-
-        /// <summary>
-        /// Показывает все полки.
-        /// </summary>
-        /// <returns> Результат выполнения запроса. </returns>
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Shelf>))]
-        public IActionResult Index()
-        {
-            var result = this.repository.Filter().ToList();
-
-            return this.Ok(result);
         }
     }
 }
