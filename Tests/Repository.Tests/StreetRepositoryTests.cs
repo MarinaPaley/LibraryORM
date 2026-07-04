@@ -29,21 +29,21 @@ namespace Repository.Tests
         }
 
         [Test]
-        public void Delete_ValidData_Success()
+        public async Task Delete_ValidData_Success()
         {
             // arrange
             var city = new City("Город");
             var street = new Street("Улица", city);
 
-            this.DataContext.Add(city);
-            this.DataContext.Add(street);
-            this.DataContext.SaveChanges();
+            _ = await this.DataContext.AddAsync(city);
+            _ = await this.DataContext.AddAsync(street);
+            _ = await this.DataContext.SaveChangesAsync();
 
             // act
             _ = this.Repository.DeleteAsync(street);
 
             // assert
-            var result = this.DataContext.Find<Street>(street.Id);
+            var result = await this.DataContext.FindAsync<Street>(street.Id);
 
             Assert.That(result, Is.Null);
         }
@@ -57,9 +57,9 @@ namespace Repository.Tests
             var cities = new List<City> { city };
             var street = new Street("Улица", city);
 
-            _ = this.DataContext.Add(city);
-            _ = this.DataContext.Add(street);
-            _ = this.DataContext.SaveChangesAsync();
+            _ = await this.DataContext.AddAsync(city);
+            _ = await this.DataContext.AddAsync(street);
+            _ = await this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act

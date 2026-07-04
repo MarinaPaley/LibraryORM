@@ -29,7 +29,7 @@ namespace Repository.Tests
         }
 
         [Test]
-        public void Create_ValidData_Success()
+        public async Task Create_ValidData_Success()
         {
             // arrange
             var name = new Name("Толстой", "Лев");
@@ -37,49 +37,51 @@ namespace Repository.Tests
             var author = new Author(person);
 
             // act
-            _ = this.Repository.CreateAsync(author);
+            _ = await this.Repository.CreateAsync(author);
 
             // assert
-            var result = this.DataContext.Find<Author>(author.Id);
+            var result = await this.DataContext.FindAsync<Author>(author.Id);
 
             Assert.That(result, Is.EqualTo(author));
         }
 
         [Test]
-        public void Update_ValidData_Success()
+        public async Task Update_ValidData_Success()
         {
             // arrange
             var name = new Name("Толстой", "Лев");
             var person = new Person(name);
             var author = new Author(person);
-            _ = this.DataContext.Add(author);
-            _ = this.DataContext.SaveChanges();
+
+            _ = await this.DataContext.AddAsync(author);
+            _ = await this.DataContext.SaveChangesAsync();
 
             // act
             author.Person.DateBirth = new DateOnly(1828, 09, 28);
-            _ = this.Repository.UpdateAsync(author);
+            _ = await this.Repository.UpdateAsync(author);
 
             // assert
-            var result = this.DataContext.Find<Author>(author.Id)?.Person.DateBirth;
+            var result = (await this.DataContext.FindAsync<Author>(author.Id))?.Person.DateBirth;
 
             Assert.That(result, Is.EqualTo(author.Person.DateBirth));
         }
 
         [Test]
-        public void Delete_ValidData_Success()
+        public async Task Delete_ValidData_Success()
         {
             // arrange
             var name = new Name("Толстой", "Лев");
             var person = new Person(name);
             var author = new Author(person);
-            _ = this.DataContext.Add(author);
-            _ = this.DataContext.SaveChanges();
+
+            _ = await this.DataContext.AddAsync(author);
+            _ = await this.DataContext.SaveChangesAsync();
 
             // act
-            _ = this.Repository.DeleteAsync(author);
+            _ = await this.Repository.DeleteAsync(author);
 
             // assert
-            var result = this.DataContext.Find<Author>(author.Id);
+            var result = await this.DataContext.FindAsync<Author>(author.Id);
 
             Assert.That(result, Is.Null);
         }
@@ -98,7 +100,9 @@ namespace Repository.Tests
             };
 
             await this.DataContext.AddRangeAsync(authors);
-            _ = this.DataContext.SaveChangesAsync();
+
+            _ = await this.DataContext.SaveChangesAsync();
+
             this.DataContext.ChangeTracker.Clear();
 
             // act

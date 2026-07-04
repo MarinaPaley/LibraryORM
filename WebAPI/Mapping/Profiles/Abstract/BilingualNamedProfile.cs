@@ -1,4 +1,4 @@
-﻿// <copyright file="DictionaryEntityProfile{TEntity,TCreateModel,TUpdateModel,TOutModel}.cs" company="Филипченко Марина Алексеевна">
+﻿// <copyright file="BilingualNamedProfile.cs" company="Филипченко Марина Алексеевна">
 // Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 

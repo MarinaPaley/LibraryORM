@@ -16,15 +16,26 @@ namespace Repository.Tests
     internal sealed class ShelfRepositoryTests
         : BaseReposytoryTests<ShelfRepository, Shelf>
     {
+        #region Тестовые данные
+
         private static readonly Person Person = new ("Толстой", "Лев", birthYear: 1828, deathYear: 1910);
+
         private static readonly Author Author = new (Person);
+
         private static readonly ISet<Author> Authors = new HashSet<Author>() { Author };
+
         private static readonly Language Language = new ("Русский");
+
         private static readonly ISet<Language> Languages = new HashSet<Language>() { Language };
+
         private static readonly Publisher Publisher = new ("Издательство");
+
         private static readonly BookType BookType = new ("Книга");
+
         private static readonly Manuscript Manuscript1 = new ("Война и мир", Languages, Authors);
+
         private static readonly Manuscript Manuscript2 = new ("Анна Каренина", Languages, Authors);
+
         private static readonly Book Book1 = new (
                 "Война и мир",
                 1000,
@@ -43,6 +54,8 @@ namespace Repository.Tests
             2024,
             new HashSet<Manuscript>() { Manuscript2 });
 
+        #endregion
+
         [SetUp]
         public void SetUp()
         {
@@ -52,23 +65,24 @@ namespace Repository.Tests
         [TearDown]
         public void TearDown()
         {
+            this.DataContext.ChangeTracker.Clear();
             _ = this.DataContext.Database.EnsureDeleted();
         }
 
         [Test]
-        public void Create_ValidData_Success()
+        public async Task Create_ValidData_Success()
         {
             // arrange
             var shelf = new Shelf("Тестовая");
 
             // act
-            _ = this.Repository.CreateAsync(shelf);
+            _ = await this.Repository.CreateAsync(shelf);
 
             // arrange
-            var result = this.DataContext.Find<Shelf>(shelf.Id);
+            var result = await this.DataContext.FindAsync<Shelf>(shelf.Id);
 
             Assert.That(result, Is.Not.Null);
-            Assert.That(result!.Name, Is.EqualTo(shelf.Name));
+            Assert.That(result.Name, Is.EqualTo(shelf.Name));
         }
 
         [Test]
@@ -77,15 +91,15 @@ namespace Repository.Tests
             // arrange
             var shelf = new Shelf("Тестовая");
 
-            this.DataContext.Add(shelf);
-            _ = this.DataContext.SaveChangesAsync();
+            _ = await this.DataContext.AddAsync(shelf);
+            _ = await this.DataContext.SaveChangesAsync();
 
             // act
             var result = await this.Repository.GetAsync(shelf.Id);
 
             // assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result!.Name, Is.EqualTo(shelf.Name));
+            Assert.That(result.Name, Is.EqualTo(shelf.Name));
         }
 
         [Test]
@@ -96,8 +110,8 @@ namespace Repository.Tests
 
             var shelf = new Shelf("Тестовая");
 
-            this.DataContext.Add(shelf);
-            _ = this.DataContext.SaveChangesAsync();
+            _ = await this.DataContext.AddAsync(shelf);
+            _ = await this.DataContext.SaveChangesAsync();
 
             // act
             shelf.Name = new Title(newName);
@@ -105,23 +119,23 @@ namespace Repository.Tests
 
             // assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result!.Name.Value, Is.EqualTo(newName));
+            Assert.That(result.Name.Value, Is.EqualTo(newName));
         }
 
         [Test]
-        public void Delete_ValidData_Success()
+        public async Task Delete_ValidData_Success()
         {
             // arrange
             var shelf = new Shelf("Тестовая");
 
-            this.DataContext.Add(shelf);
-            this.DataContext.SaveChanges();
+            _ = await this.DataContext.AddAsync(shelf);
+            _ = await this.DataContext.SaveChangesAsync();
 
             // act
-            _ = this.Repository.DeleteAsync(shelf);
+            _ = await this.Repository.DeleteAsync(shelf);
 
             // assert
-            var result = this.DataContext.Find<Shelf>(shelf.Id);
+            var result = await this.DataContext.FindAsync<Shelf>(shelf.Id);
 
             Assert.That(result, Is.Null);
         }
@@ -138,8 +152,8 @@ namespace Repository.Tests
             shelf.AddBook(item1);
             shelf.AddBook(item2);
 
-            this.DataContext.Add(shelf);
-            _ = this.DataContext.SaveChangesAsync();
+            _ = await this.DataContext.AddAsync(shelf);
+            _ = await this.DataContext.SaveChangesAsync();
 
             // act
             var result = await this.Repository.GetCountBooksAsync(shelf.Id);
@@ -185,12 +199,14 @@ namespace Repository.Tests
             _ = await this.DataContext.AddAsync(shelf);
             _ = await this.DataContext.SaveChangesAsync();
 
+            this.DataContext.ChangeTracker.Clear();
+
             // act
             var result = await this.Repository.GetIdByName("Тестовая");
 
             // assert
             Assert.That(result, Is.Not.Null);
-            Assert.AreEqual(shelf.Id, result.Value);
+            Assert.That(result.Value, Is.EqualTo(shelf.Id));
         }
     }
 }

@@ -17,13 +17,9 @@ namespace Repository.Tests
     internal sealed class BookRepositoryTests
         : BaseReposytoryTests<BookRepository, Book>
     {
-        private BookRepository repository = null!;
-
         [SetUp]
         public void SetUp()
         {
-            this.repository = new BookRepository(this.DataContext);
-            _ = this.DataContext.Database.EnsureDeleted();
             _ = this.DataContext.Database.EnsureCreated();
         }
 
@@ -49,7 +45,7 @@ namespace Repository.Tests
                 new HashSet<Manuscript>());
 
             // act
-            var result = await this.repository.CreateAsync(book);
+            var result = await this.Repository.CreateAsync(book);
 
             // assert
             Assert.That(result, Is.Not.Null);
@@ -74,15 +70,16 @@ namespace Repository.Tests
                 2024,
                 new HashSet<Manuscript>());
 
-            _ = await this.repository.CreateAsync(book);
+            _ = await this.Repository.CreateAsync(book);
+
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var loaded = await this.repository.GetAsync(book.Id);
+            var loaded = await this.Repository.GetAsync(book.Id);
             var editorPerson = new Person(new Name("Редактор", "Тестовый"));
             var editor = new Editor(editorPerson);
             loaded!.AddEditor(editor);
-            var result = await this.repository.UpdateAsync(loaded);
+            var result = await this.Repository.UpdateAsync(loaded);
 
             // assert
             Assert.That(result.Editor, Is.Not.Null);
@@ -103,17 +100,18 @@ namespace Repository.Tests
                 2024,
                 new HashSet<Manuscript>());
 
-            _ = await this.repository.CreateAsync(book);
+            _ = await this.Repository.CreateAsync(book);
+
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = await this.repository.DeleteAsync(book);
+            var result = await this.Repository.DeleteAsync(book);
 
             // assert
             using (Assert.EnterMultipleScope())
             {
                 Assert.That(result, Is.True);
-                Assert.That(await this.repository.GetAsync(book.Id), Is.Null);
+                Assert.That(await this.Repository.GetAsync(book.Id), Is.Null);
             }
         }
 
@@ -140,7 +138,7 @@ namespace Repository.Tests
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = await this.repository.GetShelfAsync(book.Title!);
+            var result = await this.Repository.GetShelfAsync(book.Title!);
 
             // assert
             Assert.That(result, Is.EquivalentTo(expected));
@@ -166,7 +164,7 @@ namespace Repository.Tests
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = await this.repository.GetIdAsync(title);
+            var result = await this.Repository.GetIdAsync(title);
 
             // assert
             Assert.That(result, Is.EqualTo(book.Id));
@@ -192,7 +190,7 @@ namespace Repository.Tests
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = await this.repository.GetTitleAsync(book.Id);
+            var result = await this.Repository.GetTitleAsync(book.Id);
 
             // assert
             Assert.That(result, Is.EqualTo(title));
@@ -206,7 +204,7 @@ namespace Repository.Tests
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var actual = await this.repository.GetShelvesByManucriptNameAsync(toFind);
+            var actual = await this.Repository.GetShelvesByManucriptNameAsync(toFind);
 
             // assert
             Assert.That(actual, Is.EquivalentTo(expected));

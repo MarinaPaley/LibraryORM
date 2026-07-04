@@ -12,6 +12,8 @@ namespace WebAPI
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using Repository;
+    using Repository.Extensions;
+    using WebAPI.Extentions;
 
     /// <summary>
     /// Программа.
@@ -39,10 +41,8 @@ namespace WebAPI
                     .EnableSensitiveDataLogging()
                     .LogTo(Console.WriteLine, LogLevel.Error));
 
-            builder.Services.AddScoped<ShelfRepository>();
-            builder.Services.AddScoped<CityRepository>();
-            builder.Services.AddScoped<StreetRepository>();
-
+            builder.Services.AddAutoMapper();
+            builder.Services.AddServices();
             builder.Services.AddControllers();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -4,12 +4,9 @@
 
 namespace DataAccessLayer
 {
-    using Domain;
-    using Domain.Abstract;
-    using Microsoft.EntityFrameworkCore;
-    using System;
-    using System.Linq;
     using System.Reflection;
+    using Domain;
+    using Microsoft.EntityFrameworkCore;
 
     /// <summary>
     /// Контекст доступа к данным.

@@ -10,15 +10,15 @@ namespace Repository.Tests
     using Domain;
     using NUnit.Framework;
 
-    internal sealed class ManuscriptRepositoryTests : BaseReposytoryTests<ManuscriptRepository, Manuscript>
+    /// <summary>
+    /// Модульные тесты для <see cref="ManuscriptRepository"/>.
+    /// </summary>
+    internal sealed class ManuscriptRepositoryTests
+        : BaseReposytoryTests<ManuscriptRepository, Manuscript>
     {
-        private ManuscriptRepository repository = null!;
-
         [SetUp]
         public void SetUp()
         {
-            this.repository = new ManuscriptRepository(this.DataContext);
-            _ = this.DataContext.Database.EnsureDeleted();
             _ = this.DataContext.Database.EnsureCreated();
         }
 
@@ -42,10 +42,11 @@ namespace Repository.Tests
 
             _ = await this.DataContext.AddAsync(manuscript);
             _ = await this.DataContext.SaveChangesAsync();
+
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = await this.repository.GetAuthorsAsync(manuscript.Id);
+            var result = await this.Repository.GetAuthorsAsync(manuscript.Id);
 
             // assert
             Assert.That(result, Is.Not.Null);
@@ -73,7 +74,7 @@ namespace Repository.Tests
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = await this.repository.GetAuthorsAsync(manuscript.Id);
+            var result = await this.Repository.GetAuthorsAsync(manuscript.Id);
 
             // assert
             Assert.That(result, Is.Not.Null);
@@ -120,7 +121,7 @@ namespace Repository.Tests
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = await this.repository.GetAllBooksCoAuthors(articleManuscript.Id);
+            var result = await this.Repository.GetAllBooksCoAuthors(articleManuscript.Id);
 
             // assert
             Assert.That(result, Is.Not.Null);

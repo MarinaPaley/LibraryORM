@@ -48,6 +48,27 @@ namespace Repository.Abstract
         }
 
         /// <inheritdoc/>
+        public async Task<bool> DeleteAsync(Guid id, bool saveNow = true)
+        {
+            try
+            {
+                var existing = await this.FindAsync(e => e.Id == id);
+                if (existing is null)
+                {
+                    return false;
+                }
+
+                _ = this.DataContext.Remove(existing);
+                return await this.SaveAsync(saveNow) != 0;
+            }
+            catch
+            {
+                // @TODO: Что-то залогировать через логгер (добавить!).
+                return false;
+            }
+        }
+
+        /// <inheritdoc/>
         public async Task<bool> DeleteAsync(TEntity entity, bool saveNow = true)
         {
             try

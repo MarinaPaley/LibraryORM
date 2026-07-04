@@ -341,7 +341,9 @@ namespace Domain.Tests
             var manuscript = CreateMinimalManuscript();
 
             // act & assert
-            Assert.That(manuscript.GetHashCode(), Is.EqualTo(expected: manuscript.GetHashCode()));
+            Assert.That(
+                manuscript.GetHashCode(),
+                Is.EqualTo(expected: manuscript.GetHashCode()));
         }
 
         [Test]
@@ -489,7 +491,7 @@ namespace Domain.Tests
                 new HashSet<Author> { CreateAuthor("Автор", "Тестовый") });
         }
 
-        private static HashSet<Language> CreateLanguage(string name = "Русский") => new HashSet<Language>() { new(name) };
+        private static HashSet<Language> CreateLanguage(string name = "Русский") => new HashSet<Language>() { new (name) };
 
         private static Person CreatePerson(string family, string given, string? patronymic = null) =>
             new (new Name(family, given, patronymic));

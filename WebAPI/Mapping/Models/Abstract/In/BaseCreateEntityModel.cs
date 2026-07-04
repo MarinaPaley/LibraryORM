@@ -1,4 +1,4 @@
-﻿// <copyright file="EntityModelModel.cs" company="Филипченко Марина Алексеевна">
+﻿// <copyright file="BaseCreateEntityModel.cs" company="Филипченко Марина Алексеевна">
 // Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 

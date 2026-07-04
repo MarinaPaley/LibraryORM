@@ -542,7 +542,7 @@ namespace Domain.Tests
         {
             if (authors.Length != 0)
             {
-                return new(title, CreateLanguage(), new HashSet<Author>(authors));
+                return new (title, CreateLanguage(), new HashSet<Author>(authors));
             }
 
             return new Manuscript(title, CreateLanguage(), new HashSet<Author>() { CreateAuthor() });

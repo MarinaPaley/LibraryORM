@@ -54,10 +54,11 @@ namespace Repository.Tests
             _ = await this.DataContext.SaveChangesAsync();
 
             // act
-            _ = this.Repository.UpdateAsync(city);
-            var result = await this.DataContext.FindAsync<City>(city.Id);
+            _ = await this.Repository.UpdateAsync(city);
 
             // assert
+            var result = await this.DataContext.FindAsync<City>(city.Id);
+
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Streets.Count, Is.EqualTo(1));
             Assert.That(result.Streets.Contains(street), Is.True);
@@ -72,6 +73,7 @@ namespace Repository.Tests
 
             _ = await this.DataContext.AddAsync(street);
             _ = await this.DataContext.SaveChangesAsync();
+
             this.DataContext.ChangeTracker.Clear();
 
             // act
@@ -96,10 +98,11 @@ namespace Repository.Tests
 
             _ = await this.DataContext.AddAsync(city);
             _ = await this.DataContext.SaveChangesAsync();
+
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            _ = this.Repository.DeleteAsync(city);
+            _ = await this.Repository.DeleteAsync(city);
 
             // assert
             var result = await this.DataContext.FindAsync<City>(city.Id);
@@ -136,6 +139,7 @@ namespace Repository.Tests
 
             _ = await this.DataContext.AddAsync(city);
             _ = await this.DataContext.SaveChangesAsync();
+
             this.DataContext.ChangeTracker.Clear();
 
             // act
@@ -156,6 +160,7 @@ namespace Repository.Tests
 
             _ = await this.DataContext.AddAsync(city);
             _ = await this.DataContext.SaveChangesAsync();
+
             this.DataContext.ChangeTracker.Clear();
 
             // act

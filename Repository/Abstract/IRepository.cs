@@ -35,6 +35,14 @@ namespace Repository.Abstract
         /// <summary>
         /// Удаление сущности.
         /// </summary>
+        /// <param name="id"> Идентификатор удаляемой сущности. </param>
+        /// <param name="saveNow"> Надо ли сохранять сущность после изменения. </param>
+        /// <returns> <see langword="true"/>, если удалили, иначе - <see langword="false"/>.</returns>
+        Task<bool> DeleteAsync(Guid id, bool saveNow = true);
+
+        /// <summary>
+        /// Удаление сущности.
+        /// </summary>
         /// <param name="entity"> Сущность. </param>
         /// <param name="saveNow"> Надо ли сохранять сущность после изменения. </param>
         /// <returns> <see langword="true"/>, если удалили, иначе - <see langword="false"/>.</returns>
