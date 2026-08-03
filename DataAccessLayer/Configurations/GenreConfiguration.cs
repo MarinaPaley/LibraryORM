@@ -4,31 +4,20 @@
 
 namespace DataAccessLayer.Configurations
 {
+    using DataAccessLayer.Configurations.Abstractions;
     using Domain;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     /// <summary>
     /// Конфигурация правил отображения сущности (<see cref="Genre"/> в таблицах БД.
     /// </summary>
-    internal sealed class GenreConfiguration : IEntityTypeConfiguration<Genre>
+    internal sealed class GenreConfiguration : BaseNamedEntityConfiguration<Genre>
     {
-        /// <inheritdoc/>
-        public void Configure(EntityTypeBuilder<Genre> builder)
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="GenreConfiguration"/>.
+        /// </summary>
+        public GenreConfiguration()
+            : base(nameComment: "Жанр", nameIsUnique: true)
         {
-            _ = builder.HasKey(genre => genre.Id);
-
-            _ = builder.OwnsOne(genre => genre.Name, titleBuilder =>
-            {
-                titleBuilder.Property(t => t.Value)
-                    .HasColumnName("GenreName")
-                    .IsRequired()
-                    .HasComment("Жанр")
-                    .HasMaxLength(200);
-                titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-            });
-
-            _ = builder.ToTable("Genres");
         }
     }
 }

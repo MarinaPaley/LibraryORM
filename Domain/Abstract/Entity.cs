@@ -40,7 +40,11 @@ namespace Domain.Abstract
         }
 
         /// <inheritdoc/>
-        // @NOTE: В случае проблемы заменить на object.GetHashCode().
-        public override int GetHashCode() => this.Id.GetHashCode();
+        public override int GetHashCode()
+        {
+            // Используем хеш-код самого объекта в памяти, а не его mutable-свойств.
+            // Это гарантирует стабильность хеш-кода на протяжении всего жизненного цикла объекта.
+            return System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(this);
+        }
     }
 }

@@ -4,6 +4,7 @@
 
 namespace DataAccessLayer.Configurations
 {
+    using DataAccessLayer.Configurations.Abstractions;
     using Domain;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,12 +12,20 @@ namespace DataAccessLayer.Configurations
     /// <summary>
     /// Конфигурация правил отображения сущности (<see cref="Item"/>) в таблицу БД.
     /// </summary>
-    internal sealed class ItemConfiguration : IEntityTypeConfiguration<Item>
+    internal sealed class ItemConfiguration : BaseEntityConfiguration<Item>
     {
-        /// <inheritdoc/>
-        public void Configure(EntityTypeBuilder<Item> builder)
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="ItemConfiguration"/>.
+        /// </summary>
+        public ItemConfiguration()
+            : base(tableName: "Items", tableComment: "Экземпляры книг")
         {
-            _ = builder.HasKey(item => item.Id);
+        }
+
+        /// <inheritdoc/>
+        public override void Configure(EntityTypeBuilder<Item> builder)
+        {
+            base.Configure(builder);
 
             _ = builder.HasOne(item => item.Shelf)
                 .WithMany(shelf => shelf.Items)
@@ -27,8 +36,6 @@ namespace DataAccessLayer.Configurations
                 .WithMany(book => book.Items)
                 .OnDelete(DeleteBehavior.SetNull)
                 .IsRequired();
-
-            _ = builder.ToTable("Items");
         }
     }
 }

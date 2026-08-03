@@ -10,22 +10,24 @@ namespace Repository
     using DataAccessLayer;
     using Domain;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
     using Repository.Abstract;
 
     /// <summary>
     /// Репозиторий для класса <see cref="Book"/>.
     /// </summary>
-    public sealed class BookRepository : BaseRepository<Book>, IBookRepository
+    public sealed class BookRepository : BaseRepository<Book, BookRepository>, IBookRepository
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="BookRepository"/>.
         /// </summary>
         /// <param name="dataContext"> Контекст доступа к данным.</param>
+        /// <param name="logger"> Логгер. </param>
         /// <exception cref="ArgumentNullException">
-        /// В случае если <paramref name="dataContext"/> – <see langword="null"/>.
+        /// В случае если <paramref name="dataContext"/> или <paramref name="logger"/> – <see langword="null"/>.
         /// </exception>
-        public BookRepository(DataContext dataContext)
-            : base(dataContext)
+        public BookRepository(DataContext dataContext, ILogger<BookRepository> logger)
+            : base(dataContext, logger)
         {
         }
 
@@ -62,17 +64,21 @@ namespace Repository
                 .ToListAsync();
         }
 
-        /// <summary>
-        /// Получает все книги.
-        /// </summary>
-        /// <returns> Книги.</returns>
-        protected override IQueryable<Book> GetAll()
+        /// <inheritdoc/>
+        protected override IQueryable<Book> GetAll(bool track = false)
         {
-            return this.DataContext.Books
+            var result = this.DataContext.Books
                 .Include(book => book.Manuscripts)
-                    .ThenInclude(author => author.Books)
+                    .ThenInclude(manuscript => manuscript.Authors)
                 .Include(book => book.Items)
                     .ThenInclude(item => item.Shelf);
+
+            if (!track)
+            {
+                result.AsNoTracking();
+            }
+
+            return result;
         }
     }
 }

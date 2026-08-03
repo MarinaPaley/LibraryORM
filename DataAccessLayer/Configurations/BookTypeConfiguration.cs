@@ -4,31 +4,20 @@
 
 namespace DataAccessLayer.Configurations
 {
+    using DataAccessLayer.Configurations.Abstractions;
     using Domain;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     /// <summary>
     /// Конфигурация правил отображения сущности (<see cref="BookType"/> в таблицах БД.
     /// </summary>
-    internal sealed class BookTypeConfiguration : IEntityTypeConfiguration<BookType>
+    internal sealed class BookTypeConfiguration : BaseNamedEntityConfiguration<BookType>
     {
-        /// <inheritdoc/>
-        public void Configure(EntityTypeBuilder<BookType> builder)
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="BookTypeConfiguration"/>.
+        /// </summary>
+        public BookTypeConfiguration()
+            : base(nameComment: "Тип книги", nameIsUnique: true)
         {
-            _ = builder.HasKey(type => type.Id);
-
-            _ = builder.OwnsOne(type => type.Name, titleBuilder =>
-            {
-                titleBuilder.Property(t => t.Value)
-                    .HasColumnName("BookTypeName")
-                    .IsRequired()
-                    .HasComment("Тип книги")
-                    .HasMaxLength(200);
-                titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-            });
-
-            _ = builder.ToTable("BookTypes");
         }
     }
 }

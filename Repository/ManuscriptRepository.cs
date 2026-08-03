@@ -10,19 +10,24 @@ namespace Repository
     using DataAccessLayer;
     using Domain;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
     using Repository.Abstract;
 
     /// <summary>
     /// Репозиторий для класса <see cref="Manuscript"/>.
     /// </summary>
-    public sealed class ManuscriptRepository : BaseRepository<Manuscript>, IManuscriptRepository
+    public sealed class ManuscriptRepository : BaseRepository<Manuscript, ManuscriptRepository>, IManuscriptRepository
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="ManuscriptRepository"/>.
         /// </summary>
         /// <param name="dataContext"> Контекст доступа к БД.</param>
-        public ManuscriptRepository(DataContext dataContext)
-            : base(dataContext)
+        /// <param name="logger"> Логгер. </param>
+        /// <exception cref="ArgumentNullException">
+        /// В случае если <paramref name="dataContext"/> или <paramref name="logger"/> – <see langword="null"/>.
+        /// </exception>
+        public ManuscriptRepository(DataContext dataContext, ILogger<ManuscriptRepository> logger)
+            : base(dataContext, logger)
         {
         }
 
@@ -33,7 +38,7 @@ namespace Repository
         /// <returns> Список авторов.</returns>
         public async Task<ISet<Author>> GetAuthorsAsync(Guid id)
         {
-            var manuscript = await this.FindAsync(manuscript => manuscript.Id == id);
+            var manuscript = await this.FindAsync(manuscript => manuscript.Id == id, true);
 
             return manuscript?.Authors
                 ?? new HashSet<Author>();
@@ -60,15 +65,22 @@ namespace Repository
         }
 
         /// <inheritdoc/>
-        protected override IQueryable<Manuscript> GetAll()
+        protected override IQueryable<Manuscript> GetAll(bool track = false)
         {
-            return this.DataContext.Manuscripts
+            var result = this.DataContext.Manuscripts
                 .Include(m => m.Authors)
                     .ThenInclude(a => a.Person)
                 .Include(m => m.Translators)
                     .ThenInclude(t => t.Person)
                 .Include(m => m.Genres)
                 .Include(m => m.Books);
+
+            if (!track)
+            {
+                result.AsNoTracking();
+            }
+
+            return result;
         }
     }
 }

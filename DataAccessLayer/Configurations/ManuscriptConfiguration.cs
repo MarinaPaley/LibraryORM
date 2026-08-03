@@ -4,6 +4,7 @@
 
 namespace DataAccessLayer.Configurations
 {
+    using DataAccessLayer.Configurations.Abstractions;
     using Domain;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,50 +12,36 @@ namespace DataAccessLayer.Configurations
     /// <summary>
     /// Конфигурация правил отображения сущности <see cref="Manuscript"/> в таблицу БД.
     /// </summary>
-    internal sealed class ManuscriptConfiguration : IEntityTypeConfiguration<Manuscript>
+    internal sealed class ManuscriptConfiguration
+        : BaseBilingualNamedEntityConfiguration<Manuscript>
     {
-        /// <inheritdoc/>
-        public void Configure(EntityTypeBuilder<Manuscript> builder)
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="ManuscriptConfiguration"/>.
+        /// </summary>
+        public ManuscriptConfiguration()
+            : base(
+                tableName: "Manuscripts",
+                tableComment: "Рукописи произведений",
+                nameComment: "Название произведения",
+                originNameComment: "Оригинальное название произведения")
         {
-            // 🔑 Первичный ключ
-            _ = builder.HasKey(manuscript => manuscript.Id);
+        }
 
-            // 📝 Owned Type: Название (Title)
-            _ = builder.OwnsOne(manuscript => manuscript.Name, titleBuilder =>
-            {
-                titleBuilder.Property(t => t.Value)
-                    .HasColumnName("ManuscriptTitle")
-                    .IsRequired()
-                    .HasComment("Название произведения")
-                    .HasMaxLength(200);
-
-                // 🔑 Пишем напрямую в поле 'value', обходя валидацию при загрузке из БД
-                titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-            });
-
-            // 📝 Owned Type: Оригинальное название (OriginTitle)
-            _ = builder.OwnsOne(manuscript => manuscript.OriginName, titleBuilder =>
-            {
-                titleBuilder.Property(t => t.Value)
-                    .HasColumnName("ManuscriptOriginTitle")
-                    .IsRequired(false)
-                    .HasComment("Оригинальное название произведения")
-                    .HasMaxLength(200);
-
-                // 🔑 Пишем напрямую в поле 'value', обходя валидацию при загрузке из БД
-                titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-            });
+        /// <inheritdoc/>
+        public override void Configure(EntityTypeBuilder<Manuscript> builder)
+        {
+            base.Configure(builder);
 
             // 📅 Диапазон дат создания (Range<DateOnly>)
             // EF Core не умеет маппить Range<T> "из коробки", поэтому разбиваем на две колонки
             _ = builder.OwnsOne(manuscript => manuscript.Dates, dateRangeBuilder =>
             {
-                dateRangeBuilder.Property(r => r.From)
+                dateRangeBuilder.Property(range => range.From)
                     .HasColumnName("DateFrom")
                     .IsRequired()
                     .HasComment("Дата начала написания");
 
-                dateRangeBuilder.Property(r => r.To)
+                dateRangeBuilder.Property(range => range.To)
                     .HasColumnName("DateTo")
                     .IsRequired()
                     .HasComment("Дата окончания написания");
@@ -62,26 +49,15 @@ namespace DataAccessLayer.Configurations
 
             // 🌐 Язык
             _ = builder.HasMany(manuscript => manuscript.Languages)
-                .WithMany(l => l.Manuscripts);
-
-            // 🔗 Many-to-Many: Авторы
-            _ = builder.HasMany(m => m.Authors)
-                .WithMany(author => author.Manuscripts);
-
-            // 🔗 Many-to-Many: Переводчики
-            _ = builder.HasMany(m => m.Translators)
-                .WithMany(translator => translator.Manuscripts);
+                .WithMany(language => language.Manuscripts);
 
             // 🔗 Many-to-Many: Жанры
-            _ = builder.HasMany(m => m.Genres)
-                .WithMany(g => g.Manuscripts);
+            _ = builder.HasMany(manuscript => manuscript.Genres)
+                .WithMany(genre => genre.Manuscripts);
 
             // 🔗 Many-to-Many: Книги (где опубликована рукопись)
-            _ = builder.HasMany(m => m.Books)
-                .WithMany(b => b.Manuscripts);
-
-            // 🧹 Настройки таблицы
-            _ = builder.ToTable("Manuscripts", t => t.HasComment("Рукописи произведений"));
+            _ = builder.HasMany(manuscript => manuscript.Books)
+                .WithMany(book => book.Manuscripts);
         }
     }
 }

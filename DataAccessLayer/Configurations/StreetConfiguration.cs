@@ -4,6 +4,7 @@
 
 namespace DataAccessLayer.Configurations
 {
+    using DataAccessLayer.Configurations.Abstractions;
     using Domain;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,30 +12,25 @@ namespace DataAccessLayer.Configurations
     /// <summary>
     ///  Конфигурация правил отображения сущности (<see cref="Street"/> в таблице БД.
     /// </summary>
-    internal sealed class StreetConfiguration : IEntityTypeConfiguration<Street>
+    internal sealed class StreetConfiguration : BaseNamedEntityConfiguration<Street>
     {
-        /// <inheritdoc/>
-        public void Configure(EntityTypeBuilder<Street> builder)
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="StreetConfiguration"/>.
+        /// </summary>
+        public StreetConfiguration()
+            : base(tableName: "Streets", nameComment: "Назание улицы")
         {
-            _ = builder.HasKey(street => street.Id);
+        }
 
-            _ = builder.OwnsOne(street => street.Name, titleBuilder =>
-            {
-                titleBuilder.Property(t => t.Value)
-                    .HasColumnName("StreetName")
-                    .IsRequired()
-                    .HasComment("Название улицы")
-                    .HasMaxLength(200);
-
-                titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-            });
+        /// <inheritdoc/>
+        public override void Configure(EntityTypeBuilder<Street> builder)
+        {
+            base.Configure(builder);
 
             _ = builder.HasOne(street => street.City)
                 .WithMany(city => city.Streets)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
-
-            _ = builder.ToTable("Streets");
         }
     }
 }

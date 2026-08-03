@@ -10,22 +10,24 @@ namespace Repository
     using DataAccessLayer;
     using Domain;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
     using Repository.Abstract;
 
     /// <summary>
     /// Репозиторий для класса <see cref="City"/>.
     /// </summary>
-    public sealed class CityRepository : BaseRepository<City>, ICityRepository
+    public sealed class CityRepository : BaseRepository<City, CityRepository>, ICityRepository
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="CityRepository"/>.
         /// </summary>
         /// <param name="dataContext"> Контекст доступа к данным.</param>
+        /// <param name="logger"> Логгер. </param>
         /// <exception cref="ArgumentNullException">
-        /// В случае если <paramref name="dataContext"/> – <see langword="null"/>.
+        /// В случае если <paramref name="dataContext"/> или <paramref name="logger"/> – <see langword="null"/>.
         /// </exception>
-        public CityRepository(DataContext dataContext)
-            : base(dataContext)
+        public CityRepository(DataContext dataContext, ILogger<CityRepository> logger)
+            : base(dataContext, logger)
         {
         }
 
@@ -63,10 +65,17 @@ namespace Repository
         }
 
         /// <inheritdoc/>
-        protected override IQueryable<City> GetAll()
+        protected override IQueryable<City> GetAll(bool track = false)
         {
-            return this.DataContext.Cities
+            var result = this.DataContext.Cities
                 .Include(city => city.Streets);
+
+            if (!track)
+            {
+                result.AsNoTracking();
+            }
+
+            return result;
         }
     }
 }

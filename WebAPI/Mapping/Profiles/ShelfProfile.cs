@@ -21,8 +21,11 @@ namespace WebAPI.Mapping.Profiles
             : base()
         {
             this.CreateMap.ForMember(d => d.Cabinet, opt => opt.Ignore());
+            this.CreateMap.ForMember(d => d.CabinetId, opt => opt.Ignore());
             this.UpdateMap.ForMember(d => d.Cabinet, opt => opt.Ignore());
+            this.UpdateMap.ForMember(d => d.CabinetId, opt => opt.Ignore());
             this.OutputMap.ForSourceMember(s => s.Cabinet, opt => opt?.ToString());
+            this.OutputMap.ForSourceMember(s => s.CabinetId, opt => opt.DoNotValidate());
 
             this.UpdateMap.ForMember(d => d.Items, opt => opt.Ignore());
             this.CreateMap.ForMember(d => d.Items, opt => opt.Ignore());

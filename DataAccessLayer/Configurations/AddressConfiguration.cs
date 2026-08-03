@@ -4,6 +4,7 @@
 
 namespace DataAccessLayer.Configurations
 {
+    using DataAccessLayer.Configurations.Abstractions;
     using Domain;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,12 +12,12 @@ namespace DataAccessLayer.Configurations
     /// <summary>
     /// Конфигурация правил отображения сущности <see cref="Address"/> в таблицу БД.
     /// </summary>
-    internal sealed class AddressConfiguration : IEntityTypeConfiguration<Address>
+    internal sealed class AddressConfiguration : BaseEntityConfiguration<Address>
     {
         /// <inheritdoc/>
-        public void Configure(EntityTypeBuilder<Address> builder)
+        public override void Configure(EntityTypeBuilder<Address> builder)
         {
-            _ = builder.HasKey(address => address.Id);
+            base.Configure(builder);
 
             _ = builder.Property(address => address.House)
                 .IsRequired()
@@ -33,8 +34,6 @@ namespace DataAccessLayer.Configurations
                 .WithMany()
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
-
-            _ = builder.ToTable("Addresses");
         }
     }
 }

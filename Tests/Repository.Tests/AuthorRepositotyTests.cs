@@ -14,20 +14,8 @@ namespace Repository.Tests
     using NUnit.Framework;
 
     internal sealed class AuthorRepositotyTests
-        : BaseReposytoryTests<AuthorRepository, Author>
+        : BaseRepositoryTests<AuthorRepository, Author>
     {
-        [SetUp]
-        public void SetUp()
-        {
-            _ = this.DataContext.Database.EnsureCreated();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            _ = this.DataContext.Database.EnsureDeleted();
-        }
-
         [Test]
         public async Task Create_ValidData_Success()
         {
@@ -103,8 +91,6 @@ namespace Repository.Tests
 
             _ = await this.DataContext.SaveChangesAsync();
 
-            this.DataContext.ChangeTracker.Clear();
-
             // act
             var result = await this.Repository.GetIdByNameAsync(familyName);
 
@@ -123,6 +109,8 @@ namespace Repository.Tests
             var person = new Person(name);
             var author = new Author(person);
             var language = new HashSet<Language>() { new ("Русский") };
+
+            // Рукописи написаны авторами. Эти переменные потом попадают строками в БД.
             var manuscript1 = new Manuscript("Анна Каренина", language, new DateOnly(1873, 1, 1), new DateOnly(1877, 1, 1), null, author);
             var manuscript2 = new Manuscript("Война и мир", language, new DateOnly(1863, 1, 1), new DateOnly(1869, 1, 1), null, author);
 
@@ -136,7 +124,7 @@ namespace Repository.Tests
                 .ToListAsync();
 
             // act
-            var actual = await this.Repository.GetBooksByAuthorId(author.Id);
+            var actual = await this.Repository.GetManuscriptsByAuthorId(author.Id);
 
             // assert
             var comparer = BilingualNamedEntityComparer<Manuscript>.Instance;
@@ -149,6 +137,7 @@ namespace Repository.Tests
         {
             // arrange
             var language = new Language("Русский");
+            var languages = new HashSet<Language>() { language };
 
             var marina = new Person(new Name("Васильева", "Марина", "Алексеевна"), new DateOnly(1976, 1, 11));
             var constantin = new Person(new Name("Филипченко", "Константин", "Михайлович"), new DateOnly(1990, 4, 6));
@@ -158,15 +147,14 @@ namespace Repository.Tests
             var balakina = new Author(ekaterina);
             var authors = new HashSet<Author> { balakina, philipchenko };
 
-            var csv = new Manuscript("Система контроля версий", new HashSet<Language>() { new ("Русский") }, new HashSet<Author>() { vasilyeva, philipchenko });
-            var iscs = new Manuscript("Информационное обеспечение систем управления", new HashSet<Language>() { new ("Русский") }, new HashSet<Author>() { vasilyeva, philipchenko, balakina });
-            var term = new Manuscript("Методические указания к курсовому проектированию", new HashSet<Language>() { new ("Русский") }, new HashSet<Author>() { vasilyeva, balakina });
-            var article = new Manuscript("Статья", new HashSet<Language>() { new ("Русский") }, new HashSet<Author>() { vasilyeva });
+            var csv = new Manuscript("Система контроля версий", languages, new HashSet<Author>() { vasilyeva, philipchenko });
+            var iscs = new Manuscript("Информационное обеспечение систем управления", languages, new HashSet<Author>() { vasilyeva, philipchenko, balakina });
+            var term = new Manuscript("Методические указания к курсовому проектированию", languages, new HashSet<Author>() { vasilyeva, balakina });
+            var article = new Manuscript("Статья", languages, new HashSet<Author>() { vasilyeva });
             var manuscripts = new HashSet<Manuscript> { csv, iscs, term, article };
 
             await this.DataContext.AddRangeAsync(manuscripts);
             _ = await this.DataContext.SaveChangesAsync();
-            this.DataContext.ChangeTracker.Clear();
 
             // act
             var result = await this.Repository.GetCoAuthorsAsync(vasilyeva.Id);

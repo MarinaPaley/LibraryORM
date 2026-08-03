@@ -34,6 +34,11 @@ namespace Domain
 #pragma warning restore CS8618
 
         /// <summary>
+        /// Ключ для построения связи со шкафом (<see cref="Cabinet"/>).
+        /// </summary>
+        public Guid? CabinetId { get; set; }
+
+        /// <summary>
         /// Шкаф.
         /// </summary>
         public Cabinet? Cabinet { get; set; }
@@ -41,7 +46,7 @@ namespace Domain
         /// <summary>
         ///  Книги.
         /// </summary>
-        public IList<Item> Items { get; } = [];
+        public IList<Item> Items { get; } = new List<Item>();
 
         /// <summary>
         /// Добавляет книгу на полку.

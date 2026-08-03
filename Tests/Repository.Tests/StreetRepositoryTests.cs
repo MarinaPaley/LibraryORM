@@ -14,20 +14,8 @@ namespace Repository.Tests
     /// </summary>
     [TestFixture]
     internal sealed class StreetRepositoryTests
-        : BaseReposytoryTests<StreetRepository, Street>
+        : BaseRepositoryTests<StreetRepository, Street>
     {
-        [SetUp]
-        public void SetUp()
-        {
-            _ = this.DataContext.Database.EnsureCreated();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            _ = this.DataContext.Database.EnsureDeleted();
-        }
-
         [Test]
         public async Task Delete_ValidData_Success()
         {
@@ -36,7 +24,6 @@ namespace Repository.Tests
             var street = new Street("Улица", city);
 
             _ = await this.DataContext.AddAsync(city);
-            _ = await this.DataContext.AddAsync(street);
             _ = await this.DataContext.SaveChangesAsync();
 
             // act
@@ -60,7 +47,6 @@ namespace Repository.Tests
             _ = await this.DataContext.AddAsync(city);
             _ = await this.DataContext.AddAsync(street);
             _ = await this.DataContext.SaveChangesAsync();
-            this.DataContext.ChangeTracker.Clear();
 
             // act
             var result = await this.Repository.GetCities(name);

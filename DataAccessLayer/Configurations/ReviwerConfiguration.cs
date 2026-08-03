@@ -4,31 +4,24 @@
 
 namespace DataAccessLayer.Configurations
 {
+    using DataAccessLayer.Configurations.Abstractions;
     using Domain;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     /// <summary>
     /// Конфигурация правил отображения сущности (<see cref="Reviewer"/>) в таблицу БД.
     /// </summary>
-    internal sealed class ReviwerConfiguration : IEntityTypeConfiguration<Reviewer>
+    internal sealed class ReviwerConfiguration : BasePersonRoleConfiguration<Reviewer>
     {
-        /// <inheritdoc/>
-        public void Configure(EntityTypeBuilder<Reviewer> builder)
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="ReviwerConfiguration"/>.
+        /// </summary>
+        public ReviwerConfiguration()
+            : base(
+                person => person.Reviewer,
+                reviewer => reviewer.Manuscripts,
+                manuscript => manuscript.Reviewers,
+                tableName: "Reviwers")
         {
-            _ = builder.HasKey(r => r.Id);
-
-            _ = builder.HasOne(a => a.Person)
-                .WithOne(p => p.Reviewer)
-                .HasForeignKey<Reviewer>(a => a.PersonId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Restrict);
-
-            _ = builder.HasMany(r => r.Manuscripts)
-                .WithMany(m => m.Reviewers);
-
-            _ = builder.ToTable("Reviwers");
-            _ = builder.HasIndex(a => a.PersonId).IsUnique();
         }
     }
 }

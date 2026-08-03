@@ -483,6 +483,19 @@ namespace Domain.Tests
             Assert.That(manuscript.Books, Is.Empty);
         }
 
+        [Test]
+        public void Authors_CreateManuscript_IsValid()
+        {
+            // arrange
+            var manuscript = CreateMinimalManuscript();
+
+            // act
+            var authors = manuscript.Authors;
+
+            // assert
+            Assert.That(authors, Has.Count.EqualTo(1));
+        }
+
         private static Manuscript CreateMinimalManuscript()
         {
             return new Manuscript(

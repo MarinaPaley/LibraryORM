@@ -4,9 +4,9 @@
 
 namespace Domain
 {
-    using Domain.Abstract;
     using System;
     using System.Collections.Generic;
+    using Domain.Abstract;
 
     /// <summary>
     /// Автор.
@@ -37,6 +37,6 @@ namespace Domain
         /// Рукописи, связанные с этой ролью.
         /// </summary>
         public ISet<Manuscript> Manuscripts { get; } =
-                new HashSet<Manuscript>(BilingualNamedEntityComparer<Manuscript>.Instance);
+            new HashSet<Manuscript>(BilingualNamedEntityComparer<Manuscript>.Instance);
     }
 }

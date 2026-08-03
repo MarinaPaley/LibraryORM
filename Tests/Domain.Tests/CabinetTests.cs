@@ -369,7 +369,5 @@ namespace Domain.Tests
 
         private static Room CreateRoom(string name = "Комната") =>
             new (CreateAddress(), name);
-
-        private static Shelf CreateShelf(Cabinet cabinet, string name = "Полка") => new (name);
     }
 }

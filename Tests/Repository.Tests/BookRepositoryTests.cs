@@ -15,20 +15,8 @@ namespace Repository.Tests
     /// </summary>
     [TestFixture]
     internal sealed class BookRepositoryTests
-        : BaseReposytoryTests<BookRepository, Book>
+        : BaseRepositoryTests<BookRepository, Book>
     {
-        [SetUp]
-        public void SetUp()
-        {
-            _ = this.DataContext.Database.EnsureCreated();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            _ = this.DataContext.Database.EnsureDeleted();
-        }
-
         [Test]
         public async Task Create_ValidData_Success()
         {
@@ -72,8 +60,6 @@ namespace Repository.Tests
 
             _ = await this.Repository.CreateAsync(book);
 
-            this.DataContext.ChangeTracker.Clear();
-
             // act
             var loaded = await this.Repository.GetAsync(book.Id);
             var editorPerson = new Person(new Name("Редактор", "Тестовый"));
@@ -100,8 +86,8 @@ namespace Repository.Tests
                 2024,
                 new HashSet<Manuscript>());
 
-            _ = await this.Repository.CreateAsync(book);
-
+            _ = await this.DataContext.AddAsync(book);
+            _ = await this.DataContext.SaveChangesAsync();
             this.DataContext.ChangeTracker.Clear();
 
             // act
@@ -135,7 +121,6 @@ namespace Repository.Tests
 
             _ = await this.DataContext.AddAsync(book);
             _ = await this.DataContext.SaveChangesAsync();
-            this.DataContext.ChangeTracker.Clear();
 
             // act
             var result = await this.Repository.GetShelfAsync(book.Title!);
@@ -161,7 +146,6 @@ namespace Repository.Tests
 
             _ = await this.DataContext.AddAsync(book);
             _ = await this.DataContext.SaveChangesAsync();
-            this.DataContext.ChangeTracker.Clear();
 
             // act
             var result = await this.Repository.GetIdAsync(title);
@@ -187,7 +171,6 @@ namespace Repository.Tests
 
             _ = await this.DataContext.AddAsync(book);
             _ = await this.DataContext.SaveChangesAsync();
-            this.DataContext.ChangeTracker.Clear();
 
             // act
             var result = await this.Repository.GetTitleAsync(book.Id);
@@ -201,7 +184,6 @@ namespace Repository.Tests
         {
             await this.DataContext.AddRangeAsync(books);
             _ = await this.DataContext.SaveChangesAsync();
-            this.DataContext.ChangeTracker.Clear();
 
             // act
             var actual = await this.Repository.GetShelvesByManucriptNameAsync(toFind);

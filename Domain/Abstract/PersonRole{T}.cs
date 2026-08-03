@@ -9,7 +9,7 @@ namespace Domain.Abstract
     /// <summary>
     /// Базовый класс для ролей персоны (автор, редактор, переводчик, рецензент).
     /// </summary>
-    /// <typeparam name="T">Конкретный тип роли (например, Author).</typeparam>
+    /// <typeparam name="T"> Конкретный тип роли (например, Author). </typeparam>
     public abstract class PersonRole<T> : Entity<T>, IPerson<T>
             where T : PersonRole<T>
         {

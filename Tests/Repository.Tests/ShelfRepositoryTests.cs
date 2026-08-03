@@ -14,7 +14,7 @@ namespace Repository.Tests
     /// </summary>
     [TestFixture]
     internal sealed class ShelfRepositoryTests
-        : BaseReposytoryTests<ShelfRepository, Shelf>
+        : BaseRepositoryTests<ShelfRepository, Shelf>
     {
         #region Тестовые данные
 
@@ -55,19 +55,6 @@ namespace Repository.Tests
             new HashSet<Manuscript>() { Manuscript2 });
 
         #endregion
-
-        [SetUp]
-        public void SetUp()
-        {
-            _ = this.DataContext.Database.EnsureCreated();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            this.DataContext.ChangeTracker.Clear();
-            _ = this.DataContext.Database.EnsureDeleted();
-        }
 
         [Test]
         public async Task Create_ValidData_Success()
@@ -158,7 +145,7 @@ namespace Repository.Tests
             // act
             var result = await this.Repository.GetCountBooksAsync(shelf.Id);
 
-            // assret
+            // assert
             Assert.AreEqual(result, 2);
         }
 
@@ -188,7 +175,8 @@ namespace Repository.Tests
         public async Task GetIdByName_ValidData_Success()
         {
             // arrange
-            var shelf = new Shelf("Тестовая");
+            var name = "Тестовая";
+            var shelf = new Shelf(name);
 
             var item1 = new Item(Book1);
             var item2 = new Item(Book2);
@@ -199,10 +187,8 @@ namespace Repository.Tests
             _ = await this.DataContext.AddAsync(shelf);
             _ = await this.DataContext.SaveChangesAsync();
 
-            this.DataContext.ChangeTracker.Clear();
-
             // act
-            var result = await this.Repository.GetIdByName("Тестовая");
+            var result = await this.Repository.GetIdByName(name);
 
             // assert
             Assert.That(result, Is.Not.Null);

@@ -4,31 +4,20 @@
 
 namespace DataAccessLayer.Configurations
 {
+    using DataAccessLayer.Configurations.Abstractions;
     using Domain;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     /// <summary>
     /// Конфигурация правил отображения сущности (<see cref="Language"/> в таблицах БД.
     /// </summary>
-    internal sealed class LanguageConfiguration : IEntityTypeConfiguration<Language>
+    internal sealed class LanguageConfiguration : BaseNamedEntityConfiguration<Language>
     {
-        /// <inheritdoc/>
-        public void Configure(EntityTypeBuilder<Language> builder)
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="LanguageConfiguration"/>.
+        /// </summary>
+        public LanguageConfiguration()
+            : base(tableName: "Languages", nameComment: "Язык", nameIsUnique: true)
         {
-            _ = builder.HasKey(language => language.Id);
-
-            _ = builder.OwnsOne(language => language.Name, titleBuilder =>
-            {
-                titleBuilder.Property(t => t.Value)
-                    .HasColumnName("LanguageName")
-                    .IsRequired()
-                    .HasComment("Язык")
-                    .HasMaxLength(200);
-                titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-            });
-
-            _ = builder.ToTable("Languages");
         }
     }
 }

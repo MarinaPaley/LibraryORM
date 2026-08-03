@@ -9,22 +9,25 @@ namespace Repository
     using System.Threading.Tasks;
     using DataAccessLayer;
     using Domain;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
     using Repository.Abstract;
 
     /// <summary>
     /// Репозиторий для класса <see cref="Shelf"/>.
     /// </summary>
-    public sealed class ShelfRepository : BaseRepository<Shelf>, IShelfRepository
+    public sealed class ShelfRepository : BaseRepository<Shelf, ShelfRepository>, IShelfRepository
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="ShelfRepository"/>.
         /// </summary>
         /// <param name="dataContext"> Контекст доступа к данным.</param>
+        /// <param name="logger"> Логгер. </param>
         /// <exception cref="ArgumentNullException">
-        /// В случае если <paramref name="dataContext"/> – <see langword="null"/>.
+        /// В случае если <paramref name="dataContext"/> или <paramref name="logger"/> – <see langword="null"/>.
         /// </exception>
-        public ShelfRepository(DataContext dataContext)
-            : base(dataContext)
+        public ShelfRepository(DataContext dataContext, ILogger<ShelfRepository> logger)
+            : base(dataContext, logger)
         {
         }
 
@@ -49,16 +52,23 @@ namespace Repository
         /// <inheritdoc/>
         public async Task<Guid?> GetIdByName(string name)
         {
-            var result = await this.FindAsync(shelf => shelf.Name == new Title(name));
+            var result = await this.FindAsync(shelf => shelf.Name.Value == name);
 
             return result?.Id;
         }
 
         /// <inheritdoc/>
         // @NOTE: IgnoreAutoIncludes()
-        protected override IQueryable<Shelf> GetAll()
+        protected override IQueryable<Shelf> GetAll(bool track = false)
         {
-            return this.DataContext.Shelves;
+            var result = this.DataContext.Shelves;
+
+            if (!track)
+            {
+                result.AsNoTracking();
+            }
+
+            return result;
         }
     }
 }

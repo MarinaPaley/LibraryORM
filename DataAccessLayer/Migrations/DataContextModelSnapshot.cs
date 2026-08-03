@@ -233,7 +233,10 @@ namespace DataAccessLayer.Migrations
                     b.HasIndex("PersonId")
                         .IsUnique();
 
-                    b.ToTable("Editors", (string)null);
+                    b.ToTable("Editors", null, t =>
+                        {
+                            t.HasComment("Редакторы");
+                        });
                 });
 
             modelBuilder.Entity("Domain.Genre", b =>
@@ -265,7 +268,10 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("ShelfId");
 
-                    b.ToTable("Items", (string)null);
+                    b.ToTable("Items", null, t =>
+                        {
+                            t.HasComment("Экземпляры книг");
+                        });
                 });
 
             modelBuilder.Entity("Domain.Language", b =>
@@ -387,16 +393,14 @@ namespace DataAccessLayer.Migrations
                     b.Property<Guid?>("CabinetId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasComment("Название полки");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CabinetId");
 
-                    b.ToTable("Shelves", (string)null);
+                    b.ToTable("Shelves", null, t =>
+                        {
+                            t.HasComment("Книжные полки");
+                        });
                 });
 
             modelBuilder.Entity("Domain.Street", b =>
@@ -595,10 +599,13 @@ namespace DataAccessLayer.Migrations
                                 .IsRequired()
                                 .HasMaxLength(200)
                                 .HasColumnType("character varying(200)")
-                                .HasColumnName("BookTypeName")
+                                .HasColumnName("Name")
                                 .HasComment("Тип книги");
 
                             b1.HasKey("BookTypeId");
+
+                            b1.HasIndex("Value")
+                                .IsUnique();
 
                             b1.ToTable("BookTypes", (string)null);
 
@@ -626,7 +633,7 @@ namespace DataAccessLayer.Migrations
                                 .IsRequired()
                                 .HasMaxLength(200)
                                 .HasColumnType("character varying(200)")
-                                .HasColumnName("CabinetName")
+                                .HasColumnName("Name")
                                 .HasComment("Название шкафа");
 
                             b1.HasKey("CabinetId");
@@ -654,10 +661,13 @@ namespace DataAccessLayer.Migrations
                                 .IsRequired()
                                 .HasMaxLength(200)
                                 .HasColumnType("character varying(200)")
-                                .HasColumnName("CityName")
-                                .HasComment("Название города");
+                                .HasColumnName("Name")
+                                .HasComment("Назване города");
 
                             b1.HasKey("CityId");
+
+                            b1.HasIndex("Value")
+                                .IsUnique();
 
                             b1.ToTable("Cities", (string)null);
 
@@ -691,10 +701,13 @@ namespace DataAccessLayer.Migrations
                                 .IsRequired()
                                 .HasMaxLength(200)
                                 .HasColumnType("character varying(200)")
-                                .HasColumnName("GenreName")
+                                .HasColumnName("Name")
                                 .HasComment("Жанр");
 
                             b1.HasKey("GenreId");
+
+                            b1.HasIndex("Value")
+                                .IsUnique();
 
                             b1.ToTable("Genres", (string)null);
 
@@ -735,10 +748,13 @@ namespace DataAccessLayer.Migrations
                                 .IsRequired()
                                 .HasMaxLength(200)
                                 .HasColumnType("character varying(200)")
-                                .HasColumnName("LanguageName")
+                                .HasColumnName("Name")
                                 .HasComment("Язык");
 
                             b1.HasKey("LanguageId");
+
+                            b1.HasIndex("Value")
+                                .IsUnique();
 
                             b1.ToTable("Languages", (string)null);
 
@@ -784,7 +800,7 @@ namespace DataAccessLayer.Migrations
                                 .IsRequired()
                                 .HasMaxLength(200)
                                 .HasColumnType("character varying(200)")
-                                .HasColumnName("ManuscriptTitle")
+                                .HasColumnName("Name")
                                 .HasComment("Название произведения");
 
                             b1.HasKey("ManuscriptId");
@@ -803,7 +819,7 @@ namespace DataAccessLayer.Migrations
                             b1.Property<string>("Value")
                                 .HasMaxLength(200)
                                 .HasColumnType("character varying(200)")
-                                .HasColumnName("ManuscriptOriginTitle")
+                                .HasColumnName("OriginTitle")
                                 .HasComment("Оригинальное название произведения");
 
                             b1.HasKey("ManuscriptId");
@@ -877,10 +893,13 @@ namespace DataAccessLayer.Migrations
                                 .IsRequired()
                                 .HasMaxLength(200)
                                 .HasColumnType("character varying(200)")
-                                .HasColumnName("PublisherName")
+                                .HasColumnName("Name")
                                 .HasComment("Название издательства");
 
                             b1.HasKey("PublisherId");
+
+                            b1.HasIndex("Value")
+                                .IsUnique();
 
                             b1.ToTable("Publishers", (string)null);
 
@@ -896,10 +915,13 @@ namespace DataAccessLayer.Migrations
                             b1.Property<string>("Value")
                                 .HasMaxLength(200)
                                 .HasColumnType("character varying(200)")
-                                .HasColumnName("PublisheOriginName")
+                                .HasColumnName("OriginTitle")
                                 .HasComment("Оригинальное название издательства");
 
                             b1.HasKey("PublisherId");
+
+                            b1.HasIndex("Value")
+                                .IsUnique();
 
                             b1.ToTable("Publishers", (string)null);
 
@@ -943,7 +965,7 @@ namespace DataAccessLayer.Migrations
                                 .IsRequired()
                                 .HasMaxLength(200)
                                 .HasColumnType("character varying(200)")
-                                .HasColumnName("RoomName")
+                                .HasColumnName("Name")
                                 .HasComment("Название комнаты");
 
                             b1.HasKey("RoomId");
@@ -962,7 +984,7 @@ namespace DataAccessLayer.Migrations
 
             modelBuilder.Entity("Domain.Seria", b =>
                 {
-                    b.OwnsOne("Domain.Title", "SeriaName", b1 =>
+                    b.OwnsOne("Domain.Title", "Name", b1 =>
                         {
                             b1.Property<Guid>("SeriaId")
                                 .HasColumnType("uuid");
@@ -971,7 +993,7 @@ namespace DataAccessLayer.Migrations
                                 .IsRequired()
                                 .HasMaxLength(200)
                                 .HasColumnType("character varying(200)")
-                                .HasColumnName("SeriaName")
+                                .HasColumnName("Name")
                                 .HasComment("Серия");
 
                             b1.HasKey("SeriaId");
@@ -982,7 +1004,7 @@ namespace DataAccessLayer.Migrations
                                 .HasForeignKey("SeriaId");
                         });
 
-                    b.Navigation("SeriaName")
+                    b.Navigation("Name")
                         .IsRequired();
                 });
 
@@ -993,7 +1015,30 @@ namespace DataAccessLayer.Migrations
                         .HasForeignKey("CabinetId")
                         .OnDelete(DeleteBehavior.SetNull);
 
+                    b.OwnsOne("Domain.Title", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("ShelfId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("character varying(200)")
+                                .HasColumnName("Name")
+                                .HasComment("Название полки");
+
+                            b1.HasKey("ShelfId");
+
+                            b1.ToTable("Shelves", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("ShelfId");
+                        });
+
                     b.Navigation("Cabinet");
+
+                    b.Navigation("Name")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Street", b =>
@@ -1013,8 +1058,8 @@ namespace DataAccessLayer.Migrations
                                 .IsRequired()
                                 .HasMaxLength(200)
                                 .HasColumnType("character varying(200)")
-                                .HasColumnName("StreetName")
-                                .HasComment("Название улицы");
+                                .HasColumnName("Name")
+                                .HasComment("Назание улицы");
 
                             b1.HasKey("StreetId");
 

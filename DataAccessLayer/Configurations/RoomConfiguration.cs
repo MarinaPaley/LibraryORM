@@ -4,6 +4,7 @@
 
 namespace DataAccessLayer.Configurations
 {
+    using DataAccessLayer.Configurations.Abstractions;
     using Domain;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,35 +12,29 @@ namespace DataAccessLayer.Configurations
     /// <summary>
     /// Конфигурация правил отображения сущности <see cref="Room"/> в таблицу БД.
     /// </summary>
-    internal sealed class RoomConfiguration : IEntityTypeConfiguration<Room>
+    internal sealed class RoomConfiguration : BaseNamedEntityConfiguration<Room>
     {
-        /// <inheritdoc/>
-        public void Configure(EntityTypeBuilder<Room> builder)
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="RoomConfiguration"/>.
+        /// </summary>
+        public RoomConfiguration()
+            : base(
+                tableName: "Rooms",
+                tableComment: "Комнаты",
+                nameComment: "Название комнаты")
         {
-            // 🔑 Первичный ключ
-            _ = builder.HasKey(room => room.Id);
+        }
 
-            // 📝 Owned Type: Название комнаты
-            _ = builder.OwnsOne(room => room.Name, titleBuilder =>
-            {
-                titleBuilder.Property(t => t.Value)
-                    .HasColumnName("RoomName")
-                    .IsRequired()
-                    .HasComment("Название комнаты")
-                    .HasMaxLength(200);
-
-                // 🔑 Пишем напрямую в поле, обходя валидацию при загрузке
-                titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-            });
+        /// <inheritdoc/>
+        public override void Configure(EntityTypeBuilder<Room> builder)
+        {
+            base.Configure(builder);
 
             // 🔗 Связь с адресом (обязательная)
             _ = builder.HasOne(room => room.Address)
                 .WithMany()
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
-
-            // 🗂 Имя таблицы
-            _ = builder.ToTable("Rooms", t => t.HasComment("Комнаты"));
         }
     }
 }

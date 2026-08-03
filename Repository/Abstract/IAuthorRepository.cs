@@ -22,11 +22,11 @@ namespace Repository.Abstract
         public Task<Guid?> GetIdByNameAsync(string familyName);
 
         /// <summary>
-        /// Получить список книг автора по идентификатору.
+        /// Получить список рукописей автора по идентификатору.
         /// </summary>
         /// <param name="id"> Идентификатор автора.</param>
         /// <returns> Книги автора.</returns>
-        public Task<ISet<Manuscript>> GetBooksByAuthorId(Guid id);
+        public Task<ISet<Manuscript>> GetManuscriptsByAuthorId(Guid id);
 
         /// <summary>
         /// Показать соавторов указанного автора.

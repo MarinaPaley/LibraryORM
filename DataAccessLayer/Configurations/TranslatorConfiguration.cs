@@ -4,31 +4,24 @@
 
 namespace DataAccessLayer.Configurations
 {
+    using DataAccessLayer.Configurations.Abstractions;
     using Domain;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     /// <summary>
     /// Конфигурация правил отображения сущности (<see cref="Translator"/>) в таблицу БД.
     /// </summary>
-    internal sealed class TranslatorConfiguration : IEntityTypeConfiguration<Translator>
+    internal sealed class TranslatorConfiguration : BasePersonRoleConfiguration<Translator>
     {
-        /// <inheritdoc/>
-        public void Configure(EntityTypeBuilder<Translator> builder)
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="TranslatorConfiguration"/>.
+        /// </summary>
+        public TranslatorConfiguration()
+            : base(
+                person => person.Translator,
+                translator => translator.Manuscripts,
+                manuscript => manuscript.Translators,
+                tableName: "Translators")
         {
-            _ = builder.HasKey(t => t.Id);
-
-            _ = builder.HasOne(t => t.Person)
-                .WithOne(p => p.Translator)
-                .HasForeignKey<Translator>(a => a.PersonId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Restrict);
-
-            _ = builder.HasMany(t => t.Manuscripts)
-                .WithMany(m => m.Translators);
-
-            _ = builder.ToTable("Translators");
-            _ = builder.HasIndex(a => a.PersonId).IsUnique();
         }
     }
 }

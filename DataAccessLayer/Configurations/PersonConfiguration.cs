@@ -4,6 +4,7 @@
 
 namespace DataAccessLayer.Configurations
 {
+    using DataAccessLayer.Configurations.Abstractions;
     using Domain;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,13 +12,20 @@ namespace DataAccessLayer.Configurations
     /// <summary>
     /// Конфигурация правил отображения сущности <see cref="Person"/> в таблицу БД.
     /// </summary>
-    internal sealed class PersonConfiguration : IEntityTypeConfiguration<Person>
+    internal sealed class PersonConfiguration : BaseEntityConfiguration<Person>
     {
-        /// <inheritdoc/>
-        public void Configure(EntityTypeBuilder<Person> builder)
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="PersonConfiguration"/>.
+        /// </summary>
+        public PersonConfiguration()
+            : base(tableName: "Persons", tableComment: "Персоны: авторы, переводчики, редакторы")
         {
-            // 🔑 Первичный ключ (наследуется от Entity<Person>)
-            _ = builder.HasKey(person => person.Id);
+        }
+
+        /// <inheritdoc/>
+        public override void Configure(EntityTypeBuilder<Person> builder)
+        {
+            base.Configure(builder);
 
             // 📝 Owned Type: FullName (BookTypeName)
             _ = builder.OwnsOne(person => person.FullName, nameBuilder =>
@@ -55,9 +63,6 @@ namespace DataAccessLayer.Configurations
             _ = builder.Property(person => person.DateDeath)
                 .HasComment("Дата смерти")
                 .HasColumnType("date");
-
-            // 🗂 Имя таблицы и комментарий
-            _ = builder.ToTable("Persons", t => t.HasComment("Персоны: авторы, переводчики, редакторы"));
         }
     }
 }

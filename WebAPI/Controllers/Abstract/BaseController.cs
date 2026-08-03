@@ -26,7 +26,7 @@ namespace WebAPI.Controllers.Abstract
     /// <typeparam name="TOutModel"> Целевой тип ВЫХОДНОЙ модели. </typeparam>
     /// <typeparam name="TController"> Целевой тип контроллера. </typeparam>
     public abstract class BaseController<TRepository, TEntity, TCreateModel, TUpdateModel, TOutModel, TController> : ControllerBase
-        where TRepository : BaseRepository<TEntity>
+        where TRepository : BaseRepository<TEntity, TRepository>
         where TEntity : Entity<TEntity>
         where TCreateModel : class, ICreateModel
         where TUpdateModel : class, IUpdateModel

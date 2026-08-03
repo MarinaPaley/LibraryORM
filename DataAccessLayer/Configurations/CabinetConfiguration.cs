@@ -4,6 +4,7 @@
 
 namespace DataAccessLayer.Configurations
 {
+    using DataAccessLayer.Configurations.Abstractions;
     using Domain;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,34 +12,29 @@ namespace DataAccessLayer.Configurations
     /// <summary>
     /// Конфигурация правил отображения сущности <see cref="Cabinet"/> в таблицу БД.
     /// </summary>
-    internal sealed class CabinetConfiguration : IEntityTypeConfiguration<Cabinet>
+    internal sealed class CabinetConfiguration : BaseNamedEntityConfiguration<Cabinet>
     {
-        /// <inheritdoc/>
-        public void Configure(EntityTypeBuilder<Cabinet> builder)
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="CabinetConfiguration"/>.
+        /// </summary>
+        public CabinetConfiguration()
+            : base(
+                tableName: "Cabinets",
+                tableComment: "Шкафы в комнатах",
+                nameComment: "Название шкафа")
         {
-            // 🔑 Первичный ключ
-            _ = builder.HasKey(cabinet => cabinet.Id);
+        }
 
-            // 📝 Owned Type: Название шкафа
-            _ = builder.OwnsOne(cabinet => cabinet.Name, titleBuilder =>
-            {
-                titleBuilder.Property(t => t.Value)
-                    .HasColumnName("CabinetName")
-                    .IsRequired()
-                    .HasComment("Название шкафа")
-                    .HasMaxLength(200);
+        /// <inheritdoc/>
+        public override void Configure(EntityTypeBuilder<Cabinet> builder)
+        {
+            base.Configure(builder);
 
-                titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-            });
-
-            // 🔗 Связь с комнатой
+            // @NOTE: Связь необязательна для возможности перестановки шкафа в другую комнату.
             _ = builder.HasOne(cabinet => cabinet.Room)
                 .WithMany(room => room.Cabinets)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.SetNull);
-
-            // 🗂 Имя таблицы
-            _ = builder.ToTable("Cabinets", t => t.HasComment("Шкафы в комнатах"));
         }
     }
 }

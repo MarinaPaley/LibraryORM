@@ -4,39 +4,40 @@
 
 namespace DataAccessLayer.Configurations
 {
+    using System;
+    using System.Linq;
+    using DataAccessLayer.Configurations.Abstractions;
     using Domain;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.ChangeTracking;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     /// <summary>
     /// Конфигурация правил отображения сущности (<see cref="Shelf"/>) в таблицу БД.
     /// </summary>
-    internal sealed class ShelfConfiguration : IEntityTypeConfiguration<Shelf>
+    internal sealed class ShelfConfiguration : BaseNamedEntityConfiguration<Shelf>
     {
-        /// <inheritdoc/>
-        public void Configure(EntityTypeBuilder<Shelf> builder)
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="ShelfConfiguration"/>.
+        /// </summary>
+        public ShelfConfiguration()
+            : base(
+                tableName: "Shelves",
+                tableComment: "Книжные полки",
+                nameComment: "Название полки")
         {
-            _ = builder.HasKey(shelf => shelf.Id);
+        }
 
-            builder.Property(shelf => shelf.Name)
-                .IsRequired()
-                .HasConversion(
-                    title => title.Value,
-                    value => new Title(value))
-                .HasComment("Название полки")
-                .Metadata.SetValueComparer(
-                    new ValueComparer<Title>(
-                        (lha, rha) => lha.Equals(rha),     // Твой Equals
-                        title => title.GetHashCode(),      // Твой GetHashCode
-                        title => new Title(title.Value))); // Метод клонирования (Snapshot)
+        /// <inheritdoc/>
+        public override void Configure(EntityTypeBuilder<Shelf> builder)
+        {
+            base.Configure(builder);
 
             // 🔗 Один-ко-многим: полки в шкафу
             _ = builder.HasOne(shelf => shelf.Cabinet)
                 .WithMany(cabinet => cabinet.Shelves)
+                .HasForeignKey(shelf => shelf.CabinetId)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.SetNull);
-
-            _ = builder.ToTable("Shelves");
         }
     }
 }
