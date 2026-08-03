@@ -2,16 +2,12 @@
 // Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
-namespace WebAPI.Models.Abstract
+namespace WebAPI.Mapping.Models.Abstract.In
 {
     /// <summary>
-    /// Входная модель.
+    /// Маркерный интерфейс входной модели.
     /// </summary>
     public interface IInModel : IModel
     {
-        /// <summary>
-        /// Идентификатор.
-        /// </summary>
-        Guid Id { get; set; }
     }
 }

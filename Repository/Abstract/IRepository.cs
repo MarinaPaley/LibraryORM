@@ -21,8 +21,9 @@ namespace Repository.Abstract
         /// Находит сущность по идентификатору.
         /// </summary>
         /// <param name="id"> Идентификатор сущности. </param>
+        /// /// <param name="track"> Отследивать ли изменения?. </param>
         /// <returns> Сущность. </returns>
-        Task<TEntity?> GetAsync(Guid id);
+        Task<TEntity?> GetAsync(Guid id, bool track = false);
 
         /// <summary>
         /// Обновление сущности.
@@ -31,6 +32,14 @@ namespace Repository.Abstract
         /// <param name="saveNow"> Надо ли сохранять сущность после изменения. </param>
         /// <returns> Контекст доступа к сущности.</returns>
         Task<TEntity> UpdateAsync(TEntity entity, bool saveNow = true);
+
+        /// <summary>
+        /// Удаление сущности.
+        /// </summary>
+        /// <param name="id"> Идентификатор удаляемой сущности. </param>
+        /// <param name="saveNow"> Надо ли сохранять сущность после изменения. </param>
+        /// <returns> <see langword="true"/>, если удалили, иначе - <see langword="false"/>.</returns>
+        Task<bool> DeleteAsync(Guid id, bool saveNow = true);
 
         /// <summary>
         /// Удаление сущности.
@@ -59,7 +68,8 @@ namespace Repository.Abstract
         /// Поиск сущности по предикату (<paramref name="predicate"/>).
         /// </summary>
         /// <param name="predicate"> Предикат, которому должна удовлетворять сущность.</param>
+        /// <param name="track"> Отследивать ли изменения?. </param>
         /// <returns> Сущность или <see langword="null"/>.</returns>
-        Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate, bool track = false);
     }
 }

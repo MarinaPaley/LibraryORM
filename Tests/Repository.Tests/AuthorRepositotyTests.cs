@@ -14,22 +14,10 @@ namespace Repository.Tests
     using NUnit.Framework;
 
     internal sealed class AuthorRepositotyTests
-        : BaseReposytoryTests<AuthorRepository, Author>
+        : BaseRepositoryTests<AuthorRepository, Author>
     {
-        [SetUp]
-        public void SetUp()
-        {
-            _ = this.DataContext.Database.EnsureCreated();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            _ = this.DataContext.Database.EnsureDeleted();
-        }
-
         [Test]
-        public void Create_ValidData_Success()
+        public async Task Create_ValidData_Success()
         {
             // arrange
             var name = new Name("Толстой", "Лев");
@@ -37,49 +25,51 @@ namespace Repository.Tests
             var author = new Author(person);
 
             // act
-            _ = this.Repository.CreateAsync(author);
+            _ = await this.Repository.CreateAsync(author);
 
             // assert
-            var result = this.DataContext.Find<Author>(author.Id);
+            var result = await this.DataContext.FindAsync<Author>(author.Id);
 
             Assert.That(result, Is.EqualTo(author));
         }
 
         [Test]
-        public void Update_ValidData_Success()
+        public async Task Update_ValidData_Success()
         {
             // arrange
             var name = new Name("Толстой", "Лев");
             var person = new Person(name);
             var author = new Author(person);
-            _ = this.DataContext.Add(author);
-            _ = this.DataContext.SaveChanges();
+
+            _ = await this.DataContext.AddAsync(author);
+            _ = await this.DataContext.SaveChangesAsync();
 
             // act
             author.Person.DateBirth = new DateOnly(1828, 09, 28);
-            _ = this.Repository.UpdateAsync(author);
+            _ = await this.Repository.UpdateAsync(author);
 
             // assert
-            var result = this.DataContext.Find<Author>(author.Id)?.Person.DateBirth;
+            var result = (await this.DataContext.FindAsync<Author>(author.Id))?.Person.DateBirth;
 
             Assert.That(result, Is.EqualTo(author.Person.DateBirth));
         }
 
         [Test]
-        public void Delete_ValidData_Success()
+        public async Task Delete_ValidData_Success()
         {
             // arrange
             var name = new Name("Толстой", "Лев");
             var person = new Person(name);
             var author = new Author(person);
-            _ = this.DataContext.Add(author);
-            _ = this.DataContext.SaveChanges();
+
+            _ = await this.DataContext.AddAsync(author);
+            _ = await this.DataContext.SaveChangesAsync();
 
             // act
-            _ = this.Repository.DeleteAsync(author);
+            _ = await this.Repository.DeleteAsync(author);
 
             // assert
-            var result = this.DataContext.Find<Author>(author.Id);
+            var result = await this.DataContext.FindAsync<Author>(author.Id);
 
             Assert.That(result, Is.Null);
         }
@@ -98,8 +88,8 @@ namespace Repository.Tests
             };
 
             await this.DataContext.AddRangeAsync(authors);
-            _ = this.DataContext.SaveChangesAsync();
-            this.DataContext.ChangeTracker.Clear();
+
+            _ = await this.DataContext.SaveChangesAsync();
 
             // act
             var result = await this.Repository.GetIdByNameAsync(familyName);
@@ -119,6 +109,8 @@ namespace Repository.Tests
             var person = new Person(name);
             var author = new Author(person);
             var language = new HashSet<Language>() { new ("Русский") };
+
+            // Рукописи написаны авторами. Эти переменные потом попадают строками в БД.
             var manuscript1 = new Manuscript("Анна Каренина", language, new DateOnly(1873, 1, 1), new DateOnly(1877, 1, 1), null, author);
             var manuscript2 = new Manuscript("Война и мир", language, new DateOnly(1863, 1, 1), new DateOnly(1869, 1, 1), null, author);
 
@@ -132,7 +124,7 @@ namespace Repository.Tests
                 .ToListAsync();
 
             // act
-            var actual = await this.Repository.GetBooksByAuthorId(author.Id);
+            var actual = await this.Repository.GetManuscriptsByAuthorId(author.Id);
 
             // assert
             var comparer = BilingualNamedEntityComparer<Manuscript>.Instance;
@@ -145,6 +137,7 @@ namespace Repository.Tests
         {
             // arrange
             var language = new Language("Русский");
+            var languages = new HashSet<Language>() { language };
 
             var marina = new Person(new Name("Васильева", "Марина", "Алексеевна"), new DateOnly(1976, 1, 11));
             var constantin = new Person(new Name("Филипченко", "Константин", "Михайлович"), new DateOnly(1990, 4, 6));
@@ -154,15 +147,14 @@ namespace Repository.Tests
             var balakina = new Author(ekaterina);
             var authors = new HashSet<Author> { balakina, philipchenko };
 
-            var csv = new Manuscript("Система контроля версий", new HashSet<Language>() { new ("Русский") }, new HashSet<Author>() { vasilyeva, philipchenko });
-            var iscs = new Manuscript("Информационное обеспечение систем управления", new HashSet<Language>() { new ("Русский") }, new HashSet<Author>() { vasilyeva, philipchenko, balakina });
-            var term = new Manuscript("Методические указания к курсовому проектированию", new HashSet<Language>() { new ("Русский") }, new HashSet<Author>() { vasilyeva, balakina });
-            var article = new Manuscript("Статья", new HashSet<Language>() { new ("Русский") }, new HashSet<Author>() { vasilyeva });
+            var csv = new Manuscript("Система контроля версий", languages, new HashSet<Author>() { vasilyeva, philipchenko });
+            var iscs = new Manuscript("Информационное обеспечение систем управления", languages, new HashSet<Author>() { vasilyeva, philipchenko, balakina });
+            var term = new Manuscript("Методические указания к курсовому проектированию", languages, new HashSet<Author>() { vasilyeva, balakina });
+            var article = new Manuscript("Статья", languages, new HashSet<Author>() { vasilyeva });
             var manuscripts = new HashSet<Manuscript> { csv, iscs, term, article };
 
             await this.DataContext.AddRangeAsync(manuscripts);
             _ = await this.DataContext.SaveChangesAsync();
-            this.DataContext.ChangeTracker.Clear();
 
             // act
             var result = await this.Repository.GetCoAuthorsAsync(vasilyeva.Id);

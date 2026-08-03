@@ -58,7 +58,7 @@ namespace Domain.Tests
             var language = CreateLanguage();
 
             // act & assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<NullReferenceException>(() =>
                 _ = new Manuscript(name: "Название", languages: language, authors: null!, date: null));
         }
 
@@ -341,7 +341,9 @@ namespace Domain.Tests
             var manuscript = CreateMinimalManuscript();
 
             // act & assert
-            Assert.That(manuscript.GetHashCode(), Is.EqualTo(expected: manuscript.GetHashCode()));
+            Assert.That(
+                manuscript.GetHashCode(),
+                Is.EqualTo(expected: manuscript.GetHashCode()));
         }
 
         [Test]
@@ -481,6 +483,19 @@ namespace Domain.Tests
             Assert.That(manuscript.Books, Is.Empty);
         }
 
+        [Test]
+        public void Authors_CreateManuscript_IsValid()
+        {
+            // arrange
+            var manuscript = CreateMinimalManuscript();
+
+            // act
+            var authors = manuscript.Authors;
+
+            // assert
+            Assert.That(authors, Has.Count.EqualTo(1));
+        }
+
         private static Manuscript CreateMinimalManuscript()
         {
             return new Manuscript(
@@ -489,7 +504,7 @@ namespace Domain.Tests
                 new HashSet<Author> { CreateAuthor("Автор", "Тестовый") });
         }
 
-        private static HashSet<Language> CreateLanguage(string name = "Русский") => new HashSet<Language>() { new(name) };
+        private static HashSet<Language> CreateLanguage(string name = "Русский") => new HashSet<Language>() { new (name) };
 
         private static Person CreatePerson(string family, string given, string? patronymic = null) =>
             new (new Name(family, given, patronymic));

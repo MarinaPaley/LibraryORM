@@ -10,53 +10,43 @@ namespace Repository
     using DataAccessLayer;
     using Domain;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
     using Repository.Abstract;
 
     /// <summary>
     /// Репозиторий для класса <see cref="City"/>.
     /// </summary>
-    public sealed class CityRepository : BaseRepository<City>
+    public sealed class CityRepository : BaseRepository<City, CityRepository>, ICityRepository
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="CityRepository"/>.
         /// </summary>
         /// <param name="dataContext"> Контекст доступа к данным.</param>
+        /// <param name="logger"> Логгер. </param>
         /// <exception cref="ArgumentNullException">
-        /// В случае если <paramref name="dataContext"/> – <see langword="null"/>.
+        /// В случае если <paramref name="dataContext"/> или <paramref name="logger"/> – <see langword="null"/>.
         /// </exception>
-        public CityRepository(DataContext dataContext)
-            : base(dataContext)
+        public CityRepository(DataContext dataContext, ILogger<CityRepository> logger)
+            : base(dataContext, logger)
         {
         }
 
-        /// <summary>
-        /// Получает список городов, в которых есть указанная улица.
-        /// </summary>
-        /// <param name="street"> Название улицы.</param>
-        /// <returns> Список городов.</returns>
-        public IEnumerable<City> GetCities(string street)
+        /// <inheritdoc/>
+        public async Task<IEnumerable<City>> GetCities(string street)
         {
             return this.GetAll()
                 .Where(city => city.Streets
                     .Any(s => s.Name.Value.Contains(street)));
         }
 
-        /// <summary>
-        /// Получает идентификатор города.
-        /// </summary>
-        /// <param name="cityName"> Город. </param>
-        /// <returns> Идентификатор города. </returns>
+        /// <inheritdoc/>
         public async Task<Guid?> GetIdAsync(string cityName)
         {
             return (await this.GetAll()
                 .FirstOrDefaultAsync(city => city.Name.Value == cityName))?.Id;
         }
 
-        /// <summary>
-        /// Получает название города.
-        /// </summary>
-        /// <param name="id"> Идентификатор города. </param>
-        /// <returns> Название города. </returns>
+        /// <inheritdoc/>
         public async Task<string?> GetCityAsync(Guid id)
         {
             return (await this.GetAll()
@@ -65,11 +55,7 @@ namespace Repository
                 .Value;
         }
 
-        /// <summary>
-        /// Получает список улиц указанного города.
-        /// </summary>
-        /// <param name="id"> Идентификатор города. </param>
-        /// <returns> Список улиц. </returns>
+        /// <inheritdoc/>
         public async Task<IEnumerable<Street>?> GetStreetsAsync(Guid id)
         {
             return (await this.GetAll()
@@ -79,10 +65,17 @@ namespace Repository
         }
 
         /// <inheritdoc/>
-        protected override IQueryable<City> GetAll()
+        protected override IQueryable<City> GetAll(bool track = false)
         {
-            return this.DataContext.Cities
+            var result = this.DataContext.Cities
                 .Include(city => city.Streets);
+
+            if (!track)
+            {
+                result.AsNoTracking();
+            }
+
+            return result;
         }
     }
 }

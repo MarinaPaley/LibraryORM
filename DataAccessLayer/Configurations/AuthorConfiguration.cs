@@ -4,31 +4,23 @@
 
 namespace DataAccessLayer.Configurations
 {
+    using DataAccessLayer.Configurations.Abstractions;
     using Domain;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     /// <summary>
     /// Конфигурация правил отображения сущности (<see cref="Author"/>) в таблицу БД.
     /// </summary>
-    internal sealed class AuthorConfiguration : IEntityTypeConfiguration<Author>
+    internal sealed class AuthorConfiguration : BasePersonRoleConfiguration<Author>
     {
-        /// <inheritdoc/>
-        public void Configure(EntityTypeBuilder<Author> builder)
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="AuthorConfiguration"/>.
+        /// </summary>
+        public AuthorConfiguration()
+            : base(
+                person => person.Author,
+                author => author.Manuscripts,
+                manuscript => manuscript.Authors)
         {
-            _ = builder.HasKey(a => a.Id);
-
-            _ = builder.HasOne(a => a.Person)
-            .WithOne(p => p.Author)
-            .HasForeignKey<Author>(a => a.PersonId)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Restrict);
-
-            _ = builder.HasMany(a => a.Manuscripts)
-                .WithMany(m => m.Authors);
-
-            _ = builder.ToTable("Authors");
-            _ = builder.HasIndex(a => a.PersonId).IsUnique();
         }
     }
 }

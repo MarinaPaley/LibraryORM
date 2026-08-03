@@ -4,6 +4,7 @@
 
 namespace DataAccessLayer.Configurations
 {
+    using DataAccessLayer.Configurations.Abstractions;
     using Domain;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,39 +12,30 @@ namespace DataAccessLayer.Configurations
     /// <summary>
     /// Конфигурация правил отображения сущности <see cref="Publisher"/> в таблицу БД.
     /// </summary>
-    internal sealed class PublisherConfiguration : IEntityTypeConfiguration<Publisher>
+    internal sealed class PublisherConfiguration : BaseBilingualNamedEntityConfiguration<Publisher>
     {
-        /// <inheritdoc/>
-        public void Configure(EntityTypeBuilder<Publisher> builder)
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="PublisherConfiguration"/>.
+        /// </summary>
+        public PublisherConfiguration()
+            : base(
+                tableName: "Publishers",
+                nameComment: "Название издательства",
+                nameIsUnique: true,
+                originNameComment: "Оригинальное название издательства",
+                originNameIsUnique: true)
         {
-            _ = builder.HasKey(publisher => publisher.Id);
+        }
 
-            _ = builder.OwnsOne(publisher => publisher.Name, titleBuilder =>
-            {
-                titleBuilder.Property(t => t.Value)
-                    .HasColumnName("PublisherName")
-                    .IsRequired()
-                    .HasComment("Название издательства")
-                    .HasMaxLength(200);
-                titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-            });
+        /// <inheritdoc/>
+        public override void Configure(EntityTypeBuilder<Publisher> builder)
+        {
+            base.Configure(builder);
 
-            _ = builder.OwnsOne(publisher => publisher.OriginName, titleBuilder =>
-            {
-                titleBuilder.Property(t => t.Value)
-                    .HasColumnName("PublisheOriginName")
-                    .IsRequired(false)
-                    .HasComment("Оригинальное название издательства")
-                    .HasMaxLength(200);
-                titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-            });
-
-            _ = builder.HasOne(p => p.Address)
+            _ = builder.HasOne(publisher => publisher.Address)
                 .WithMany()
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.SetNull);
-
-            _ = builder.ToTable("Publishers");
         }
     }
 }

@@ -14,6 +14,8 @@ namespace Domain
     /// </summary>
     public sealed class Manuscript : BilingualNamedEntity<Manuscript>, IEquatable<Manuscript>
     {
+        private readonly ISet<Author> authors;
+
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Manuscript"/>.
         /// </summary>
@@ -24,20 +26,28 @@ namespace Domain
         /// <param name="origin"> Оригинальное название. </param>
         /// <exception cref="ArgumentNullException"> Если авторы или жанры <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException"> Если количество страниц равно ли меньше нуля.</exception>
-        public Manuscript(string name, ISet<Language> languages, ISet<Author> authors, Range<DateOnly>? date = null, string? origin = null)
+        public Manuscript(
+            string name,
+            ISet<Language> languages,
+            ISet<Author> authors,
+            Range<DateOnly>? date = null,
+            string? origin = null)
             : base(name, origin)
         {
             this.Dates = date;
             this.Languages = languages ?? throw new ArgumentNullException(nameof(languages));
-            this.Authors = authors ?? throw new ArgumentNullException(nameof(authors));
-            if (this.Authors.Count == 0)
+
+            if (authors.Count == 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(authors));
             }
 
-            foreach (var author in authors)
+            this.authors = this.authors = new HashSet<Author>(authors, PersonComparer<Author>.Instance)
+                ?? throw new ArgumentNullException(nameof(authors));
+
+            foreach (var author in this.Authors)
             {
-                _ = author.Manuscripts.Add(this);
+                author.Manuscripts.Add(this);
             }
         }
 
@@ -51,7 +61,7 @@ namespace Domain
         /// <param name="origin"> Оригинальное наименование. </param>
         /// <param name="authors"> Список авторов. </param>
         public Manuscript(string name, ISet<Language> languages, DateOnly? from = null, DateOnly? to = null, string? origin = null, params Author[] authors)
-            : this(name, new HashSet<Language>(languages), new HashSet<Author>(authors), new Range<DateOnly>(from, to), origin)
+            : this(name, new HashSet<Language>(languages, NamedEntityComparer<Language>.Instance), new HashSet<Author>(authors, PersonComparer<Author>.Instance), new Range<DateOnly>(from, to), origin)
         {
         }
 
@@ -64,13 +74,14 @@ namespace Domain
         private Manuscript()
             : base(name: "Не задано", origin: null)
         {
+            this.authors = new HashSet<Author>(PersonComparer<Author>.Instance);
         }
 #pragma warning restore CS8618
 
         /// <summary>
         /// Авторы.
         /// </summary>
-        public ISet<Author> Authors { get; } = new HashSet<Author>(PersonComparer<Author>.Instance);
+        public ISet<Author> Authors => this.authors;
 
         /// <summary>
         /// Переводчики.

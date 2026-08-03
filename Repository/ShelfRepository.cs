@@ -10,65 +10,65 @@ namespace Repository
     using DataAccessLayer;
     using Domain;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Query;
+    using Microsoft.Extensions.Logging;
     using Repository.Abstract;
 
     /// <summary>
-    /// Репозиторий для класса <see cref="Domain.Shelf"/>.
+    /// Репозиторий для класса <see cref="Shelf"/>.
     /// </summary>
-    public sealed class ShelfRepository : BaseRepository<Shelf>
+    public sealed class ShelfRepository : BaseRepository<Shelf, ShelfRepository>, IShelfRepository
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="ShelfRepository"/>.
         /// </summary>
         /// <param name="dataContext"> Контекст доступа к данным.</param>
+        /// <param name="logger"> Логгер. </param>
         /// <exception cref="ArgumentNullException">
-        /// В случае если <paramref name="dataContext"/> – <see langword="null"/>.
+        /// В случае если <paramref name="dataContext"/> или <paramref name="logger"/> – <see langword="null"/>.
         /// </exception>
-        public ShelfRepository(DataContext dataContext)
-            : base(dataContext)
+        public ShelfRepository(DataContext dataContext, ILogger<ShelfRepository> logger)
+            : base(dataContext, logger)
         {
         }
 
-        /// <summary>
-        /// Показать количество книг, стоящих на данной полке.
-        /// </summary>
-        /// <param name="id">Идентификатор полки.</param>
-        /// <returns> Количество книг.</returns>
-        public async Task<int?> GetBooksCountAsync(Guid id)
+        /// <inheritdoc/>
+        public async Task<int?> GetCountBooksAsync(Guid id)
         {
-            return (await this.GetAsync(id))?.Items.Count;
-        }
-
-        /// <summary>
-        /// Показать количество книг, стоящих на полке.
-        /// </summary>
-        /// <param name="name"> Название полки.</param>
-        /// <returns> Количество книг.</returns>
-        public async Task<int?> GetCountBooksAsync(string name)
-        {
-            return (await this.GetAll()
-                .FirstOrDefaultAsync(shelf => shelf.Name.Value == name))
+            return (await this.GetAsync(id))
                 ?.Items
                 .Count;
         }
 
-        /// <summary>
-        /// Найти идентификатор по имени.
-        /// </summary>
-        /// <param name="name"> Название полки.</param>
-        /// <returns> Идентификатор.</returns>
+        /// <inheritdoc/>
+        public async Task<int?> GetCountBooksAsync(string name)
+        {
+            var id = await this.GetIdByName(name);
+
+            return id.HasValue
+                ? await this.GetCountBooksAsync(id.Value)
+                : null;
+        }
+
+        /// <inheritdoc/>
         public async Task<Guid?> GetIdByName(string name)
         {
-            return (await this.FindAsync(shelf => shelf.Name.Value == name))
-                ?.Id;
+            var result = await this.FindAsync(shelf => shelf.Name.Value == name);
+
+            return result?.Id;
         }
 
         /// <inheritdoc/>
         // @NOTE: IgnoreAutoIncludes()
-        protected override IQueryable<Shelf> GetAll()
+        protected override IQueryable<Shelf> GetAll(bool track = false)
         {
-            return this.DataContext.Shelves;
+            var result = this.DataContext.Shelves;
+
+            if (!track)
+            {
+                result.AsNoTracking();
+            }
+
+            return result;
         }
     }
 }

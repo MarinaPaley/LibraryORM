@@ -4,31 +4,20 @@
 
 namespace DataAccessLayer.Configurations
 {
+    using DataAccessLayer.Configurations.Abstractions;
     using Domain;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     /// <summary>
     /// Конфигурация правил отображения сущности (<see cref="City"/> в таблицах БД.
     /// </summary>
-    internal sealed class CityConfiguration : IEntityTypeConfiguration<City>
+    internal sealed class CityConfiguration : BaseNamedEntityConfiguration<City>
     {
-        /// <inheritdoc/>
-        public void Configure(EntityTypeBuilder<City> builder)
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="CityConfiguration"/>.
+        /// </summary>
+        public CityConfiguration()
+            : base(nameComment: "Назване города", nameIsUnique: true)
         {
-            _ = builder.HasKey(city => city.Id);
-
-            _ = builder.OwnsOne(city => city.Name, titleBuilder =>
-            {
-                titleBuilder.Property(t => t.Value)
-                    .HasColumnName("CityName")
-                    .IsRequired()
-                    .HasComment("Название города")
-                    .HasMaxLength(200);
-                titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-            });
-
-            _ = builder.ToTable("Cities");
         }
     }
 }

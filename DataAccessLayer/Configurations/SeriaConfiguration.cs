@@ -4,31 +4,20 @@
 
 namespace DataAccessLayer.Configurations
 {
+    using DataAccessLayer.Configurations.Abstractions;
     using Domain;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     /// <summary>
     /// Конфигурация правил отображения сущности (<see cref="Seria"/> в таблицах БД.
     /// </summary>
-    internal sealed class SeriaConfiguration : IEntityTypeConfiguration<Seria>
+    internal sealed class SeriaConfiguration : BaseNamedEntityConfiguration<Seria>
     {
-        /// <inheritdoc/>
-        public void Configure(EntityTypeBuilder<Seria> builder)
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="SeriaConfiguration"/>.
+        /// </summary>
+        public SeriaConfiguration()
+            : base(tableName: "Serias", nameComment: "Серия")
         {
-            _ = builder.HasKey(seria => seria.Id);
-
-            _ = builder.OwnsOne(seria => seria.SeriaName, titleBuilder =>
-            {
-                titleBuilder.Property(t => t.Value)
-                    .HasColumnName("SeriaName")
-                    .IsRequired()
-                    .HasComment("Серия")
-                    .HasMaxLength(200);
-                titleBuilder.UsePropertyAccessMode(PropertyAccessMode.Field);
-            });
-
-            _ = builder.ToTable("Serias");
         }
     }
 }

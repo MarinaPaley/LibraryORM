@@ -11,51 +11,41 @@ namespace Repository
     using DataAccessLayer;
     using Domain;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
     using Repository.Abstract;
 
     /// <summary>
-    /// Репозиторий для класса <see cref="Domain.Author"/>.
+    /// Репозиторий для класса <see cref="Author"/>.
     /// </summary>
-    public sealed class AuthorRepository : BaseRepository<Author>
+    public sealed class AuthorRepository : BaseRepository<Author, AuthorRepository>, IAuthorRepository
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="AuthorRepository"/>.
         /// </summary>
         /// <param name="dataContext">Контекст доступа к данным.</param>
+        /// <param name="logger"> Логгер. </param>
         /// <exception cref="ArgumentNullException">
-        /// В случае если <paramref name="dataContext"/> – <see langword="null"/>.
+        /// В случае если <paramref name="dataContext"/> или <paramref name="logger"/> – <see langword="null"/>.
         /// </exception>
-        public AuthorRepository(DataContext dataContext)
-            : base(dataContext)
+        public AuthorRepository(DataContext dataContext, ILogger<AuthorRepository> logger)
+            : base(dataContext, logger)
         {
         }
 
-        /// <summary>
-        /// Найти идентификатор автора по его фамилии.
-        /// </summary>
-        /// <param name="familyName"> Фамилия автора.</param>
-        /// <returns> Идентификатор.</returns>
+        /// <inheritdoc/>
         public async Task<Guid?> GetIdByNameAsync(string familyName)
         {
             return (await this.FindAsync(author => author.Person.FullName.FamilyName == familyName))?.Id;
         }
 
-        /// <summary>
-        /// Получить список книг автора по идентификатору.
-        /// </summary>
-        /// <param name="id"> Идентификатор автора.</param>
-        /// <returns> Книги автора.</returns>
-        public async Task<ISet<Manuscript>> GetBooksByAuthorId(Guid id)
+        /// <inheritdoc/>
+        public async Task<ISet<Manuscript>> GetManuscriptsByAuthorId(Guid id)
         {
             return (await this.GetAsync(id))?.Manuscripts
                 ?? new HashSet<Manuscript>();
         }
 
-        /// <summary>
-        /// Показать соавторов указанного автора.
-        /// </summary>
-        /// <param name="id"> Идентификатор автора.</param>
-        /// <returns> Соавторов данного автора.</returns>
+        /// <inheritdoc/>
         public async Task<ISet<Author>> GetCoAuthorsAsync(Guid id)
         {
             return await this.GetAll()
@@ -66,16 +56,20 @@ namespace Repository
                 .ToHashSetAsync();
         }
 
-        /// <summary>
-        /// Получает всех авторов.
-        /// </summary>
-        /// <returns> Авторы.</returns>
-        protected override IQueryable<Author> GetAll()
+        /// <inheritdoc/>
+        protected override IQueryable<Author> GetAll(bool track = false)
         {
-            return this.DataContext.Authors
+            var result = this.DataContext.Authors
                 .Include(author => author.Person)
                     .ThenInclude(person => person.FullName)
                 .Include(author => author.Manuscripts);
+
+            if (!track)
+            {
+                result.AsNoTracking();
+            }
+
+            return result;
         }
     }
 }

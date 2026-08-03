@@ -1,0 +1,6 @@
+name: Library
+values:
+  - key: localhost
+    value: ''
+  - key: sec-localhost
+    value: ''

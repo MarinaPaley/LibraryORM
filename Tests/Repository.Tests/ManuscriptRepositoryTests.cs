@@ -4,31 +4,19 @@
 
 namespace Repository.Tests
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Runtime.InteropServices;
-    using System.Threading.Tasks;
     using Domain;
     using NUnit.Framework;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
 
-    internal sealed class ManuscriptRepositoryTests : BaseReposytoryTests<ManuscriptRepository, Manuscript>
+    /// <summary>
+    /// Модульные тесты для <see cref="ManuscriptRepository"/>.
+    /// </summary>
+    internal sealed class ManuscriptRepositoryTests
+        : BaseRepositoryTests<ManuscriptRepository, Manuscript>
     {
-        private ManuscriptRepository repository = null!;
-
-        [SetUp]
-        public void SetUp()
-        {
-            this.repository = new ManuscriptRepository(this.DataContext);
-            _ = this.DataContext.Database.EnsureDeleted();
-            _ = this.DataContext.Database.EnsureCreated();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            _ = this.DataContext.Database.EnsureDeleted();
-        }
-
         [Test]
         public async Task GetAuthors_FullNameIsLoaded()
         {
@@ -43,10 +31,9 @@ namespace Repository.Tests
 
             _ = await this.DataContext.AddAsync(manuscript);
             _ = await this.DataContext.SaveChangesAsync();
-            this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = await this.repository.GetAuthorsAsync(manuscript.Id);
+            var result = await this.Repository.GetAuthorsAsync(manuscript.Id);
 
             // assert
             Assert.That(result, Is.Not.Null);
@@ -61,7 +48,7 @@ namespace Repository.Tests
         public async Task GetAuthors_ValidData_Success()
         {
             // arrange
-            var person = new Person(new Name("Толстой", "Лев"));
+            var person = new Person(new Name("Фамилий", "Имён"));
             var author = new Author(person);
 
             var manuscript = new Manuscript(
@@ -71,15 +58,14 @@ namespace Repository.Tests
 
             _ = await this.DataContext.AddAsync(manuscript);
             _ = await this.DataContext.SaveChangesAsync();
-            this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = await this.repository.GetAuthorsAsync(manuscript.Id);
+            var result = await this.Repository.GetAuthorsAsync(manuscript.Id);
 
             // assert
             Assert.That(result, Is.Not.Null);
             Assert.That(result, Has.Count.EqualTo(1));
-            Assert.That(result.Any(a => a.Person.FullName.FamilyName == "Толстой"), Is.True);
+            Assert.That(result.Any(a => a.Person.FullName.FamilyName == "Фамилий"), Is.True);
         }
 
         [Test]
@@ -121,7 +107,7 @@ namespace Repository.Tests
             this.DataContext.ChangeTracker.Clear();
 
             // act
-            var result = await this.repository.GetAllBooksCoAuthors(articleManuscript.Id);
+            var result = await this.Repository.GetAllBooksCoAuthors(articleManuscript.Id);
 
             // assert
             Assert.That(result, Is.Not.Null);

@@ -4,6 +4,7 @@
 
 namespace DataAccessLayer.Configurations
 {
+    using DataAccessLayer.Configurations.Abstractions;
     using Domain;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,12 +12,12 @@ namespace DataAccessLayer.Configurations
     /// <summary>
     /// Конфигурация правил отображения сущности (<see cref="Book"/>) в таблицу БД.
     /// </summary>
-    internal sealed class BookConfiguration : IEntityTypeConfiguration<Book>
+    internal sealed class BookConfiguration : BaseEntityConfiguration<Book>
     {
         /// <inheritdoc/>
-        public void Configure(EntityTypeBuilder<Book> builder)
+        public override void Configure(EntityTypeBuilder<Book> builder)
         {
-            _ = builder.HasKey(book => book.Id);
+            base.Configure(builder);
 
             _ = builder.Property(book => book.Title)
                 .IsRequired(false)
@@ -32,11 +33,8 @@ namespace DataAccessLayer.Configurations
                 .HasMaxLength(25)
                 .HasComment("ISBN");
 
-            _ = builder.HasMany(book => book.Manuscripts)
-                .WithMany(manuscript => manuscript.Books);
-
             _ = builder.HasMany(book => book.Publishers)
-                .WithMany(p => p.Books);
+                .WithMany(publisher => publisher.Books);
 
             _ = builder.HasOne(book => book.Editor)
                 .WithMany(editor => editor.Books)
@@ -68,8 +66,6 @@ namespace DataAccessLayer.Configurations
             _ = builder.Property(book => book.Volume)
                 .IsRequired(false)
                 .HasComment("Том");
-
-            _ = builder.ToTable("Books");
         }
     }
 }

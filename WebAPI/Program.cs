@@ -1,10 +1,19 @@
 // <copyright file="Program.cs" company="Филипченко Марина Алексеевна">
 // Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
+
 namespace WebAPI
 {
+    using System;
+    using Microsoft.AspNetCore.Builder;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
     using Repository;
+    using Repository.Extensions;
+    using WebAPI.Extentions;
 
     /// <summary>
     /// Программа.
@@ -24,7 +33,7 @@ namespace WebAPI
             var connectionString =
                 builder.Configuration.GetConnectionString("Default")
                 ?? throw new InvalidOperationException("Connection string"
-                + "'DefaultConnection' not found.");
+                    + "'DefaultConnection' not found.");
 
             builder.Services.AddDbContext<DataAccessLayer.DataContext>(
                 opt => opt.UseNpgsql(connectionString)
@@ -32,8 +41,8 @@ namespace WebAPI
                     .EnableSensitiveDataLogging()
                     .LogTo(Console.WriteLine, LogLevel.Error));
 
-            builder.Services.AddScoped<ShelfRepository>();
-
+            builder.Services.AddAutoMapper();
+            builder.Services.AddServices();
             builder.Services.AddControllers();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

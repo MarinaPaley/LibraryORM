@@ -6,47 +6,53 @@ namespace Repository
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using DataAccessLayer;
     using Domain;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
     using Repository.Abstract;
 
     /// <summary>
     /// Репозиторий для класса <see cref="Street"/>.
     /// </summary>
-    public sealed class StreetRepository : BaseRepository<Street>
+    public sealed class StreetRepository : BaseRepository<Street, StreetRepository>, IStreetRepository
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="StreetRepository"/>.
         /// </summary>
         /// <param name="dataContext"> Контекст доступа к данным.</param>
+        /// <param name="logger"> Логгер. </param>
         /// <exception cref="ArgumentNullException">
-        /// В случае если <paramref name="dataContext"/> – <see langword="null"/>.
+        /// В случае если <paramref name="dataContext"/> или <paramref name="logger"/> – <see langword="null"/>.
         /// </exception>
-        public StreetRepository(DataContext dataContext)
-            : base(dataContext)
+        public StreetRepository(DataContext dataContext, ILogger<StreetRepository> logger)
+            : base(dataContext, logger)
         {
-        }
-
-        /// <summary>
-        /// Показать список городов, имеющая указанную улицу.
-        /// </summary>
-        /// <param name="street"> Улица.</param>
-        /// <returns> Список городов, в которых имеется указанная улица. </returns>
-        public IEnumerable<City> GetCities(string street)
-        {
-            return this.DataContext.Streets
-                .Where(s => s.Name.Value.Contains(street))
-                .Select(s => s.City)
-                .Distinct()
-                .ToList();
         }
 
         /// <inheritdoc/>
-        protected override IQueryable<Street> GetAll()
+        public async Task<IEnumerable<City>> GetCities(string streetName)
         {
-            return this.DataContext.Streets
+            return await this.GetAll()
+                .Where(street => street.Name.Value.Contains(streetName))
+                .Select(street => street.City)
+                .Distinct()
+                .ToListAsync();
+        }
+
+        /// <inheritdoc/>
+        protected override IQueryable<Street> GetAll(bool track = false)
+        {
+            var result = this.DataContext.Streets
                 .Include(street => street.City);
+
+            if (!track)
+            {
+                result.AsNoTracking();
+            }
+
+            return result;
         }
     }
 }

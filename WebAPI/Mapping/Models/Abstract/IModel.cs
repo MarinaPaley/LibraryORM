@@ -2,7 +2,7 @@
 // Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
-namespace WebAPI.Models.Abstract
+namespace WebAPI.Mapping.Models.Abstract
 {
     /// <summary>
     /// Маркерный интерфейс моделей.

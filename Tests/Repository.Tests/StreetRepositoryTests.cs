@@ -5,6 +5,7 @@
 namespace Repository.Tests
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Domain;
     using NUnit.Framework;
 
@@ -13,42 +14,29 @@ namespace Repository.Tests
     /// </summary>
     [TestFixture]
     internal sealed class StreetRepositoryTests
-        : BaseReposytoryTests<StreetRepository, Street>
+        : BaseRepositoryTests<StreetRepository, Street>
     {
-        [SetUp]
-        public void SetUp()
-        {
-            _ = this.DataContext.Database.EnsureCreated();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            _ = this.DataContext.Database.EnsureDeleted();
-        }
-
         [Test]
-        public void Delete_ValidData_Success()
+        public async Task Delete_ValidData_Success()
         {
             // arrange
             var city = new City("Город");
             var street = new Street("Улица", city);
 
-            this.DataContext.Add(city);
-            this.DataContext.Add(street);
-            this.DataContext.SaveChanges();
+            _ = await this.DataContext.AddAsync(city);
+            _ = await this.DataContext.SaveChangesAsync();
 
             // act
             _ = this.Repository.DeleteAsync(street);
 
             // assert
-            var result = this.DataContext.Find<Street>(street.Id);
+            var result = await this.DataContext.FindAsync<Street>(street.Id);
 
             Assert.That(result, Is.Null);
         }
 
         [Test]
-        public void GetCities_ValidData_Success()
+        public async Task GetCities_ValidData_Success()
         {
             // arrange
             var name = "Улица";
@@ -56,13 +44,12 @@ namespace Repository.Tests
             var cities = new List<City> { city };
             var street = new Street("Улица", city);
 
-            _ = this.DataContext.Add(city);
-            _ = this.DataContext.Add(street);
-            _ = this.DataContext.SaveChanges();
-            this.DataContext.ChangeTracker.Clear();
+            _ = await this.DataContext.AddAsync(city);
+            _ = await this.DataContext.AddAsync(street);
+            _ = await this.DataContext.SaveChangesAsync();
 
             // act
-            var result = this.Repository.GetCities(name);
+            var result = await this.Repository.GetCities(name);
 
             // assert
             Assert.That(result, Is.EqualTo(cities));

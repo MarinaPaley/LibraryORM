@@ -4,6 +4,9 @@
 
 namespace DataAccessLayer.Configurations
 {
+    using System;
+    using System.Linq;
+    using DataAccessLayer.Configurations.Abstractions;
     using Domain;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,27 +14,30 @@ namespace DataAccessLayer.Configurations
     /// <summary>
     /// Конфигурация правил отображения сущности (<see cref="Shelf"/>) в таблицу БД.
     /// </summary>
-    internal sealed class ShelfConfiguration : IEntityTypeConfiguration<Shelf>
+    internal sealed class ShelfConfiguration : BaseNamedEntityConfiguration<Shelf>
     {
-        /// <inheritdoc/>
-        public void Configure(EntityTypeBuilder<Shelf> builder)
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="ShelfConfiguration"/>.
+        /// </summary>
+        public ShelfConfiguration()
+            : base(
+                tableName: "Shelves",
+                tableComment: "Книжные полки",
+                nameComment: "Название полки")
         {
-            _ = builder.HasKey(shelf => shelf.Id);
+        }
 
-            _ = builder.Property(shelf => shelf.Name)
-                .IsRequired()
-                .HasConversion(
-                    v => v.Value,
-                    v => new Title(v))
-                .HasComment("Название полки");
-
+        /// <inheritdoc/>
+        public override void Configure(EntityTypeBuilder<Shelf> builder)
+        {
+            base.Configure(builder);
 
             // 🔗 Один-ко-многим: полки в шкафу
             _ = builder.HasOne(shelf => shelf.Cabinet)
                 .WithMany(cabinet => cabinet.Shelves)
+                .HasForeignKey(shelf => shelf.CabinetId)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.SetNull);
-
-            _ = builder.ToTable("Shelves");
         }
     }
 }
