@@ -25,6 +25,7 @@ namespace WebAPI.Controllers.Abstract
     /// <typeparam name="TUpdateModel" > Целевой тип ИЗМЕНЯЕМОЙ модели. </typeparam>
     /// <typeparam name="TOutModel"> Целевой тип ВЫХОДНОЙ модели. </typeparam>
     /// <typeparam name="TController"> Целевой тип контроллера. </typeparam>
+    [ApiController]
     public abstract class BaseController<TRepository, TEntity, TCreateModel, TUpdateModel, TOutModel, TController> : ControllerBase
         where TRepository : BaseRepository<TEntity, TRepository>
         where TEntity : Entity<TEntity>
@@ -155,7 +156,7 @@ namespace WebAPI.Controllers.Abstract
         /// Обновляет сущность.
         /// </summary>
         /// <remarks>
-        /// @TODO: Стоит использовать метод PATCH (<see cref="HttpPatchAttribute"/>).
+        /// @TODO: Стоит использовать метод <c>PATCH</c> (<see cref="HttpPatchAttribute"/>).
         /// Более подробно описан <see href="https://developer.mozilla.org/ru/docs/Web/HTTP/Reference/Methods/PATCH"/>.
         /// </remarks>
         /// <param name="model"> Модель.</param>

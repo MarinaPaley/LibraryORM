@@ -60,7 +60,7 @@ namespace Repository.Tests
         public async Task Create_ValidData_Success()
         {
             // arrange
-            var shelf = new Shelf("Тестовая");
+            var shelf = new Shelf("Тестовая6");
 
             // act
             _ = await this.Repository.CreateAsync(shelf);
@@ -76,7 +76,7 @@ namespace Repository.Tests
         public async Task Get_ValidData_Success()
         {
             // arrange
-            var shelf = new Shelf("Тестовая");
+            var shelf = new Shelf("Тестовая5");
 
             _ = await this.DataContext.AddAsync(shelf);
             _ = await this.DataContext.SaveChangesAsync();
@@ -95,7 +95,7 @@ namespace Repository.Tests
             // arrange
             var newName = "Новое имя";
 
-            var shelf = new Shelf("Тестовая");
+            var shelf = new Shelf("Тестовая4");
 
             _ = await this.DataContext.AddAsync(shelf);
             _ = await this.DataContext.SaveChangesAsync();
@@ -113,7 +113,7 @@ namespace Repository.Tests
         public async Task Delete_ValidData_Success()
         {
             // arrange
-            var shelf = new Shelf("Тестовая");
+            var shelf = new Shelf("Тестовая3");
 
             _ = await this.DataContext.AddAsync(shelf);
             _ = await this.DataContext.SaveChangesAsync();
@@ -131,7 +131,8 @@ namespace Repository.Tests
         public async Task GetBooksCountAsync_ValidData_Success()
         {
             // arrange
-            var shelf = new Shelf("Тестовая");
+            var name = "Тестовая2";
+            var shelf = new Shelf(name);
 
             var item1 = new Item(Book1);
             var item2 = new Item(Book2);
@@ -153,7 +154,8 @@ namespace Repository.Tests
         public async Task GetBooksCountByShelfName_ValidData_Success()
         {
             // arrange
-            var shelf = new Shelf("Тестовая");
+            var name = "Тестовая";
+            var shelf = new Shelf(name);
 
             var item1 = new Item(Book1);
             var item2 = new Item(Book2);
@@ -165,7 +167,7 @@ namespace Repository.Tests
             _ = await this.DataContext.SaveChangesAsync();
 
             // act
-            var result = await this.Repository.GetCountBooksAsync("Тестовая");
+            var result = await this.Repository.GetCountBooksAsync(name);
 
             // assret
             Assert.AreEqual(result, 2);
@@ -175,7 +177,7 @@ namespace Repository.Tests
         public async Task GetIdByName_ValidData_Success()
         {
             // arrange
-            var name = "Тестовая";
+            var name = "Тестовая1";
             var shelf = new Shelf(name);
 
             var item1 = new Item(new (
