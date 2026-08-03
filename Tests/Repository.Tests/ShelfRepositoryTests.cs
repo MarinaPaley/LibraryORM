@@ -178,8 +178,23 @@ namespace Repository.Tests
             var name = "Тестовая";
             var shelf = new Shelf(name);
 
-            var item1 = new Item(Book1);
-            var item2 = new Item(Book2);
+            var item1 = new Item(new (
+                "Война и мир",
+                1000,
+                "1",
+                BookType,
+                Publisher,
+                2024,
+                new HashSet<Manuscript>() { Manuscript1 }));
+            var item2 = new Item(new (
+            "Анна Каренина",
+            500,
+            "1",
+            BookType,
+            Publisher,
+            2024,
+            new HashSet<Manuscript>() { Manuscript2 })
+                );
 
             shelf.AddBook(item1);
             shelf.AddBook(item2);

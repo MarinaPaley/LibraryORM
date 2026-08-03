@@ -58,7 +58,7 @@ namespace Domain.Tests
             var language = CreateLanguage();
 
             // act & assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.Throws<NullReferenceException>(() =>
                 _ = new Manuscript(name: "Название", languages: language, authors: null!, date: null));
         }
 

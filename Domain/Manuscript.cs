@@ -44,6 +44,11 @@ namespace Domain
 
             this.authors = this.authors = new HashSet<Author>(authors, PersonComparer<Author>.Instance)
                 ?? throw new ArgumentNullException(nameof(authors));
+
+            foreach (var author in this.Authors)
+            {
+                author.Manuscripts.Add(this);
+            }
         }
 
         /// <summary>
@@ -56,7 +61,7 @@ namespace Domain
         /// <param name="origin"> Оригинальное наименование. </param>
         /// <param name="authors"> Список авторов. </param>
         public Manuscript(string name, ISet<Language> languages, DateOnly? from = null, DateOnly? to = null, string? origin = null, params Author[] authors)
-            : this(name, new HashSet<Language>(languages), new HashSet<Author>(authors, PersonComparer<Author>.Instance), new Range<DateOnly>(from, to), origin)
+            : this(name, new HashSet<Language>(languages, NamedEntityComparer<Language>.Instance), new HashSet<Author>(authors, PersonComparer<Author>.Instance), new Range<DateOnly>(from, to), origin)
         {
         }
 

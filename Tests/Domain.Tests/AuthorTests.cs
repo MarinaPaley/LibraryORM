@@ -27,6 +27,8 @@ namespace Domain.Tests
 
         private static readonly Author Tolstoy = new Author(new Person(NameValue));
 
+        private static readonly Language Language = new Language("Русский");
+
         /// <summary>
         /// Тест на конструктор с неизвестными датами жизни.
         /// </summary>
@@ -104,15 +106,29 @@ namespace Domain.Tests
         }
 
         [TestCaseSource(nameof(Books))]
-        public void AddBook_Data_Success(Manuscript? book, bool expected)
+        public void AddBook_Data_Success(string? manuscriptTitle, bool expected)
         {
-            var author = Ilf;
-            Assert.That(expected, Is.EqualTo(author.Manuscripts.Contains(book!)));
+            var author = new Author(new Person(new Name("Ильф", "Илья")));
+            var language = new Language("Русский");
+
+            Manuscript? book = null;
+            if (manuscriptTitle != null)
+            {
+                book = new Manuscript(
+                    manuscriptTitle,
+                    new HashSet<Language> { language },
+                    new DateOnly(1927, 1, 9),
+                    new DateOnly(1927, 1, 12),
+                    null,
+                    author);
+            }
+
+            Assert.That(author.Manuscripts.Contains(book!), Is.EqualTo(expected));
         }
 
         private static IEnumerable<TestCaseData> Books()
         {
-            yield return new TestCaseData(new Manuscript("12 стульев", new HashSet<Language>() { new ("Русский") }, new DateOnly(1927, 1, 9), new DateOnly(1927, 1, 12), null, Ilf), true);
+            yield return new TestCaseData("12 стульев", true);
             yield return new TestCaseData(null, false);
         }
 
