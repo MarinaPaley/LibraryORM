@@ -230,6 +230,11 @@ namespace Domain
         /// </summary>
         public string? Url { get; set; }
 
+        /// <summary>
+        /// Теги.
+        /// </summary>
+        public ISet<Tag> Tags { get; set; } = new HashSet<Tag>(BilingualNamedEntityComparer<Tag>.Instance);
+
         /// <inheritdoc/>
         public override bool Equals(Book? other)
         {
@@ -297,6 +302,34 @@ namespace Domain
             var result = this.BookType.Books.Remove(this);
             this.BookType = bookType;
             return result && bookType.Books.Add(this);
+        }
+
+        /// <summary>
+        /// Добавляет тег.
+        /// </summary>
+        /// <param name="tag"> Тег. </param>
+        /// <returns>
+        /// Если добавили, то <see langword="true"/>, иначе - <see langword="false"/>.
+        /// </returns>
+        public bool AddTag(Tag tag)
+        {
+            return tag is not null
+                && this.Tags.Add(tag)
+                && tag.Books.Add(this);
+        }
+
+        /// <summary>
+        /// Удаляет тег.
+        /// </summary>
+        /// <param name="tag"> Тег. </param>
+        /// <returns>
+        /// Если удалили, то <see langword="true"/>, иначе - <see langword="false"/>.
+        /// </returns>
+        public bool RemoveTag(Tag tag)
+        {
+            return tag is not null
+                && this.Tags.Remove(tag)
+                && tag.Books.Remove(this);
         }
     }
 }

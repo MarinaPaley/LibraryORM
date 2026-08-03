@@ -16,7 +16,7 @@ namespace DataAccessLayer.Configurations
         /// Инициализирует новый экземпляр класса <see cref="CityConfiguration"/>.
         /// </summary>
         public CityConfiguration()
-            : base(nameComment: "Назване города", nameIsUnique: true)
+            : base(nameComment: "Название города", nameIsUnique: true)
         {
         }
     }

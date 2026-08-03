@@ -117,11 +117,27 @@ namespace DataAccessLayer
         /// </summary>
         public DbSet<Person> Persons { get; set; }
 
+        /// <summary>
+        /// Теги.
+        /// </summary>
+        public DbSet<Tag> Tags { get; set; }
+
+        /// <summary>
+        /// Цвета.
+        /// </summary>
+        public DbSet<Color> Colors { get; set; }
+
+        /// <summary>
+        /// Категории.
+        /// </summary>
+        public DbSet<Category> Categories { get; set; }
+
         /// <inheritdoc/>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             _ = modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             modelBuilder.Ignore<Title>();
+            modelBuilder.Ignore<ColorCode>();
         }
     }
 }

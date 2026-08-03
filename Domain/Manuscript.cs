@@ -86,12 +86,12 @@ namespace Domain
         /// <summary>
         /// Переводчики.
         /// </summary>
-        public ISet<Translator> Translators { get; } = new HashSet<Translator>();
+        public ISet<Translator> Translators { get; } = new HashSet<Translator>(PersonComparer<Translator>.Instance);
 
         /// <summary>
         /// Рецензенты.
         /// </summary>
-        public ISet<Reviewer> Reviewers { get; } = new HashSet<Reviewer>();
+        public ISet<Reviewer> Reviewers { get; } = new HashSet<Reviewer>(PersonComparer<Reviewer>.Instance);
 
         /// <summary>
         /// Дата создания произведения.
@@ -101,17 +101,17 @@ namespace Domain
         /// <summary>
         /// Жанры.
         /// </summary>
-        public ISet<Genre> Genres { get; } = new HashSet<Genre>();
+        public ISet<Genre> Genres { get; } = new HashSet<Genre>(NamedEntityComparer<Genre>.Instance);
 
         /// <summary>
         /// Язык.
         /// </summary>
-        public ISet<Language> Languages { get; } = new HashSet<Language>();
+        public ISet<Language> Languages { get; } = new HashSet<Language>(NamedEntityComparer<Language>.Instance);
 
         /// <summary>
         /// Книги, в которых напечатано данное произведение.
         /// </summary>
-        public ISet<Book> Books { get; } = new HashSet<Book>();
+        public ISet<Book> Books { get; } = new HashSet<Book>(EntityComparer<Book>.Instance);
 
         /// <inheritdoc cref="object.ToString()"/>
         public override string ToString()
