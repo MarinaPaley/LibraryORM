@@ -1,4 +1,4 @@
-﻿// <copyright file="CityTest.cs" company="Филипченко Марина Алексеевна">
+﻿// <copyright file="ColorTests.cs" company="Филипченко Марина Алексеевна">
 // Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
@@ -9,31 +9,33 @@ namespace Domain.Tests
     using NUnit.Framework;
 
     /// <summary>
-    /// Модульные тесты для класса <see cref="City"/>.
+    /// Модульные тесты для класса <see cref="Color"/>.
     /// </summary>
     [TestFixture]
-    public sealed class CityTest
+    public sealed class ColorTests
     {
+        private static readonly ColorCode ColorCode = new ColorCode("#FF0000");
+
         [Test]
         public void Ctor_ValidData_Success()
         {
-            Assert.DoesNotThrow(() => _ = new City("City"));
+            Assert.DoesNotThrow(() => _ = new Color("Color", ColorCode));
         }
 
         [TestCase(null)]
         [TestCase("")]
         public void Ctor_BadData_Throws(string? name)
         {
-            Assert.Throws<ArgumentNullException>(() => _ = new City(name!));
+            Assert.Throws<ArgumentNullException>(() => _ = new Color(name!, ColorCode));
         }
 
-        [TestCase("City", "City", true)]
-        [TestCase("City", "Town", false)]
+        [TestCase("Red", "Red", true)]
+        [TestCase("Green", "Red", false)]
         public void Equals_Success(string thirst, string second, bool expected)
         {
             // Arrange
-            var left = new City(thirst);
-            var right = new City(second);
+            var left = new Color(thirst, ColorCode);
+            var right = new Color(second, ColorCode);
 
             // Act
             var actual = left.Equals(right);
