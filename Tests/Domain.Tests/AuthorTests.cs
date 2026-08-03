@@ -21,13 +21,7 @@ namespace Domain.Tests
 
         private static readonly Name OtherName = new ("Пушкин", "Александр", "Сергеевич");
 
-        private static readonly Author Ilf = new Author(new Person(new Name("Ильф", "Илья")));
-
-        private static readonly Author Petrov = new Author(new Person(new Name("Петров", "Евгений")));
-
         private static readonly Author Tolstoy = new Author(new Person(NameValue));
-
-        private static readonly Language Language = new Language("Русский");
 
         /// <summary>
         /// Тест на конструктор с неизвестными датами жизни.

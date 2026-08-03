@@ -193,8 +193,7 @@ namespace Repository.Tests
             BookType,
             Publisher,
             2024,
-            new HashSet<Manuscript>() { Manuscript2 })
-                );
+            new HashSet<Manuscript>() { Manuscript2 }));
 
             shelf.AddBook(item1);
             shelf.AddBook(item2);
