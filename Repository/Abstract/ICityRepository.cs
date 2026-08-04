@@ -11,7 +11,7 @@ namespace Repository.Abstract
     /// <summary>
     /// Интерфейс для работы с репозитрием городов.
     /// </summary>
-    internal interface ICityRepository
+    public interface ICityRepository
     {
         /// <summary>
         /// Получает список городов, в которых есть указанная улица.
