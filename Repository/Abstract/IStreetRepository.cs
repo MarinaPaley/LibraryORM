@@ -10,7 +10,7 @@ namespace Repository.Abstract
     /// <summary>
     /// Интерфейс для репозитрия с улицами.
     /// </summary>
-    internal interface IStreetRepository
+    public interface IStreetRepository
     {
         /// <summary>
         /// Показать список городов, в которых встречается улица с указанным именем.
