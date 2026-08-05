@@ -34,16 +34,17 @@ namespace Domain
             string? origin = null)
             : base(name, origin)
         {
+            ArgumentNullException.ThrowIfNull(authors);
+            ArgumentNullException.ThrowIfNull(languages);
             this.Dates = date;
-            this.Languages = languages ?? throw new ArgumentNullException(nameof(languages));
+            this.Languages = new HashSet<Language>(languages, NamedEntityComparer<Language>.Instance);
 
             if (authors.Count == 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(authors));
             }
 
-            this.authors = this.authors = new HashSet<Author>(authors, PersonComparer<Author>.Instance)
-                ?? throw new ArgumentNullException(nameof(authors));
+            this.authors = new HashSet<Author>(authors, PersonComparer<Author>.Instance);
 
             foreach (var author in this.Authors)
             {

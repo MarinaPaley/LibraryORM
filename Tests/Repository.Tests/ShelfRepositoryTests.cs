@@ -39,7 +39,6 @@ namespace Repository.Tests
         private static readonly Book Book1 = new (
                 "Война и мир",
                 1000,
-                "1",
                 BookType,
                 Publisher,
                 2024,
@@ -48,7 +47,6 @@ namespace Repository.Tests
         private static readonly Book Book2 = new (
             "Анна Каренина",
             500,
-            "1",
             BookType,
             Publisher,
             2024,
@@ -183,7 +181,6 @@ namespace Repository.Tests
             var item1 = new Item(new (
                 "Война и мир",
                 1000,
-                "1",
                 BookType,
                 Publisher,
                 2024,
@@ -191,7 +188,6 @@ namespace Repository.Tests
             var item2 = new Item(new (
             "Анна Каренина",
             500,
-            "1",
             BookType,
             Publisher,
             2024,

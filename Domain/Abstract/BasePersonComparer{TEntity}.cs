@@ -53,14 +53,6 @@ namespace Domain.Abstract
         /// <inheritdoc/>
         public override int GetHashCode([DisallowNull] TEntity obj)
         {
-            /*
-            if (obj?.Person?.FullName is null)
-            {
-                return obj?.Id.GetHashCode() ?? 0;
-            }
-
-            return HashCode.Combine(obj.Person.FullName, obj.Person.DateBirth);
-            */
             if (obj is null)
             {
                 return 0;

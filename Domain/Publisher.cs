@@ -42,30 +42,6 @@ namespace Domain
         /// </summary>
         public ISet<Book> Books { get; } = new HashSet<Book>(EntityComparer<Book>.Instance);
 
-        /// <summary>
-        /// Добавить книгу.
-        /// </summary>
-        /// <param name="book"> Книга.</param>
-        /// <returns> <see langword="true"/>, если добавили, иначе - <see langword="false"/>.</returns>
-        public bool AddBook(Book book)
-        {
-            return book is not null
-                && this.Books.Add(book)
-                && book.Publishers.Add(this);
-        }
-
-        /// <summary>
-        /// Удаление книги из серии.
-        /// </summary>
-        /// <param name="book"> Книга.</param>
-        /// <returns> <see langword="true"/>, если удалили, иначе - <see langword="false"/>.</returns>
-        public bool RemoveBook(Book book)
-        {
-            return book is not null
-                && this.Books.Remove(book)
-                && book.Publishers.Remove(this);
-        }
-
         /// <inheritdoc/>
         public override bool Equals(object? obj) => this.Equals(obj as Publisher);
 

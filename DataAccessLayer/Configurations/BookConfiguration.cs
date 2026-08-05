@@ -33,8 +33,10 @@ namespace DataAccessLayer.Configurations
                 .HasMaxLength(25)
                 .HasComment("ISBN");
 
-            _ = builder.HasMany(book => book.Publishers)
-                .WithMany(publisher => publisher.Books);
+            _ = builder.HasOne(book => book.Publisher)
+                .WithMany(publisher => publisher.Books)
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired(true);
 
             _ = builder.HasOne(book => book.Editor)
                 .WithMany(editor => editor.Books)
@@ -52,7 +54,7 @@ namespace DataAccessLayer.Configurations
 
             _ = builder.HasOne(book => book.BookType)
                 .WithMany(type => type.Books)
-                .OnDelete(DeleteBehavior.SetNull)
+                .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
 
             _ = builder.Property(book => book.Doi)

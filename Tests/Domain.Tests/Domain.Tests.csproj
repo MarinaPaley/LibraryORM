@@ -40,6 +40,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\..\TestDataProvider\TestDataProvider.csproj" />
   </ItemGroup>
 
 </Project>

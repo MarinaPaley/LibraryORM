@@ -6,91 +6,109 @@ namespace Domain.Tests
 {
     using System;
     using System.Collections.Generic;
+    using Domain;
     using NUnit.Framework;
+    using TestDataProvider;
 
     /// <summary>
-    /// Тесты для <see cref="Domain.Room"/>.
+    /// Модульные тесты для класса <see cref="Room"/>.
     /// </summary>
     [TestFixture]
     internal sealed class RoomTests
     {
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Room"/> выбрасывает исключение при передаче null вместо адреса.
+        /// </summary>
         [Test]
         public void Ctor_NullAddress_ThrowsArgumentNullException()
         {
-            // arrange & act & assert
-            Assert.Throws<ArgumentNullException>(() =>
-                _ = new Room(null!, "Комната"));
+            // Arrange, Act & Assert
+            Assert.Throws<ArgumentNullException>(() => _ = new Room(null!, "Комната"));
         }
 
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Room"/> выбрасывает исключение при передаче null в качестве названия.
+        /// </summary>
         [Test]
         public void Ctor_NullName_ThrowsArgumentNullException()
         {
-            // arrange
-            var address = CreateAddress();
+            // Arrange
+            var address = TestData.ValidAddress().Build();
 
-            // act & assert
-            Assert.Throws<ArgumentNullException>(() =>
-                _ = new Room(address, null!));
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(() => _ = new Room(address, null!));
         }
 
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Room"/> выбрасывает исключение при передаче строки из пробелов в качестве названия.
+        /// </summary>
         [Test]
         public void Ctor_EmptyName_AfterTrim_ThrowsArgumentNullException()
         {
-            // arrange
-            var address = CreateAddress();
+            // Arrange
+            var address = TestData.ValidAddress().Build();
 
-            // act & assert
-            Assert.Throws<ArgumentNullException>(() =>
-                _ = new Room(address, "   "));
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(() => _ = new Room(address, "   "));
         }
 
+        /// <summary>
+        /// Проверяет успешное создание <see cref="Room"/> с валидными данными.
+        /// </summary>
         [Test]
         public void Ctor_ValidData_Success()
         {
-            // arrange
-            var address = CreateAddress("Москва", "Ленина", 10);
+            // Arrange
+            var city = TestData.ValidCity().WithName("Москва").Build();
+            var street = TestData.ValidStreet().WithName("Ленина").WithCity(city).Build();
+            var address = TestData.ValidAddress().WithStreet(street).WithApartment(10).Build();
+            var name = "Кабинет директора";
 
-            // act
-            var room = new Room(address, "Кабинет директора");
+            // Act
+            var room = new Room(address, name);
 
-            // assert
+            // Assert
             using (Assert.EnterMultipleScope())
             {
                 Assert.That(room.Address, Is.SameAs(address));
-                Assert.That(room.Name.Value, Is.EqualTo("Кабинет директора"));
+                Assert.That(room.Name.Value, Is.EqualTo(name));
                 Assert.That(room.Cabinets, Is.Empty);
             }
         }
 
+        /// <summary>
+        /// Проверяет, что создание шкафа автоматически добавляет его в коллекцию комнаты (двусторонняя связь).
+        /// </summary>
         [Test]
         public void AddCabinet_ValidCabinet_AddsToBothCollections()
         {
-            // arrange
-            var room = new Room(CreateAddress(), "Комната");
-            var cabinet = new Cabinet(room, "Шкаф");
+            // Arrange
+            var room = TestData.ValidRoom().Build();
 
-            // act
-            var result = room.AddCabinet(cabinet);
+            // Act
+            var cabinet = new Cabinet(room, "Шкаф 1");
 
-            // assert
+            // Assert
             using (Assert.EnterMultipleScope())
             {
-                Assert.That(result, Is.True);
                 Assert.That(room.Cabinets, Contains.Item(cabinet));
                 Assert.That(cabinet.Room, Is.SameAs(room));
             }
         }
 
+        /// <summary>
+        /// Проверяет, что попытка добавить null в качестве шкафа возвращает false.
+        /// </summary>
         [Test]
         public void AddCabinet_NullCabinet_ReturnsFalse()
         {
-            // arrange
-            var room = new Room(CreateAddress(), "Комната");
+            // Arrange
+            var room = TestData.ValidRoom().Build();
 
-            // act
+            // Act
             var result = room.AddCabinet(null!);
 
-            // assert
+            // Assert
             using (Assert.EnterMultipleScope())
             {
                 Assert.That(result, Is.False);
@@ -98,37 +116,41 @@ namespace Domain.Tests
             }
         }
 
+        /// <summary>
+        /// Проверяет, что попытка добавить уже существующий шкаф возвращает false.
+        /// </summary>
         [Test]
         public void AddCabinet_DuplicateCabinet_ReturnsFalse()
         {
-            // arrange
-            var room = new Room(CreateAddress(), "Комната");
-            var cabinet = new Cabinet(room, "Шкаф");
-            room.AddCabinet(cabinet);
+            // Arrange
+            var room = TestData.ValidRoom().Build();
+            var cabinet = new Cabinet(room, "Шкаф 1"); // Автоматически добавляется в комнату
 
-            // act
+            // Act
             var result = room.AddCabinet(cabinet);
 
-            // assert
+            // Assert
             using (Assert.EnterMultipleScope())
             {
                 Assert.That(result, Is.False);
-                Assert.That(room.Cabinets.Count, Is.EqualTo(1));
+                Assert.That(room.Cabinets, Has.Count.EqualTo(1));
             }
         }
 
+        /// <summary>
+        /// Проверяет, что удаление существующего шкафа разрывает двустороннюю связь.
+        /// </summary>
         [Test]
         public void RemoveCabinet_ExistingCabinet_RemovesFromBothCollections()
         {
-            // arrange
-            var room = new Room(CreateAddress(), "Комната");
-            var cabinet = new Cabinet(room, "Шкаф");
-            room.AddCabinet(cabinet);
+            // Arrange
+            var room = TestData.ValidRoom().Build();
+            var cabinet = new Cabinet(room, "Шкаф 1");
 
-            // act
+            // Act
             var result = room.RemoveCabinet(cabinet);
 
-            // assert
+            // Assert
             using (Assert.EnterMultipleScope())
             {
                 Assert.That(result, Is.True);
@@ -137,18 +159,21 @@ namespace Domain.Tests
             }
         }
 
+        /// <summary>
+        /// Проверяет, что попытка удалить шкаф, принадлежащий другой комнате, возвращает false.
+        /// </summary>
         [Test]
         public void RemoveCabinet_NonExistingCabinet_ReturnsFalse()
         {
-            // arrange
-            var room = new Room(CreateAddress(), "Комната");
-            var otherRoom = new Room(CreateAddress(), "Другая комната");
-            var cabinet = new Cabinet(otherRoom, "Чужой шкаф");
+            // Arrange
+            var room = TestData.ValidRoom().WithName("Комната").Build();
+            var otherRoom = TestData.ValidRoom().WithName("Другая Комната").Build();
+            var cabinet = TestData.ValidCabinet().WithName("Чужой шкаф").WithRoom(otherRoom).Build();
 
-            // act
+            // Act
             var result = room.RemoveCabinet(cabinet);
 
-            // assert
+            // Assert
             using (Assert.EnterMultipleScope())
             {
                 Assert.That(result, Is.False);
@@ -156,172 +181,226 @@ namespace Domain.Tests
             }
         }
 
+        /// <summary>
+        /// Проверяет, что попытка удалить null в качестве шкафа возвращает false.
+        /// </summary>
         [Test]
         public void RemoveCabinet_NullCabinet_ReturnsFalse()
         {
-            // arrange
-            var room = new Room(CreateAddress(), "Комната");
+            // Arrange
+            var room = TestData.ValidRoom().WithName("Комната").Build();
 
-            // act
+            // Act
             var result = room.RemoveCabinet(null!);
 
-            // assert
+            // Assert
             Assert.That(result, Is.False);
         }
 
+        /// <summary>
+        /// Проверяет, что сравнение комнаты с самой собой возвращает true.
+        /// </summary>
         [Test]
         public void Equals_SameReference_ReturnsTrue()
         {
-            // arrange
-            var room = new Room(CreateAddress(), "Комната");
+            // Arrange
+            var room = TestData.ValidRoom().WithName("Комната").Build();
 
-            // act & assert
+            // Act & Assert
             Assert.That(room.Equals(room), Is.True);
         }
 
+        /// <summary>
+        /// Проверяет, что сравнение комнаты с null возвращает false.
+        /// </summary>
         [Test]
         public void Equals_Null_ReturnsFalse()
         {
-            // arrange
-            var room = new Room(CreateAddress(), "Комната");
+            // Arrange
+            var room = TestData.ValidRoom().WithName("Комната").Build();
 
-            // act & assert
+            // Act & Assert
             Assert.That(room.Equals(null), Is.False);
         }
 
+        /// <summary>
+        /// Проверяет, что сравнение комнаты с объектом другого типа возвращает false.
+        /// </summary>
         [Test]
         public void Equals_DifferentType_ReturnsFalse()
         {
-            // arrange
-            var room = new Room(CreateAddress(), "Комната");
+            // Arrange
+            var room = TestData.ValidRoom().WithName("Комната").Build();
 
-            // act & assert
+            // Act & Assert
             Assert.That(room.Equals("not a room"), Is.False);
         }
 
+        /// <summary>
+        /// Проверяет, что комнаты с одинаковым адресом и названием считаются равными.
+        /// </summary>
         [Test]
         public void Equals_SameAddressAndName_ReturnsTrue()
         {
-            // arrange
-            var address = CreateAddress();
-            var room1 = new Room(address, "Кабинет");
-            var room2 = new Room(address, "Кабинет");
+            // Arrange
+            var room1 = TestData.ValidRoom().WithName("Кабинет").Build();
+            var room2 = TestData.ValidRoom().WithName("Кабинет").Build();
 
-            // act & assert
+            // Act & Assert
             Assert.That(room1, Is.EqualTo(room2));
         }
 
+        /// <summary>
+        /// Проверяет, что комнаты с разными адресами не равны, даже если названия совпадают.
+        /// </summary>
         [Test]
         public void Equals_DifferentAddress_ReturnsFalse()
         {
-            // arrange
-            var address1 = CreateAddress(city: "Москва");
-            var address2 = CreateAddress(city: "Санкт-Петербург");
-            var room1 = new Room(address1, "Кабинет");
-            var room2 = new Room(address2, "Кабинет");
+            // Arrange
+            var city1 = TestData.ValidCity().WithName("Москва").Build();
+            var city2 = TestData.ValidCity().WithName("Санкт-Петербург").Build();
+            var street1 = TestData.ValidStreet().WithName("Ленина").WithCity(city1).Build();
+            var street2 = TestData.ValidStreet().WithName("Ленина").WithCity(city2).Build();
+            var address1 = TestData.ValidAddress().WithStreet(street1).WithApartment(10).Build();
+            var address2 = TestData.ValidAddress().WithStreet(street2).WithApartment(10).Build();
+            var room1 = TestData.ValidRoom().WithName("Кабинет").WithAddress(address1).Build();
+            var room2 = TestData.ValidRoom().WithName("Кабинет").WithAddress(address2).Build();
 
-            // act
+            // Act
             var actual = room1.Equals(room2);
 
-            // assert
+            // Assert
             Assert.That(actual, Is.False);
         }
 
+        /// <summary>
+        /// Проверяет, что комнаты с разными названиями не равны.
+        /// </summary>
         [Test]
         public void Equals_DifferentName_ReturnsFalse()
         {
-            // arrange
-            var address = CreateAddress();
-            var room1 = new Room(address, "Кабинет");
-            var room2 = new Room(address, "Спальня");
+            // Arrange
+            var room1 = TestData.ValidRoom().WithName("Кабинет").Build();
+            var room2 = TestData.ValidRoom().WithName("Спальня").Build();
 
-            // act & assert
+            // Act & Assert
             Assert.That(room1, Is.Not.EqualTo(room2));
         }
 
+        /// <summary>
+        /// Проверяет, что комнаты с одинаковым адресом и названием имеют одинаковый хеш-код.
+        /// </summary>
         [Test]
         public void GetHashCode_SameAddressAndName_SameHashCode()
         {
-            // arrange
-            var address = CreateAddress();
-            var room1 = new Room(address, "Кабинет");
-            var room2 = new Room(address, "Кабинет");
+            // Arrange
+            var room1 = TestData.ValidRoom().WithName("Кабинет").Build();
+            var room2 = TestData.ValidRoom().WithName("Кабинет").Build();
 
-            // act & assert
+            // Act & Assert
             Assert.That(room1.GetHashCode(), Is.EqualTo(room2.GetHashCode()));
         }
 
+        /// <summary>
+        /// Проверяет, что комнаты с разными адресами имеют разные хеш-коды и не равны.
+        /// </summary>
         [Test]
-        public void GetHashCode_DifferentAddress_DifferenObjects()
+        public void GetHashCode_DifferentAddress_DifferentHashCode()
         {
-            // arrange
-            var address1 = CreateAddress("Москва");
-            var address2 = CreateAddress("Санкт-Петербург");
-            var room1 = new Room(address1, "Кабинет");
-            var room2 = new Room(address2, "Кабинет");
+            // Arrange
+            var city1 = TestData.ValidCity().WithName("Москва").Build();
+            var city2 = TestData.ValidCity().WithName("Санкт-Петербург").Build();
+            var street1 = TestData.ValidStreet().WithName("Ленина").WithCity(city1).Build();
+            var street2 = TestData.ValidStreet().WithName("Ленина").WithCity(city2).Build();
+            var address1 = TestData.ValidAddress().WithStreet(street1).WithApartment(10).Build();
+            var address2 = TestData.ValidAddress().WithStreet(street2).WithApartment(10).Build();
+            var room1 = TestData.ValidRoom().WithName("Кабинет").WithAddress(address1).Build();
+            var room2 = TestData.ValidRoom().WithName("Кабинет").WithAddress(address2).Build();
 
-            // act & assert
+            // Act & Assert
             Assert.That(room1, Is.Not.EqualTo(room2));
             Assert.That(room1.GetHashCode(), Is.Not.EqualTo(room2.GetHashCode()));
         }
 
+        /// <summary>
+        /// Проверяет, что метод ToString возвращает название комнаты и адрес, если шкафов нет.
+        /// </summary>
         [Test]
         public void ToString_WithoutCabinets_ReturnsRoomNameAndAddress()
         {
-            // arrange
-            var room = new Room(CreateAddress("Москва", "Ленина", 10), "Кабинет");
+            // Arrange
+            var city = TestData.ValidCity().WithName("Москва").Build();
+            var street = TestData.ValidStreet().WithName("Ленина").WithCity(city).Build();
+            var address = TestData.ValidAddress().WithStreet(street).WithApartment(10).Build();
+            var room = TestData.ValidRoom().WithName("Кабинет").WithAddress(address).Build();
 
-            // act
+            // Act
             var result = room.ToString();
 
-            // assert
-            Assert.That(result, Does.Contain("Кабинет"));
-            Assert.That(result, Does.Contain("Москва"));
-            Assert.That(result, Does.Contain("Ленина"));
+            // Assert
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(result, Does.Contain("Кабинет"));
+                Assert.That(result, Does.Contain("Москва"));
+                Assert.That(result, Does.Contain("Ленина"));
+            }
         }
 
+        /// <summary>
+        /// Проверяет, что метод ToString включает список шкафов, если они есть.
+        /// </summary>
         [Test]
         public void ToString_WithCabinets_IncludesCabinetsList()
         {
-            // arrange
-            var room = new Room(CreateAddress(), "Комната");
-            _ = room.AddCabinet(new Cabinet(room, "Шкаф 1"));
-            _ = room.AddCabinet(new Cabinet(room, "Шкаф 2"));
+            // Arrange
+            var room = TestData.ValidRoom().WithName("Комната").Build();
+            var cabinet1 = new Cabinet(room, "Шкаф 1");
+            var cabinet2 = new Cabinet(room, "Шкаф 2");
 
-            // act
+            // Act
             var result = room.ToString();
 
-            // assert
-            Assert.That(result, Does.Contain("Комната"));
-            Assert.That(result, Does.Contain("Шкаф 1"));
-            Assert.That(result, Does.Contain("Шкаф 2"));
+            // Assert
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(room.Cabinets, Does.Contain(cabinet1), "Шкаф 1 должен быть в коллекции комнаты");
+                Assert.That(room.Cabinets, Does.Contain(cabinet2), "Шкаф 2 должен быть в коллекции комнаты");
+
+                Assert.That(result, Does.Contain("Комната"));
+                Assert.That(result, Does.Contain("Шкаф 1"));
+                Assert.That(result, Does.Contain("Шкаф 2"));
+            }
         }
 
+        /// <summary>
+        /// Проверяет, что коллекция шкафов изначально пуста.
+        /// </summary>
         [Test]
         public void Cabinets_Collection_StartsEmpty()
         {
-            // arrange & act
-            var room = new Room(CreateAddress(), "Комната");
+            // Arrange & Act
+            var room = TestData.ValidRoom().WithName("Комната").Build();
 
-            // assert
+            // Assert
             Assert.That(room.Cabinets, Is.Empty);
         }
 
+        /// <summary>
+        /// Проверяет, что ссылка на коллекцию шкафов возвращает корректный тип ISet.
+        /// </summary>
         [Test]
         public void Cabinets_Collection_IsReadOnlyExternally()
         {
-            // arrange
-            var room = new Room(CreateAddress(), "Комната");
+            // Arrange
+            var room = TestData.ValidRoom().WithName("Комната").Build();
             var cabinetsReference = room.Cabinets;
 
-            // act & assert — коллекция доступна, но изменение должно идти через AddCabinet
-            Assert.That(cabinetsReference, Is.Not.Null);
-            Assert.That(cabinetsReference, Is.InstanceOf<ISet<Cabinet>>());
+            // Act & Assert
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(cabinetsReference, Is.Not.Null);
+                Assert.That(cabinetsReference, Is.InstanceOf<ISet<Cabinet>>());
+            }
         }
-
-        private static Address CreateAddress(string city = "Город", string street = "Улица", int house = 1) =>
-            new (new Street(street, new City(city)), house);
-
-        private static Cabinet CreateCabinet(Room room, string name = "Шкаф") => new (room, name);
     }
 }

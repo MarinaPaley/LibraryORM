@@ -19,11 +19,11 @@ namespace Domain
         /// </summary>
         /// <param name="title"> Название. </param>
         /// <param name="pages"> Количество страниц. </param>
-        /// <param name="ibsn"> Код <c>ISBN</c>. </param>
         /// <param name="bookType"> Тип книги. </param>
         /// <param name="publisher"> Издательство.</param>
         /// <param name="year"> Год издания. </param>
         /// <param name="manuscripts"> Рукописи. </param>
+        /// <param name="ibsn"> Код <c>ISBN</c>. </param>
         /// <param name="volume"> Том.</param>
         /// <param name="annotation"> Аннотация. </param>
         /// <param name="edition"> Редакция. </param>
@@ -42,11 +42,11 @@ namespace Domain
         public Book(
             string? title,
             int pages,
-            string ibsn,
             BookType bookType,
             Publisher publisher,
             int year,
             ISet<Manuscript> manuscripts,
+            string? ibsn = null,
             int? volume = null,
             string? annotation = null,
             string? edition = null,
@@ -77,6 +77,10 @@ namespace Domain
                 manuscript.Books.Add(this);
             }
 
+            this.Publisher = publisher;
+            publisher.Books.Add(this);
+            this.BookType = bookType;
+
             this.Annotation = annotation.TrimOrNull();
             this.Volume = volume;
             this.Edition = edition.TrimOrNull();
@@ -84,7 +88,6 @@ namespace Domain
 
             _ = editor?.AddBook(this);
             _ = seria?.AddBook(this);
-            _ = publisher.AddBook(this);
 
             this.Doi = doi;
             this.Url = url;
@@ -114,7 +117,7 @@ namespace Domain
         public Book(
             string title,
             int pages,
-            string ibsn,
+            string? ibsn,
             BookType bookType,
             Publisher publisher,
             int year,
@@ -129,11 +132,11 @@ namespace Domain
             : this(
                    title,
                    pages,
-                   ibsn,
                    bookType,
                    publisher,
                    year,
                    new HashSet<Manuscript>(manuscripts),
+                   ibsn,
                    volume,
                    annotation,
                    edition,
@@ -171,9 +174,9 @@ namespace Domain
         public string? ISBN { get; }
 
         /// <summary>
-        /// Издательства.
+        /// Издательсто.
         /// </summary>
-        public ISet<Publisher> Publishers { get; } = new HashSet<Publisher>(NamedEntityComparer<Publisher>.Instance);
+        public Publisher Publisher { get; set; }
 
         /// <summary>
         /// Тип книги.
@@ -238,19 +241,54 @@ namespace Domain
         /// <inheritdoc/>
         public override bool Equals(Book? other)
         {
-            return ReferenceEquals(this, other)
-                || (other is not null
-                    && this.Title == other.Title
-                    && this.Publishers.Equals(other.Publishers)
-                    && this.Year == other.Year
-                    && StringComparer.OrdinalIgnoreCase.Equals(this.Edition, other.Edition));
+            if (ReferenceEquals(this, other))
+            {
+                return true;
             }
+
+            if (other is null)
+            {
+                return false;
+            }
+
+            // Если ISBN задан у обеих книг — сравниваем по ISBN (главный идентификатор).
+            if (this.ISBN is not null && other.ISBN is not null)
+            {
+                return string.Equals(this.ISBN, other.ISBN, StringComparison.OrdinalIgnoreCase);
+            }
+
+            // Если ISBN задан только у одной книги — они разные.
+            if (this.ISBN is not null || other.ISBN is not null)
+            {
+                return false;
+            }
+
+            // Если ISBN отсутствует у обеих книг — сравниваем по остальным полям.
+            return this.Title == other.Title
+                && this.Publisher.Equals(other.Publisher)
+                && this.Year == other.Year
+                && StringComparer.OrdinalIgnoreCase.Equals(this.Edition, other.Edition);
+        }
 
         /// <inheritdoc/>
         public override bool Equals(object? obj) => this.Equals(obj as Book);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => HashCode.Combine(this.Title, this.Manuscripts, this.Publishers, this.Edition);
+        public override int GetHashCode()
+        {
+            // Если ISBN задан, он является главным идентификатором.
+            if (this.ISBN is not null)
+            {
+                return HashCode.Combine(this.ISBN.ToUpperInvariant());
+            }
+
+            // Если ISBN отсутствует, используем комбинацию остальных полей.
+            return HashCode.Combine(
+                this.Title,
+                this.Publisher,
+                this.Year,
+                this.Edition);
+        }
 
         /// <inheritdoc cref="object.ToString()"/>
         public override string ToString()
@@ -291,7 +329,9 @@ namespace Domain
         /// Меняет тип издания.
         /// </summary>
         /// <param name="bookType"> Тип издания. </param>
-        /// <returns> Если изменили, то <see langword="true"/>, иначе - <see langword="false"/>.</returns>
+        /// <returns>
+        /// Если изменили, то <see langword="true"/>, иначе - <see langword="false"/>.
+        /// </returns>
         public bool ChangeBookType(BookType bookType)
         {
             if (bookType is null)
@@ -302,6 +342,25 @@ namespace Domain
             var result = this.BookType.Books.Remove(this);
             this.BookType = bookType;
             return result && bookType.Books.Add(this);
+        }
+
+        /// <summary>
+        /// Меняет издательства.
+        /// </summary>
+        /// <param name="publisher"> Издательство.
+        /// <returns>
+        /// Если изменили, то <see langword="true"/>, иначе - <see langword="false"/>.
+        /// </returns>
+        public bool ChangePublisher(Publisher publisher)
+        {
+            if (publisher is null)
+            {
+                return false;
+            }
+
+            var result = this.Publisher.Books.Remove(this);
+            this.Publisher = publisher;
+            return result && publisher.Books.Add(this);
         }
 
         /// <summary>
