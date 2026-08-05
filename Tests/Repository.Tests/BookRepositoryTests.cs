@@ -26,7 +26,6 @@ namespace Repository.Tests
             var book = new Book(
                 "Книга",
                 100,
-                "1",
                 bookType,
                 publisher,
                 2024,
@@ -52,7 +51,6 @@ namespace Repository.Tests
             var book = new Book(
                 "Книга",
                 100,
-                "1",
                 new BookType("Книга"),
                 publisher,
                 2024,
@@ -80,7 +78,6 @@ namespace Repository.Tests
             var book = new Book(
                 "Книга",
                 100,
-                "1",
                 new BookType("Книга"),
                 publisher,
                 2024,
@@ -110,7 +107,6 @@ namespace Repository.Tests
             var book = new Book(
                 "Книга",
                 100,
-                "1",
                 new BookType("Книга"),
                 publisher,
                 2024,
@@ -138,7 +134,6 @@ namespace Repository.Tests
             var book = new Book(
                 title,
                 100,
-                "1",
                 new BookType("Книга"),
                 publisher,
                 2024,
@@ -163,7 +158,6 @@ namespace Repository.Tests
             var book = new Book(
                 title,
                 100,
-                "1",
                 new BookType("Книга"),
                 publisher,
                 2024,
@@ -217,11 +211,11 @@ namespace Repository.Tests
                 var manuscript2 = NewManuscript("Рукопись 2", language, author);
                 var manuscript3 = NewManuscript("Рукопись 3", language, author);
 
-                var book1 = new Book("Книга", 120, "12345", bookType, publisher, 2026, new HashSet<Manuscript> { manuscript1, manuscript2, manuscript3 });
+                var book1 = new Book("Книга", 120, bookType, publisher, 2026, new HashSet<Manuscript> { manuscript1, manuscript2, manuscript3 }, "12345");
                 var item1 = new Item(book1);
                 shelf1.AddBook(item1);
 
-                var book3 = new Book(null, 50, "123", bookType, publisher, 2025, new HashSet<Manuscript> { manuscript1 });
+                var book3 = new Book(null, 50, bookType, publisher, 2025, new HashSet<Manuscript> { manuscript1 }, "123");
                 var item2 = new Item(book3);
                 shelf2.AddBook(item2);
 
@@ -240,7 +234,7 @@ namespace Repository.Tests
                 var author = NewAuthor("Фамилия", "Имя", "Отчество");
 
                 var manuscript3 = NewManuscript("Рукопись 3", language, author);
-                var book2 = new Book(null, 100, "12", bookType, publisher, 2025, new HashSet<Manuscript> { manuscript3 });
+                var book2 = new Book(null, 100, bookType, publisher, 2025, new HashSet<Manuscript> { manuscript3 });
                 var item = new Item(book2);
                 shelf1.AddBook(item);
 
@@ -262,11 +256,11 @@ namespace Repository.Tests
                 var manuscript1 = NewManuscript("Рукопись 1", language, author);
                 var manuscript2 = NewManuscript("Рукопись 2", language, author);
 
-                var book1 = new Book("Книга", 120, "12345", bookType, publisher, 2026, new HashSet<Manuscript> { manuscript1, manuscript2 });
+                var book1 = new Book("Книга", 120, bookType, publisher, 2026, new HashSet<Manuscript> { manuscript1, manuscript2 }, "12345");
                 var item1 = new Item(book1);
                 shelf1.AddBook(item1);
 
-                var book3 = new Book(null, 50, "123", bookType, publisher, 2025, new HashSet<Manuscript> { manuscript1 });
+                var book3 = new Book(null, 50, bookType, publisher, 2025, new HashSet<Manuscript> { manuscript1 }, "123");
                 var item3 = new Item(book3);
                 shelf2.AddBook(item3);
 
@@ -285,7 +279,7 @@ namespace Repository.Tests
                 var author = NewAuthor("Фамилия", "Имя", "Отчество");
 
                 var manuscript3 = NewManuscript("Рукопись 3", language, author);
-                var book2 = new Book(null, 100, "12", bookType, publisher, 2025, new HashSet<Manuscript> { manuscript3 });
+                var book2 = new Book(null, 100, bookType, publisher, 2025, new HashSet<Manuscript> { manuscript3 });
                 var item = new Item(book2);
                 shelf1.AddBook(item);
 

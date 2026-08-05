@@ -8,6 +8,8 @@ namespace Domain.Tests
     using System.Collections.Generic;
     using Domain;
     using NUnit.Framework;
+    using Staff;
+    using TestDataProvider;
 
     /// <summary>
     /// Модульные тесты для класса <see cref="Author"/>.
@@ -15,134 +17,261 @@ namespace Domain.Tests
     [TestFixture]
     public sealed class AuthorTests
     {
-        private static readonly Name NameValue = new ("Толстой", "Лев", "Николаевич");
-
-        private static readonly Name NullPatronicName = new ("Толстой", "Лев");
-
-        private static readonly Name OtherName = new ("Пушкин", "Александр", "Сергеевич");
-
-        private static readonly Author Tolstoy = new Author(new Person(NameValue));
-
         /// <summary>
-        /// Тест на конструктор с неизвестными датами жизни.
+        /// Проверяет, что конструктор <see cref="Author"/> успешно создает объект с различными комбинациями дат жизни.
+        /// Имя и фамилия обязательно должны быть заданы, если задаем какие-либо поля у Персоны.
         /// </summary>
         /// <param name="dateBirth"> Дата рождения. </param>
         /// <param name="dateDeath"> Дата смерти. </param>
         [TestCaseSource(nameof(ValidDateData))]
-        public void Ctor_DateLiveNull_DoesNotThrow(DateOnly? dateBirth, DateOnly? dateDeath)
+        public void Ctor_WithValidDates_DoesNotThrow(DateOnly? dateBirth, DateOnly? dateDeath)
         {
-            Assert.DoesNotThrow(() => _ = new Author(new Person(NameValue, dateBirth, dateDeath)));
+            // Act & Assert
+            Assert.DoesNotThrow(() => _ = TestData.ValidAuthor()
+                .WithPerson(
+                    TestData.ValidPerson()
+                        .WithFirstName("Имя")
+                        .WithFamilyName("Фамилия")
+                        .WithDateBirth(dateBirth)
+                        .WithDateDeath(dateDeath)
+                        .Build())
+                .Build());
         }
 
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Author"/> выбрасывает исключение при передаче null вместо персоны.
+        /// </summary>
         [Test]
-        public void CtorNullFullName_Expected_Exception()
+        public void Ctor_NullPerson_ThrowsArgumentNullException()
         {
+            // Act & Assert
             Assert.Throws<ArgumentNullException>(() => _ = new Author(null!));
         }
 
         /// <summary>
-        /// Сравнение двух разных авторов.
+        /// Проверяет, что два разных автора не равны друг другу.
         /// </summary>
         [Test]
-        public void Equals_DifferentAuthors_False()
+        public void Equals_DifferentAuthors_ReturnsFalse()
         {
             // Arrange
-            var author1 = new Author(new Person(NameValue, new DateOnly(1828, 09, 28), null));
-            var author2 = new Author(new Person(OtherName, new DateOnly(1799, 06, 06), null));
+            var author1 = TestData.ValidAuthor()
+                .WithPerson(
+                    TestData.ValidPerson()
+                        .WithFirstName("Имя")
+                        .WithFamilyName("Фамилия")
+                        .WithDateBirth(new DateOnly(1828, 09, 28))
+                        .Build())
+                .Build();
+
+            var author2 = TestData.ValidAuthor()
+                .WithPerson(
+                    TestData.ValidPerson()
+                        .WithFirstName("Имя")
+                        .WithFamilyName("Фамилия")
+                        .WithDateBirth(new DateOnly(1799, 06, 06))
+                        .Build())
+                .Build();
 
             // Act & Assert
             Assert.That(author1, Is.Not.EqualTo(author2));
         }
 
+        /// <summary>
+        /// Проверяет, что два автора, созданные с дефолтными значениями, равны друг другу.
+        /// </summary>
         [Test]
-        public void Equals_SameAuthors_True()
+        public void Equals_SameAuthors_ReturnsTrue()
         {
             // Arrange
-            var author1 = new Author(new Person(NameValue));
-            var author2 = new Author(new Person(NameValue));
+            var author1 = TestData.ValidAuthor().Build();
+            var author2 = TestData.ValidAuthor().Build();
 
             // Act & Assert
             Assert.That(author1, Is.EqualTo(author2));
         }
 
         /// <summary>
-        /// Сравнение двух "разных" авторов, т.к. с точки зрения программирования они разные.
+        /// Проверяет, что авторы с разным отчеством не равны друг другу.
         /// </summary>
         [Test]
-        public void Equals_SimilarAuthorsDiffernetPatronicName_False()
+        public void Equals_SimilarAuthorsDifferentPatronymicName_ReturnsFalse()
         {
             // Arrange
-            var author1 = new Author(new Person(NameValue));
-            var author2 = new Author(new Person(NullPatronicName));
+            var author1 = TestData.ValidAuthor()
+                .WithPerson(
+                    TestData.ValidPerson()
+                        .WithFirstName("Лев")
+                        .WithFamilyName("Толстой")
+                        .WithPatronymicName("Николаевич")
+                        .Build())
+                .Build();
+
+            var author2 = TestData.ValidAuthor()
+                .WithPerson(
+                    TestData.ValidPerson()
+                        .WithFirstName("Лев")
+                        .WithFamilyName("Толстой")
+                        .Build())
+                .Build();
 
             // Act & Assert
             Assert.That(author1, Is.Not.EqualTo(author2));
         }
 
+        /// <summary>
+        /// Проверяет, что авторы с разными датами рождения не равны друг другу.
+        /// </summary>
+        /// <param name="dateBirth1"> Дата рождения первого автора. </param>
+        /// <param name="dateBirth2"> Дата рождения второго автора. </param>
         [TestCaseSource(nameof(ValidNullDates))]
-        public void Equals_SimilarAuthorsDifferentDates_False(
+        public void Equals_SimilarAuthorsDifferentDates_ReturnsFalse(
             DateOnly? dateBirth1,
             DateOnly? dateBirth2)
         {
             // Arrange
-            var author1 = new Author(new Person(NameValue, dateBirth1));
-            var author2 = new Author(new Person(NameValue, dateBirth2));
+            var author1 = TestData.ValidAuthor()
+                .WithPerson(
+                    TestData.ValidPerson()
+                        .WithFirstName("Имя")
+                        .WithFamilyName("Фамилия")
+                        .WithDateBirth(dateBirth1)
+                        .Build())
+                .Build();
+
+            var author2 = TestData.ValidAuthor()
+                .WithPerson(
+                    TestData.ValidPerson()
+                        .WithFirstName("Имя")
+                        .WithFamilyName("Фамилия")
+                        .WithDateBirth(dateBirth2)
+                        .Build())
+                .Build();
+
+            // Act
             var result = author1.Equals(author2);
 
-            // Act & Assert
+            // Assert
             Assert.That(result, Is.False);
         }
 
+        /// <summary>
+        /// Проверяет корректность строкового представления автора.
+        /// </summary>
+        /// <param name="author"> Тестируемый автор. </param>
+        /// <param name="expected"> Ожидаемая строка. </param>
         [TestCaseSource(nameof(Authors))]
-        public void ToString_ValidData_Success(Author author, string expected)
+        public void ToString_ValidData_ReturnsExpectedString(Author author, string expected)
         {
+            // Act & Assert
             Assert.That(author.ToString(), Is.EqualTo(expected));
         }
 
-        [TestCaseSource(nameof(Books))]
-        public void AddBook_Data_Success(string? manuscriptTitle, bool expected)
+        /// <summary>
+        /// Проверяет, что при создании рукописи с автором происходит двусторонняя связь,
+        /// либо что при null-названии рукописи связь не устанавливается.
+        /// </summary>
+        /// <param name="manuscriptTitle"> Название рукописи (может быть null). </param>
+        /// <param name="expected"> Ожидаемый результат наличия рукописи в коллекции автора. </param>
+        [TestCaseSource(nameof(ManuscriptsData))]
+        public void CreateManuscript_WithAuthor_ShouldEstablishBidirectionalLink(
+            string? manuscriptTitle,
+            bool expected)
         {
-            var author = new Author(new Person(new Name("Ильф", "Илья")));
-            var language = new Language("Русский");
+            // Arrange
+            var author = TestData.ValidAuthor()
+                .WithPerson(
+                    TestData.ValidPerson()
+                        .WithFamilyName("Ильф")
+                        .WithFirstName("Илья"))
+                .Build();
 
-            Manuscript? book = null;
-            if (manuscriptTitle != null)
+            var language = TestData.ValidLanguage().WithName("Русский").Build();
+
+            Manuscript? manuscript = null;
+            if (manuscriptTitle is not null)
             {
-                book = new Manuscript(
-                    manuscriptTitle,
-                    new HashSet<Language> { language },
-                    new DateOnly(1927, 1, 9),
-                    new DateOnly(1927, 1, 12),
-                    null,
-                    author);
+                manuscript = TestData.ValidManuscript()
+                    .WithName(manuscriptTitle)
+                    .WithLanguages(new HashSet<Language> { language, })
+                    .WithDate(new Range<DateOnly>(
+                        new DateOnly(1927, 1, 9),
+                        new DateOnly(1927, 1, 12)))
+                    .WithAuthors(new HashSet<Author> { author, })
+                    .Build();
             }
 
-            Assert.That(author.Manuscripts.Contains(book!), Is.EqualTo(expected));
+            // Act & Assert
+            Assert.That(author.Manuscripts.Contains(manuscript!), Is.EqualTo(expected));
         }
 
-        private static IEnumerable<TestCaseData> Books()
+        /// <summary>
+        /// Предоставляет тестовые данные для проверки двусторонней связи с рукописью.
+        /// </summary>
+        /// <returns> Коллекция тестовых данных. </returns>
+        private static IEnumerable<TestCaseData> ManuscriptsData()
         {
             yield return new TestCaseData("12 стульев", true);
             yield return new TestCaseData(null, false);
         }
 
+        /// <summary>
+        /// Предоставляет тестовые данные для проверки метода ToString.
+        /// </summary>
+        /// <returns> Коллекция тестовых данных. </returns>
         private static IEnumerable<TestCaseData> Authors()
         {
             yield return new TestCaseData(
-                new Author(new Person(NullPatronicName)),
+                TestData.ValidAuthor()
+                    .WithPerson(
+                        TestData.ValidPerson()
+                            .WithFirstName("Лев")
+                            .WithFamilyName("Толстой")
+                            .Build())
+                    .Build(),
                 "Толстой Лев");
 
-            yield return new TestCaseData(Tolstoy, "Толстой Лев Николаевич");
+            yield return new TestCaseData(
+                TestData.ValidAuthor()
+                    .WithPerson(
+                        TestData.ValidPerson()
+                            .WithFirstName("Лев")
+                            .WithFamilyName("Толстой")
+                            .WithPatronymicName("Николаевич")
+                            .Build())
+                    .Build(),
+                "Толстой Лев Николаевич");
 
             yield return new TestCaseData(
-                new Author(new Person(NameValue, new DateOnly(1828, 09, 28))),
+                TestData.ValidAuthor()
+                    .WithPerson(
+                        TestData.ValidPerson()
+                            .WithFirstName("Лев")
+                            .WithFamilyName("Толстой")
+                            .WithPatronymicName("Николаевич")
+                            .WithDateBirth(new DateOnly(1828, 09, 28))
+                            .Build())
+                    .Build(),
                 "Толстой Лев Николаевич Год рождения: 28.09.1828");
 
             yield return new TestCaseData(
-                new Author(new Person(NameValue, new DateOnly(1828, 09, 28), new DateOnly(1910, 10, 20))),
+                TestData.ValidAuthor()
+                    .WithPerson(
+                        TestData.ValidPerson()
+                            .WithFirstName("Лев")
+                            .WithFamilyName("Толстой")
+                            .WithPatronymicName("Николаевич")
+                            .WithDateBirth(new DateOnly(1828, 09, 28))
+                            .WithDateDeath(new DateOnly(1910, 10, 20))
+                            .Build())
+                    .Build(),
                 "Толстой Лев Николаевич Год рождения: 28.09.1828 Год смерти: 20.10.1910");
         }
 
+        /// <summary>
+        /// Предоставляет валидные комбинации дат для проверки конструктора.
+        /// </summary>
+        /// <returns> Коллекция тестовых данных. </returns>
         private static IEnumerable<TestCaseData> ValidDateData()
         {
             yield return new TestCaseData(new DateOnly(1828, 09, 28), null);
@@ -151,9 +280,9 @@ namespace Domain.Tests
         }
 
         /// <summary>
-        /// Сравнение авторов происходит по ФИО и дате рождения.
+        /// Предоставляет тестовые данные для проверки неравенства авторов с разными датами.
         /// </summary>
-        /// <returns> Набор тестовых данных. </returns>
+        /// <returns> Коллекция тестовых данных. </returns>
         private static IEnumerable<TestCaseData> ValidNullDates()
         {
             yield return new TestCaseData(new DateOnly(1828, 09, 28), null);

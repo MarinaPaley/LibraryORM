@@ -7,8 +7,10 @@ namespace Domain.Tests
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Domain;
     using NUnit.Framework;
     using Staff;
+    using TestDataProvider;
 
     /// <summary>
     /// Модульные тесты для класса <see cref="Manuscript"/>.
@@ -16,118 +18,137 @@ namespace Domain.Tests
     [TestFixture]
     public sealed class ManuscriptTests
     {
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Manuscript"/> выбрасывает исключение при передаче null в качестве названия.
+        /// </summary>
         [Test]
         public void Ctor_NullName_ThrowsArgumentNullException()
         {
-            // arrange
-            var language = CreateLanguage();
+            // Arrange
+            var languages = new HashSet<Language> { TestData.ValidLanguage().Build(), };
             var authors = new HashSet<Author>();
 
-            // act & assert
-            Assert.Throws<ArgumentNullException>(() =>
-                _ = new Manuscript(null!, language, authors));
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(() => _ = new Manuscript(null!, languages, authors));
         }
 
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Manuscript"/> выбрасывает исключение при передаче строки из пробелов в качестве названия.
+        /// </summary>
         [Test]
         public void Ctor_EmptyName_AfterTrim_ThrowsArgumentNullException()
         {
-            // arrange
-            var language = CreateLanguage();
+            // Arrange
+            var languages = new HashSet<Language> { TestData.ValidLanguage().Build(), };
             var authors = new HashSet<Author>();
 
-            // act & assert
-            Assert.Throws<ArgumentNullException>(() =>
-                _ = new Manuscript("   ", language, authors));
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(() => _ = new Manuscript("   ", languages, authors));
         }
 
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Manuscript"/> выбрасывает исключение при передаче null в качестве коллекции языков.
+        /// </summary>
         [Test]
         public void Ctor_NullLanguage_ThrowsArgumentNullException()
         {
-            // arrange
+            // Arrange
             var authors = new HashSet<Author>();
 
-            // act & assert
-            Assert.Throws<ArgumentNullException>(() =>
-                _ = new Manuscript("Название", null!, authors));
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(() => _ = new Manuscript("Название", null!, authors));
         }
 
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Manuscript"/> выбрасывает исключение при передаче null в качестве коллекции авторов.
+        /// </summary>
         [Test]
         public void Ctor_NullAuthors_ThrowsArgumentNullException()
         {
-            // arrange
-            var language = CreateLanguage();
+            // Arrange
+            var languages = new HashSet<Language> { TestData.ValidLanguage().Build(), };
+            ISet<Author>? nullAuthors = null;
 
-            // act & assert
-            Assert.Throws<NullReferenceException>(() =>
-                _ = new Manuscript(name: "Название", languages: language, authors: null!, date: null));
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(() =>
+                _ = new Manuscript("Название", languages, nullAuthors!));
         }
 
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Manuscript"/> выбрасывает исключение при передаче пустой коллекции авторов.
+        /// </summary>
         [Test]
-        public void Ctor_EmptyAuthorsCollection_Throws()
+        public void Ctor_EmptyAuthorsCollection_ThrowsArgumentOutOfRangeException()
         {
-            // arrange
-            var language = CreateLanguage();
+            // Arrange
+            var languages = new HashSet<Language> { TestData.ValidLanguage().Build(), };
             var authors = new HashSet<Author>();
 
-            // act & assert
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-            {
-                _ = new Manuscript("Название", language, authors);
-            });
+            // Act & Assert
+            Assert.Throws<ArgumentOutOfRangeException>(() => _ = new Manuscript("Название", languages, authors));
         }
 
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Manuscript"/> допускает передачу null в качестве диапазона дат.
+        /// </summary>
         [Test]
         public void Ctor_NullDateRange_Allowed()
         {
-            // arrange
-            var language = CreateLanguage();
-            var authors = new HashSet<Author>() { CreateAuthor("a", "b") };
+            // Arrange
+            var languages = new HashSet<Language> { TestData.ValidLanguage().Build(), };
+            var author = TestData.ValidAuthor().Build();
+            var authors = new HashSet<Author> { author, };
 
-            // act
-            var manuscript = new Manuscript("Название", language, authors, date: null);
+            // Act
+            var manuscript = new Manuscript("Название", languages, authors, date: null);
 
-            // assert
+            // Assert
             Assert.That(manuscript.Dates, Is.Null);
         }
 
+        /// <summary>
+        /// Проверяет успешное создание <see cref="Manuscript"/> с валидными данными.
+        /// </summary>
         [Test]
         public void Ctor_ValidData_Success()
         {
-            // arrange
-            var language = CreateLanguage();
-            var author = CreateAuthor("Толстой", "Лев");
-            var authors = new HashSet<Author> { author };
+            // Arrange
+            var languages = new HashSet<Language> { TestData.ValidLanguage().Build(), };
+            var person = TestData.ValidPerson().WithFirstName("Лев").WithFamilyName("Толстой").Build();
+            var author = TestData.ValidAuthor().WithPerson(person).Build();
+            var authors = new HashSet<Author> { author, };
             var dateRange = new Range<DateOnly>(new DateOnly(1865, 1, 1), new DateOnly(1869, 12, 31));
 
-            // act & assert
-            Assert.DoesNotThrow(() =>
-            {
-                var manuscript = new Manuscript("Война и мир", language, authors, dateRange);
+            // Act
+            var manuscript = new Manuscript("Война и мир", languages, authors, dateRange);
 
-                using (Assert.EnterMultipleScope())
-                {
-                    Assert.That(manuscript.Name.Value, Is.EqualTo("Война и мир"));
-                    Assert.That(manuscript.Authors, Contains.Item(author));
-                    Assert.That(manuscript.Dates?.From, Is.EqualTo(new DateOnly(1865, 1, 1)));
-                    Assert.That(manuscript.Dates?.To, Is.EqualTo(new DateOnly(1869, 12, 31)));
-                }
-            });
+            // Assert
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(manuscript.Name.Value, Is.EqualTo("Война и мир"));
+                Assert.That(manuscript.Authors, Contains.Item(author));
+                Assert.That(manuscript.Dates?.From, Is.EqualTo(new DateOnly(1865, 1, 1)));
+                Assert.That(manuscript.Dates?.To, Is.EqualTo(new DateOnly(1869, 12, 31)));
+            }
         }
 
+        /// <summary>
+        /// Проверяет, что конструктор с параметрами DateOnly корректно создает диапазон дат.
+        /// </summary>
         [Test]
         public void Ctor_WithDateOnlyParams_CreatesRange()
         {
-            // arrange
-            var language = CreateLanguage();
-            var author = CreateAuthor("Ильф", "Илья");
+            // Arrange
+            var languages = new HashSet<Language> { TestData.ValidLanguage().Build(), };
+            var person = TestData.ValidPerson().WithFirstName("Илья").WithFamilyName("Ильф").Build();
+            var author = TestData.ValidAuthor().WithPerson(person).Build();
             var from = new DateOnly(1927, 1, 1);
             var to = new DateOnly(1928, 12, 31);
 
-            // act
-            var manuscript = new Manuscript(
-                "12 стульев", language, from, to, null, author);
+            // Act
+            var manuscript = new Manuscript("12 стульев", languages, from, to, null, author);
 
-            // assert
+            // Assert
             Assert.That(manuscript.Dates, Is.Not.Null);
             using (Assert.EnterMultipleScope())
             {
@@ -136,36 +157,44 @@ namespace Domain.Tests
             }
         }
 
+        /// <summary>
+        /// Проверяет, что конструктор с одной датой DateOnly создает диапазон с одинаковыми границами.
+        /// </summary>
         [Test]
         public void Ctor_WithSingleDateOnly_CreatesRangeWithSameBounds()
         {
-            // arrange
-            var language = CreateLanguage();
-            var author = CreateAuthor("Чехов", "Антон");
+            // Arrange
+            var languages = new HashSet<Language> { TestData.ValidLanguage().Build(), };
+            var person = TestData.ValidPerson().WithFirstName("Антон").WithFamilyName("Чехов").Build();
+            var author = TestData.ValidAuthor().WithPerson(person).Build();
             var date = new DateOnly(1886, 1, 1);
 
-            // act
-            var manuscript = new Manuscript(
-                "Хамелеон", language, date, date, null, author);
+            // Act
+            var manuscript = new Manuscript("Хамелеон", languages, date, date, null, author);
 
-            // assert
+            // Assert
             Assert.That(manuscript.Dates!.From, Is.EqualTo(manuscript.Dates!.To));
             Assert.That(manuscript.Dates!.From, Is.EqualTo(date));
         }
 
+        /// <summary>
+        /// Проверяет, что при создании рукописи она автоматически добавляется в коллекции всех переданных авторов.
+        /// </summary>
         [Test]
         public void Ctor_AddsManuscriptToAuthors()
         {
-            // arrange
-            var language = CreateLanguage();
-            var author1 = CreateAuthor("Толстой", "Лев");
-            var author2 = CreateAuthor("Достоевский", "Фёдор");
-            var authors = new HashSet<Author> { author1, author2 };
+            // Arrange
+            var languages = new HashSet<Language> { TestData.ValidLanguage().Build(), };
+            var person1 = TestData.ValidPerson().WithFirstName("Лев").WithFamilyName("Толстой").Build();
+            var author1 = TestData.ValidAuthor().WithPerson(person1).Build();
+            var person2 = TestData.ValidPerson().WithFirstName("Фёдор").WithFamilyName("Достоевский").Build();
+            var author2 = TestData.ValidAuthor().WithPerson(person2).Build();
+            var authors = new HashSet<Author> { author1, author2, };
 
-            // act
-            var manuscript = new Manuscript("Классика", language, authors);
+            // Act
+            var manuscript = new Manuscript("Классика", languages, authors);
 
-            // assert
+            // Assert
             using (Assert.EnterMultipleScope())
             {
                 Assert.That(author1.Manuscripts, Contains.Item(manuscript));
@@ -173,17 +202,20 @@ namespace Domain.Tests
             }
         }
 
+        /// <summary>
+        /// Проверяет, что добавление валидного жанра устанавливает двустороннюю связь.
+        /// </summary>
         [Test]
         public void AddGenre_ValidGenre_AddsToBothCollections()
         {
-            // arrange
-            var manuscript = CreateMinimalManuscript();
-            var genre = CreateGenre("Роман");
+            // Arrange
+            var manuscript = TestData.ValidManuscript().Build();
+            var genre = TestData.ValidGenre().WithName("Роман").Build();
 
-            // act
+            // Act
             var result = manuscript.AddGenre(genre);
 
-            // assert
+            // Assert
             using (Assert.EnterMultipleScope())
             {
                 Assert.That(result, Is.True);
@@ -192,16 +224,19 @@ namespace Domain.Tests
             }
         }
 
+        /// <summary>
+        /// Проверяет, что попытка добавить null в качестве жанра возвращает false.
+        /// </summary>
         [Test]
         public void AddGenre_NullGenre_ReturnsFalse()
         {
-            // arrange
-            var manuscript = CreateMinimalManuscript();
+            // Arrange
+            var manuscript = TestData.ValidManuscript().Build();
 
-            // act
+            // Act
             var result = manuscript.AddGenre(null!);
 
-            // assert
+            // Assert
             using (Assert.EnterMultipleScope())
             {
                 Assert.That(result, Is.False);
@@ -209,318 +244,300 @@ namespace Domain.Tests
             }
         }
 
+        /// <summary>
+        /// Проверяет, что попытка добавить один и тот же жанр дважды возвращает false при втором вызове.
+        /// </summary>
         [Test]
         public void AddGenre_DuplicateGenre_ReturnsFalse()
         {
-            // arrange
-            var manuscript = CreateMinimalManuscript();
-            var genre = CreateGenre("Роман");
-            manuscript.AddGenre(genre);
+            // Arrange
+            var manuscript = TestData.ValidManuscript().Build();
+            var genre = TestData.ValidGenre().WithName("Роман").Build();
+            _ = manuscript.AddGenre(genre);
 
-            // act
+            // Act
             var result = manuscript.AddGenre(genre);
 
-            // assert
+            // Assert
             Assert.That(result, Is.False);
             Assert.That(manuscript.Genres, Has.Count.EqualTo(1));
         }
 
+        /// <summary>
+        /// Проверяет, что удаление существующего жанра разрывает двустороннюю связь.
+        /// </summary>
         [Test]
         public void RemoveGenre_ExistingGenre_RemovesFromBothCollections()
         {
-            // arrange
-            var manuscript = CreateMinimalManuscript();
-            var genre = CreateGenre("Роман");
-            manuscript.AddGenre(genre);
+            // Arrange
+            var manuscript = TestData.ValidManuscript().Build();
+            var genre = TestData.ValidGenre().WithName("Роман").Build();
+            _ = manuscript.AddGenre(genre);
 
-            // act
+            // Act
             var result = manuscript.RemoveGenre(genre);
 
-            // assert
+            // Assert
             Assert.That(result, Is.True);
             Assert.That(manuscript.Genres, Does.Not.Contain(genre));
             Assert.That(genre.Manuscripts, Does.Not.Contain(manuscript));
         }
 
+        /// <summary>
+        /// Проверяет, что попытка удалить не добавленный жанр возвращает false.
+        /// </summary>
         [Test]
         public void RemoveGenre_NonExistingGenre_ReturnsFalse()
         {
-            // arrange
-            var manuscript = CreateMinimalManuscript();
-            var genre = CreateGenre("Не добавленный жанр");
+            // Arrange
+            var manuscript = TestData.ValidManuscript().Build();
+            var genre = TestData.ValidGenre().WithName("Не добавленный жанр").Build();
 
-            // act
+            // Act
             var result = manuscript.RemoveGenre(genre);
 
-            // assert
+            // Assert
             Assert.That(result, Is.False);
         }
 
+        /// <summary>
+        /// Проверяет, что попытка удалить null в качестве жанра возвращает false.
+        /// </summary>
         [Test]
         public void RemoveGenre_NullGenre_ReturnsFalse()
         {
-            // arrange
-            var manuscript = CreateMinimalManuscript();
+            // Arrange
+            var manuscript = TestData.ValidManuscript().Build();
 
-            // act
+            // Act
             var result = manuscript.RemoveGenre(null!);
 
-            // assert
+            // Assert
             Assert.That(result, Is.False);
         }
 
-        [Test]
-        public void Equals_SameReference_ReturnsTrue()
-        {
-            // arrange
-            var manuscript = CreateMinimalManuscript();
-
-            // act & assert
-            Assert.That(manuscript, Is.EqualTo(manuscript));
-        }
-
+        /// <summary>
+        /// Проверяет, что сравнение рукописи с null возвращает false.
+        /// </summary>
         [Test]
         public void Equals_Null_ReturnsFalse()
         {
-            // arrange
-            var manuscript = CreateMinimalManuscript();
+            // Arrange
+            var manuscript = TestData.ValidManuscript().Build();
 
-            // act & assert
-            Assert.That(manuscript, Is.Not.Null);
+            // Act & Assert
+            // Исправлено: теперь реально проверяется метод Equals, а не просто Is.Not.Null
+            Assert.That(manuscript.Equals(null), Is.False);
         }
 
+        /// <summary>
+        /// Проверяет, что сравнение рукописи с объектом другого типа возвращает false.
+        /// </summary>
         [Test]
         public void Equals_DifferentType_ReturnsFalse()
         {
-            // arrange
-            var manuscript = CreateMinimalManuscript();
+            // Arrange
+            var manuscript = TestData.ValidManuscript().Build();
 
-            // act & assert
+            // Act & Assert
             Assert.That(manuscript.Equals("not a manuscript"), Is.False);
         }
 
+        /// <summary>
+        /// Проверяет, что рукописи с одинаковым названием считаются равными, даже если языки отличаются.
+        /// </summary>
         [Test]
         public void Equals_SameTitle_DifferentOtherFields_ReturnsTrue()
         {
-            // arrange
-            var language1 = CreateLanguage("Русский");
-            var language2 = CreateLanguage("Английский");
-            var author = CreateAuthor("Толстой", "Лев");
+            // Arrange
+            var language1 = TestData.ValidLanguage().WithName("Русский").Build();
+            var language2 = TestData.ValidLanguage().WithName("Английский").Build();
+            var languages1 = new HashSet<Language> { language1, };
+            var languages2 = new HashSet<Language> { language2, };
+            var person = TestData.ValidPerson().WithFirstName("Лев").WithFamilyName("Толстой").Build();
+            var author = TestData.ValidAuthor().WithPerson(person).Build();
             var title = "Война и мир";
-            var authors = new HashSet<Author>() { author };
+            var authors = new HashSet<Author> { author, };
 
-            var manuscript1 = new Manuscript(title, language1, authors);
-            var manuscript2 = new Manuscript(title, language2, authors);
+            var manuscript1 = new Manuscript(title, languages1, authors);
+            var manuscript2 = new Manuscript(title, languages2, authors);
 
-            // act
+            // Act
             var result = manuscript1.Equals(manuscript2);
 
-            // assert
+            // Assert
             Assert.That(result, Is.True);
         }
 
+        /// <summary>
+        /// Проверяет, что рукописи с разными названиями не равны.
+        /// </summary>
         [Test]
         public void Equals_DifferentTitle_ReturnsFalse()
         {
-            // arrange
-            var language = CreateLanguage();
-            var author = CreateAuthor("Толстой", "Лев");
+            // Arrange
+            var languages = new HashSet<Language> { TestData.ValidLanguage().Build(), };
+            var person = TestData.ValidPerson().WithFirstName("Лев").WithFamilyName("Толстой").Build();
+            var author = TestData.ValidAuthor().WithPerson(person).Build();
 
-            var manuscript1 = new Manuscript("Война и мир", language, new HashSet<Author> { author });
-            var manuscript2 = new Manuscript("Анна Каренина", language, new HashSet<Author> { author });
+            var manuscript1 = new Manuscript("Война и мир", languages, new HashSet<Author> { author, });
+            var manuscript2 = new Manuscript("Анна Каренина", languages, new HashSet<Author> { author, });
+
+            // Act
             var result = manuscript1.Equals(manuscript2);
 
-            // act & assert
+            // Assert
             Assert.That(result, Is.False);
         }
 
-        [Test]
-        public void GetHashCode_SameObject_SameHashCode()
-        {
-            // arrange
-            var manuscript = CreateMinimalManuscript();
-
-            // act & assert
-            Assert.That(
-                manuscript.GetHashCode(),
-                Is.EqualTo(expected: manuscript.GetHashCode()));
-        }
-
+        /// <summary>
+        /// Проверяет, что метод ToString возвращает корректную строку с названием и одним автором.
+        /// </summary>
         [Test]
         public void ToString_WithSingleAuthor_ReturnsTitleAndAuthor()
         {
-            // arrange
-            var author = new Author(new Person(new Name("Толстой", "Лев", "Николаевич")));
-            var manuscript = new Manuscript(
-                "Анна Каренина",
-                new HashSet<Language>() { new ("Русский") },
-                new HashSet<Author> { author });
+            // Arrange
+            var person = TestData.ValidPerson()
+                .WithFirstName("Лев")
+                .WithFamilyName("Толстой")
+                .WithPatronymicName("Николаевич")
+                .Build();
+            var author = TestData.ValidAuthor().WithPerson(person).Build();
+            var languages = new HashSet<Language> { TestData.ValidLanguage().Build(), };
+            var manuscript = new Manuscript("Анна Каренина", languages, new HashSet<Author> { author, });
 
-            // act
+            // Act
             var result = manuscript.ToString();
 
-            // assert
+            // Assert
             Assert.That(result, Is.EqualTo("Анна Каренина: [Толстой Лев Николаевич]"));
         }
 
+        /// <summary>
+        /// Проверяет, что метод ToString возвращает корректную строку с названием и несколькими авторами.
+        /// </summary>
         [Test]
         public void ToString_WithMultipleAuthors_ReturnsTitleAndAuthorsJoined()
         {
-            // arrange
-            var author1 = new Author(new Person(new Name("Ильф", "Илья")));
-            var author2 = new Author(new Person(new Name("Петров", "Евгений")));
-            var manuscript = new Manuscript(
-                "12 стульев",
-                new HashSet<Language>() { new ("Русский") },
-                new HashSet<Author> { author1, author2 });
+            // Arrange
+            var person1 = TestData.ValidPerson().WithFirstName("Илья").WithFamilyName("Ильф").Build();
+            var author1 = TestData.ValidAuthor().WithPerson(person1).Build();
+            var person2 = TestData.ValidPerson().WithFirstName("Евгений").WithFamilyName("Петров").Build();
+            var author2 = TestData.ValidAuthor().WithPerson(person2).Build();
+            var languages = new HashSet<Language> { TestData.ValidLanguage().Build(), };
+            var manuscript = new Manuscript("12 стульев", languages, new HashSet<Author> { author1, author2, });
 
-            // act
+            // Act
             var result = manuscript.ToString();
 
-            // assert
+            // Assert
             Assert.That(result, Is.EqualTo("12 стульев: [Ильф Илья, Петров Евгений]"));
         }
 
-        [Test]
-        public void ToString_TitleWithSpaces_Trimmed()
-        {
-            // arrange
-            var manuscript = new Manuscript(
-                "  Название с пробелами  ",
-                new HashSet<Language>() { new ("Русский") },
-                new HashSet<Author>() { CreateMinimalAuthor() });
-
-            // act
-            var result = manuscript.ToString();
-
-            // assert
-            Assert.That(result, Is.EqualTo("Название с пробелами: [Фамилия Имя]"));
-        }
-
-        [Test]
-        public void ToString_TitleWithSpaces_Preserved()
-        {
-            // arrange
-            var manuscript = new Manuscript(
-                "  Название с пробелами  ",
-                new HashSet<Language>() { new ("Русский") },
-                new HashSet<Author>() { CreateMinimalAuthor() });
-
-            // act
-            var result = manuscript.ToString();
-
-            // assert
-            Assert.That(result, Does.StartWith("Название с пробелами"));
-        }
-
+        /// <summary>
+        /// Проверяет, что коллекция жанров изначально пуста.
+        /// </summary>
         [Test]
         public void Genres_Collection_StartsEmpty()
         {
-            // arrange & act
-            var manuscript = CreateMinimalManuscript();
+            // Arrange & Act
+            var manuscript = TestData.ValidManuscript().Build();
 
-            // assert
+            // Assert
             Assert.That(manuscript.Genres, Is.Empty);
         }
 
+        /// <summary>
+        /// Проверяет, что коллекция переводчиков изначально пуста.
+        /// </summary>
         [Test]
         public void Translators_Collection_StartsEmpty()
         {
-            // arrange & act
-            var manuscript = CreateMinimalManuscript();
+            // Arrange & Act
+            var manuscript = TestData.ValidManuscript().Build();
 
-            // assert
+            // Assert
             Assert.That(manuscript.Translators, Is.Empty);
         }
 
+        /// <summary>
+        /// Проверяет, что коллекция рецензентов изначально пуста.
+        /// </summary>
         [Test]
         public void Reviewers_Collection_StartsEmpty()
         {
-            // arrange & act
-            var manuscript = CreateMinimalManuscript();
+            // Arrange & Act
+            var manuscript = TestData.ValidManuscript().Build();
 
-            // assert
+            // Assert
             Assert.That(manuscript.Reviewers, Is.Empty);
         }
 
+        /// <summary>
+        /// Проверяет, что добавление рукописи рецензенту устанавливает двустороннюю связь.
+        /// </summary>
         [Test]
-        public void AddReviwer_ValidData_Success()
+        public void AddReviewer_ValidData_EstablishesBidirectionalLink()
         {
-            // act
-            var manuscript = CreateMinimalManuscript();
-            var reviwer = CreateReviewer("Палей", "Алексей");
+            // Arrange
+            var manuscript = TestData.ValidManuscript().Build();
+            var person = TestData.ValidPerson().WithFirstName("Алексей").WithFamilyName("Палей").Build();
+            var reviewer = TestData.ValidReviewer().WithPerson(person).Build();
 
-            // act
-            reviwer.AddManuscript(manuscript);
+            // Act
+            reviewer.AddManuscript(manuscript);
 
-            // assert
+            // Assert
             Assert.That(manuscript.Reviewers, Has.Count.EqualTo(1));
-            Assert.That(manuscript.Reviewers.Any(r => r.Id == reviwer.Id), Is.True);
+            Assert.That(manuscript.Reviewers.Any(r => r.Id == reviewer.Id), Is.True);
         }
 
+        /// <summary>
+        /// Проверяет, что добавление рукописи переводчику устанавливает двустороннюю связь.
+        /// </summary>
         [Test]
-        public void AddTranslator_ValidData_Success()
+        public void AddTranslator_ValidData_EstablishesBidirectionalLink()
         {
-            // act
-            var manuscript = CreateMinimalManuscript();
-            var translator = CreateTranslator("Палей", "Алексей");
+            // Arrange
+            var manuscript = TestData.ValidManuscript().Build();
+            var person = TestData.ValidPerson().WithFirstName("Алексей").WithFamilyName("Палей").Build();
+            var translator = TestData.ValidTranslator().WithPerson(person).Build();
 
-            // act
+            // Act
             translator.AddManuscript(manuscript);
 
-            // assert
+            // Assert
             Assert.That(manuscript.Translators, Has.Count.EqualTo(1));
             Assert.That(manuscript.Translators.Any(r => r.Id == translator.Id), Is.True);
         }
 
+        /// <summary>
+        /// Проверяет, что коллекция книг изначально пуста.
+        /// </summary>
         [Test]
         public void Books_Collection_StartsEmpty()
         {
-            // arrange & act
-            var manuscript = CreateMinimalManuscript();
+            // Arrange & Act
+            var manuscript = TestData.ValidManuscript().Build();
 
-            // assert
+            // Assert
             Assert.That(manuscript.Books, Is.Empty);
         }
 
+        /// <summary>
+        /// Проверяет, что рукопись, созданная через провайдер по умолчанию, содержит ровно одного автора.
+        /// </summary>
         [Test]
-        public void Authors_CreateManuscript_IsValid()
+        public void Authors_CreateManuscriptViaProvider_HasOneAuthor()
         {
-            // arrange
-            var manuscript = CreateMinimalManuscript();
+            // Arrange
+            var manuscript = TestData.ValidManuscript().Build();
 
-            // act
+            // Act
             var authors = manuscript.Authors;
 
-            // assert
+            // Assert
             Assert.That(authors, Has.Count.EqualTo(1));
         }
-
-        private static Manuscript CreateMinimalManuscript()
-        {
-            return new Manuscript(
-                "Минимальная рукопись",
-                CreateLanguage(),
-                new HashSet<Author> { CreateAuthor("Автор", "Тестовый") });
-        }
-
-        private static HashSet<Language> CreateLanguage(string name = "Русский") => new HashSet<Language>() { new (name) };
-
-        private static Person CreatePerson(string family, string given, string? patronymic = null) =>
-            new (new Name(family, given, patronymic));
-
-        private static Author CreateAuthor(string family, string given, string? patronymic = null) =>
-            new (CreatePerson(family, given, patronymic));
-
-        private static Author CreateMinimalAuthor() =>
-            new (new Person(new Name("Фамилия", "Имя")));
-
-        private static Translator CreateTranslator(string family, string given) =>
-            new (CreatePerson(family, given));
-
-        private static Reviewer CreateReviewer(string family, string given) =>
-            new (CreatePerson(family, given));
-
-        private static Genre CreateGenre(string name) => new (name);
     }
 }

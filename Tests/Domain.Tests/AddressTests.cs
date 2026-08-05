@@ -6,39 +6,49 @@ namespace Domain.Tests
 {
     using Domain;
     using NUnit.Framework;
+    using TestDataProvider;
 
     /// <summary>
-    /// Тесты на <see cref="Domain.Address"/>.
+    /// Модульные тесты для класса <see cref="Address"/>.
     /// </summary>
     [TestFixture]
     internal sealed class AddressTests
     {
-        [Test]
-        public void Address_Equals_SameFieldsDifferentId_ReturnsTrue()
+        /// <summary>
+        /// Проверяет логику равенства двух адресов с разными городами.
+        /// </summary>
+        /// <param name="cityName1"> Название первого города. </param>
+        /// <param name="cityName2"> Название второго города. </param>
+        /// <param name="expected"> Ожидаемый результат сравнения. </param>
+        [TestCase("Москва", "Москва", true)]
+        [TestCase("Москва", "Санкт-Петербург", false)]
+        public void Equals_DifferentCities_ReturnsExpectedResult(
+            string cityName1,
+            string cityName2,
+            bool expected)
         {
-            // arrange
-            var city = new City("Москва");
-            var street = new Street("Ленина", city);
+            // Arrange
+            var city1 = TestData.ValidCity().WithName(cityName1).Build();
+            var street1 = TestData.ValidStreet().WithName("Ленина").WithCity(city1).Build();
 
-            var address1 = new Address(street, 10);
-            var address2 = new Address(street, 10);
+            var city2 = TestData.ValidCity().WithName(cityName2).Build();
+            var street2 = TestData.ValidStreet().WithName("Ленина").WithCity(city2).Build();
 
-            // act & assert
-            Assert.That(address1, Is.EqualTo(address2));
-        }
+            var address1 = TestData.ValidAddress()
+                .WithStreet(street1)
+                .WithHouse(10)
+                .Build();
 
-        [Test]
-        public void Address_Equals_DifferentCity_ReturnsFalse()
-        {
-            // arrange
-            var address1 = new Address(new Street("Ленина", new City("Москва")), 10);
-            var address2 = new Address(new Street("Ленина", new City("Санкт-Петербург")), 10);
+            var address2 = TestData.ValidAddress()
+                .WithStreet(street2)
+                .WithHouse(10)
+                .Build();
 
-            // act
+            // Act
             var result = address1.Equals(address2);
 
-            // act & assert
-            Assert.That(result, Is.False);
+            // Assert
+            Assert.That(result, Is.EqualTo(expected));
         }
     }
 }

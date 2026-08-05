@@ -6,307 +6,426 @@ namespace Domain.Tests
 {
     using System;
     using System.Collections.Generic;
+    using Domain;
     using NUnit.Framework;
+    using TestDataProvider;
 
     /// <summary>
-    /// Тесты для <see cref="Domain.Book"/>.
+    /// Модульные тесты для класса <see cref="Book"/>.
     /// </summary>
     [TestFixture]
     internal sealed class BookTests
     {
+        // ==========================================
+        // Конструктор: валидация данных
+        // ==========================================
+
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Book"/> успешно создает объект с валидными данными.
+        /// </summary>
         [Test]
         public void Ctor_ValidData_Success()
         {
-            // arrange
-            var publisher = CreatePublisher();
-            var bookType = CreateBookType();
-            var manuscript = CreateManuscript();
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
 
-            // act & assert
+            // Act & Assert
             Assert.DoesNotThrow(() =>
             {
                 _ = new Book(
                     "Тестовая книга",
                     300,
-                    "978-5-123456-78-9",
                     bookType,
                     publisher,
                     2024,
-                    new HashSet<Manuscript> { manuscript });
+                    new HashSet<Manuscript> { manuscript, },
+                    "978-5-123456-78-9");
             });
         }
 
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Book"/> допускает передачу null в качестве названия.
+        /// </summary>
         [Test]
         public void Ctor_NullTitle_Allowed()
         {
-            // arrange
-            var publisher = CreatePublisher();
-            var bookType = CreateBookType();
-            var manuscript = CreateManuscript();
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
 
-            // act & assert
-            Assert.DoesNotThrow(() =>
-            {
-                var book = new Book(
-                    null,
-                    300,
-                    "978-5-123456-78-9",
-                    bookType,
-                    publisher,
-                    2024,
-                    new HashSet<Manuscript> { manuscript });
+            // Act
+            var book = new Book(
+                null,
+                300,
+                bookType,
+                publisher,
+                2024,
+                new HashSet<Manuscript> { manuscript, },
+                "978-5-123456-78-9");
 
-                Assert.That(book.Title, Is.Null);
-            });
+            // Assert
+            Assert.That(book.Title, Is.Null);
         }
 
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Book"/> допускает передачу null в качестве ISBN.
+        /// </summary>
         [Test]
-        public void Ctor_NullISBN_DoesnotThrow()
+        public void Ctor_NullISBN_DoesNotThrow()
         {
-            // arrange
-            var publisher = CreatePublisher();
-            var bookType = CreateBookType();
-            var manuscript = CreateManuscript();
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
 
-            // act & assert
+            // Act & Assert
             Assert.DoesNotThrow(() =>
                 _ = new Book(
                     "Книга",
                     300,
-                    null!,
                     bookType,
                     publisher,
                     2024,
-                    new HashSet<Manuscript> { manuscript }));
+                    new HashSet<Manuscript> { manuscript, }));
         }
 
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Book"/> корректно обрабатывает пустую строку ISBN после обрезки пробелов.
+        /// </summary>
         [Test]
-        public void Ctor_EmptyISBN_AfterTrim_DoesnotThrow()
+        public void Ctor_EmptyISBN_AfterTrim_DoesNotThrow()
         {
-            // arrange
-            var publisher = CreatePublisher();
-            var bookType = CreateBookType();
-            var manuscript = CreateManuscript();
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
 
-            // act & assert
-            Assert.DoesNotThrow(() =>
+            // Act & Assert
+            Assert.DoesNotThrow(
+                () =>
                 _ = new Book(
                     "Книга",
                     300,
-                    "   ",
                     bookType,
                     publisher,
                     2024,
-                    new HashSet<Manuscript> { manuscript }));
+                    new HashSet<Manuscript> { manuscript, }),
+                "   ");
         }
 
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Book"/> выбрасывает исключение при передаче null вместо издателя.
+        /// </summary>
         [Test]
         public void Ctor_NullPublisher_ThrowsArgumentNullException()
         {
-            // arrange
-            var bookType = CreateBookType();
-            var manuscript = CreateManuscript();
+            // Arrange
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
 
-            // act & assert
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(
+                () =>
+                _ = new Book(
+                    "Книга",
+                    300,
+                    bookType,
+                    null!,
+                    2024,
+                    new HashSet<Manuscript> { manuscript, }),
+                "123");
+        }
+
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Book"/> выбрасывает исключение при передаче null вместо типа книги.
+        /// </summary>
+        [Test]
+        public void Ctor_NullBookType_ThrowsArgumentNullException()
+        {
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var manuscript = TestData.ValidManuscript().Build();
+
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(
+                () =>
+                _ = new Book(
+                    "Книга",
+                    300,
+                    null!,
+                    publisher,
+                    2024,
+                    new HashSet<Manuscript> { manuscript, }),
+                "123");
+        }
+
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Book"/> выбрасывает исключение при передаче null вместо коллекции рукописей.
+        /// </summary>
+        [Test]
+        public void Ctor_NullManuscripts_ThrowsArgumentNullException()
+        {
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+
+            // Act & Assert
             Assert.Throws<ArgumentNullException>(() =>
                 _ = new Book(
                     "Книга",
                     300,
-                    "123",
                     bookType,
-                    null!,
+                    publisher,
                     2024,
-                    new HashSet<Manuscript> { manuscript }));
+                    null!));
         }
 
-        [Test]
-        public void Ctor_NullBookType_ThrowsArgumentNullException()
-        {
-            // arrange
-            var publisher = CreatePublisher();
-            var manuscript = CreateManuscript();
-
-            // act & assert
-            Assert.Throws<ArgumentNullException>(() =>
-                _ = new Book("Книга", 300, "123", null!, publisher, 2024, new HashSet<Manuscript> { manuscript }));
-        }
-
-        [Test]
-        public void Ctor_NullManuscripts_ThrowsArgumentNullException()
-        {
-            // arrange
-            var publisher = CreatePublisher();
-            var bookType = CreateBookType();
-
-            // act & assert
-            Assert.Throws<ArgumentNullException>(() =>
-                _ = new Book("Книга", 300, "123", bookType, publisher, 2024, null!));
-        }
-
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Book"/> выбрасывает исключение при неположительном количестве страниц.
+        /// </summary>
+        /// <param name="pages"> Количество страниц. </param>
         [TestCase(0)]
         [TestCase(-1)]
         [TestCase(-100)]
         public void Ctor_NegativeOrZeroPages_ThrowsArgumentOutOfRangeException(int pages)
         {
-            // arrange
-            var publisher = CreatePublisher();
-            var bookType = CreateBookType();
-            var manuscript = CreateManuscript();
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
 
-            // act & assert
+            // Act & Assert
             Assert.Throws<ArgumentOutOfRangeException>(() =>
-                _ = new Book("Книга", pages, "123", bookType, publisher, 2024, new HashSet<Manuscript> { manuscript }));
+                _ = new Book(
+                    "Книга",
+                    pages,
+                    bookType,
+                    publisher,
+                    2024,
+                    new HashSet<Manuscript> { manuscript, },
+                    "123"));
         }
 
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Book"/> выбрасывает исключение при неположительном годе издания.
+        /// </summary>
+        /// <param name="year"> Год издания. </param>
         [TestCase(0)]
         [TestCase(-1)]
         public void Ctor_NegativeOrZeroYear_ThrowsArgumentOutOfRangeException(int year)
         {
-            // arrange
-            var publisher = CreatePublisher();
-            var bookType = CreateBookType();
-            var manuscript = CreateManuscript();
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
 
-            // act & assert
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                _ = new Book("Книга", 300, "123", bookType, publisher, year, new HashSet<Manuscript> { manuscript }));
+            // Act & Assert
+            Assert.Throws<ArgumentOutOfRangeException>(
+                () =>
+                _ = new Book(
+                    "Книга",
+                    300,
+                    bookType,
+                    publisher,
+                    year,
+                    new HashSet<Manuscript> { manuscript, },
+                    "123"));
         }
 
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Book"/> выбрасывает исключение, если год издания больше текущего.
+        /// </summary>
         [Test]
         public void Ctor_YearGreaterThanCurrent_ThrowsArgumentOutOfRangeException()
         {
-            // arrange
-            var publisher = CreatePublisher();
-            var bookType = CreateBookType();
-            var manuscript = CreateManuscript();
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
             var futureYear = DateTime.Now.Year + 1;
 
-            // act & assert
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                _ = new Book("Книга", 300, "123", bookType, publisher, futureYear, new HashSet<Manuscript> { manuscript }));
-        }
-
-        [TestCase(0)]
-        [TestCase(-1)]
-        public void Ctor_NegativeVolume_ThrowsArgumentOutOfRangeException(int? volume)
-        {
-            // arrange
-            var publisher = CreatePublisher();
-            var bookType = CreateBookType();
-            var manuscript = CreateManuscript();
-
-            // act & assert
+            // Act & Assert
             Assert.Throws<ArgumentOutOfRangeException>(() =>
                 _ = new Book(
                     "Книга",
                     300,
-                    "123",
+                    bookType,
+                    publisher,
+                    futureYear,
+                    new HashSet<Manuscript> { manuscript, }));
+        }
+
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Book"/> выбрасывает исключение при отрицательном или нулевом томе.
+        /// </summary>
+        /// <param name="volume"> Номер тома. </param>
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void Ctor_NegativeVolume_ThrowsArgumentOutOfRangeException(int? volume)
+        {
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
+
+            // Act & Assert
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+                _ = new Book(
+                    "Книга",
+                    300,
                     bookType,
                     publisher,
                     2024,
-                    new HashSet<Manuscript> { manuscript },
+                    new HashSet<Manuscript> { manuscript, },
                     volume: volume));
         }
 
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Book"/> допускает передачу null в качестве тома.
+        /// </summary>
         [Test]
         public void Ctor_NullVolume_Allowed()
         {
-            // arrange
-            var publisher = CreatePublisher();
-            var bookType = CreateBookType();
-            var manuscript = CreateManuscript();
-            var manuscripts = new HashSet<Manuscript> { manuscript };
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
+            var manuscripts = new HashSet<Manuscript> { manuscript, };
 
-            // act
-            var book = new Book("Книга", 300, "123", bookType, publisher, 2024, manuscripts, volume: null);
+            // Act
+            var book = new Book(
+                "Книга",
+                300,
+                bookType,
+                publisher,
+                2024,
+                manuscripts,
+                volume: null);
 
-            // assert
+            // Assert
             Assert.That(book.Volume, Is.Null);
         }
 
+        // ==========================================
+        // Двусторонние связи (при создании)
+        // ==========================================
+
+        /// <summary>
+        /// Проверяет, что добавление экземпляра книги на полку корректно обновляет коллекцию полки.
+        /// </summary>
         [Test]
-        public void Ctor_Shelf_AddsBookToShelf()
+        public void AddBook_ToShelf_AddsItemToShelfCollection()
         {
-            // arrange
-            var shelf = new Shelf("A1");
-            var publisher = CreatePublisher();
-            var bookType = CreateBookType();
-            var manuscript = CreateManuscript();
-            var manuscripts = new HashSet<Manuscript> { manuscript };
-            var book = new Book("Книга", 300, "123", bookType, publisher, 2024, manuscripts);
+            // Arrange
+            var shelf = TestData.ValidShelf().WithName("A1").Build();
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
+            var manuscripts = new HashSet<Manuscript> { manuscript, };
+            var book = new Book("Книга", 300,  bookType, publisher, 2024, manuscripts);
             var item = new Item(book);
 
-            // act
+            // Act
             shelf.AddBook(item);
 
-            // assert
+            // Assert
             Assert.That(shelf.Items, Contains.Item(item));
         }
 
+        /// <summary>
+        /// Проверяет, что передача редактора в конструктор <see cref="Book"/> устанавливает двустороннюю связь.
+        /// </summary>
         [Test]
         public void Ctor_Editor_AddsBookToEditor()
         {
-            // arrange
-            var editor = new Editor(new Person(new Name("Редактор", "Тестовый")));
-            var publisher = CreatePublisher();
-            var bookType = CreateBookType();
-            var manuscript = CreateManuscript();
-            var manuscripts = new HashSet<Manuscript> { manuscript };
+            // Arrange
+            var person = TestData.ValidPerson().WithFirstName("Редактор").WithFamilyName("Тестовый").Build();
+            var editor = TestData.ValidEditor().WithPerson(person).Build();
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
+            var manuscripts = new HashSet<Manuscript> { manuscript, };
 
-            // act
-            var book = new Book("Книга", 300, "123", bookType, publisher, 2024, manuscripts, editor: editor);
+            // Act
+            var book = new Book(
+                "Книга",
+                300,
+                bookType,
+                publisher,
+                2024,
+                manuscripts,
+                editor: editor);
 
-            // assert
+            // Assert
             Assert.That(editor.Books, Contains.Item(book));
         }
 
+        /// <summary>
+        /// Проверяет, что передача серии в конструктор <see cref="Book"/> устанавливает двустороннюю связь.
+        /// </summary>
         [Test]
         public void Ctor_Seria_AddsBookToSeria()
         {
-            // arrange
-            var seria = new Seria("Научная серия");
-            var publisher = CreatePublisher();
-            var bookType = CreateBookType();
-            var manuscript = CreateManuscript();
-            var manuscripts = new HashSet<Manuscript> { manuscript };
+            // Arrange
+            var seria = TestData.ValidSeria().WithName("Научная серия").Build();
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
+            var manuscripts = new HashSet<Manuscript> { manuscript, };
 
-            // act
-            var book = new Book("Книга", 300, "123", bookType, publisher, 2024, manuscripts, seria: seria);
+            // Act
+            var book = new Book(
+                "Книга",
+                300,
+                bookType,
+                publisher,
+                2024,
+                manuscripts,
+                seria: seria);
 
-            // assert
+            // Assert
             Assert.That(seria.Books, Contains.Item(book));
         }
 
+        /// <summary>
+        /// Проверяет, что передача издателя в конструктор <see cref="Book"/> устанавливает связь.
+        /// </summary>
         [Test]
         public void Ctor_Publisher_AddsBookToPublisher()
         {
-            // arrange
-            var publisher = CreatePublisher();
-            var bookType = CreateBookType();
-            var manuscript = CreateManuscript();
-            var manuscripts = new HashSet<Manuscript> { manuscript };
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
+            var manuscripts = new HashSet<Manuscript> { manuscript, };
 
-            // act
-            var book = new Book("Книга", 300, "123", bookType, publisher, 2024, manuscripts);
+            // Act
+            var book = new Book("Книга", 300, bookType, publisher, 2024, manuscripts);
 
-            // assert
+            // Assert
             Assert.That(publisher.Books, Contains.Item(book));
         }
 
+        /// <summary>
+        /// Проверяет, что передача рукописей в конструктор <see cref="Book"/> устанавливает двустороннюю связь.
+        /// </summary>
         [Test]
         public void Ctor_Manuscripts_AddsBookToManuscripts()
         {
-            // arrange
-            var publisher = CreatePublisher();
-            var bookType = CreateBookType();
-            var manuscript1 = CreateManuscript("Произведение 1");
-            var manuscript2 = CreateManuscript("Произведение 2");
-            var manuscripts = new HashSet<Manuscript> { manuscript1, manuscript2 };
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript1 = TestData.ValidManuscript().WithName("Произведение 1").Build();
+            var manuscript2 = TestData.ValidManuscript().WithName("Произведение 2").Build();
+            var manuscripts = new HashSet<Manuscript> { manuscript1, manuscript2, };
 
-            // act
-            var book = new Book("Книга", 300, "123", bookType, publisher, 2024, manuscripts);
+            // Act
+            var book = new Book("Книга", 300, bookType, publisher, 2024, manuscripts);
 
-            // assert
+            // Assert
             using (Assert.EnterMultipleScope())
             {
                 Assert.That(manuscript1.Books, Contains.Item(book));
@@ -314,17 +433,25 @@ namespace Domain.Tests
             }
         }
 
+        // ==========================================
+        // Методы AddEditor / RemoveEditor
+        // ==========================================
+
+        /// <summary>
+        /// Проверяет успешное добавление редактора к существующей книге.
+        /// </summary>
         [Test]
         public void AddEditor_ValidEditor_AddsBookToEditor()
         {
-            // arrange
-            var book = CreateMinimalBook();
-            var editor = new Editor(new Person(new Name("Новый", "Редактор")));
+            // Arrange
+            var book = TestData.ValidBook().Build();
+            var person = TestData.ValidPerson().WithFirstName("Редактор").WithFamilyName("Тестовый").Build();
+            var editor = TestData.ValidEditor().WithPerson(person).Build();
 
-            // act
+            // Act
             var result = book.AddEditor(editor);
 
-            // assert
+            // Assert
             using (Assert.EnterMultipleScope())
             {
                 Assert.That(result, Is.True);
@@ -333,16 +460,19 @@ namespace Domain.Tests
             }
         }
 
+        /// <summary>
+        /// Проверяет, что попытка добавить null в качестве редактора возвращает false.
+        /// </summary>
         [Test]
         public void AddEditor_NullEditor_ReturnsFalse()
         {
-            // arrange
-            var book = CreateMinimalBook();
+            // Arrange
+            var book = TestData.ValidBook().Build();
 
-            // act
+            // Act
             var result = book.AddEditor(null!);
 
-            // assert
+            // Assert
             using (Assert.EnterMultipleScope())
             {
                 Assert.That(result, Is.False);
@@ -350,18 +480,22 @@ namespace Domain.Tests
             }
         }
 
+        /// <summary>
+        /// Проверяет успешное удаление редактора у книги.
+        /// </summary>
         [Test]
         public void RemoveEditor_ExistingEditor_RemovesBookFromEditor()
         {
-            // arrange
-            var editor = new Editor(new Person(new Name("Редактор", "Тестовый")));
-            var book = CreateMinimalBook();
+            // Arrange
+            var person = TestData.ValidPerson().WithFirstName("Редактор").WithFamilyName("Тестовый").Build();
+            var editor = TestData.ValidEditor().WithPerson(person).Build();
+            var book = TestData.ValidBook().Build();
             book.AddEditor(editor);
 
-            // act
+            // Act
             var result = book.RemoveEditor(editor);
 
-            // assert
+            // Assert
             using (Assert.EnterMultipleScope())
             {
                 Assert.That(result, Is.True);
@@ -370,182 +504,314 @@ namespace Domain.Tests
             }
         }
 
+        /// <summary>
+        /// Проверяет, что попытка удалить null в качестве редактора возвращает false.
+        /// </summary>
         [Test]
         public void RemoveEditor_NullEditor_ReturnsFalse()
         {
-            // arrange
-            var book = CreateMinimalBook();
+            // Arrange
+            var book = TestData.ValidBook().Build();
 
-            // act
+            // Act
             var result = book.RemoveEditor(null!);
 
-            // assert
+            // Assert
             Assert.That(result, Is.False);
         }
 
+        // ==========================================
+        // Equals: базовые проверки
+        // ==========================================
+
+        /// <summary>
+        /// Проверяет, что сравнение книги с самой собой возвращает true.
+        /// </summary>
         [Test]
         public void Equals_SameReference_ReturnsTrue()
         {
-            // arrange
-            var book = CreateMinimalBook();
+            // Arrange
+            var book = TestData.ValidBook().Build();
 
-            // act & assert
+            // Act & Assert
             Assert.That(book.Equals(book), Is.True);
         }
 
+        /// <summary>
+        /// Проверяет, что сравнение книги с null возвращает false.
+        /// </summary>
         [Test]
         public void Equals_Null_ReturnsFalse()
         {
-            // arrange
-            var book = CreateMinimalBook();
+            // Arrange
+            var book = TestData.ValidBook().Build();
 
-            // act & assert
+            // Act & Assert
             Assert.That(book.Equals(null), Is.False);
         }
 
+        /// <summary>
+        /// Проверяет, что сравнение книги с объектом другого типа возвращает false.
+        /// </summary>
         [Test]
         public void Equals_DifferentType_ReturnsFalse()
         {
-            // arrange
-            var book = CreateMinimalBook();
+            // Arrange
+            var book = TestData.ValidBook().Build();
 
-            // act & assert
+            // Act & Assert
             Assert.That(book.Equals("not a book"), Is.False);
         }
 
+        // ==========================================
+        // Equals: логика сравнения с учётом ISBN
+        // ==========================================
+
+        /// <summary>
+        /// Проверяет, что книги с одинаковым ISBN считаются равными, даже если остальные поля отличаются.
+        /// </summary>
         [Test]
-        public void Equals_SameTitleDifferentOther_ReturnsFalse()
+        public void Equals_SameIsbn_ReturnsTrue()
         {
-            // arrange
-            var publisher = CreatePublisher();
-            var bookType = CreateBookType();
-            var manuscript = CreateManuscript();
-            var manuscripts = new HashSet<Manuscript> { manuscript };
+            // Arrange
+            var publisher1 = TestData.ValidPublisher().WithName("Издательство 1").Build();
+            var publisher2 = TestData.ValidPublisher().WithName("Издательство 2").Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
+            var manuscripts = new HashSet<Manuscript> { manuscript, };
 
-            var book1 = new Book("Одинаковое название", 300, "111", bookType, publisher, 2024, manuscripts);
-            var book2 = new Book("Одинаковое название", 400, "222", bookType, publisher, 2024, manuscripts);
+            var book1 = new Book("Книга 1", 300, bookType, publisher1, 2024, manuscripts, "978-123");
+            var book2 = new Book("Книга 2", 400, bookType, publisher2, 2025, manuscripts, "978-123");
 
-            // act & assert
+            // Act & Assert
+            Assert.That(book1.Equals(book2), Is.True);
+            Assert.That(book1.GetHashCode(), Is.EqualTo(book2.GetHashCode()));
+        }
+
+        /// <summary>
+        /// Проверяет, что книги с разными ISBN считаются разными, даже если остальные поля совпадают.
+        /// </summary>
+        [Test]
+        public void Equals_DifferentIsbn_ReturnsFalse()
+        {
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
+            var manuscripts = new HashSet<Manuscript> { manuscript, };
+
+            var book1 = new Book("Одинаковое название", 300, bookType, publisher, 2024, manuscripts, "978-111");
+            var book2 = new Book("Одинаковое название", 300, bookType, publisher, 2024, manuscripts, "978-222");
+
+            // Act & Assert
             Assert.That(book1.Equals(book2), Is.False);
         }
 
+        /// <summary>
+        /// Проверяет, что книги без ISBN с одинаковыми остальными полями считаются равными.
+        /// </summary>
         [Test]
-        public void Equals_DifferentTitle_ReturnsFalse()
+        public void Equals_BothWithoutIsbn_SameOtherFields_ReturnsTrue()
         {
-            // arrange
-            var publisher = CreatePublisher();
-            var bookType = CreateBookType();
-            var manuscript = CreateManuscript();
-            var manuscripts = new HashSet<Manuscript> { manuscript };
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
+            var manuscripts = new HashSet<Manuscript> { manuscript, };
 
-            var book1 = new Book("Книга 1", 300, "111", bookType, publisher, 2024, manuscripts);
-            var book2 = new Book("Книга 2", 300, "111", bookType, publisher, 2024, manuscripts);
+            var book1 = new Book("Одинаковое название", 300, bookType, publisher, 2024, manuscripts);
+            var book2 = new Book("Одинаковое название", 300, bookType, publisher, 2024, manuscripts);
 
-            // act & assert
+            using (Assert.EnterMultipleScope())
+            {
+                // Act & Assert
+                Assert.That(book1.Equals(book2), Is.True);
+                Assert.That(book1.GetHashCode(), Is.EqualTo(book2.GetHashCode()));
+            }
+        }
+
+        /// <summary>
+        /// Проверяет, что если ISBN задан только у одной книги, они считаются разными.
+        /// </summary>
+        [Test]
+        public void Equals_OneWithIsbnOneWithout_SameOtherFields_ReturnsFalse()
+        {
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
+            var manuscripts = new HashSet<Manuscript> { manuscript, };
+
+            var book1 = new Book("Одинаковое название", 300, bookType, publisher, 2024, manuscripts, "978-123");
+            var book2 = new Book("Одинаковое название", 300, bookType, publisher, 2024, manuscripts);
+
+            // Act & Assert
             Assert.That(book1.Equals(book2), Is.False);
         }
 
+        /// <summary>
+        /// Проверяет, что книги без ISBN с разными названиями считаются разными.
+        /// </summary>
         [Test]
-        public void GetHashCode_SameTitle_DifferentHashCode()
+        public void Equals_BothWithoutIsbn_DifferentTitle_ReturnsFalse()
         {
-            // arrange
-            var publisher = CreatePublisher();
-            var bookType = CreateBookType();
-            var manuscript = CreateManuscript();
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
+            var manuscripts = new HashSet<Manuscript> { manuscript, };
 
-            var book1 = new Book("Одинаковое название", 300, "111", bookType, publisher, 2024, new HashSet<Manuscript> { manuscript });
-            var book2 = new Book("Одинаковое название", 400, "222", bookType, publisher, 2024, new HashSet<Manuscript> { manuscript });
+            var book1 = new Book("Книга 1", 300, bookType, publisher, 2024, manuscripts);
+            var book2 = new Book("Книга 2", 300, bookType, publisher, 2024, manuscripts);
 
-            // act & assert
+            // Act & Assert
+            Assert.That(book1.Equals(book2), Is.False);
+        }
+
+        // ==========================================
+        // GetHashCode
+        // ==========================================
+
+        /// <summary>
+        /// Проверяет, что книги с одинаковым ISBN имеют одинаковый хеш-код.
+        /// </summary>
+        [Test]
+        public void GetHashCode_SameIsbn_SameHashCode()
+        {
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
+            var manuscripts = new HashSet<Manuscript> { manuscript, };
+
+            var book1 = new Book("Книга 1", 300, bookType, publisher, 2024, manuscripts, "978-123");
+            var book2 = new Book("Книга 2", 400, bookType, publisher, 2025, manuscripts, "978-123");
+
+            // Act & Assert
+            Assert.That(book1.GetHashCode(), Is.EqualTo(book2.GetHashCode()));
+        }
+
+        /// <summary>
+        /// Проверяет, что книги без ISBN с одинаковыми полями имеют одинаковый хеш-код.
+        /// </summary>
+        [Test]
+        public void GetHashCode_BothWithoutIsbn_SameOtherFields_SameHashCode()
+        {
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
+            var manuscripts = new HashSet<Manuscript> { manuscript, };
+
+            var book1 = new Book("Одинаковое название", 300, bookType, publisher, 2024, manuscripts);
+            var book2 = new Book("Одинаковое название", 400, bookType, publisher, 2024, manuscripts);
+
+            // Act & Assert
+            Assert.That(book1.GetHashCode(), Is.EqualTo(book2.GetHashCode()));
+        }
+
+        /// <summary>
+        /// Проверяет, что книги с разными ISBN имеют разные хеш-коды.
+        /// </summary>
+        [Test]
+        public void GetHashCode_DifferentIsbn_DifferentHashCode()
+        {
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
+            var manuscripts = new HashSet<Manuscript> { manuscript, };
+
+            var book1 = new Book("Одинаковое название", 300, bookType, publisher, 2024, manuscripts, "978-123");
+            var book2 = new Book("Одинаковое название", 300, bookType, publisher, 2024, manuscripts, "978-111");
+
+            // Act & Assert
             Assert.That(book1.GetHashCode(), Is.Not.EqualTo(book2.GetHashCode()));
         }
 
+        // ==========================================
+        // ToString
+        // ==========================================
+
+        /// <summary>
+        /// Проверяет, что метод ToString возвращает отформатированную строку с названием книги и рукописями.
+        /// </summary>
         [Test]
         public void ToString_WithTitleAndManuscripts_ReturnsFormattedString()
         {
-            // arrange
-            var publisher = CreatePublisher();
-            var bookType = CreateBookType();
-            var author = CreateAuthor("Толстой", "Лев");
-            var manuscript = CreateManuscript("Война и мир", author);
-            var manuscripts = new HashSet<Manuscript> { manuscript };
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var person = TestData.ValidPerson()
+                .WithFirstName("Лев")
+                .WithFamilyName("Толстой")
+                .Build();
+            var author = TestData.ValidAuthor().WithPerson(person).Build();
+            var authors = new HashSet<Author> { author, };
+            var manuscript = TestData.ValidManuscript()
+                .WithName("Война и мир")
+                .WithAuthors(authors)
+                .Build();
 
-            var book = new Book("Классика", 1000, "123", bookType, publisher, 1869, manuscripts);
+            var manuscripts = new HashSet<Manuscript> { manuscript, };
 
-            // act
+            var book = new Book("Классика", 1000, bookType, publisher, 1869, manuscripts);
+
+            // Act
             var result = book.ToString();
 
-            // assert
-            Assert.That(result, Does.Contain("Классика"));
-            Assert.That(result, Does.Contain("Война и мир"));
-            Assert.That(result, Does.Contain("Толстой"));
+            // Assert
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(result, Does.Contain("Классика"));
+                Assert.That(result, Does.Contain("Война и мир"));
+                Assert.That(result, Does.Contain("Толстой"));
+            }
         }
 
+        /// <summary>
+        /// Проверяет, что метод ToString возвращает только рукописи, если название книги отсутствует.
+        /// </summary>
         [Test]
         public void ToString_WithoutTitle_ReturnsManuscriptsOnly()
         {
-            // arrange
-            var publisher = CreatePublisher();
-            var bookType = CreateBookType();
-            var manuscript = CreateManuscript("Без названия");
-            var manuscripts = new HashSet<Manuscript> { manuscript };
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().WithName("Без названия").Build();
+            var manuscripts = new HashSet<Manuscript> { manuscript, };
 
-            var book = new Book(null, 200, "456", bookType, publisher, 2024, manuscripts);
+            var book = new Book(null, 200, bookType, publisher, 2024, manuscripts);
 
-            // act
+            // Act
             var result = book.ToString();
 
-            // assert
-            Assert.That(result, Does.Not.StartWith(" "));
-            Assert.That(result, Does.Contain("Без названия"));
+            // Assert
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(result, Does.Not.StartWith(" "));
+                Assert.That(result, Does.Contain("Без названия"));
+            }
         }
 
+        /// <summary>
+        /// Проверяет, что метод ToString возвращает только название, если коллекция рукописей пуста.
+        /// </summary>
         [Test]
         public void ToString_EmptyManuscripts_ReturnsTitleOnly()
         {
-            // arrange
-            var publisher = CreatePublisher();
-            var bookType = CreateBookType();
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
             var manuscripts = new HashSet<Manuscript>();
 
-            var book = new Book("Только название", 100, "789", bookType, publisher, 2024, manuscripts);
+            var book = new Book("Только название", 100, bookType, publisher, 2024, manuscripts);
 
-            // act
+            // Act
             var result = book.ToString();
 
-            // assert
+            // Assert
             Assert.That(result, Is.EqualTo("Только название "));
-        }
-
-        private static Book CreateMinimalBook()
-        {
-            return new Book(
-                "Минимальная книга",
-                100,
-                "000",
-                CreateBookType(),
-                CreatePublisher(),
-                2024,
-                new HashSet<Manuscript> { CreateManuscript() });
-        }
-
-        private static BookType CreateBookType(string name = "Книга") => new (name);
-
-        private static Publisher CreatePublisher(string name = "Издательство") => new (name);
-
-        private static HashSet<Language> CreateLanguage(string name = "Русский") => new HashSet<Language>() { new (name) };
-
-        private static Author CreateAuthor(string family = "Фамилия", string given = "Имя") =>
-            new (new Person(new Name(family, given)));
-
-        private static Manuscript CreateManuscript(string title = "Произведение", params Author[] authors)
-        {
-            if (authors.Length != 0)
-            {
-                return new (title, CreateLanguage(), new HashSet<Author>(authors));
-            }
-
-            return new Manuscript(title, CreateLanguage(), new HashSet<Author>() { CreateAuthor() });
         }
     }
 }

@@ -6,7 +6,6 @@ namespace Domain
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Domain.Abstract;
     using Staff;
 
@@ -18,7 +17,7 @@ namespace Domain
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Cabinet"/>.
         /// </summary>
-        /// <param name="room"> Комната. </param>
+        /// <param name="room"> Комната, в которой будет находиться шкаф. </param>
         /// <param name="name"> Название шкафа. </param>
         /// <exception cref="ArgumentNullException">
         /// В случае если <paramref name="room"/> или <paramref name="name"/> – <see langword="null"/>.
@@ -27,6 +26,8 @@ namespace Domain
             : base(name)
         {
             this.Room = room ?? throw new ArgumentNullException(nameof(room));
+
+            _ = this.Room.AddCabinet(this);
         }
 
 #pragma warning disable CS8618 // Необходимо для работы с обязательными полями, получаемыми не через конструктор.
@@ -43,7 +44,7 @@ namespace Domain
 #pragma warning restore CS8618
 
         /// <summary>
-        /// Комната.
+        /// Комната, в которой находится шкаф.
         /// </summary>
         public Room? Room { get; set; }
 
@@ -61,7 +62,7 @@ namespace Domain
         {
             if (shelf is not null)
             {
-                shelf!.Cabinet = this;
+                shelf.Cabinet = this;
                 return this.Shelves.Add(shelf);
             }
 
@@ -82,6 +83,24 @@ namespace Domain
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Перестановка шкафа в новую комнату.
+        /// </summary>
+        /// <param name="newRoom"> Новая комната. </param>
+        /// <exception cref="ArgumentNullException">
+        /// В случае если <paramref name="room"/> или <paramref name="name"/> – <see langword="null"/>.
+        /// </exception>
+        public void MoveTo(Room newRoom)
+        {
+            if (this.Room is not null)
+            {
+                this.Room.RemoveCabinet(this);
+            }
+
+            this.Room = newRoom ?? throw new ArgumentNullException(nameof(newRoom));
+            this.Room.AddCabinet(this);
         }
 
         /// <inheritdoc/>

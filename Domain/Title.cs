@@ -8,16 +8,16 @@ namespace Domain
     using Staff;
 
     /// <summary>
-    /// Value Object Название.
+    /// Value Object "Название".
     /// </summary>
     public sealed class Title : IEquatable<Title>
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="Title"/>.
         /// </summary>
-        /// <param name="value"> Значение. </param>
+        /// <param name="value"> Значение названия. </param>
         /// <exception cref="ArgumentNullException">
-        /// В случае если <paramref name="value"/> – <see langword="null"/>.
+        /// В случае если <paramref name="value"/> равно <see langword="null"/> или состоит только из пробелов.
         /// </exception>
         public Title(string value)
         {
@@ -25,11 +25,8 @@ namespace Domain
         }
 
         /// <summary>
-        /// Значение.
+        /// Значение названия.
         /// </summary>
-        /// <exception cref="ArgumentNullException">
-        /// В случае если входное значение <see langword="null"/>.
-        /// </exception>
         public string Value
         {
             get => field;
@@ -37,33 +34,33 @@ namespace Domain
         }
 
         /// <summary>
-        /// Оператор равенства.
+        /// Определяет равенство двух экземпляров <see cref="Title"/>.
         /// </summary>
-        /// <param name="lha"> Левый операнд. </param>
-        /// <param name="rha"> Правый операнд. </param>
-        /// <returns>  В случае равенства – <see langword="true"/>. </returns>
-        public static bool operator ==(Title? lha, Title? rha) => Equals(lha, rha);
+        /// <param name="left"> Левый операнд. </param>
+        /// <param name="right"> Правый операнд. </param>
+        /// <returns> <see langword="true"/>, если значения равны; в противном случае — <see langword="false"/>. </returns>
+        public static bool operator ==(Title? left, Title? right) => Equals(left, right);
 
         /// <summary>
-        /// Оператор неравенства.
+        /// Определяет неравенство двух экземпляров <see cref="Title"/>.
         /// </summary>
-        /// <param name="lha"> Левый операнд.</param>
-        /// <param name="rha"> Правый операнд.</param>
-        /// <returns> В случае неравенства – <see langword="true"/>. </returns>
-        public static bool operator !=(Title? lha, Title? rha) => !Equals(lha, rha);
+        /// <param name="left"> Левый операнд. </param>
+        /// <param name="right"> Правый операнд. </param>
+        /// <returns> <see langword="true"/>, если значения не равны; в противном случае — <see langword="false"/>. </returns>
+        public static bool operator !=(Title? left, Title? right) => !Equals(left, right);
 
         /// <inheritdoc/>
         public bool Equals(Title? other)
         {
             return ReferenceEquals(this, other)
-                || ((other is not null) && (this.Value == other.Value));
+                || (other is not null && this.Value == other.Value);
         }
 
         /// <inheritdoc/>
         public override bool Equals(object? obj) => this.Equals(obj as Title);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => this.Value.GetHashCode();
+        public override int GetHashCode() => StringComparer.Ordinal.GetHashCode(this.Value);
 
         /// <inheritdoc cref="object.ToString()"/>
         public override string ToString() => this.Value;
