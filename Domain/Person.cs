@@ -111,6 +111,11 @@ namespace Domain
         public Editor? Editor { get; set; }
 
         /// <summary>
+        /// Персона является Художником.
+        /// </summary>
+        public Illustrator? Illustrator { get; set; }
+
+        /// <summary>
         /// Персона является переводчиком.
         /// </summary>
         public Translator? Translator { get; set; }

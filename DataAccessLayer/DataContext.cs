@@ -33,6 +33,11 @@ namespace DataAccessLayer
         public DbSet<Editor> Editors { get; init; }
 
         /// <summary>
+        /// Художники.
+        /// </summary>
+        public DbSet<Illustrator> Illustrators { get; init; }
+
+        /// <summary>
         /// Рецензенты.
         /// </summary>
         public DbSet<Reviewer> Reviewers { get; init; }

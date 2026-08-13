@@ -43,6 +43,11 @@ namespace DataAccessLayer.Configurations
                 .OnDelete(DeleteBehavior.SetNull)
                 .IsRequired(false);
 
+            _ = builder.HasOne(book => book.Illustrator)
+                .WithMany(illustrator => illustrator.Books)
+                .OnDelete(DeleteBehavior.SetNull)
+                .IsRequired(false);
+
             _ = builder.Property(book => book.Annotation)
                 .IsRequired(false)
                 .HasComment("Аннотация");
@@ -68,6 +73,18 @@ namespace DataAccessLayer.Configurations
             _ = builder.Property(book => book.Volume)
                 .IsRequired(false)
                 .HasComment("Том");
+
+            _ = builder.Property(book => book.Year)
+                .IsRequired(true)
+                .HasComment("Год издания");
+
+            _ = builder.Property(book => book.IsConvolutus)
+                .IsRequired(true)
+                .HasComment("Сшита из нескольких журналов");
+
+            _ = builder.Property(book => book.Quality)
+                .IsRequired(true)
+                .HasComment("Качество печати");
         }
     }
 }
