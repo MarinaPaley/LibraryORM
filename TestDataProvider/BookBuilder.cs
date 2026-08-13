@@ -41,11 +41,15 @@ namespace TestDataProvider
 
         private Editor? Editor { get; set; }
 
+        private Illustrator? Illustrator { get; set; }
+
         private Seria? Seria { get; set; }
 
         private string? Doi { get; set; }
 
         private string? Url { get; set; }
+
+        private PrintQuality Quality { get; set; } = PrintQuality.PrintingHouse;
 
         /// <summary>
         /// Неявное преобразование строителя в сущность <see cref="Book"/>.
@@ -61,6 +65,17 @@ namespace TestDataProvider
         public BookBuilder WithTitle(string? title)
         {
             this.Title = title;
+            return this;
+        }
+
+        /// <summary>
+        /// Устанавливает качество книги.
+        /// </summary>
+        /// <param name="quality"> Качество книги. </param>
+        /// <returns> Текущий экземпляр строителя. </returns>
+        public BookBuilder WithQuality(PrintQuality quality)
+        {
+            this.Quality = quality;
             return this;
         }
 
@@ -175,6 +190,17 @@ namespace TestDataProvider
         }
 
         /// <summary>
+        /// Устанавливает художника.
+        /// </summary>
+        /// <param name="illustrator"> Экземпляр художника. </param>
+        /// <returns> Текущий экземпляр строителя. </returns>
+        public BookBuilder WithIllustrator(Illustrator? illustrator)
+        {
+            this.Illustrator = illustrator;
+            return this;
+        }
+
+        /// <summary>
         /// Устанавливает серию.
         /// </summary>
         /// <param name="seria"> Экземпляр серии. </param>
@@ -223,8 +249,10 @@ namespace TestDataProvider
             this.Annotation,
             this.Edition,
             this.Editor,
+            this.Illustrator,
             this.Seria,
             this.Doi,
-            this.Url);
+            this.Url,
+            this.Quality);
     }
 }

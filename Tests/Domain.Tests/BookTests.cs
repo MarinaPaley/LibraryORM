@@ -364,6 +364,36 @@ namespace Domain.Tests
         }
 
         /// <summary>
+        /// Проверяет, что передача художника в конструктор <see cref="Book"/> устанавливает двустороннюю связь.
+        /// </summary>
+        [Test]
+        public void Ctor_Illustrator_AddsBookToIllustrator()
+        {
+            // Arrange
+            var person = TestData.ValidPerson().WithFirstName("Редактор").WithFamilyName("Тестовый").Build();
+            var editor = TestData.ValidEditor().WithPerson(person).Build();
+            var illustrator = TestData.ValidIllustrator().WithPerson(person).Build();
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
+            var manuscripts = new HashSet<Manuscript> { manuscript, };
+
+            // Act
+            var book = new Book(
+                "Книга",
+                300,
+                bookType,
+                publisher,
+                2024,
+                manuscripts,
+                editor: editor,
+                illustrator: illustrator);
+
+            // Assert
+            Assert.That(illustrator.Books, Contains.Item(book));
+        }
+
+        /// <summary>
         /// Проверяет, что передача серии в конструктор <see cref="Book"/> устанавливает двустороннюю связь.
         /// </summary>
         [Test]
@@ -812,6 +842,99 @@ namespace Domain.Tests
 
             // Assert
             Assert.That(result, Is.EqualTo("Только название "));
+        }
+
+        // ==========================================
+        // Тесты свойства Quality (enum)
+        // ==========================================
+
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Book"/> по умолчанию устанавливает качество "Типография".
+        /// </summary>
+        [Test]
+        public void Ctor_DefaultQuality_SetsPrintingHouse()
+        {
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
+            var manuscripts = new HashSet<Manuscript> { manuscript, };
+
+            // Act
+            var book = new Book("Книга", 300, bookType, publisher, 2024, manuscripts);
+
+            // Assert
+            Assert.That(book.Quality, Is.EqualTo(PrintQuality.PrintingHouse));
+        }
+
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Book"/> корректно устанавливает указанное качество.
+        /// </summary>
+        [Test]
+        public void Ctor_ExplicitQuality_SetsSpecifiedValue()
+        {
+            // Arrange
+            var publisher = TestData.ValidPublisher().Build();
+            var bookType = TestData.ValidBookType().Build();
+            var manuscript = TestData.ValidManuscript().Build();
+            var manuscripts = new HashSet<Manuscript> { manuscript, };
+
+            // Act
+            var book = new Book(
+                "Книга",
+                300,
+                bookType,
+                publisher,
+                2024,
+                manuscripts,
+                quality: PrintQuality.SelfPublished);
+
+            // Assert
+            Assert.That(book.Quality, Is.EqualTo(PrintQuality.SelfPublished));
+        }
+
+        /// <summary>
+        /// Проверяет, что качество книги можно изменить после создания.
+        /// </summary>
+        [Test]
+        public void Quality_CanBeChangedAfterCreation()
+        {
+            // Arrange
+            var book = TestData.ValidBook().Build();
+
+            // Act
+            book.Quality = PrintQuality.Manuscript;
+
+            // Assert
+            Assert.That(book.Quality, Is.EqualTo(PrintQuality.Manuscript));
+        }
+
+        /// <summary>
+        /// Проверяет, что книги с одинаковым качеством имеют одинаковое значение свойства.
+        /// </summary>
+        [Test]
+        public void Quality_SameValue_ReturnsEqual()
+        {
+            // Arrange
+            var book1 = TestData.ValidBook().WithQuality(PrintQuality.PrintingHouse).Build();
+            var book2 = TestData.ValidBook().WithQuality(PrintQuality.PrintingHouse).Build();
+
+            // Act & Assert
+            Assert.That(book1.Quality, Is.EqualTo(book2.Quality));
+        }
+
+        /// <summary>
+        /// Проверяет, что книги с разным качеством имеют разные значения свойства.
+        /// </summary>
+        [Test]
+        public void Quality_DifferentValue_ReturnsNotEqual()
+        {
+            // Arrange
+            var book1 = TestData.ValidBook().WithQuality(PrintQuality.PrintingHouse).Build();
+            var book2 = TestData.ValidBook().WithQuality(PrintQuality.SelfPublished).Build();
+
+            // Act & Assert
+            Assert.That(book1.Quality, Is.Not.EqualTo(book2.Quality));
         }
     }
 }

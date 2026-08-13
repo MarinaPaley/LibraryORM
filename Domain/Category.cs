@@ -53,7 +53,7 @@ namespace Domain
         public override bool Equals(Category? other)
         {
             return ReferenceEquals(this, other)
-                || NamedEntityComparer<Category>.Instance.Equals(this, other);
+                || BilingualNamedEntityComparer<Category>.Instance.Equals(this, other);
         }
 
         /// <inheritdoc/>

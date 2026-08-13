@@ -28,9 +28,12 @@ namespace Domain
         /// <param name="annotation"> Аннотация. </param>
         /// <param name="edition"> Редакция. </param>
         /// <param name="editor"> Редактор. </param>
+        /// <param name="illustrator"> Художник. </param>
         /// <param name="seria"> Серия. </param>
         /// <param name="doi"> DOI. </param>
         /// <param name="url"> URL. </param>
+        /// <param name="quality"> Качество. </param>
+        /// <param name="isConvolutus"> Сшита из нескольких журналов. </param>
         /// <exception cref="ArgumentNullException">
         /// Если название книги или код <see langword="null"/>
         /// или Издательство <see langword="null"/>
@@ -51,9 +54,12 @@ namespace Domain
             string? annotation = null,
             string? edition = null,
             Editor? editor = null,
+            Illustrator? illustrator = null,
             Seria? seria = null,
             string? doi = null,
-            string? url = null)
+            string? url = null,
+            PrintQuality quality = PrintQuality.PrintingHouse,
+            bool isConvolutus = false)
         {
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pages);
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(year);
@@ -79,20 +85,24 @@ namespace Domain
 
             this.Publisher = publisher;
             publisher.Books.Add(this);
-            this.BookType = bookType;
 
             this.Annotation = annotation.TrimOrNull();
             this.Volume = volume;
             this.Edition = edition.TrimOrNull();
             this.Editor = editor;
+            this.Illustrator = illustrator;
 
             _ = editor?.AddBook(this);
             _ = seria?.AddBook(this);
+            _ = illustrator?.AddBook(this);
 
             this.Doi = doi;
             this.Url = url;
             this.BookType = bookType;
             bookType.Books.Add(this);
+
+            this.Quality = quality;
+            this.IsConvolutus = isConvolutus;
         }
 
         /// <summary>
@@ -109,9 +119,12 @@ namespace Domain
         /// <param name="annotation"> Аннотация. </param>
         /// <param name="edition"> Редакция. </param>
         /// <param name="editor"> Редактор. </param>
+        /// <param name="illustrator"> Художник.</param>
         /// <param name="seria"> Серия. </param>
         /// <param name="doi"> DOI. </param>
         /// <param name="url"> URL. </param>
+        /// <param name="quality"> Качество. </param>
+        /// <param name="isConvolutus"> Сшита из нескольких журналов. </param>
         /// <exception cref="ArgumentNullException"> Если название книги или код <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException"> Если количество страниц меньше или равно нулю.</exception>
         public Book(
@@ -125,9 +138,12 @@ namespace Domain
             string? annotation = null,
             string? edition = null,
             Editor? editor = null,
+            Illustrator? illustrator = null,
             Seria? seria = null,
             string? doi = null,
             string? url = null,
+            PrintQuality quality = PrintQuality.PrintingHouse,
+            bool isConvolutus = false,
             params Manuscript[] manuscripts)
             : this(
                    title,
@@ -141,9 +157,12 @@ namespace Domain
                    annotation,
                    edition,
                    editor,
+                   illustrator,
                    seria,
                    doi,
-                   url)
+                   url,
+                   quality,
+                   isConvolutus)
         {
         }
 
@@ -169,6 +188,11 @@ namespace Domain
         public int Pages { get; }
 
         /// <summary>
+        /// Качество.
+        /// </summary>
+        public PrintQuality Quality { get; set; }
+
+        /// <summary>
         /// Код isbn.
         /// </summary>
         public string? ISBN { get; }
@@ -186,7 +210,12 @@ namespace Domain
         /// <summary>
         /// Год издания.
         /// </summary>
-        public int Year { get; set; }
+        public int Year { get; }
+
+        /// <summary>
+        /// Сшита из нескольких журналов.
+        /// </summary>
+        public bool IsConvolutus { get; }
 
         /// <summary>
         /// Рукописи в книге.
@@ -202,6 +231,11 @@ namespace Domain
         /// Редактор.
         /// </summary>
         public Editor? Editor { get; set; }
+
+        /// <summary>
+        /// Художник.
+        /// </summary>
+        public Illustrator? Illustrator { get; set; }
 
         /// <summary>
         /// Аннотация.
@@ -326,6 +360,32 @@ namespace Domain
         }
 
         /// <summary>
+        /// Добавляет иллюстратора к книге.
+        /// </summary>
+        /// <param name="illustrator"> Иллюстратор. </param>
+        /// <returns> Если добавили, то <see langword="true"/>, иначе - <see langword="false"/>. </returns>
+        public bool AddIllustrator(Illustrator illustrator)
+        {
+            this.Illustrator = illustrator;
+
+            return illustrator is not null
+                && illustrator.Books.Add(this);
+        }
+
+        /// <summary>
+        /// Удаляет иллюстратора у книги.
+        /// </summary>
+        /// <param name="illustrator"> Иллюстратор. </param>
+        /// <returns> Если удалили, то <see langword="true"/>, иначе - <see langword="false"/>. </returns>
+        public bool RemoveIllustrator(Illustrator illustrator)
+        {
+            this.Illustrator = null;
+
+            return illustrator is not null
+                && illustrator.Books.Remove(this);
+        }
+
+        /// <summary>
         /// Меняет тип издания.
         /// </summary>
         /// <param name="bookType"> Тип издания. </param>
@@ -347,7 +407,7 @@ namespace Domain
         /// <summary>
         /// Меняет издательства.
         /// </summary>
-        /// <param name="publisher"> Издательство.
+        /// <param name="publisher"> Издательство. </param>
         /// <returns>
         /// Если изменили, то <see langword="true"/>, иначе - <see langword="false"/>.
         /// </returns>

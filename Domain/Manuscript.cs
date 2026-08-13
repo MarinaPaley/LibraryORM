@@ -20,9 +20,9 @@ namespace Domain
         /// Инициализирует новый экземпляр класса <see cref="Manuscript"/>.
         /// </summary>
         /// <param name="name"> Название произведения. </param>
-        /// <param name="authors"> Авторы.</param>
+        /// <param name="authors"> Авторы. </param>
         /// <param name="date"> Дата написания. </param>
-        /// <param name="languages"> Язык.</param>
+        /// <param name="languages"> Язык. </param>
         /// <param name="origin"> Оригинальное название. </param>
         /// <exception cref="ArgumentNullException"> Если авторы или жанры <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException"> Если количество страниц равно ли меньше нуля.</exception>

@@ -34,6 +34,12 @@ namespace TestDataProvider
         public static EditorBuilder ValidEditor() => new EditorBuilder();
 
         /// <summary>
+        /// Создает валидного художника с дефолтными настройками.
+        /// </summary>
+        /// <returns> Экземпляр строителя для художника. </returns>
+        public static IllustratorBuilder ValidIllustrator() => new IllustratorBuilder();
+
+        /// <summary>
         /// Создает валидного рецензента с дефолтными настройками.
         /// </summary>
         /// <returns> Экземпляр строителя для рецензента. </returns>
