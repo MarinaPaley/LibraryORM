@@ -1,0 +1,12 @@
+<map id="WebAPI.Mapping.Models.Abstract.In.BaseUpdateEntityModel" name="WebAPI.Mapping.Models.Abstract.In.BaseUpdateEntityModel">
+<area shape="rect" id="Node000001" title="Базовый класс для модели модификации сущности с идентификатором." alt="" coords="5,225,249,265"/>
+<area shape="rect" id="Node000002" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_in_1_1_i_update_model.html" title="Маркерный интерфейс редактируемой модели." alt="" coords="71,152,184,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,191,130,225,125,225,125,191"/>
+<area shape="rect" id="Node000003" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_i_id_model.html" title="Маркерный интерфейс для моделей с идентификатором." alt="" coords="37,79,116,104"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="95,114,121,150,117,153,91,117"/>
+<area shape="rect" id="Node000004" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_i_model.html" title="Маркерный интерфейс моделей." alt="" coords="94,5,161,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="113,44,87,80,83,77,109,41"/>
+<area shape="rect" id="Node000005" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_in_1_1_i_in_model.html" title="Маркерный интерфейс входной модели." alt="" coords="140,79,219,104"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="146,40,173,77,169,80,142,43"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="165,117,138,153,134,150,161,114"/>
+</map>

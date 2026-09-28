@@ -1,0 +1,11 @@
+<map id="Domain.Abstract.INamedEntity&lt; TEntity &gt;" name="Domain.Abstract.INamedEntity&lt; TEntity &gt;">
+<area shape="rect" id="Node000001" title="Интерфейс базовой именованной сущности." alt="" coords="5,153,229,193"/>
+<area shape="rect" id="Node000002" href="$interface_domain_1_1_abstract_1_1_i_entity.html" title="Базовый интерфейс сущности." alt="" coords="31,6,95,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="48,44,35,73,34,89,37,103,57,130,83,150,80,155,53,134,32,106,28,89,30,72,43,42"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="104,3,116,8,121,18,118,27,111,33,89,34,89,29,109,28,114,24,116,19,112,11,102,8"/>
+<area shape="rect" id="Node000003" href="$interface_domain_1_1_abstract_1_1_i_entity.html" title="Базовый интерфейс сущности." alt="" coords="47,79,187,105"/>
+<area shape="poly" id="edge4_Node000003_Node000002" title=" " alt="" coords="82,41,111,77,106,81,78,44"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="120,118,120,152,115,152,115,118"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="211,79,322,105"/>
+<area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="234,113,155,155,152,150,231,109"/>
+</map>

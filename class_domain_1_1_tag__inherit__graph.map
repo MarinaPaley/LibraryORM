@@ -1,0 +1,7 @@
+<map id="Domain.Tag" name="Domain.Tag">
+<area shape="rect" id="Node000001" title="Тег." alt="" coords="126,93,225,119"/>
+<area shape="rect" id="Node000002" href="$class_domain_1_1_abstract_1_1_bilingual_named_entity.html" title=" " alt="" coords="5,5,169,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,53,164,91,160,95,117,57"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="193,13,336,38"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="243,49,190,95,187,91,240,45"/>
+</map>

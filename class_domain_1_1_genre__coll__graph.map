@@ -1,0 +1,7 @@
+<map id="Domain.Genre" name="Domain.Genre">
+<area shape="rect" id="Node000001" title="Жанр." alt="" coords="131,79,247,104"/>
+<area shape="rect" id="Node000002" href="$class_domain_1_1_abstract_1_1_named_entity.html" title=" " alt="" coords="5,5,181,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,37,175,76,172,81,118,41"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="205,5,365,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="260,41,207,81,203,76,257,37"/>
+</map>

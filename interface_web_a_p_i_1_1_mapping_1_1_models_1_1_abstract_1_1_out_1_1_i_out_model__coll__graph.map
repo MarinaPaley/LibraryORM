@@ -1,0 +1,7 @@
+<map id="WebAPI.Mapping.Models.Abstract.Out.IOutModel" name="WebAPI.Mapping.Models.Abstract.Out.IOutModel">
+<area shape="rect" id="Node000001" title="Выходная модель." alt="" coords="5,152,249,192"/>
+<area shape="rect" id="Node000002" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_i_id_model.html" title="Маркерный интерфейс для моделей с идентификатором." alt="" coords="88,79,167,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,118,130,152,125,152,125,118"/>
+<area shape="rect" id="Node000003" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_i_model.html" title="Маркерный интерфейс моделей." alt="" coords="94,5,161,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="130,44,130,79,125,79,125,44"/>
+</map>

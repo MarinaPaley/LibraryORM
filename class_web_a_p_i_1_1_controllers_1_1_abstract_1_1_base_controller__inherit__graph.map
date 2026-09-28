@@ -1,0 +1,5 @@
+<map id="WebAPI.Controllers.Abstract.BaseController&lt; TRepository, TEntity, TCreateModel, TUpdateModel, TOutModel, TController &gt;" name="WebAPI.Controllers.Abstract.BaseController&lt; TRepository, TEntity, TCreateModel, TUpdateModel, TOutModel, TController &gt;">
+<area shape="rect" id="Node000001" title="Базовый абстрактный класс для контроллеров." alt="" coords="5,79,283,148"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="85,5,203,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="147,44,147,79,141,79,141,44"/>
+</map>

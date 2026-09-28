@@ -1,0 +1,21 @@
+<map id="Domain.Abstract.INamedEntity&lt; TEntity &gt;" name="Domain.Abstract.INamedEntity&lt; TEntity &gt;">
+<area shape="rect" id="Node000001" title="Интерфейс базовой именованной сущности." alt="" coords="305,69,529,109"/>
+<area shape="rect" id="Node000005" href="$interface_domain_1_1_abstract_1_1_i_bilingual_named_entity.html" title="Интерфейс базовой сущности, имеющей оригинальное и переводное имя." alt="" coords="589,5,785,45"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="515,63,602,43,603,48,516,69"/>
+<area shape="rect" id="Node000007" href="$interface_domain_1_1_abstract_1_1_i_bilingual_named_entity.html" title="Интерфейс базовой сущности, имеющей оригинальное и переводное имя." alt="" coords="589,69,785,109"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="543,87,589,87,589,92,543,92"/>
+<area shape="rect" id="Node000008" href="$class_domain_1_1_abstract_1_1_named_entity.html" title="Базовая именованная сущность." alt="" coords="577,133,797,173"/>
+<area shape="poly" id="edge10_Node000001_Node000008" title=" " alt="" coords="516,110,603,131,602,136,515,115"/>
+<area shape="rect" id="Node000002" href="$interface_domain_1_1_abstract_1_1_i_entity.html" title="Базовый интерфейс сущности." alt="" coords="5,51,69,77"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,59,164,58,258,61,306,67,305,72,257,67,164,63,83,65"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="8,37,17,28,37,25,55,27,65,33,68,43,63,53,58,50,63,42,61,37,53,32,37,30,19,33,12,41"/>
+<area shape="rect" id="Node000003" href="$interface_domain_1_1_abstract_1_1_i_entity.html" title="Базовый интерфейс сущности." alt="" coords="117,77,257,102"/>
+<area shape="poly" id="edge4_Node000003_Node000002" title=" " alt="" coords="83,69,117,75,116,80,83,74"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="271,87,305,87,305,92,271,92"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="132,126,243,151"/>
+<area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="256,121,323,107,324,112,257,127"/>
+<area shape="rect" id="Node000006" href="$class_domain_1_1_abstract_1_1_bilingual_named_entity.html" title="Базовая именованная сущность с переводом." alt="" coords="845,69,1037,109"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="781,46,862,67,861,72,780,51"/>
+<area shape="poly" id="edge9_Node000007_Node000006" title=" " alt="" coords="799,87,845,87,845,92,799,92"/>
+<area shape="poly" id="edge11_Node000008_Node000006" title=" " alt="" coords="780,127,861,107,862,112,781,132"/>
+</map>

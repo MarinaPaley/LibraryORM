@@ -1,0 +1,7 @@
+<map id="Domain.City" name="Domain.City">
+<area shape="rect" id="Node000001" title="Город." alt="" coords="125,79,227,104"/>
+<area shape="rect" id="Node000002" href="$class_domain_1_1_abstract_1_1_named_entity.html" title=" " alt="" coords="5,5,168,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="113,37,163,76,160,81,110,41"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="192,5,339,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="242,41,192,81,189,76,239,37"/>
+</map>

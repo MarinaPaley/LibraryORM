@@ -1,0 +1,13 @@
+<map id="Domain.Abstract.BaseNamedEntityComparer&lt; TEntity &gt;" name="Domain.Abstract.BaseNamedEntityComparer&lt; TEntity &gt;">
+<area shape="rect" id="Node000001" title="Базовый компаратор для именованных сущностей." alt="" coords="461,37,676,77"/>
+<area shape="rect" id="Node000004" href="$class_domain_1_1_abstract_1_1_base_bilingual_named_entity_comparer.html" title="Базовый компаратор для именованных сущностей с переводом." alt="" coords="724,5,971,45"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="690,41,723,37,724,42,690,46"/>
+<area shape="rect" id="Node000006" href="$class_domain_1_1_abstract_1_1_named_entity_comparer.html" title="Базовый компаратор для сравнения именованных сущностей." alt="" coords="737,69,957,109"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="690,69,737,74,737,79,690,74"/>
+<area shape="rect" id="Node000002" href="$class_domain_1_1_abstract_1_1_base_entity_comparer.html" title="Базовый компаратор для сущностей." alt="" coords="257,37,413,77"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="427,55,461,55,461,60,427,60"/>
+<area shape="rect" id="Node000003" href="$interface_domain_1_1_abstract_1_1_i_entity_comparer.html" title=" " alt="" coords="5,45,209,70"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="223,55,257,55,257,60,223,60"/>
+<area shape="rect" id="Node000005" href="$class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html" title="Базовый компаратор для сравнения именованных сущностей, имеющих перевод." alt="" coords="1019,5,1265,45"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="984,23,1019,23,1019,28,984,28"/>
+</map>

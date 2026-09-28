@@ -1,0 +1,7 @@
+<map id="Repository.AuthorRepository" name="Repository.AuthorRepository">
+<area shape="rect" id="Node000001" title="Репозиторий для класса Author." alt="" coords="89,93,295,119"/>
+<area shape="rect" id="Node000002" href="$class_repository_1_1_abstract_1_1_base_repository.html" title=" " alt="" coords="5,5,192,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="133,52,180,91,176,95,130,56"/>
+<area shape="rect" id="Node000003" href="$interface_repository_1_1_abstract_1_1_i_author_repository.html" title="Интерфейс для репозитория Автор." alt="" coords="216,13,355,38"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="263,49,208,95,204,91,259,45"/>
+</map>

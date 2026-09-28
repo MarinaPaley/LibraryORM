@@ -1,0 +1,10 @@
+<map id="WebAPI.Mapping.Models.Abstract.In.IInNamedModel" name="WebAPI.Mapping.Models.Abstract.In.IInNamedModel">
+<area shape="rect" id="Node000001" title="Маркерный интерфейс для входной модели именованной сущности." alt="" coords="5,152,249,192"/>
+<area shape="rect" id="Node000002" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_in_1_1_i_in_model.html" title="Маркерный интерфейс входной модели." alt="" coords="28,79,107,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,113,115,150,111,153,82,116"/>
+<area shape="rect" id="Node000003" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_i_model.html" title="Маркерный интерфейс моделей." alt="" coords="94,5,161,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="111,43,79,80,75,77,107,40"/>
+<area shape="rect" id="Node000004" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_i_named_model.html" title="Модель именованной сущности." alt="" coords="131,79,244,104"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="148,40,180,77,176,80,144,43"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="172,116,144,153,140,150,168,113"/>
+</map>

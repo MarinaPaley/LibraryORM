@@ -1,0 +1,23 @@
+<map id="Иерархия классов. Графический вид." name="Иерархия классов. Графический вид.">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,301,89,326"/>
+<area shape="rect" id="Node000001" href="$class_data_access_layer_1_1_migrations_1_1_ad_oroginal_title_migration.html" title=" " alt="" coords="175,5,386,45"/>
+<area shape="poly" id="edge69_Node000000_Node000001" title=" " alt="" coords="47,287,53,237,67,175,93,110,112,81,136,55,154,42,174,33,176,38,156,47,139,59,116,84,98,113,72,176,58,238,52,287"/>
+<area shape="rect" id="Node000002" href="$class_data_access_layer_1_1_migrations_1_1_add_floor_migration.html" title=" " alt="" coords="175,69,386,109"/>
+<area shape="poly" id="edge70_Node000000_Node000002" title=" " alt="" coords="51,286,60,248,76,203,101,158,136,119,174,99,177,103,139,123,105,161,81,205,65,250,56,287"/>
+<area shape="rect" id="Node000003" href="$class_data_access_layer_1_1_migrations_1_1_add_unique_constraint_to_shelves_migration.html" title=" " alt="" coords="137,133,424,173"/>
+<area shape="poly" id="edge71_Node000000_Node000003" title=" " alt="" coords="57,287,87,234,109,206,136,183,158,171,160,176,139,188,113,210,91,237,62,289"/>
+<area shape="rect" id="Node000004" href="$class_data_access_layer_1_1_migrations_1_1_category_add_migration.html" title=" " alt="" coords="175,197,386,237"/>
+<area shape="poly" id="edge72_Node000000_Node000004" title=" " alt="" coords="72,289,101,267,136,247,174,233,176,238,138,252,104,271,75,294"/>
+<area shape="rect" id="Node000005" href="$class_data_access_layer_1_1_migrations_1_1_fix_many_to_many_migration.html" title=" " alt="" coords="175,261,386,301"/>
+<area shape="poly" id="edge73_Node000000_Node000005" title=" " alt="" coords="103,303,175,293,176,298,103,308"/>
+<area shape="rect" id="Node000006" href="$class_data_access_layer_1_1_migrations_1_1_initial_migration.html" title=" " alt="" coords="175,325,386,365"/>
+<area shape="poly" id="edge74_Node000000_Node000006" title=" " alt="" coords="103,318,176,328,175,334,103,324"/>
+<area shape="rect" id="Node000007" href="$class_data_access_layer_1_1_migrations_1_1_new_entities_migration.html" title=" " alt="" coords="175,389,386,429"/>
+<area shape="poly" id="edge75_Node000000_Node000007" title=" " alt="" coords="75,333,104,355,138,375,176,388,174,393,136,380,101,360,72,337"/>
+<area shape="rect" id="Node000008" href="$class_data_access_layer_1_1_migrations_1_1_new_order_migration.html" title=" " alt="" coords="175,453,386,493"/>
+<area shape="poly" id="edge76_Node000000_Node000008" title=" " alt="" coords="62,337,91,390,113,417,139,439,176,457,174,462,136,444,109,420,87,393,57,340"/>
+<area shape="rect" id="Node000009" href="$class_data_access_layer_1_1_migrations_1_1_new_version_migration.html" title=" " alt="" coords="175,517,386,557"/>
+<area shape="poly" id="edge77_Node000000_Node000009" title=" " alt="" coords="56,339,65,377,81,421,105,466,139,503,177,523,174,528,136,507,101,469,76,424,60,378,51,341"/>
+<area shape="rect" id="Node000010" href="$class_data_access_layer_1_1_migrations_1_1_unique_i_s_b_n_migration.html" title=" " alt="" coords="175,581,386,621"/>
+<area shape="poly" id="edge78_Node000000_Node000010" title=" " alt="" coords="52,339,58,389,72,450,98,514,116,542,139,567,156,580,176,588,174,593,154,584,136,571,112,546,93,516,67,452,53,390,47,340"/>
+</map>

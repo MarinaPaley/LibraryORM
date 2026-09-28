@@ -1,0 +1,7 @@
+<map id="Repository.BookRepository" name="Repository.BookRepository">
+<area shape="rect" id="Node000001" title="Репозиторий для класса Book." alt="" coords="83,93,280,119"/>
+<area shape="rect" id="Node000002" href="$class_repository_1_1_abstract_1_1_base_repository.html" title=" " alt="" coords="5,5,181,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="127,53,170,91,166,95,123,57"/>
+<area shape="rect" id="Node000003" href="$interface_repository_1_1_abstract_1_1_i_book_repository.html" title="Интерфейс для репозитория с книгами." alt="" coords="206,13,335,38"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="249,49,196,95,193,91,246,45"/>
+</map>

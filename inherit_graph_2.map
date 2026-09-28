@@ -1,0 +1,93 @@
+<map id="Иерархия классов. Графический вид." name="Иерархия классов. Графический вид.">
+<area shape="rect" id="Node000000" href="$class_domain_1_1_abstract_1_1_bilingual_named_entity.html" title=" " alt="" coords="129,5,325,45"/>
+<area shape="rect" id="Node000001" href="$class_domain_1_1_category.html" title="Категория." alt="" coords="429,19,565,45"/>
+<area shape="poly" id="edge3_Node000000_Node000001" title=" " alt="" coords="339,25,429,28,429,33,339,31"/>
+<area shape="rect" id="Node000029" href="$class_domain_1_1_abstract_1_1_bilingual_named_entity.html" title=" " alt="" coords="123,69,332,109"/>
+<area shape="rect" id="Node000028" href="$class_domain_1_1_manuscript.html" title="Рукопись." alt="" coords="423,83,572,109"/>
+<area shape="poly" id="edge4_Node000029_Node000028" title=" " alt="" coords="346,90,422,91,422,97,345,95"/>
+<area shape="rect" id="Node000034" href="$class_domain_1_1_abstract_1_1_bilingual_named_entity.html" title=" " alt="" coords="129,133,326,173"/>
+<area shape="rect" id="Node000033" href="$class_domain_1_1_publisher.html" title="Издательство." alt="" coords="429,145,566,170"/>
+<area shape="poly" id="edge5_Node000034_Node000033" title=" " alt="" coords="340,152,428,154,428,159,340,158"/>
+<area shape="rect" id="Node000042" href="$class_domain_1_1_abstract_1_1_bilingual_named_entity.html" title=" " alt="" coords="131,197,323,237"/>
+<area shape="rect" id="Node000041" href="$class_domain_1_1_tag.html" title="Тег." alt="" coords="448,201,547,226"/>
+<area shape="poly" id="edge6_Node000042_Node000041" title=" " alt="" coords="337,213,448,211,448,217,337,218"/>
+<area shape="rect" id="Node000014" href="$class_domain_1_1_abstract_1_1_entity.html" title=" " alt="" coords="141,261,314,301"/>
+<area shape="rect" id="Node000013" href="$class_domain_1_1_address.html" title="Издательство." alt="" coords="433,250,562,275"/>
+<area shape="poly" id="edge7_Node000014_Node000013" title=" " alt="" coords="328,272,432,264,433,270,328,277"/>
+<area shape="rect" id="Node000025" href="$class_domain_1_1_abstract_1_1_entity.html" title=" " alt="" coords="141,325,314,365"/>
+<area shape="rect" id="Node000024" href="$class_domain_1_1_item.html" title="Экземпляр книги." alt="" coords="444,299,551,325"/>
+<area shape="poly" id="edge8_Node000025_Node000024" title=" " alt="" coords="328,330,444,316,444,321,328,336"/>
+<area shape="rect" id="Node000032" href="$class_domain_1_1_abstract_1_1_entity.html" title=" " alt="" coords="141,496,314,536"/>
+<area shape="rect" id="Node000031" href="$class_domain_1_1_person.html" title="Персона." alt="" coords="437,546,558,571"/>
+<area shape="poly" id="edge9_Node000032_Node000031" title=" " alt="" coords="328,529,437,547,436,552,327,534"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="413,1197,581,1222"/>
+<area shape="rect" id="Node000006" href="$interface_domain_1_1_abstract_1_1_i_bilingual_named_entity.html" title="Интерфейс базовой сущности, имеющей оригинальное и переводное имя." alt="" coords="669,1161,865,1201"/>
+<area shape="poly" id="edge10_Node000007_Node000006" title=" " alt="" coords="595,1197,669,1189,669,1194,595,1202"/>
+<area shape="rect" id="Node000005" href="$class_domain_1_1_abstract_1_1_bilingual_named_entity.html" title="Базовая именованная сущность с переводом." alt="" coords="925,1129,1117,1169"/>
+<area shape="poly" id="edge11_Node000006_Node000005" title=" " alt="" coords="879,1165,925,1159,926,1164,879,1170"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="5,1079,69,1105"/>
+<area shape="rect" id="Node000009" href="$interface_domain_1_1_abstract_1_1_i_entity.html" title="Базовый интерфейс сущности." alt="" coords="139,1072,316,1112"/>
+<area shape="poly" id="edge12_Node000011_Node000009" title=" " alt="" coords="83,1089,138,1089,138,1095,83,1095"/>
+<area shape="rect" id="Node000003" href="$class_domain_1_1_abstract_1_1_entity.html" title="Базовая сущность." alt="" coords="411,1004,584,1044"/>
+<area shape="poly" id="edge13_Node000009_Node000003" title=" " alt="" coords="320,1066,417,1041,418,1047,321,1071"/>
+<area shape="rect" id="Node000008" href="$interface_domain_1_1_abstract_1_1_i_named_entity.html" title="Интерфейс базовой именованной сущности." alt="" coords="385,1132,609,1172"/>
+<area shape="poly" id="edge16_Node000009_Node000008" title=" " alt="" coords="330,1112,407,1129,406,1135,329,1117"/>
+<area shape="rect" id="Node000010" href="$interface_domain_1_1_abstract_1_1_i_person.html" title="Интерфейс сущности, агрегирующей класс Person." alt="" coords="406,1068,589,1108"/>
+<area shape="poly" id="edge19_Node000009_Node000010" title=" " alt="" coords="330,1088,406,1087,406,1092,330,1093"/>
+<area shape="rect" id="Node000004" href="$class_domain_1_1_abstract_1_1_named_entity.html" title="Базовая именованная сущность." alt="" coords="657,1097,877,1137"/>
+<area shape="poly" id="edge14_Node000003_Node000004" title=" " alt="" coords="586,1045,610,1053,719,1095,717,1100,608,1059,584,1051"/>
+<area shape="poly" id="edge15_Node000004_Node000005" title=" " alt="" coords="891,1130,926,1135,925,1140,891,1136"/>
+<area shape="poly" id="edge17_Node000008_Node000006" title=" " alt="" coords="623,1163,669,1168,669,1173,623,1168"/>
+<area shape="poly" id="edge18_Node000008_Node000004" title=" " alt="" coords="623,1133,657,1129,657,1134,623,1139"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="182,446,273,471"/>
+<area shape="poly" id="edge23_Node000002_Node000001" title=" " alt="" coords="267,437,304,411,321,395,335,376,354,334,360,294,358,257,352,220,347,183,348,146,358,108,383,69,404,52,428,40,430,45,407,56,387,72,363,110,353,147,353,183,358,219,363,256,365,295,359,335,340,379,325,398,307,415,270,441"/>
+<area shape="poly" id="edge30_Node000002_Node000028" title=" " alt="" coords="266,437,303,411,321,395,335,376,351,342,357,311,356,280,353,251,351,221,352,192,362,161,383,130,401,116,421,106,423,110,404,120,387,134,367,164,358,193,356,221,359,250,362,280,362,311,356,344,340,379,325,398,307,415,269,441"/>
+<area shape="poly" id="edge33_Node000002_Node000033" title=" " alt="" coords="265,437,302,411,335,376,348,350,354,326,354,279,354,256,356,233,365,210,383,186,404,171,428,162,430,167,407,176,387,190,370,212,362,234,359,256,359,279,359,326,353,352,340,379,306,415,268,441"/>
+<area shape="poly" id="edge37_Node000002_Node000041" title=" " alt="" coords="264,437,301,410,335,376,346,357,352,339,355,303,360,269,369,252,384,235,414,218,447,211,448,216,416,223,387,239,373,255,365,271,360,304,357,340,351,359,339,379,305,415,267,441"/>
+<area shape="poly" id="edge21_Node000002_Node000013" title=" " alt="" coords="261,437,299,410,335,376,350,351,356,329,364,306,384,285,407,272,431,264,433,269,409,277,387,289,369,309,361,330,355,353,339,379,302,414,264,441"/>
+<area shape="poly" id="edge28_Node000002_Node000024" title=" " alt="" coords="256,435,336,375,358,353,384,334,413,322,443,315,444,320,415,327,387,338,362,357,339,379,260,440"/>
+<area shape="poly" id="edge32_Node000002_Node000031" title=" " alt="" coords="287,463,313,471,339,482,354,494,363,507,372,520,387,531,411,542,437,549,436,554,409,547,384,536,368,523,359,510,350,498,336,486,312,476,286,468"/>
+<area shape="poly" id="edge20_Node000002_Node000003" title=" " alt="" coords="287,457,315,465,339,482,352,502,360,526,369,587,369,659,365,737,361,814,361,886,368,947,376,970,387,989,412,1008,409,1012,383,992,371,973,363,948,355,887,356,814,360,736,364,659,363,587,355,527,347,504,335,486,313,470,286,462"/>
+<area shape="rect" id="Node000015" href="$class_domain_1_1_cabinet.html" title="Шкаф." alt="" coords="434,595,561,621"/>
+<area shape="poly" id="edge22_Node000002_Node000015" title=" " alt="" coords="287,460,314,468,339,482,351,494,358,507,364,533,370,558,376,569,387,581,409,593,434,601,433,606,407,598,384,585,372,573,365,560,359,534,353,509,347,497,336,486,312,473,285,465"/>
+<area shape="rect" id="Node000017" href="$class_domain_1_1_city.html" title="Город." alt="" coords="446,645,549,670"/>
+<area shape="poly" id="edge24_Node000002_Node000017" title=" " alt="" coords="287,459,315,467,339,482,354,501,362,520,364,558,366,595,373,613,387,630,415,646,446,654,445,659,413,651,384,634,368,616,361,596,359,558,357,521,350,503,336,486,313,472,286,464"/>
+<area shape="rect" id="Node000019" href="$class_domain_1_1_color.html" title="Цвет." alt="" coords="442,695,553,721"/>
+<area shape="poly" id="edge25_Node000002_Node000019" title=" " alt="" coords="287,458,315,466,339,482,358,507,366,532,367,558,364,583,362,608,363,632,370,656,387,679,413,696,443,704,441,709,410,701,384,683,365,658,357,633,356,608,359,582,361,557,360,533,353,509,336,486,313,471,285,463"/>
+<area shape="rect" id="Node000021" href="$class_domain_1_1_color_code.html" title="Код цвета в HEX&#45;формате (#RRGGBB или #RRGGBBAA)." alt="" coords="425,398,569,423"/>
+<area shape="poly" id="edge26_Node000002_Node000021" title=" " alt="" coords="286,446,425,421,426,426,287,451"/>
+<area shape="rect" id="Node000022" href="$class_domain_1_1_genre.html" title="Жанр." alt="" coords="439,745,555,770"/>
+<area shape="poly" id="edge27_Node000002_Node000022" title=" " alt="" coords="287,457,315,466,339,482,361,513,369,545,369,577,364,608,359,640,359,670,366,700,387,730,411,746,440,754,438,759,409,751,383,734,362,703,353,671,354,639,359,608,364,576,364,546,356,516,335,486,313,470,285,463"/>
+<area shape="rect" id="Node000026" href="$class_domain_1_1_language.html" title="Язык." alt="" coords="427,795,567,821"/>
+<area shape="poly" id="edge29_Node000002_Node000026" title=" " alt="" coords="287,457,315,465,339,482,354,501,364,520,373,558,371,596,364,633,357,670,355,707,363,743,373,761,387,779,406,793,428,802,426,807,403,798,383,783,369,764,358,745,350,707,352,670,359,632,366,595,368,558,359,522,350,504,336,486,313,470,286,462"/>
+<area shape="rect" id="Node000030" href="$class_domain_1_1_name.html" title="Полное имя." alt="" coords="439,447,555,473"/>
+<area shape="poly" id="edge31_Node000002_Node000030" title=" " alt="" coords="286,456,439,457,439,462,286,462"/>
+<area shape="rect" id="Node000035" href="$class_domain_1_1_room.html" title="Комната." alt="" coords="440,846,555,871"/>
+<area shape="poly" id="edge34_Node000002_Node000035" title=" " alt="" coords="287,457,315,465,339,482,356,504,368,526,374,548,377,571,374,615,364,658,354,702,351,745,354,766,360,788,371,809,387,830,411,847,441,855,439,860,409,852,383,834,366,812,355,790,348,767,346,745,349,701,359,657,368,614,372,571,369,550,363,528,352,507,335,486,313,470,286,462"/>
+<area shape="rect" id="Node000037" href="$class_domain_1_1_seria.html" title="Серия." alt="" coords="442,898,553,923"/>
+<area shape="poly" id="edge35_Node000002_Node000037" title=" " alt="" coords="287,457,315,465,339,482,358,507,371,533,379,558,381,583,376,634,364,684,352,733,348,783,350,807,357,832,369,856,387,881,412,898,443,907,441,912,410,903,383,885,364,859,352,833,345,808,342,783,347,732,359,682,371,633,376,584,373,559,366,535,354,510,335,486,313,470,286,462"/>
+<area shape="rect" id="Node000039" href="$class_domain_1_1_street.html" title="Улица." alt="" coords="439,953,555,978"/>
+<area shape="poly" id="edge36_Node000002_Node000039" title=" " alt="" coords="287,457,315,465,339,482,361,511,375,539,383,568,385,596,379,653,365,709,351,765,344,821,347,849,354,876,367,905,387,933,411,951,440,960,438,965,408,955,383,937,362,907,349,878,341,849,339,821,345,764,360,708,374,652,380,596,378,569,370,541,356,514,335,486,313,470,286,462"/>
+<area shape="rect" id="Node000043" href="$class_domain_1_1_title.html" title="Value Object Название." alt="" coords="444,497,551,522"/>
+<area shape="poly" id="edge38_Node000002_Node000043" title=" " alt="" coords="287,467,444,497,443,502,286,472"/>
+<area shape="rect" id="Node000044" href="$class_staff_1_1_range.html" title="Диапазон." alt="" coords="430,349,565,374"/>
+<area shape="poly" id="edge39_Node000002_Node000044" title=" " alt="" coords="263,437,319,409,384,383,429,371,431,376,386,388,321,414,265,442"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="172,1139,283,1165"/>
+<area shape="poly" id="edge40_Node000012_Node000008" title=" " alt="" coords="296,1149,385,1149,385,1155,296,1155"/>
+<area shape="rect" id="Node000016" href="$class_domain_1_1_abstract_1_1_named_entity.html" title=" " alt="" coords="117,560,337,600"/>
+<area shape="poly" id="edge41_Node000016_Node000015" title=" " alt="" coords="351,590,434,599,434,604,351,595"/>
+<area shape="rect" id="Node000018" href="$class_domain_1_1_abstract_1_1_named_entity.html" title=" " alt="" coords="117,624,337,664"/>
+<area shape="poly" id="edge42_Node000018_Node000017" title=" " alt="" coords="351,647,446,652,446,657,351,653"/>
+<area shape="rect" id="Node000020" href="$class_domain_1_1_abstract_1_1_named_entity.html" title=" " alt="" coords="117,688,337,728"/>
+<area shape="poly" id="edge43_Node000020_Node000019" title=" " alt="" coords="351,705,442,705,442,711,351,711"/>
+<area shape="rect" id="Node000023" href="$class_domain_1_1_abstract_1_1_named_entity.html" title=" " alt="" coords="117,752,337,792"/>
+<area shape="poly" id="edge44_Node000023_Node000022" title=" " alt="" coords="351,763,439,758,439,763,351,768"/>
+<area shape="rect" id="Node000027" href="$class_domain_1_1_abstract_1_1_named_entity.html" title=" " alt="" coords="117,816,337,856"/>
+<area shape="poly" id="edge45_Node000027_Node000026" title=" " alt="" coords="351,821,427,813,428,818,351,826"/>
+<area shape="rect" id="Node000036" href="$class_domain_1_1_abstract_1_1_named_entity.html" title=" " alt="" coords="117,880,337,920"/>
+<area shape="poly" id="edge46_Node000036_Node000035" title=" " alt="" coords="350,879,439,865,440,870,351,884"/>
+<area shape="rect" id="Node000038" href="$class_domain_1_1_abstract_1_1_named_entity.html" title=" " alt="" coords="117,944,337,984"/>
+<area shape="poly" id="edge47_Node000038_Node000037" title=" " alt="" coords="342,939,441,919,442,924,343,944"/>
+<area shape="rect" id="Node000040" href="$class_domain_1_1_abstract_1_1_named_entity.html" title=" " alt="" coords="117,1008,337,1048"/>
+<area shape="poly" id="edge48_Node000040_Node000039" title=" " alt="" coords="327,1002,441,975,442,981,328,1007"/>
+</map>

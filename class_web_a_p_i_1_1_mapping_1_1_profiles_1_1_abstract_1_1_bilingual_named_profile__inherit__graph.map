@@ -1,0 +1,9 @@
+<map id="WebAPI.Mapping.Profiles.Abstract.BilingualNamedProfile&lt; TEntity, TCreateModel, TUpdateModel, TOutModel &gt;" name="WebAPI.Mapping.Profiles.Abstract.BilingualNamedProfile&lt; TEntity, TCreateModel, TUpdateModel, TOutModel &gt;">
+<area shape="rect" id="Node000001" title="Профиль, настраивающий правила отображения ИЗ целевого типа сущности (TEntity ) В целевой тип ВЫХОДНО..." alt="" coords="5,269,293,339"/>
+<area shape="rect" id="Node000002" href="$class_web_a_p_i_1_1_mapping_1_1_profiles_1_1_abstract_1_1_entity_profile.html" title="Профиль, настраивающий правила отображения ИЗ целевого типа сущности (TEntity ) В целевой тип ВЫХОДНО..." alt="" coords="38,167,261,221"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="152,235,152,269,147,269,147,235"/>
+<area shape="rect" id="Node000003" href="$class_web_a_p_i_1_1_mapping_1_1_profiles_1_1_abstract_1_1_entity_out_profile.html" title="Профиль, настраивающий правила отображения ИЗ целевого типа сущности (TEntity ) В целевой тип ВЫХОДНО..." alt="" coords="55,79,244,119"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="152,132,152,167,147,167,147,132"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="118,5,181,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="152,44,152,79,147,79,147,44"/>
+</map>

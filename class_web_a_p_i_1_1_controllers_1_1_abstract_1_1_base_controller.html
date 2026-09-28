@@ -1,0 +1,500 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Домашняя библиотека: Шаблон класса WebAPI.Controllers.Abstract.BaseController&lt; TRepository, TEntity, TCreateModel, TUpdateModel, TOutModel, TController &gt;</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Домашняя библиотека
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespace_web_a_p_i.html">WebAPI</a></li><li class="navelem"><a class="el" href="namespace_web_a_p_i_1_1_controllers.html">Controllers</a></li><li class="navelem"><a class="el" href="namespace_web_a_p_i_1_1_controllers_1_1_abstract.html">Abstract</a></li><li class="navelem"><a class="el" href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html">BaseController</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Открытые члены</a> &#124;
+<a href="#pro-methods">Защищенные члены</a> &#124;
+<a href="#properties">Свойства</a> &#124;
+<a href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller-members.html">Полный список членов класса</a>  </div>
+  <div class="headertitle"><div class="title">Шаблон класса WebAPI.Controllers.Abstract.BaseController&lt; TRepository, TEntity, TCreateModel, TUpdateModel, TOutModel, TController &gt;<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Базовый абстрактный класс для контроллеров.  
+ <a href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html#details">Подробнее...</a></p>
+<div class="dynheader">
+Граф наследования:WebAPI.Controllers.Abstract.BaseController&lt; TRepository, TEntity, TCreateModel, TUpdateModel, TOutModel, TController &gt;:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller__inherit__graph.png" border="0" usemap="#a_web_a_p_i_8_controllers_8_abstract_8_base_controller_3_01_t_repository_00_01_t_entity_00_01_t_create_model_00_01_t_update_model_00_01_t_out_model_00_01_t_controller_01_4_inherit__map" alt="Inheritance graph"/></div>
+<map name="a_web_a_p_i_8_controllers_8_abstract_8_base_controller_3_01_t_repository_00_01_t_entity_00_01_t_create_model_00_01_t_update_model_00_01_t_out_model_00_01_t_controller_01_4_inherit__map" id="a_web_a_p_i_8_controllers_8_abstract_8_base_controller_3_01_t_repository_00_01_t_entity_00_01_t_create_model_00_01_t_update_model_00_01_t_out_model_00_01_t_controller_01_4_inherit__map">
+<area shape="rect" title="Базовый абстрактный класс для контроллеров." alt="" coords="5,79,283,148"/>
+<area shape="rect" title=" " alt="" coords="85,5,203,31"/>
+<area shape="poly" title=" " alt="" coords="147,44,147,79,141,79,141,44"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">см. легенду</a>]</span></center></div>
+<div class="dynheader">
+Граф связей класса WebAPI.Controllers.Abstract.BaseController&lt; TRepository, TEntity, TCreateModel, TUpdateModel, TOutModel, TController &gt;:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller__coll__graph.png" border="0" usemap="#a_web_a_p_i_8_controllers_8_abstract_8_base_controller_3_01_t_repository_00_01_t_entity_00_01_t_create_model_00_01_t_update_model_00_01_t_out_model_00_01_t_controller_01_4_coll__map" alt="Collaboration graph"/></div>
+<map name="a_web_a_p_i_8_controllers_8_abstract_8_base_controller_3_01_t_repository_00_01_t_entity_00_01_t_create_model_00_01_t_update_model_00_01_t_out_model_00_01_t_controller_01_4_coll__map" id="a_web_a_p_i_8_controllers_8_abstract_8_base_controller_3_01_t_repository_00_01_t_entity_00_01_t_create_model_00_01_t_update_model_00_01_t_out_model_00_01_t_controller_01_4_coll__map">
+<area shape="rect" title="Базовый абстрактный класс для контроллеров." alt="" coords="5,79,283,148"/>
+<area shape="rect" title=" " alt="" coords="85,5,203,31"/>
+<area shape="poly" title=" " alt="" coords="147,44,147,79,141,79,141,44"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">см. легенду</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Открытые члены</h2></td></tr>
+<tr class="memitem:a7d654aef93f714025dc6abe47fe0a3b5" id="r_a7d654aef93f714025dc6abe47fe0a3b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">virtual</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">IActionResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html#a7d654aef93f714025dc6abe47fe0a3b5">GetAll</a> ()</td></tr>
+<tr class="memdesc:a7d654aef93f714025dc6abe47fe0a3b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Показывает все сущности.  <br /></td></tr>
+<tr class="separator:a7d654aef93f714025dc6abe47fe0a3b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a803bae6294c4cc3b52d3bb6a1c7a6447" id="r_a803bae6294c4cc3b52d3bb6a1c7a6447"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">virtual</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">async</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Task</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">IActionResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html#a803bae6294c4cc3b52d3bb6a1c7a6447">GetAsync</a> ([<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">FromRoute</a>] <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Guid</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">id</a>)</td></tr>
+<tr class="memdesc:a803bae6294c4cc3b52d3bb6a1c7a6447"><td class="mdescLeft">&#160;</td><td class="mdescRight">Получает сущность по идентификатору.  <br /></td></tr>
+<tr class="separator:a803bae6294c4cc3b52d3bb6a1c7a6447"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32bcbf58145a3c8fa0536434f5d2e9c1" id="r_a32bcbf58145a3c8fa0536434f5d2e9c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">virtual</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">async</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Task</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">IActionResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html#a32bcbf58145a3c8fa0536434f5d2e9c1">DeleteAsync</a> ([<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">FromRoute</a>] <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Guid</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">id</a>)</td></tr>
+<tr class="memdesc:a32bcbf58145a3c8fa0536434f5d2e9c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Удаляет сущность.  <br /></td></tr>
+<tr class="separator:a32bcbf58145a3c8fa0536434f5d2e9c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0bd095d74572ea32b09b251004fb257" id="r_ac0bd095d74572ea32b09b251004fb257"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">virtual</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">async</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Task</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">IActionResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html#ac0bd095d74572ea32b09b251004fb257">CreateAsync</a> ([<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">FromBody</a>] <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TCreateModel</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">model</a>)</td></tr>
+<tr class="memdesc:ac0bd095d74572ea32b09b251004fb257"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создает сущность.  <br /></td></tr>
+<tr class="separator:ac0bd095d74572ea32b09b251004fb257"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56e374687d34bf5f39e1784685151315" id="r_a56e374687d34bf5f39e1784685151315"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">virtual</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">async</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Task</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">IActionResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html#a56e374687d34bf5f39e1784685151315">UpdateAsync</a> ([<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">FromBody</a>] <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TUpdateModel</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">model</a>)</td></tr>
+<tr class="memdesc:a56e374687d34bf5f39e1784685151315"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обновляет сущность.  <br /></td></tr>
+<tr class="separator:a56e374687d34bf5f39e1784685151315"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Защищенные члены</h2></td></tr>
+<tr class="memitem:a0f35152fa3a0491e3448970dae61ffe4" id="r_a0f35152fa3a0491e3448970dae61ffe4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html#a0f35152fa3a0491e3448970dae61ffe4">BaseController</a> (<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a> repository, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">IMapper</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">mapper</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">ILogger</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TController</a> &gt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">logger</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">string</a> controllerUrl)</td></tr>
+<tr class="memdesc:a0f35152fa3a0491e3448970dae61ffe4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Инициализирует новый экземпляр класса BaseController&lt;TRepository, TEntity, TCreateModel, TUpdateModel, TOutModel, TController&gt;.  <br /></td></tr>
+<tr class="separator:a0f35152fa3a0491e3448970dae61ffe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
+Свойства</h2></td></tr>
+<tr class="memitem:a05728c7c19524ec6763d0b229ef1fe90" id="r_a05728c7c19524ec6763d0b229ef1fe90"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html#a05728c7c19524ec6763d0b229ef1fe90">Repository</a><code> [get]</code></td></tr>
+<tr class="memdesc:a05728c7c19524ec6763d0b229ef1fe90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Репозиторий.  <br /></td></tr>
+<tr class="separator:a05728c7c19524ec6763d0b229ef1fe90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a892b771795f00bae1269682d5f807d3e" id="r_a892b771795f00bae1269682d5f807d3e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">IMapper</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html#a892b771795f00bae1269682d5f807d3e">Mapper</a><code> [get]</code></td></tr>
+<tr class="memdesc:a892b771795f00bae1269682d5f807d3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Маппер.  <br /></td></tr>
+<tr class="separator:a892b771795f00bae1269682d5f807d3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3986f108689d601b07e36bba3c0713e" id="r_ab3986f108689d601b07e36bba3c0713e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">ILogger</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TController</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html#ab3986f108689d601b07e36bba3c0713e">Logger</a><code> [get]</code></td></tr>
+<tr class="memdesc:ab3986f108689d601b07e36bba3c0713e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Логгер.  <br /></td></tr>
+<tr class="separator:ab3986f108689d601b07e36bba3c0713e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><p>Базовый абстрактный класс для контроллеров. </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TRepository</td><td>Целевой тип репозитория. </td></tr>
+    <tr><td class="paramname">TEntity</td><td>Целевой тип сущности.</td></tr>
+    <tr><td class="paramname">TCreateModel</td><td>Целевой тип СОЗДАВАЕМОЙ модели. </td></tr>
+    <tr><td class="paramname">TUpdateModel</td><td>Целевой тип ИЗМЕНЯЕМОЙ модели. </td></tr>
+    <tr><td class="paramname">TOutModel</td><td>Целевой тип ВЫХОДНОЙ модели. </td></tr>
+    <tr><td class="paramname">TController</td><td>Целевой тип контроллера. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="typeconstraint">
+<dl><dt><b>Согласование типов</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em>TRepository</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html">BaseRepository</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TRepository</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TRepository</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TEntity</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="class_domain_1_1_abstract_1_1_entity.html">Entity</a>&lt;<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>&gt;</em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TCreateModel</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">class</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TCreateModel</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_in_1_1_i_create_model.html">ICreateModel</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TUpdateModel</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">class</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TUpdateModel</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_in_1_1_i_update_model.html">IUpdateModel</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TOutModel</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">class</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TOutModel</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_out_1_1_i_out_model.html">IOutModel</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TController</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html">BaseController</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TController</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TController</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TController</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TCreateModel</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TController</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TUpdateModel</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TController</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TOutModel</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TController</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TController</a></em></td><td>&#160;</td></tr>
+</table>
+</dd>
+</dl>
+</div>
+</div><h2 class="groupheader">Конструктор(ы)</h2>
+<a id="a0f35152fa3a0491e3448970dae61ffe4" name="a0f35152fa3a0491e3448970dae61ffe4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f35152fa3a0491e3448970dae61ffe4">&#9670;&#160;</a></span>BaseController()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html">WebAPI.Controllers.Abstract.BaseController</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TCreateModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TUpdateModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TOutModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TController</a> &gt;.<a class="el" href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html">BaseController</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a>&#160;</td>
+          <td class="paramname"><em>repository</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">IMapper</a>&#160;</td>
+          <td class="paramname"><em>mapper</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">ILogger</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TController</a> &gt;&#160;</td>
+          <td class="paramname"><em>logger</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">string</a>&#160;</td>
+          <td class="paramname"><em>controllerUrl</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Инициализирует новый экземпляр класса BaseController&lt;TRepository, TEntity, TCreateModel, TUpdateModel, TOutModel, TController&gt;. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">repository</td><td>Репозиторий. </td></tr>
+    <tr><td class="paramname">mapper</td><td>Маппер. </td></tr>
+    <tr><td class="paramname">logger</td><td>Логгер. </td></tr>
+    <tr><td class="paramname">controllerUrl</td><td>Целевой <code>URL</code> контроллера. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>В случае если <em>repository</em> , <em>mapper</em>  или <em>logger</em>  – <code>null</code>. </td></tr>
+    <tr><td class="paramname">ArgumentOutOfRangeException</td><td>В случае если <em>controllerUrl</em>  – <code>null</code>, string.Empty или строка состоящая из пробельных символов (whitespaces). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Методы</h2>
+<a id="ac0bd095d74572ea32b09b251004fb257" name="ac0bd095d74572ea32b09b251004fb257"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0bd095d74572ea32b09b251004fb257">&#9670;&#160;</a></span>CreateAsync()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">virtual</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">async</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Task</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">IActionResult</a> &gt; <a class="el" href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html">WebAPI.Controllers.Abstract.BaseController</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TCreateModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TUpdateModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TOutModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TController</a> &gt;.CreateAsync </td>
+          <td>(</td>
+          <td class="paramtype">[FromBody] <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TCreateModel</a>&#160;</td>
+          <td class="paramname"><em>model</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Создает сущность. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">model</td><td>Модель. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Созданная сущность. </dd></dl>
+
+</div>
+</div>
+<a id="a32bcbf58145a3c8fa0536434f5d2e9c1" name="a32bcbf58145a3c8fa0536434f5d2e9c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32bcbf58145a3c8fa0536434f5d2e9c1">&#9670;&#160;</a></span>DeleteAsync()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">virtual</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">async</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Task</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">IActionResult</a> &gt; <a class="el" href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html">WebAPI.Controllers.Abstract.BaseController</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TCreateModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TUpdateModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TOutModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TController</a> &gt;.DeleteAsync </td>
+          <td>(</td>
+          <td class="paramtype">[FromRoute] <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Guid</a>&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Удаляет сущность. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>Идентификатор удаляемой сущности.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd><code>true</code>, если удалили, иначе <code>false</code>. </dd></dl>
+
+</div>
+</div>
+<a id="a7d654aef93f714025dc6abe47fe0a3b5" name="a7d654aef93f714025dc6abe47fe0a3b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d654aef93f714025dc6abe47fe0a3b5">&#9670;&#160;</a></span>GetAll()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">virtual</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">IActionResult</a> <a class="el" href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html">WebAPI.Controllers.Abstract.BaseController</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TCreateModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TUpdateModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TOutModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TController</a> &gt;.GetAll </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Показывает все сущности. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Результат выполнения запроса. </dd></dl>
+
+</div>
+</div>
+<a id="a803bae6294c4cc3b52d3bb6a1c7a6447" name="a803bae6294c4cc3b52d3bb6a1c7a6447"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a803bae6294c4cc3b52d3bb6a1c7a6447">&#9670;&#160;</a></span>GetAsync()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">virtual</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">async</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Task</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">IActionResult</a> &gt; <a class="el" href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html">WebAPI.Controllers.Abstract.BaseController</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TCreateModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TUpdateModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TOutModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TController</a> &gt;.GetAsync </td>
+          <td>(</td>
+          <td class="paramtype">[FromRoute] <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Guid</a>&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Получает сущность по идентификатору. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>Идентификатор сущности. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Сущность. </dd></dl>
+
+</div>
+</div>
+<a id="a56e374687d34bf5f39e1784685151315" name="a56e374687d34bf5f39e1784685151315"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56e374687d34bf5f39e1784685151315">&#9670;&#160;</a></span>UpdateAsync()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">virtual</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">async</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Task</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">IActionResult</a> &gt; <a class="el" href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html">WebAPI.Controllers.Abstract.BaseController</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TCreateModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TUpdateModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TOutModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TController</a> &gt;.UpdateAsync </td>
+          <td>(</td>
+          <td class="paramtype">[FromBody] <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TUpdateModel</a>&#160;</td>
+          <td class="paramname"><em>model</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Обновляет сущность. </p>
+<p>@TODO: Стоит использовать метод <code>PATCH</code> (HttpPatchAttribute). Более подробно описан . </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">model</td><td>Модель.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Обновленная сущность. </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Полный список свойств</h2>
+<a id="ab3986f108689d601b07e36bba3c0713e" name="ab3986f108689d601b07e36bba3c0713e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3986f108689d601b07e36bba3c0713e">&#9670;&#160;</a></span>Logger</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">ILogger</a>&lt;<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TController</a>&gt; <a class="el" href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html">WebAPI.Controllers.Abstract.BaseController</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TCreateModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TUpdateModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TOutModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TController</a> &gt;.Logger</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Логгер. </p>
+
+</div>
+</div>
+<a id="a892b771795f00bae1269682d5f807d3e" name="a892b771795f00bae1269682d5f807d3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a892b771795f00bae1269682d5f807d3e">&#9670;&#160;</a></span>Mapper</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">IMapper</a> <a class="el" href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html">WebAPI.Controllers.Abstract.BaseController</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TCreateModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TUpdateModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TOutModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TController</a> &gt;.Mapper</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Маппер. </p>
+
+</div>
+</div>
+<a id="a05728c7c19524ec6763d0b229ef1fe90" name="a05728c7c19524ec6763d0b229ef1fe90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05728c7c19524ec6763d0b229ef1fe90">&#9670;&#160;</a></span>Repository</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a> <a class="el" href="class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html">WebAPI.Controllers.Abstract.BaseController</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TCreateModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TUpdateModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TOutModel</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TController</a> &gt;.Repository</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Репозиторий. </p>
+
+</div>
+</div>
+<hr/>Объявления и описания членов класса находятся в файле:<ul>
+<li>WebAPI/Controllers/Abstract/<a class="el" href="_base_controller_8cs.html">BaseController.cs</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Создано системой&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+</small></address>
+</body>
+</html>

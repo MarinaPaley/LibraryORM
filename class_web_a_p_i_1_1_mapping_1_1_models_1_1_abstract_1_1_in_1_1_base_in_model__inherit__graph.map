@@ -1,0 +1,13 @@
+<map id="WebAPI.Mapping.Models.Abstract.In.BaseInModel" name="WebAPI.Mapping.Models.Abstract.In.BaseInModel">
+<area shape="rect" id="Node000001" title="Базовый класс для ВХОДНОЙ модели." alt="" coords="247,69,491,109"/>
+<area shape="rect" id="Node000004" href="$class_web_a_p_i_1_1_mapping_1_1_models_1_1_in_models_1_1_city_in_model.html" title="Модель IN города." alt="" coords="539,5,737,45"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="466,63,553,43,554,48,468,69"/>
+<area shape="rect" id="Node000005" href="$class_web_a_p_i_1_1_mapping_1_1_models_1_1_in_models_1_1_shelf_in_model.html" title="Модель IN полки." alt="" coords="539,69,737,109"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="504,87,539,87,539,92,504,92"/>
+<area shape="rect" id="Node000006" href="$class_web_a_p_i_1_1_mapping_1_1_models_1_1_in_models_1_1_street_in_model.html" title="Модель IN улицы." alt="" coords="539,133,737,173"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="468,110,554,131,553,136,466,115"/>
+<area shape="rect" id="Node000002" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_in_1_1_i_in_model.html" title="Маркерный интерфейс входной модели." alt="" coords="120,77,199,102"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="212,87,247,87,247,92,212,92"/>
+<area shape="rect" id="Node000003" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_i_model.html" title="Маркерный интерфейс моделей." alt="" coords="5,77,72,102"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="86,87,120,87,120,92,86,92"/>
+</map>

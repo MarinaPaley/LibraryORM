@@ -1,0 +1,707 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Домашняя библиотека: Шаблон класса Repository.Abstract.BaseRepository&lt; TEntity, TRepository &gt;</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Домашняя библиотека
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespace_repository.html">Repository</a></li><li class="navelem"><a class="el" href="namespace_repository_1_1_abstract.html">Abstract</a></li><li class="navelem"><a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html">BaseRepository</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Открытые члены</a> &#124;
+<a href="#pro-methods">Защищенные члены</a> &#124;
+<a href="#properties">Свойства</a> &#124;
+<a href="class_repository_1_1_abstract_1_1_base_repository-members.html">Полный список членов класса</a>  </div>
+  <div class="headertitle"><div class="title">Шаблон класса Repository.Abstract.BaseRepository&lt; TEntity, TRepository &gt;<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Базовый класс репозиториев.  
+ <a href="class_repository_1_1_abstract_1_1_base_repository.html#details">Подробнее...</a></p>
+<div class="dynheader">
+Граф наследования:Repository.Abstract.BaseRepository&lt; TEntity, TRepository &gt;:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_repository_1_1_abstract_1_1_base_repository__inherit__graph.png" border="0" usemap="#a_repository_8_abstract_8_base_repository_3_01_t_entity_00_01_t_repository_01_4_inherit__map" alt="Inheritance graph"/></div>
+<map name="a_repository_8_abstract_8_base_repository_3_01_t_entity_00_01_t_repository_01_4_inherit__map" id="a_repository_8_abstract_8_base_repository_3_01_t_entity_00_01_t_repository_01_4_inherit__map">
+<area shape="rect" title="Базовый класс репозиториев." alt="" coords="5,79,260,119"/>
+<area shape="rect" href="interface_repository_1_1_abstract_1_1_i_repository.html" title="Интерфейс репозитория." alt="" coords="47,5,219,31"/>
+<area shape="poly" title=" " alt="" coords="135,44,135,79,130,79,130,44"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">см. легенду</a>]</span></center></div>
+<div class="dynheader">
+Граф связей класса Repository.Abstract.BaseRepository&lt; TEntity, TRepository &gt;:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_repository_1_1_abstract_1_1_base_repository__coll__graph.png" border="0" usemap="#a_repository_8_abstract_8_base_repository_3_01_t_entity_00_01_t_repository_01_4_coll__map" alt="Collaboration graph"/></div>
+<map name="a_repository_8_abstract_8_base_repository_3_01_t_entity_00_01_t_repository_01_4_coll__map" id="a_repository_8_abstract_8_base_repository_3_01_t_entity_00_01_t_repository_01_4_coll__map">
+<area shape="rect" title="Базовый класс репозиториев." alt="" coords="5,79,260,119"/>
+<area shape="rect" href="interface_repository_1_1_abstract_1_1_i_repository.html" title="Интерфейс репозитория." alt="" coords="47,5,219,31"/>
+<area shape="poly" title=" " alt="" coords="135,44,135,79,130,79,130,44"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">см. легенду</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Открытые члены</h2></td></tr>
+<tr class="memitem:a581f5ff9621f461a7d454b328f6f3536" id="r_a581f5ff9621f461a7d454b328f6f3536"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">async</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Task</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html#a581f5ff9621f461a7d454b328f6f3536">CreateAsync</a> (<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">entity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">saveNow</a>=<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">true</a>)</td></tr>
+<tr class="memdesc:a581f5ff9621f461a7d454b328f6f3536"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создает сущность.<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">entity</td><td>Сущность.</td></tr>
+    <tr><td class="paramname">saveNow</td><td>Надо ли сохранять сущность после изменения. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Контекст доступа к сущности.</dd></dl>
+  <br /></td></tr>
+<tr class="separator:a581f5ff9621f461a7d454b328f6f3536"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf2d21923b315ca2920a508e53da0e62" id="r_aaf2d21923b315ca2920a508e53da0e62"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">async</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Task</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html#aaf2d21923b315ca2920a508e53da0e62">DeleteAsync</a> (<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Guid</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">id</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">saveNow</a>=<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">true</a>)</td></tr>
+<tr class="memdesc:aaf2d21923b315ca2920a508e53da0e62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Удаление сущности.<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>Идентификатор удаляемой сущности. </td></tr>
+    <tr><td class="paramname">saveNow</td><td>Надо ли сохранять сущность после изменения. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd><code>true</code>, если удалили, иначе - <code>false</code>.</dd></dl>
+  <br /></td></tr>
+<tr class="separator:aaf2d21923b315ca2920a508e53da0e62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac10d797689d8ef30da250be0e5418ce1" id="r_ac10d797689d8ef30da250be0e5418ce1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">async</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Task</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html#ac10d797689d8ef30da250be0e5418ce1">DeleteAsync</a> (<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">entity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">saveNow</a>=<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">true</a>)</td></tr>
+<tr class="memdesc:ac10d797689d8ef30da250be0e5418ce1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Удаление сущности.<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">entity</td><td>Сущность. </td></tr>
+    <tr><td class="paramname">saveNow</td><td>Надо ли сохранять сущность после изменения. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd><code>true</code>, если удалили, иначе - <code>false</code>.</dd></dl>
+  <br /></td></tr>
+<tr class="separator:ac10d797689d8ef30da250be0e5418ce1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a462a47228d3e1f621b970d015253d593" id="r_a462a47228d3e1f621b970d015253d593"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">IEnumerable</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html#a462a47228d3e1f621b970d015253d593">Filter</a> (<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Expression</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Func</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a> &gt; &gt;? <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">predicate</a>=<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">null</a>)</td></tr>
+<tr class="memdesc:a462a47228d3e1f621b970d015253d593"><td class="mdescLeft">&#160;</td><td class="mdescRight">Поиск множества сущностей по предикату (<em>predicate</em> ).<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">predicate</td><td>Предикат, которому должна удовлетворять сушность.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Множество (IEnumerable&lt;TEntity&gt;) всех сущностей.</dd></dl>
+  <br /></td></tr>
+<tr class="separator:a462a47228d3e1f621b970d015253d593"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae351b9b49e6c48fe0b6b10f9a9abb185" id="r_ae351b9b49e6c48fe0b6b10f9a9abb185"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">async</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Task</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>?&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html#ae351b9b49e6c48fe0b6b10f9a9abb185">FindAsync</a> (<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Expression</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Func</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a> &gt; &gt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">predicate</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">track</a>=<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">false</a>)</td></tr>
+<tr class="memdesc:ae351b9b49e6c48fe0b6b10f9a9abb185"><td class="mdescLeft">&#160;</td><td class="mdescRight">Поиск сущности по предикату (<em>predicate</em> ).<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">predicate</td><td>Предикат, которому должна удовлетворять сущность.</td></tr>
+    <tr><td class="paramname">track</td><td>Отследивать ли изменения?. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Сущность или <code>null</code>.</dd></dl>
+  <br /></td></tr>
+<tr class="separator:ae351b9b49e6c48fe0b6b10f9a9abb185"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fce721f8d883d6522dfeb1e967c965a" id="r_a3fce721f8d883d6522dfeb1e967c965a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">async</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Task</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>?&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html#a3fce721f8d883d6522dfeb1e967c965a">GetAsync</a> (<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Guid</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">id</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">track</a>=<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">false</a>)</td></tr>
+<tr class="memdesc:a3fce721f8d883d6522dfeb1e967c965a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Находит сущность по идентификатору.<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>Идентификатор сущности. </td></tr>
+  </table>
+  </dd>
+</dl>
+<p>/// </p><dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">track</td><td>Отследивать ли изменения?. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Сущность. </dd></dl>
+  <br /></td></tr>
+<tr class="separator:a3fce721f8d883d6522dfeb1e967c965a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0b9c92b7bb7f4f295321f567605f6b1" id="r_ae0b9c92b7bb7f4f295321f567605f6b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">async</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Task</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html#ae0b9c92b7bb7f4f295321f567605f6b1">UpdateAsync</a> (<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">entity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">saveNow</a>=<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">true</a>)</td></tr>
+<tr class="memdesc:ae0b9c92b7bb7f4f295321f567605f6b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обновление сущности.<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">entity</td><td>Сущность. </td></tr>
+    <tr><td class="paramname">saveNow</td><td>Надо ли сохранять сущность после изменения. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Контекст доступа к сущности.</dd></dl>
+  <br /></td></tr>
+<tr class="separator:ae0b9c92b7bb7f4f295321f567605f6b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Защищенные члены</h2></td></tr>
+<tr class="memitem:a3cc6ce27cd7fca20877ea52a4141e82b" id="r_a3cc6ce27cd7fca20877ea52a4141e82b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html#a3cc6ce27cd7fca20877ea52a4141e82b">BaseRepository</a> (<a class="el" href="class_data_access_layer_1_1_data_context.html">DataContext</a> dataContext, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">ILogger</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a> &gt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">logger</a>)</td></tr>
+<tr class="memdesc:a3cc6ce27cd7fca20877ea52a4141e82b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Инициализирует новый экземпляр класса BaseRepository&lt;TEntity,TRepository&gt;.  <br /></td></tr>
+<tr class="separator:a3cc6ce27cd7fca20877ea52a4141e82b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4066a981b3224c7a69aba74f06bfdb9c" id="r_a4066a981b3224c7a69aba74f06bfdb9c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">IQueryable</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html#a4066a981b3224c7a69aba74f06bfdb9c">GetAll</a> (<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">track</a>=<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">false</a>)</td></tr>
+<tr class="memdesc:a4066a981b3224c7a69aba74f06bfdb9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Получение всех сущностей.  <br /></td></tr>
+<tr class="separator:a4066a981b3224c7a69aba74f06bfdb9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
+Свойства</h2></td></tr>
+<tr class="memitem:ab9815f94ee51cbf1bb508c3fba8b536c" id="r_ab9815f94ee51cbf1bb508c3fba8b536c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_data_access_layer_1_1_data_context.html">DataContext</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html#ab9815f94ee51cbf1bb508c3fba8b536c">DataContext</a><code> [get]</code></td></tr>
+<tr class="memdesc:ab9815f94ee51cbf1bb508c3fba8b536c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Контекст доступа к данным.  <br /></td></tr>
+<tr class="separator:ab9815f94ee51cbf1bb508c3fba8b536c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad87c1f06126486eb1a323f57cc9d6eb8" id="r_ad87c1f06126486eb1a323f57cc9d6eb8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">ILogger</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html#ad87c1f06126486eb1a323f57cc9d6eb8">Logger</a><code> [get]</code></td></tr>
+<tr class="memdesc:ad87c1f06126486eb1a323f57cc9d6eb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Логгер.  <br /></td></tr>
+<tr class="separator:ad87c1f06126486eb1a323f57cc9d6eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><p>Базовый класс репозиториев. </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TEntity</td><td>Целевой тип сущности. </td></tr>
+    <tr><td class="paramname">TRepository</td><td>Целевой тип репозитория. </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="typeconstraint">
+<dl><dt><b>Согласование типов</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em>TEntity</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">class</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TEntity</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="interface_domain_1_1_abstract_1_1_i_entity.html">IEntity</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TRepository</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html">BaseRepository</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TRepository</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TRepository</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a></em></td><td>&#160;</td></tr>
+</table>
+</dd>
+</dl>
+</div>
+</div><h2 class="groupheader">Конструктор(ы)</h2>
+<a id="a3cc6ce27cd7fca20877ea52a4141e82b" name="a3cc6ce27cd7fca20877ea52a4141e82b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3cc6ce27cd7fca20877ea52a4141e82b">&#9670;&#160;</a></span>BaseRepository()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html">Repository.Abstract.BaseRepository</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a> &gt;.<a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html">BaseRepository</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_data_access_layer_1_1_data_context.html">DataContext</a>&#160;</td>
+          <td class="paramname"><em>dataContext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">ILogger</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a> &gt;&#160;</td>
+          <td class="paramname"><em>logger</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Инициализирует новый экземпляр класса BaseRepository&lt;TEntity,TRepository&gt;. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dataContext</td><td>Контекст доступа к данным. </td></tr>
+    <tr><td class="paramname">logger</td><td>Логгер. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>В случае если <em>dataContext</em>  или <em>logger</em>  – <code>null</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Методы</h2>
+<a id="a581f5ff9621f461a7d454b328f6f3536" name="a581f5ff9621f461a7d454b328f6f3536"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a581f5ff9621f461a7d454b328f6f3536">&#9670;&#160;</a></span>CreateAsync()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">async</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Task</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a> &gt; <a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html">Repository.Abstract.BaseRepository</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a> &gt;.CreateAsync </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>&#160;</td>
+          <td class="paramname"><em>entity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a>&#160;</td>
+          <td class="paramname"><em>saveNow</em> = <code><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">true</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Создает сущность.<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">entity</td><td>Сущность.</td></tr>
+    <tr><td class="paramname">saveNow</td><td>Надо ли сохранять сущность после изменения. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Контекст доступа к сущности.</dd></dl>
+ </p>
+
+<p>Замещает <a class="el" href="interface_repository_1_1_abstract_1_1_i_repository.html#a00a5be6d4d7430b3221dd62ef0e958da">Repository.Abstract.IRepository&lt; TEntity &gt;</a>.</p>
+
+</div>
+</div>
+<a id="aaf2d21923b315ca2920a508e53da0e62" name="aaf2d21923b315ca2920a508e53da0e62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf2d21923b315ca2920a508e53da0e62">&#9670;&#160;</a></span>DeleteAsync() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">async</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Task</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a> &gt; <a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html">Repository.Abstract.BaseRepository</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a> &gt;.DeleteAsync </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Guid</a>&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a>&#160;</td>
+          <td class="paramname"><em>saveNow</em> = <code><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">true</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Удаление сущности.<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>Идентификатор удаляемой сущности. </td></tr>
+    <tr><td class="paramname">saveNow</td><td>Надо ли сохранять сущность после изменения. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd><code>true</code>, если удалили, иначе - <code>false</code>.</dd></dl>
+ </p>
+
+<p>Замещает <a class="el" href="interface_repository_1_1_abstract_1_1_i_repository.html#a97ee26619e2ab6e4b652ed059772dc70">Repository.Abstract.IRepository&lt; TEntity &gt;</a>.</p>
+
+</div>
+</div>
+<a id="ac10d797689d8ef30da250be0e5418ce1" name="ac10d797689d8ef30da250be0e5418ce1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac10d797689d8ef30da250be0e5418ce1">&#9670;&#160;</a></span>DeleteAsync() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">async</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Task</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a> &gt; <a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html">Repository.Abstract.BaseRepository</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a> &gt;.DeleteAsync </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>&#160;</td>
+          <td class="paramname"><em>entity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a>&#160;</td>
+          <td class="paramname"><em>saveNow</em> = <code><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">true</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Удаление сущности.<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">entity</td><td>Сущность. </td></tr>
+    <tr><td class="paramname">saveNow</td><td>Надо ли сохранять сущность после изменения. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd><code>true</code>, если удалили, иначе - <code>false</code>.</dd></dl>
+ </p>
+
+<p>Замещает <a class="el" href="interface_repository_1_1_abstract_1_1_i_repository.html#af9a00339dbad90f9e205b0e7469a0ab7">Repository.Abstract.IRepository&lt; TEntity &gt;</a>.</p>
+
+</div>
+</div>
+<a id="a462a47228d3e1f621b970d015253d593" name="a462a47228d3e1f621b970d015253d593"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a462a47228d3e1f621b970d015253d593">&#9670;&#160;</a></span>Filter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">IEnumerable</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a> &gt; <a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html">Repository.Abstract.BaseRepository</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a> &gt;.Filter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Expression</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Func</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a> &gt; &gt;?&#160;</td>
+          <td class="paramname"><em>predicate</em> = <code><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">null</a></code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Поиск множества сущностей по предикату (<em>predicate</em> ).<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">predicate</td><td>Предикат, которому должна удовлетворять сушность.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Множество (IEnumerable&lt;TEntity&gt;) всех сущностей.</dd></dl>
+ </p>
+
+<p>Замещает <a class="el" href="interface_repository_1_1_abstract_1_1_i_repository.html#a8da3f061b94ea40e7a2d96aa5c1525fa">Repository.Abstract.IRepository&lt; TEntity &gt;</a>.</p>
+
+</div>
+</div>
+<a id="ae351b9b49e6c48fe0b6b10f9a9abb185" name="ae351b9b49e6c48fe0b6b10f9a9abb185"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae351b9b49e6c48fe0b6b10f9a9abb185">&#9670;&#160;</a></span>FindAsync()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">async</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Task</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>?&gt; <a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html">Repository.Abstract.BaseRepository</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a> &gt;.FindAsync </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Expression</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Func</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a> &gt; &gt;&#160;</td>
+          <td class="paramname"><em>predicate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a>&#160;</td>
+          <td class="paramname"><em>track</em> = <code><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">false</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Поиск сущности по предикату (<em>predicate</em> ).<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">predicate</td><td>Предикат, которому должна удовлетворять сущность.</td></tr>
+    <tr><td class="paramname">track</td><td>Отследивать ли изменения?. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Сущность или <code>null</code>.</dd></dl>
+ </p>
+
+<p>Замещает <a class="el" href="interface_repository_1_1_abstract_1_1_i_repository.html#af9a9b171de99ba3b893eda2552396e92">Repository.Abstract.IRepository&lt; TEntity &gt;</a>.</p>
+
+</div>
+</div>
+<a id="a4066a981b3224c7a69aba74f06bfdb9c" name="a4066a981b3224c7a69aba74f06bfdb9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4066a981b3224c7a69aba74f06bfdb9c">&#9670;&#160;</a></span>GetAll()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">IQueryable</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a> &gt; <a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html">Repository.Abstract.BaseRepository</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a> &gt;.GetAll </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a>&#160;</td>
+          <td class="paramname"><em>track</em> = <code><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">false</a></code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">abstract</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Получение всех сущностей. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">track</td><td>Отслеживать ли изменения?. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Множество (IQueryable&lt;TEntity&gt;) всех сущностей.</dd></dl>
+
+</div>
+</div>
+<a id="a3fce721f8d883d6522dfeb1e967c965a" name="a3fce721f8d883d6522dfeb1e967c965a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fce721f8d883d6522dfeb1e967c965a">&#9670;&#160;</a></span>GetAsync()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">async</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Task</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>?&gt; <a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html">Repository.Abstract.BaseRepository</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a> &gt;.GetAsync </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Guid</a>&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a>&#160;</td>
+          <td class="paramname"><em>track</em> = <code><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">false</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Находит сущность по идентификатору.<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>Идентификатор сущности. </td></tr>
+  </table>
+  </dd>
+</dl>
+<p>/// </p><dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">track</td><td>Отследивать ли изменения?. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Сущность. </dd></dl>
+ </p>
+
+<p>Замещает <a class="el" href="interface_repository_1_1_abstract_1_1_i_repository.html#a4e1d536f6d62421064c3dd506d7eed93">Repository.Abstract.IRepository&lt; TEntity &gt;</a>.</p>
+
+</div>
+</div>
+<a id="ae0b9c92b7bb7f4f295321f567605f6b1" name="ae0b9c92b7bb7f4f295321f567605f6b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0b9c92b7bb7f4f295321f567605f6b1">&#9670;&#160;</a></span>UpdateAsync()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">async</a> <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">Task</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a> &gt; <a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html">Repository.Abstract.BaseRepository</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a> &gt;.UpdateAsync </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>&#160;</td>
+          <td class="paramname"><em>entity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">bool</a>&#160;</td>
+          <td class="paramname"><em>saveNow</em> = <code><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">true</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Обновление сущности.<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">entity</td><td>Сущность. </td></tr>
+    <tr><td class="paramname">saveNow</td><td>Надо ли сохранять сущность после изменения. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Контекст доступа к сущности.</dd></dl>
+ </p>
+
+<p>Замещает <a class="el" href="interface_repository_1_1_abstract_1_1_i_repository.html#ad483ef467d33c7e5cffb08df96927c80">Repository.Abstract.IRepository&lt; TEntity &gt;</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Полный список свойств</h2>
+<a id="ab9815f94ee51cbf1bb508c3fba8b536c" name="ab9815f94ee51cbf1bb508c3fba8b536c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9815f94ee51cbf1bb508c3fba8b536c">&#9670;&#160;</a></span>DataContext</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_data_access_layer_1_1_data_context.html">DataContext</a> <a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html">Repository.Abstract.BaseRepository</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a> &gt;.<a class="el" href="class_data_access_layer_1_1_data_context.html">DataContext</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Контекст доступа к данным. </p>
+
+</div>
+</div>
+<a id="ad87c1f06126486eb1a323f57cc9d6eb8" name="ad87c1f06126486eb1a323f57cc9d6eb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad87c1f06126486eb1a323f57cc9d6eb8">&#9670;&#160;</a></span>Logger</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">ILogger</a>&lt;<a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a>&gt; <a class="el" href="class_repository_1_1_abstract_1_1_base_repository.html">Repository.Abstract.BaseRepository</a>&lt; <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TEntity</a>, <a class="el" href="class_domain_1_1_abstract_1_1_bilingual_named_entity_comparer.html">TRepository</a> &gt;.Logger</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Логгер. </p>
+
+</div>
+</div>
+<hr/>Объявления и описания членов класса находятся в файле:<ul>
+<li>Repository/Abstract/<a class="el" href="_base_repository_8cs.html">BaseRepository.cs</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Создано системой&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+</small></address>
+</body>
+</html>

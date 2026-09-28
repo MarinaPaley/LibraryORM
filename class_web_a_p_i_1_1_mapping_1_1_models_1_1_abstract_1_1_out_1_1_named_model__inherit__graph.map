@@ -1,0 +1,15 @@
+<map id="WebAPI.Mapping.Models.Abstract.Out.NamedModel" name="WebAPI.Mapping.Models.Abstract.Out.NamedModel">
+<area shape="rect" id="Node000001" title="Именованая модель." alt="" coords="281,69,525,109"/>
+<area shape="rect" id="Node000004" href="$class_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_out_1_1_base_out_named_entity_model.html" title="Базовая OUT именованая модель." alt="" coords="573,69,817,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="539,87,573,87,573,92,539,92"/>
+<area shape="rect" id="Node000002" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_i_named_model.html" title="Модель именованной сущности." alt="" coords="120,77,233,102"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="247,87,281,87,281,92,247,92"/>
+<area shape="rect" id="Node000003" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_i_model.html" title="Маркерный интерфейс моделей." alt="" coords="5,77,72,102"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="85,87,120,87,120,92,85,92"/>
+<area shape="rect" id="Node000005" href="$class_web_a_p_i_1_1_mapping_1_1_out_models_1_1_city_out_model.html" title="Модель OUT города." alt="" coords="865,5,1075,45"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="794,64,883,43,884,48,796,69"/>
+<area shape="rect" id="Node000006" href="$class_web_a_p_i_1_1_mapping_1_1_out_models_1_1_shelf_out_model.html" title="Модель OUT полки." alt="" coords="865,69,1075,109"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="831,87,865,87,865,92,831,92"/>
+<area shape="rect" id="Node000007" href="$class_web_a_p_i_1_1_mapping_1_1_out_models_1_1_street_out_mode.html" title="Модель Out улицы." alt="" coords="865,133,1075,173"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="796,110,884,131,883,136,794,115"/>
+</map>

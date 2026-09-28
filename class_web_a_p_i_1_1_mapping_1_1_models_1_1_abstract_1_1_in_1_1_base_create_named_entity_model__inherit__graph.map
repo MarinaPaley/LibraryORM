@@ -1,0 +1,28 @@
+<map id="WebAPI.Mapping.Models.Abstract.In.BaseCreateNamedEntityModel" name="WebAPI.Mapping.Models.Abstract.In.BaseCreateNamedEntityModel">
+<area shape="rect" id="Node000001" title="Базовый класс для create модели именованной сущности." alt="" coords="677,101,921,141"/>
+<area shape="rect" id="Node000009" href="$class_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_in_1_1_base_create_bilingual_named_model.html" title="Базовый класс для create модели именованной сущности, имеющей оригинальное название." alt="" coords="969,5,1227,45"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="861,94,969,55,1010,43,1012,48,970,60,863,99"/>
+<area shape="rect" id="Node000010" href="$class_web_a_p_i_1_1_mapping_1_1_models_1_1_in_models_1_1_city_create_model.html" title="Модель CREATE города." alt="" coords="999,69,1197,109"/>
+<area shape="poly" id="edge12_Node000001_Node000010" title=" " alt="" coords="934,104,998,97,999,103,935,109"/>
+<area shape="rect" id="Node000011" href="$class_web_a_p_i_1_1_mapping_1_1_models_1_1_in_models_1_1_shelf_create_model.html" title="Модель CREATE полки." alt="" coords="999,133,1197,173"/>
+<area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="935,133,999,140,998,145,934,138"/>
+<area shape="rect" id="Node000012" href="$class_web_a_p_i_1_1_mapping_1_1_models_1_1_in_models_1_1_street_create_model.html" title="Модель CREATE улицы." alt="" coords="999,197,1197,237"/>
+<area shape="poly" id="edge14_Node000001_Node000012" title=" " alt="" coords="863,144,970,183,1012,195,1010,200,969,188,861,149"/>
+<area shape="rect" id="Node000002" href="$class_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_in_1_1_base_create_entity_model.html" title="Базовый класс для создаваемой модели сущности." alt="" coords="455,83,629,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="643,103,677,107,677,112,643,109"/>
+<area shape="rect" id="Node000003" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_in_1_1_i_create_model.html" title="Маркерный интерфейс создаваемой модели." alt="" coords="289,83,399,109"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="412,93,455,93,455,99,412,99"/>
+<area shape="rect" id="Node000006" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_in_1_1_i_create_named_model.html" title="Маркерный интерфейс для создаваемой именованной сущности." alt="" coords="464,133,620,158"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="409,109,491,130,490,135,408,115"/>
+<area shape="rect" id="Node000004" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_in_1_1_i_in_model.html" title="Маркерный интерфейс входной модели." alt="" coords="137,83,216,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="230,93,289,93,289,99,230,99"/>
+<area shape="rect" id="Node000007" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_in_1_1_i_in_named_model.html" title="Маркерный интерфейс для входной модели именованной сущности." alt="" coords="281,133,407,158"/>
+<area shape="poly" id="edge8_Node000007_Node000004" title=" " alt="" coords="230,109,301,130,299,135,228,114"/>
+<area shape="rect" id="Node000005" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_i_model.html" title="Маркерный интерфейс моделей." alt="" coords="5,109,72,134"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="85,110,137,101,138,106,86,115"/>
+<area shape="rect" id="Node000008" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_i_named_model.html" title="Модель именованной сущности." alt="" coords="120,133,233,158"/>
+<area shape="poly" id="edge10_Node000008_Node000005" title=" " alt="" coords="86,127,120,133,119,138,85,132"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="633,134,677,130,677,135,634,139"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="421,143,464,143,464,148,421,148"/>
+<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="247,143,281,143,281,148,247,148"/>
+</map>

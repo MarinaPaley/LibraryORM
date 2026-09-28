@@ -1,0 +1,19 @@
+<map id="Domain.Abstract.NamedEntity&lt; TEntity &gt;" name="Domain.Abstract.NamedEntity&lt; TEntity &gt;">
+<area shape="rect" id="Node000001" title="Базовая именованная сущность." alt="" coords="171,225,391,265"/>
+<area shape="rect" id="Node000008" href="$class_domain_1_1_abstract_1_1_bilingual_named_entity.html" title="Базовая именованная сущность с переводом." alt="" coords="185,313,377,353"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="283,279,283,313,278,313,278,279"/>
+<area shape="rect" id="Node000002" href="$class_domain_1_1_abstract_1_1_entity.html" title="Базовая сущность." alt="" coords="121,152,257,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="214,184,260,223,257,227,211,188"/>
+<area shape="rect" id="Node000003" href="$interface_domain_1_1_abstract_1_1_i_entity.html" title="Базовый интерфейс сущности." alt="" coords="196,79,336,104"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="245,115,203,154,200,150,242,111"/>
+<area shape="rect" id="Node000006" href="$interface_domain_1_1_abstract_1_1_i_named_entity.html" title="Интерфейс базовой именованной сущности." alt="" coords="281,152,467,177"/>
+<area shape="poly" id="edge7_Node000006_Node000003" title=" " alt="" coords="296,109,358,150,355,154,293,114"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="287,5,351,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="305,43,277,80,273,77,300,40"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="335,42,351,78,374,151,369,152,346,80,330,44"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,79,172,104"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="117,110,174,150,171,154,114,114"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="351,188,305,227,301,223,348,184"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="412,79,523,104"/>
+<area shape="poly" id="edge8_Node000006_Node000007" title=" " alt="" coords="443,114,391,154,388,150,440,110"/>
+</map>

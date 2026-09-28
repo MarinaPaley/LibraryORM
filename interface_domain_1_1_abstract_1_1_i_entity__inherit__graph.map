@@ -1,0 +1,27 @@
+<map id="Domain.Abstract.IEntity&lt; TEntity &gt;" name="Domain.Abstract.IEntity&lt; TEntity &gt;">
+<area shape="rect" id="Node000001" title="Базовый интерфейс сущности." alt="" coords="117,101,295,141"/>
+<area shape="rect" id="Node000003" href="$class_domain_1_1_abstract_1_1_entity.html" title="Базовая сущность." alt="" coords="368,5,541,45"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="257,93,342,55,377,43,379,48,344,60,259,98"/>
+<area shape="rect" id="Node000006" href="$interface_domain_1_1_abstract_1_1_i_named_entity.html" title="Интерфейс базовой именованной сущности." alt="" coords="343,69,567,109"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="308,106,342,101,343,106,309,111"/>
+<area shape="rect" id="Node000009" href="$interface_domain_1_1_abstract_1_1_i_named_entity.html" title="Интерфейс базовой именованной сущности." alt="" coords="343,133,567,173"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="309,132,343,136,342,142,308,137"/>
+<area shape="rect" id="Node000010" href="$interface_domain_1_1_abstract_1_1_i_person.html" title="Интерфейс сущности, агрегирующей класс Person." alt="" coords="363,197,546,237"/>
+<area shape="poly" id="edge15_Node000001_Node000010" title=" " alt="" coords="259,145,344,183,379,195,377,200,342,188,257,150"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,109,69,134"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,119,117,119,117,124,83,124"/>
+<area shape="rect" id="Node000004" href="$class_domain_1_1_abstract_1_1_named_entity.html" title="Базовая именованная сущность." alt="" coords="615,5,835,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="556,23,615,23,615,28,556,28"/>
+<area shape="rect" id="Node000005" href="$class_domain_1_1_abstract_1_1_bilingual_named_entity.html" title="Базовая именованная сущность с переводом." alt="" coords="883,69,1075,109"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="819,46,899,67,898,72,817,51"/>
+<area shape="poly" id="edge10_Node000006_Node000004" title=" " alt="" coords="553,63,639,43,640,48,554,69"/>
+<area shape="rect" id="Node000007" href="$interface_domain_1_1_abstract_1_1_i_bilingual_named_entity.html" title="Интерфейс базовой сущности, имеющей оригинальное и переводное имя." alt="" coords="627,133,823,173"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="554,110,640,131,639,136,553,115"/>
+<area shape="rect" id="Node000008" href="$interface_domain_1_1_abstract_1_1_i_bilingual_named_entity.html" title="Интерфейс базовой сущности, имеющей оригинальное и переводное имя." alt="" coords="627,69,823,109"/>
+<area shape="poly" id="edge8_Node000006_Node000008" title=" " alt="" coords="580,87,626,87,626,92,580,92"/>
+<area shape="poly" id="edge7_Node000007_Node000005" title=" " alt="" coords="817,127,898,107,899,112,819,132"/>
+<area shape="poly" id="edge9_Node000008_Node000005" title=" " alt="" coords="836,87,883,87,883,92,836,92"/>
+<area shape="poly" id="edge14_Node000009_Node000004" title=" " alt="" coords="556,125,565,119,580,104,588,88,597,71,613,55,635,43,637,48,616,59,601,75,593,91,585,107,568,123,559,129"/>
+<area shape="poly" id="edge12_Node000009_Node000007" title=" " alt="" coords="580,151,626,151,626,156,580,156"/>
+<area shape="poly" id="edge13_Node000009_Node000008" title=" " alt="" coords="553,127,639,107,640,112,554,133"/>
+</map>

@@ -1,0 +1,5 @@
+var searchData=
+[
+  ['manuscripts_0',['manuscripts',['../class_data_access_layer_1_1_data_context.html#ab53df5a21f8abebc25e3a0a501d9c410',1,'DataAccessLayer.DataContext.Manuscripts'],['../class_domain_1_1_author.html#a1d2d54ae0e9d9042645bd49d7b0db1d3',1,'Domain.Author.Manuscripts'],['../class_domain_1_1_book.html#accd7a0a1544cd5ec7ee600cfe0b62699',1,'Domain.Book.Manuscripts'],['../class_domain_1_1_genre.html#aba006d6903b267a4dfa182b23cb3002c',1,'Domain.Genre.Manuscripts'],['../class_domain_1_1_language.html#a8d635b45443ac9ca592668fcef1ec4a9',1,'Domain.Language.Manuscripts'],['../class_domain_1_1_reviewer.html#a025666f7a556aa16e4d91077bfe9bc40',1,'Domain.Reviewer.Manuscripts'],['../class_domain_1_1_translator.html#ae0e5e4da4d4eff7a968e5de4d0dbfc95',1,'Domain.Translator.Manuscripts']]],
+  ['mapper_1',['mapper',['../class_mapping_tests_1_1_base_profile_tests.html#aeb685cfdc8ab0f5c37942dbe74bac051',1,'MappingTests.BaseProfileTests.Mapper'],['../class_web_a_p_i_1_1_controllers_1_1_abstract_1_1_base_controller.html#a892b771795f00bae1269682d5f807d3e',1,'WebAPI.Controllers.Abstract.BaseController.Mapper']]]
+];

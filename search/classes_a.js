@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['name_0',['Name',['../class_domain_1_1_name.html',1,'Domain']]],
+  ['namedentity_1',['NamedEntity',['../class_domain_1_1_abstract_1_1_named_entity.html',1,'Domain::Abstract']]],
+  ['namedentity_3c_20booktype_20_3e_2',['NamedEntity&lt; BookType &gt;',['../class_domain_1_1_abstract_1_1_named_entity.html',1,'Domain::Abstract']]],
+  ['namedentity_3c_20cabinet_20_3e_3',['NamedEntity&lt; Cabinet &gt;',['../class_domain_1_1_abstract_1_1_named_entity.html',1,'Domain::Abstract']]],
+  ['namedentity_3c_20city_20_3e_4',['NamedEntity&lt; City &gt;',['../class_domain_1_1_abstract_1_1_named_entity.html',1,'Domain::Abstract']]],
+  ['namedentity_3c_20color_20_3e_5',['NamedEntity&lt; Color &gt;',['../class_domain_1_1_abstract_1_1_named_entity.html',1,'Domain::Abstract']]],
+  ['namedentity_3c_20genre_20_3e_6',['NamedEntity&lt; Genre &gt;',['../class_domain_1_1_abstract_1_1_named_entity.html',1,'Domain::Abstract']]],
+  ['namedentity_3c_20language_20_3e_7',['NamedEntity&lt; Language &gt;',['../class_domain_1_1_abstract_1_1_named_entity.html',1,'Domain::Abstract']]],
+  ['namedentity_3c_20room_20_3e_8',['NamedEntity&lt; Room &gt;',['../class_domain_1_1_abstract_1_1_named_entity.html',1,'Domain::Abstract']]],
+  ['namedentity_3c_20seria_20_3e_9',['NamedEntity&lt; Seria &gt;',['../class_domain_1_1_abstract_1_1_named_entity.html',1,'Domain::Abstract']]],
+  ['namedentity_3c_20shelf_20_3e_10',['NamedEntity&lt; Shelf &gt;',['../class_domain_1_1_abstract_1_1_named_entity.html',1,'Domain::Abstract']]],
+  ['namedentity_3c_20street_20_3e_11',['NamedEntity&lt; Street &gt;',['../class_domain_1_1_abstract_1_1_named_entity.html',1,'Domain::Abstract']]],
+  ['namedentitycomparer_12',['NamedEntityComparer',['../class_domain_1_1_abstract_1_1_named_entity_comparer.html',1,'Domain::Abstract']]],
+  ['namedmodel_13',['NamedModel',['../class_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_out_1_1_named_model.html',1,'WebAPI::Mapping::Models::Abstract::Out']]],
+  ['namedprofile_14',['NamedProfile',['../class_web_a_p_i_1_1_mapping_1_1_profiles_1_1_abstract_1_1_named_profile.html',1,'WebAPI::Mapping::Profiles::Abstract']]],
+  ['namedprofile_3c_20city_2c_20citycreatemodel_2c_20cityupdatemodel_2c_20cityoutmodel_20_3e_15',['NamedProfile&lt; City, CityCreateModel, CityUpdateModel, CityOutModel &gt;',['../class_web_a_p_i_1_1_mapping_1_1_profiles_1_1_abstract_1_1_named_profile.html',1,'WebAPI::Mapping::Profiles::Abstract']]],
+  ['namedprofile_3c_20shelf_2c_20shelfcreatemodel_2c_20shelfupdatemodel_2c_20shelfoutmodel_20_3e_16',['NamedProfile&lt; Shelf, ShelfCreateModel, ShelfUpdateModel, ShelfOutModel &gt;',['../class_web_a_p_i_1_1_mapping_1_1_profiles_1_1_abstract_1_1_named_profile.html',1,'WebAPI::Mapping::Profiles::Abstract']]],
+  ['namedprofile_3c_20street_2c_20streetcreatemodel_2c_20streetupdatemodel_2c_20streetoutmode_20_3e_17',['NamedProfile&lt; Street, StreetCreateModel, StreetUpdateModel, StreetOutMode &gt;',['../class_web_a_p_i_1_1_mapping_1_1_profiles_1_1_abstract_1_1_named_profile.html',1,'WebAPI::Mapping::Profiles::Abstract']]],
+  ['nametests_18',['NameTests',['../class_domain_1_1_tests_1_1_name_tests.html',1,'Domain::Tests']]],
+  ['newentitiesmigration_19',['NewEntitiesMigration',['../class_data_access_layer_1_1_migrations_1_1_new_entities_migration.html',1,'DataAccessLayer::Migrations']]],
+  ['newordermigration_20',['NewOrderMigration',['../class_data_access_layer_1_1_migrations_1_1_new_order_migration.html',1,'DataAccessLayer::Migrations']]],
+  ['newversionmigration_21',['NewVersionMigration',['../class_data_access_layer_1_1_migrations_1_1_new_version_migration.html',1,'DataAccessLayer::Migrations']]]
+];

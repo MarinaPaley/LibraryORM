@@ -1,0 +1,7 @@
+<map id="Repository.ManuscriptRepository" name="Repository.ManuscriptRepository">
+<area shape="rect" id="Node000001" title="Репозиторий для класса Manuscript." alt="" coords="103,93,339,119"/>
+<area shape="rect" id="Node000002" href="$class_repository_1_1_abstract_1_1_base_repository.html" title=" " alt="" coords="5,5,220,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="151,51,206,91,203,95,148,56"/>
+<area shape="rect" id="Node000003" href="$interface_repository_1_1_abstract_1_1_i_manuscript_repository.html" title="Интерфейс для репозитория рукописей." alt="" coords="245,13,413,38"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="303,48,238,95,235,91,300,44"/>
+</map>

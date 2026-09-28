@@ -1,0 +1,13 @@
+<map id="Иерархия классов. Графический вид." name="Иерархия классов. Графический вид.">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,110,68,135"/>
+<area shape="rect" id="Node000001" href="$class_web_a_p_i_1_1_mapping_1_1_profiles_1_1_abstract_1_1_entity_out_profile.html" title="Профиль, настраивающий правила отображения ИЗ целевого типа сущности (TEntity ) В целевой тип ВЫХОДНО..." alt="" coords="116,59,303,114"/>
+<area shape="poly" id="edge80_Node000000_Node000001" title=" " alt="" coords="81,111,115,104,116,109,82,116"/>
+<area shape="rect" id="Node000005" href="$class_web_a_p_i_1_1_mapping_1_1_profiles_1_1_title_profile.html" title="Профиль для Title." alt="" coords="116,139,303,179"/>
+<area shape="poly" id="edge84_Node000000_Node000005" title=" " alt="" coords="82,129,116,137,115,142,81,134"/>
+<area shape="rect" id="Node000002" href="$class_web_a_p_i_1_1_mapping_1_1_profiles_1_1_abstract_1_1_entity_profile.html" title="Профиль, настраивающий правила отображения ИЗ целевого типа сущности (TEntity ) В целевой тип ВЫХОДНО..." alt="" coords="351,52,565,121"/>
+<area shape="poly" id="edge81_Node000001_Node000002" title=" " alt="" coords="317,84,351,84,351,89,317,89"/>
+<area shape="rect" id="Node000003" href="$class_web_a_p_i_1_1_mapping_1_1_profiles_1_1_abstract_1_1_bilingual_named_profile.html" title="Профиль, настраивающий правила отображения ИЗ целевого типа сущности (TEntity ) В целевой тип ВЫХОДНО..." alt="" coords="613,5,901,75"/>
+<area shape="poly" id="edge82_Node000002_Node000003" title=" " alt="" coords="578,65,613,60,614,65,579,71"/>
+<area shape="rect" id="Node000004" href="$class_web_a_p_i_1_1_mapping_1_1_profiles_1_1_abstract_1_1_named_profile.html" title="Профиль, настраивающий правила отображения ИЗ целевого типа сущности (TEntity ) В целевой тип ВЫХОДНО..." alt="" coords="650,99,865,168"/>
+<area shape="poly" id="edge83_Node000002_Node000004" title=" " alt="" coords="580,103,650,114,650,119,579,108"/>
+</map>

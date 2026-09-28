@@ -1,0 +1,7 @@
+<map id="Repository.StreetRepository" name="Repository.StreetRepository">
+<area shape="rect" id="Node000001" title="Репозиторий для класса Street." alt="" coords="86,93,289,119"/>
+<area shape="rect" id="Node000002" href="$class_repository_1_1_abstract_1_1_base_repository.html" title=" " alt="" coords="5,5,188,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="131,52,175,91,172,95,127,56"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="212,13,347,38"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="257,49,203,95,199,91,254,45"/>
+</map>

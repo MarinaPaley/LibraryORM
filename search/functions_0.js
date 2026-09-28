@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['addbook_0',['addbook',['../class_domain_1_1_publisher.html#a1638cea4cb4af653ee619efbac433c2b',1,'Domain.Publisher.AddBook()'],['../class_domain_1_1_seria.html#a225f337bad7ac857884b2b7790fc358c',1,'Domain.Seria.AddBook()'],['../class_domain_1_1_shelf.html#ad8e3868c04fd240e6e78538c9df31a6f',1,'Domain.Shelf.AddBook()'],['../class_domain_1_1_editor.html#a9a8ed07389952131f4033cbfbecbcbba',1,'Domain.Editor.AddBook()']]],
+  ['addbook_5fbook_5fsuccess_1',['AddBook_Book_Success',['../class_domain_1_1_tests_1_1_shelf_tests.html#a20de1adbb5e577bf4cdc8a688daf79dd',1,'Domain::Tests::ShelfTests']]],
+  ['addbook_5fdata_5fsuccess_2',['AddBook_Data_Success',['../class_domain_1_1_tests_1_1_author_tests.html#a1b1f879f88614cdd0a91a87566f34e48',1,'Domain::Tests::AuthorTests']]],
+  ['addcabinet_3',['AddCabinet',['../class_domain_1_1_room.html#a7bb9a804c5467d4fa3657dc063d36aff',1,'Domain::Room']]],
+  ['addeditor_4',['AddEditor',['../class_domain_1_1_book.html#a52cd6d74cb1a48cddebd9947c1f73327',1,'Domain::Book']]],
+  ['addgenre_5',['AddGenre',['../class_domain_1_1_manuscript.html#a48004c30151eb84816ad9449c99464c7',1,'Domain::Manuscript']]],
+  ['addgenre_5fduplicategenre_5freturnsfalse_6',['AddGenre_DuplicateGenre_ReturnsFalse',['../class_domain_1_1_tests_1_1_manuscript_tests.html#a08d9ba8530571fe1432a28b8b330ed64',1,'Domain::Tests::ManuscriptTests']]],
+  ['addgenre_5fnullgenre_5freturnsfalse_7',['AddGenre_NullGenre_ReturnsFalse',['../class_domain_1_1_tests_1_1_manuscript_tests.html#a50339fa020c87bd6a6107bd09a7cd7cd',1,'Domain::Tests::ManuscriptTests']]],
+  ['addgenre_5fvalidgenre_5faddstobothcollections_8',['AddGenre_ValidGenre_AddsToBothCollections',['../class_domain_1_1_tests_1_1_manuscript_tests.html#a66a5d48929eb73395f89df103b033038',1,'Domain::Tests::ManuscriptTests']]],
+  ['addmanuscript_9',['addmanuscript',['../class_domain_1_1_translator.html#a24f8fdbb3d90fbb57496db2bb362d978',1,'Domain.Translator.AddManuscript()'],['../class_domain_1_1_reviewer.html#afd7d8d496ca7e18571e7a0978f7c41cb',1,'Domain.Reviewer.AddManuscript()'],['../class_domain_1_1_genre.html#ab4c15f7ca69a5050b03aeba36164ddc7',1,'Domain.Genre.AddManuscript()']]],
+  ['address_10',['Address',['../class_domain_1_1_address.html#a19581e691d815bb1f06c91806a940462',1,'Domain::Address']]],
+  ['addreviwer_5fvaliddata_5fsuccess_11',['AddReviwer_ValidData_Success',['../class_domain_1_1_tests_1_1_manuscript_tests.html#a2ddee0b328e76559382f4622e27cb156',1,'Domain::Tests::ManuscriptTests']]],
+  ['addservice_3c_20tinterface_20_3e_12',['AddService&lt; TInterface &gt;',['../class_mapping_tests_1_1_base_profile_tests.html#a3e07871e2b51c0fa90b127dbb026e3a8',1,'MappingTests::BaseProfileTests']]],
+  ['addservice_3c_20tinterface_2c_20trealisation_20_3e_13',['addservice&lt; tinterface, trealisation &gt;',['../class_mapping_tests_1_1_base_profile_tests.html#ae3bdd3e1b681beb5e6c8b76ca3c2cac5',1,'MappingTests.BaseProfileTests.AddService&lt; TInterface, TRealisation &gt;()'],['../class_mapping_tests_1_1_base_profile_tests.html#a4ad08d8c695275f2c9c128e54d4f7a18',1,'MappingTests.BaseProfileTests.AddService&lt; TInterface, TRealisation &gt;(TRealisation realisation)']]],
+  ['addshelf_14',['AddShelf',['../class_domain_1_1_cabinet.html#abbe41687fd7e1ccd2731ab221ff3b492',1,'Domain::Cabinet']]],
+  ['addstreet_15',['AddStreet',['../class_domain_1_1_city.html#adfe7be148f569e05a9a4be72a7e5863e',1,'Domain::City']]],
+  ['addtag_16',['AddTag',['../class_domain_1_1_book.html#acd4158132a9473125b86dd17e1c36e25',1,'Domain::Book']]],
+  ['addtranslator_5fvaliddata_5fsuccess_17',['AddTranslator_ValidData_Success',['../class_domain_1_1_tests_1_1_manuscript_tests.html#a49702690c6fdc7b136542b4405cb6bb3',1,'Domain::Tests::ManuscriptTests']]],
+  ['areequalbyperson_18',['AreEqualByPerson',['../class_domain_1_1_abstract_1_1_base_person_comparer.html#a0b2b834a49fe7dce90ae19c78f51c31e',1,'Domain::Abstract::BasePersonComparer']]],
+  ['author_19',['Author',['../class_domain_1_1_author.html#a261ebcea165fc54b5e708eefb5f42c9e',1,'Domain::Author']]],
+  ['authorrepository_20',['AuthorRepository',['../class_repository_1_1_author_repository.html#ac5fa9e9e22c7b96d7fbaef475d5dbac4',1,'Repository::AuthorRepository']]],
+  ['authors_5fcreatemanuscript_5fisvalid_21',['Authors_CreateManuscript_IsValid',['../class_domain_1_1_tests_1_1_manuscript_tests.html#a8a4b59f7ed275b9fd86b0f23f0edca21',1,'Domain::Tests::ManuscriptTests']]]
+];

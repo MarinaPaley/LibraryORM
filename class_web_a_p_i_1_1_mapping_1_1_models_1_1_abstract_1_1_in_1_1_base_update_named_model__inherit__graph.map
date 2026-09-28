@@ -1,0 +1,31 @@
+<map id="WebAPI.Mapping.Models.Abstract.In.BaseUpdateNamedModel" name="WebAPI.Mapping.Models.Abstract.In.BaseUpdateNamedModel">
+<area shape="rect" id="Node000001" title="Базовый класс для update модели именованной сущности." alt="" coords="681,101,925,141"/>
+<area shape="rect" id="Node000010" href="$class_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_in_1_1_base_update_bilingual_named_model.html" title="Базовый класс для update модели именованной сущности, имеющей оригинальное название." alt="" coords="973,5,1235,45"/>
+<area shape="poly" id="edge13_Node000001_Node000010" title=" " alt="" coords="865,94,973,55,1015,43,1016,48,974,60,866,99"/>
+<area shape="rect" id="Node000011" href="$class_web_a_p_i_1_1_mapping_1_1_models_1_1_in_models_1_1_city_update_model.html" title="Модель UPDATE города." alt="" coords="1005,69,1203,109"/>
+<area shape="poly" id="edge14_Node000001_Node000011" title=" " alt="" coords="939,104,1004,97,1005,103,939,110"/>
+<area shape="rect" id="Node000012" href="$class_web_a_p_i_1_1_mapping_1_1_models_1_1_in_models_1_1_shelf_update_model.html" title="Модель UPDATE полки." alt="" coords="1005,133,1203,173"/>
+<area shape="poly" id="edge15_Node000001_Node000012" title=" " alt="" coords="939,133,1005,140,1004,145,939,138"/>
+<area shape="rect" id="Node000013" href="$class_web_a_p_i_1_1_mapping_1_1_models_1_1_in_models_1_1_street_update_model.html" title="Модель UPDATE улицы." alt="" coords="1005,197,1203,237"/>
+<area shape="poly" id="edge16_Node000001_Node000013" title=" " alt="" coords="866,144,974,183,1016,195,1015,200,973,188,865,149"/>
+<area shape="rect" id="Node000002" href="$class_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_in_1_1_base_update_entity_model.html" title="Базовый класс для модели модификации сущности с идентификатором." alt="" coords="455,83,633,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="647,103,682,107,681,112,647,109"/>
+<area shape="rect" id="Node000003" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_in_1_1_i_update_model.html" title="Маркерный интерфейс редактируемой модели." alt="" coords="287,83,401,109"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="414,93,454,93,454,99,414,99"/>
+<area shape="rect" id="Node000007" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_in_1_1_i_update_named_model.html" title="Маркерный интерфейс для именованной редактируемой модели." alt="" coords="464,133,624,158"/>
+<area shape="poly" id="edge8_Node000007_Node000003" title=" " alt="" coords="410,109,492,130,491,135,409,115"/>
+<area shape="rect" id="Node000004" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_i_id_model.html" title="Маркерный интерфейс для моделей с идентификатором." alt="" coords="137,58,216,83"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="230,76,288,85,287,90,229,81"/>
+<area shape="rect" id="Node000005" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_i_model.html" title="Маркерный интерфейс моделей." alt="" coords="5,107,72,133"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="84,101,139,81,141,86,86,106"/>
+<area shape="rect" id="Node000006" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_in_1_1_i_in_model.html" title="Маркерный интерфейс входной модели." alt="" coords="137,107,216,133"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="86,117,137,117,137,123,86,123"/>
+<area shape="rect" id="Node000009" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_i_named_model.html" title="Модель именованной сущности." alt="" coords="120,157,233,182"/>
+<area shape="poly" id="edge12_Node000009_Node000005" title=" " alt="" coords="86,134,141,154,139,159,84,139"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="229,110,287,101,288,107,230,115"/>
+<area shape="rect" id="Node000008" href="$interface_web_a_p_i_1_1_mapping_1_1_models_1_1_abstract_1_1_in_1_1_i_in_named_model.html" title="Маркерный интерфейс для входной модели именованной сущности." alt="" coords="281,133,407,158"/>
+<area shape="poly" id="edge10_Node000008_Node000006" title=" " alt="" coords="230,125,281,133,280,138,229,131"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="637,134,681,130,681,135,638,139"/>
+<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="420,143,464,143,464,148,420,148"/>
+<area shape="poly" id="edge11_Node000008_Node000009" title=" " alt="" coords="247,157,281,152,282,157,248,162"/>
+</map>

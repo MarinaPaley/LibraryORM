@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['20241126082739_5finitialmigration_2ecs_0',['20241126082739_InitialMigration.cs',['../20241126082739___initial_migration_8cs.html',1,'']]],
+  ['20241126082739_5finitialmigration_2edesigner_2ecs_1',['20241126082739_InitialMigration.Designer.cs',['../20241126082739___initial_migration_8_designer_8cs.html',1,'']]],
+  ['20241126114634_5fadduniqueconstrainttoshelvesmigration_2ecs_2',['20241126114634_AddUniqueConstraintToShelvesMigration.cs',['../20241126114634___add_unique_constraint_to_shelves_migration_8cs.html',1,'']]],
+  ['20241126114634_5fadduniqueconstrainttoshelvesmigration_2edesigner_2ecs_3',['20241126114634_AddUniqueConstraintToShelvesMigration.Designer.cs',['../20241126114634___add_unique_constraint_to_shelves_migration_8_designer_8cs.html',1,'']]],
+  ['20260425135237_5fnewentitiesmigration_2ecs_4',['20260425135237_NewEntitiesMigration.cs',['../20260425135237___new_entities_migration_8cs.html',1,'']]],
+  ['20260425135237_5fnewentitiesmigration_2edesigner_2ecs_5',['20260425135237_NewEntitiesMigration.Designer.cs',['../20260425135237___new_entities_migration_8_designer_8cs.html',1,'']]],
+  ['20260427160956_5faddfloormigration_2ecs_6',['20260427160956_AddFloorMigration.cs',['../20260427160956___add_floor_migration_8cs.html',1,'']]],
+  ['20260427160956_5faddfloormigration_2edesigner_2ecs_7',['20260427160956_AddFloorMigration.Designer.cs',['../20260427160956___add_floor_migration_8_designer_8cs.html',1,'']]],
+  ['20260428163624_5fadoroginaltitlemigration_2ecs_8',['20260428163624_AdOroginalTitleMigration.cs',['../20260428163624___ad_oroginal_title_migration_8cs.html',1,'']]],
+  ['20260428163624_5fadoroginaltitlemigration_2edesigner_2ecs_9',['20260428163624_AdOroginalTitleMigration.Designer.cs',['../20260428163624___ad_oroginal_title_migration_8_designer_8cs.html',1,'']]],
+  ['20260428173525_5funiqueisbnmigration_2ecs_10',['20260428173525_UniqueISBNMigration.cs',['../20260428173525___unique_i_s_b_n_migration_8cs.html',1,'']]],
+  ['20260428173525_5funiqueisbnmigration_2edesigner_2ecs_11',['20260428173525_UniqueISBNMigration.Designer.cs',['../20260428173525___unique_i_s_b_n_migration_8_designer_8cs.html',1,'']]],
+  ['20260506091219_5fnewversionmigration_2ecs_12',['20260506091219_NewVersionMigration.cs',['../20260506091219___new_version_migration_8cs.html',1,'']]],
+  ['20260506091219_5fnewversionmigration_2edesigner_2ecs_13',['20260506091219_NewVersionMigration.Designer.cs',['../20260506091219___new_version_migration_8_designer_8cs.html',1,'']]],
+  ['20260704192705_5fnewordermigration_2ecs_14',['20260704192705_NewOrderMigration.cs',['../20260704192705___new_order_migration_8cs.html',1,'']]],
+  ['20260704192705_5fnewordermigration_2edesigner_2ecs_15',['20260704192705_NewOrderMigration.Designer.cs',['../20260704192705___new_order_migration_8_designer_8cs.html',1,'']]],
+  ['20260717180352_5ffixmanytomanymigration_2ecs_16',['20260717180352_FixManyToManyMigration.cs',['../20260717180352___fix_many_to_many_migration_8cs.html',1,'']]],
+  ['20260717180352_5ffixmanytomanymigration_2edesigner_2ecs_17',['20260717180352_FixManyToManyMigration.Designer.cs',['../20260717180352___fix_many_to_many_migration_8_designer_8cs.html',1,'']]],
+  ['20260803142525_5fcategoryaddmigration_2ecs_18',['20260803142525_CategoryAddMigration.cs',['../20260803142525___category_add_migration_8cs.html',1,'']]],
+  ['20260803142525_5fcategoryaddmigration_2edesigner_2ecs_19',['20260803142525_CategoryAddMigration.Designer.cs',['../20260803142525___category_add_migration_8_designer_8cs.html',1,'']]]
+];

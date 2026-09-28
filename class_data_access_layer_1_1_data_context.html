@@ -1,0 +1,792 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Домашняя библиотека: Класс DataAccessLayer.DataContext</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Домашняя библиотека
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespace_data_access_layer.html">DataAccessLayer</a></li><li class="navelem"><a class="el" href="class_data_access_layer_1_1_data_context.html">DataContext</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Открытые члены</a> &#124;
+<a href="#pro-methods">Защищенные члены</a> &#124;
+<a href="#properties">Свойства</a> &#124;
+<a href="class_data_access_layer_1_1_data_context-members.html">Полный список членов класса</a>  </div>
+  <div class="headertitle"><div class="title">Класс DataAccessLayer.DataContext<span class="mlabels"><span class="mlabel">sealed</span></span></div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Контекст доступа к данным.  
+ <a href="class_data_access_layer_1_1_data_context.html#details">Подробнее...</a></p>
+<div class="dynheader">
+Граф наследования:DataAccessLayer.DataContext:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_data_access_layer_1_1_data_context__inherit__graph.png" border="0" usemap="#a_data_access_layer_8_data_context_inherit__map" alt="Inheritance graph"/></div>
+<map name="a_data_access_layer_8_data_context_inherit__map" id="a_data_access_layer_8_data_context_inherit__map">
+<area shape="rect" title="Контекст доступа к данным." alt="" coords="5,79,224,104"/>
+<area shape="rect" title=" " alt="" coords="69,5,160,31"/>
+<area shape="poly" title=" " alt="" coords="117,44,117,79,112,79,112,44"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">см. легенду</a>]</span></center></div>
+<div class="dynheader">
+Граф связей класса DataAccessLayer.DataContext:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_data_access_layer_1_1_data_context__coll__graph.png" border="0" usemap="#a_data_access_layer_8_data_context_coll__map" alt="Collaboration graph"/></div>
+<map name="a_data_access_layer_8_data_context_coll__map" id="a_data_access_layer_8_data_context_coll__map">
+<area shape="rect" title="Контекст доступа к данным." alt="" coords="5,79,224,104"/>
+<area shape="rect" title=" " alt="" coords="69,5,160,31"/>
+<area shape="poly" title=" " alt="" coords="117,44,117,79,112,79,112,44"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">см. легенду</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Открытые члены</h2></td></tr>
+<tr class="memitem:a078beda2df862ae11b7711b6a1aff4fe" id="r_a078beda2df862ae11b7711b6a1aff4fe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#a078beda2df862ae11b7711b6a1aff4fe">DataContext</a> (DbContextOptions&lt; <a class="el" href="class_data_access_layer_1_1_data_context.html">DataContext</a> &gt; options)</td></tr>
+<tr class="memdesc:a078beda2df862ae11b7711b6a1aff4fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Инициализирует новый экземпляр класса DataContext.  <br /></td></tr>
+<tr class="separator:a078beda2df862ae11b7711b6a1aff4fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Защищенные члены</h2></td></tr>
+<tr class="memitem:ac1174635217551aeb603ae53478f69d0" id="r_ac1174635217551aeb603ae53478f69d0"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#ac1174635217551aeb603ae53478f69d0">OnModelCreating</a> (ModelBuilder modelBuilder)</td></tr>
+<tr class="separator:ac1174635217551aeb603ae53478f69d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
+Свойства</h2></td></tr>
+<tr class="memitem:a2f463b8d745e3497043ae1a7e94049da" id="r_a2f463b8d745e3497043ae1a7e94049da"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_author.html">Author</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#a2f463b8d745e3497043ae1a7e94049da">Authors</a><code> [get]</code></td></tr>
+<tr class="memdesc:a2f463b8d745e3497043ae1a7e94049da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Авторы.  <br /></td></tr>
+<tr class="separator:a2f463b8d745e3497043ae1a7e94049da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72f45edc5f2f349b1bc4fe08c2935168" id="r_a72f45edc5f2f349b1bc4fe08c2935168"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_editor.html">Editor</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#a72f45edc5f2f349b1bc4fe08c2935168">Editors</a><code> [get]</code></td></tr>
+<tr class="memdesc:a72f45edc5f2f349b1bc4fe08c2935168"><td class="mdescLeft">&#160;</td><td class="mdescRight">Редакторы.  <br /></td></tr>
+<tr class="separator:a72f45edc5f2f349b1bc4fe08c2935168"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71efd45c7c825d8898dce62b9372fba4" id="r_a71efd45c7c825d8898dce62b9372fba4"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_reviewer.html">Reviewer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#a71efd45c7c825d8898dce62b9372fba4">Reviewers</a><code> [get]</code></td></tr>
+<tr class="memdesc:a71efd45c7c825d8898dce62b9372fba4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Рецензенты.  <br /></td></tr>
+<tr class="separator:a71efd45c7c825d8898dce62b9372fba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34183131c6a7d2323c573dc23004f3ea" id="r_a34183131c6a7d2323c573dc23004f3ea"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_translator.html">Translator</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#a34183131c6a7d2323c573dc23004f3ea">Translations</a><code> [get]</code></td></tr>
+<tr class="memdesc:a34183131c6a7d2323c573dc23004f3ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Переводчики.  <br /></td></tr>
+<tr class="separator:a34183131c6a7d2323c573dc23004f3ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3562b37c4c53288acae452a7b2ec1bea" id="r_a3562b37c4c53288acae452a7b2ec1bea"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_book.html">Book</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#a3562b37c4c53288acae452a7b2ec1bea">Books</a><code> [get]</code></td></tr>
+<tr class="memdesc:a3562b37c4c53288acae452a7b2ec1bea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Книги.  <br /></td></tr>
+<tr class="separator:a3562b37c4c53288acae452a7b2ec1bea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90340a482126019aa8d0dedda401b7c6" id="r_a90340a482126019aa8d0dedda401b7c6"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_item.html">Item</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#a90340a482126019aa8d0dedda401b7c6">Items</a><code> [get]</code></td></tr>
+<tr class="memdesc:a90340a482126019aa8d0dedda401b7c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Экземпляры книг.  <br /></td></tr>
+<tr class="separator:a90340a482126019aa8d0dedda401b7c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8db35d15397150976d8149caeeda40c9" id="r_a8db35d15397150976d8149caeeda40c9"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_shelf.html">Shelf</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#a8db35d15397150976d8149caeeda40c9">Shelves</a><code> [get]</code></td></tr>
+<tr class="memdesc:a8db35d15397150976d8149caeeda40c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Полки.  <br /></td></tr>
+<tr class="separator:a8db35d15397150976d8149caeeda40c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a513f2e5335b4a0ee63d64b57f7dec66f" id="r_a513f2e5335b4a0ee63d64b57f7dec66f"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_cabinet.html">Cabinet</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#a513f2e5335b4a0ee63d64b57f7dec66f">Cabinets</a><code> [get]</code></td></tr>
+<tr class="memdesc:a513f2e5335b4a0ee63d64b57f7dec66f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Шкафы.  <br /></td></tr>
+<tr class="separator:a513f2e5335b4a0ee63d64b57f7dec66f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad93e36c1b900a128b22259efc80c957d" id="r_ad93e36c1b900a128b22259efc80c957d"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_room.html">Room</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#ad93e36c1b900a128b22259efc80c957d">Rooms</a><code> [get]</code></td></tr>
+<tr class="memdesc:ad93e36c1b900a128b22259efc80c957d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Комнаты.  <br /></td></tr>
+<tr class="separator:ad93e36c1b900a128b22259efc80c957d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef0014edba76396415e3bbddab3ce59f" id="r_aef0014edba76396415e3bbddab3ce59f"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_city.html">City</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#aef0014edba76396415e3bbddab3ce59f">Cities</a><code> [get]</code></td></tr>
+<tr class="memdesc:aef0014edba76396415e3bbddab3ce59f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Города.  <br /></td></tr>
+<tr class="separator:aef0014edba76396415e3bbddab3ce59f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a040de611bca0eed553453649ed625971" id="r_a040de611bca0eed553453649ed625971"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_street.html">Street</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#a040de611bca0eed553453649ed625971">Streets</a><code> [get]</code></td></tr>
+<tr class="memdesc:a040de611bca0eed553453649ed625971"><td class="mdescLeft">&#160;</td><td class="mdescRight">Улицы.  <br /></td></tr>
+<tr class="separator:a040de611bca0eed553453649ed625971"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aede92855a3e878b872d5d8dd09995c39" id="r_aede92855a3e878b872d5d8dd09995c39"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_address.html">Address</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#aede92855a3e878b872d5d8dd09995c39">Addresses</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:aede92855a3e878b872d5d8dd09995c39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Адреса.  <br /></td></tr>
+<tr class="separator:aede92855a3e878b872d5d8dd09995c39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bae6547991278db2c41668a056caeec" id="r_a3bae6547991278db2c41668a056caeec"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_publisher.html">Publisher</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#a3bae6547991278db2c41668a056caeec">Publishers</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a3bae6547991278db2c41668a056caeec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Издательства.  <br /></td></tr>
+<tr class="separator:a3bae6547991278db2c41668a056caeec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab53df5a21f8abebc25e3a0a501d9c410" id="r_ab53df5a21f8abebc25e3a0a501d9c410"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_manuscript.html">Manuscript</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#ab53df5a21f8abebc25e3a0a501d9c410">Manuscripts</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:ab53df5a21f8abebc25e3a0a501d9c410"><td class="mdescLeft">&#160;</td><td class="mdescRight">Рукописи.  <br /></td></tr>
+<tr class="separator:ab53df5a21f8abebc25e3a0a501d9c410"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65a344f4f1b85a4d694e4792ededf886" id="r_a65a344f4f1b85a4d694e4792ededf886"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_language.html">Language</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#a65a344f4f1b85a4d694e4792ededf886">Languages</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a65a344f4f1b85a4d694e4792ededf886"><td class="mdescLeft">&#160;</td><td class="mdescRight">Языки.  <br /></td></tr>
+<tr class="separator:a65a344f4f1b85a4d694e4792ededf886"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7ce05ac456cf154896f7b573b47d5d1" id="r_ab7ce05ac456cf154896f7b573b47d5d1"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_book_type.html">BookType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#ab7ce05ac456cf154896f7b573b47d5d1">BookTypes</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:ab7ce05ac456cf154896f7b573b47d5d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Типы изданий.  <br /></td></tr>
+<tr class="separator:ab7ce05ac456cf154896f7b573b47d5d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e867037b953a2a3d5fb189f8ce2d305" id="r_a4e867037b953a2a3d5fb189f8ce2d305"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_seria.html">Seria</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#a4e867037b953a2a3d5fb189f8ce2d305">Serias</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a4e867037b953a2a3d5fb189f8ce2d305"><td class="mdescLeft">&#160;</td><td class="mdescRight">Серии.  <br /></td></tr>
+<tr class="separator:a4e867037b953a2a3d5fb189f8ce2d305"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6afd1f7598b077fb82fb20a11bbe3973" id="r_a6afd1f7598b077fb82fb20a11bbe3973"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_genre.html">Genre</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#a6afd1f7598b077fb82fb20a11bbe3973">Genres</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a6afd1f7598b077fb82fb20a11bbe3973"><td class="mdescLeft">&#160;</td><td class="mdescRight">Жанры.  <br /></td></tr>
+<tr class="separator:a6afd1f7598b077fb82fb20a11bbe3973"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af54c9b2aa827c07bb2a3c269558a94b6" id="r_af54c9b2aa827c07bb2a3c269558a94b6"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_person.html">Person</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#af54c9b2aa827c07bb2a3c269558a94b6">Persons</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:af54c9b2aa827c07bb2a3c269558a94b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Персоны.  <br /></td></tr>
+<tr class="separator:af54c9b2aa827c07bb2a3c269558a94b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2194318fd088fda3547ade5b14f315e" id="r_ad2194318fd088fda3547ade5b14f315e"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_tag.html">Tag</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#ad2194318fd088fda3547ade5b14f315e">Tags</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:ad2194318fd088fda3547ade5b14f315e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Теги.  <br /></td></tr>
+<tr class="separator:ad2194318fd088fda3547ade5b14f315e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ac40e16738809cba0fb99d7205e3cd3" id="r_a7ac40e16738809cba0fb99d7205e3cd3"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_color.html">Color</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#a7ac40e16738809cba0fb99d7205e3cd3">Colors</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a7ac40e16738809cba0fb99d7205e3cd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Цвета.  <br /></td></tr>
+<tr class="separator:a7ac40e16738809cba0fb99d7205e3cd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9162a71f8967c602acf07d724a32c4d0" id="r_a9162a71f8967c602acf07d724a32c4d0"><td class="memItemLeft" align="right" valign="top">DbSet&lt; <a class="el" href="class_domain_1_1_category.html">Category</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_data_access_layer_1_1_data_context.html#a9162a71f8967c602acf07d724a32c4d0">Categories</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a9162a71f8967c602acf07d724a32c4d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Категории.  <br /></td></tr>
+<tr class="separator:a9162a71f8967c602acf07d724a32c4d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><p>Контекст доступа к данным. </p>
+</div><h2 class="groupheader">Конструктор(ы)</h2>
+<a id="a078beda2df862ae11b7711b6a1aff4fe" name="a078beda2df862ae11b7711b6a1aff4fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a078beda2df862ae11b7711b6a1aff4fe">&#9670;&#160;</a></span>DataContext()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DataAccessLayer.DataContext.DataContext </td>
+          <td>(</td>
+          <td class="paramtype">DbContextOptions&lt; <a class="el" href="class_data_access_layer_1_1_data_context.html">DataContext</a> &gt;&#160;</td>
+          <td class="paramname"><em>options</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Инициализирует новый экземпляр класса DataContext. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">options</td><td>Опции настройки контекста. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Методы</h2>
+<a id="ac1174635217551aeb603ae53478f69d0" name="ac1174635217551aeb603ae53478f69d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1174635217551aeb603ae53478f69d0">&#9670;&#160;</a></span>OnModelCreating()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">override void DataAccessLayer.DataContext.OnModelCreating </td>
+          <td>(</td>
+          <td class="paramtype">ModelBuilder&#160;</td>
+          <td class="paramname"><em>modelBuilder</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p></p>
+
+</div>
+</div>
+<h2 class="groupheader">Полный список свойств</h2>
+<a id="aede92855a3e878b872d5d8dd09995c39" name="aede92855a3e878b872d5d8dd09995c39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aede92855a3e878b872d5d8dd09995c39">&#9670;&#160;</a></span>Addresses</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_address.html">Address</a>&gt; DataAccessLayer.DataContext.Addresses</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Адреса. </p>
+
+</div>
+</div>
+<a id="a2f463b8d745e3497043ae1a7e94049da" name="a2f463b8d745e3497043ae1a7e94049da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f463b8d745e3497043ae1a7e94049da">&#9670;&#160;</a></span>Authors</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_author.html">Author</a>&gt; DataAccessLayer.DataContext.Authors</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Авторы. </p>
+
+</div>
+</div>
+<a id="a3562b37c4c53288acae452a7b2ec1bea" name="a3562b37c4c53288acae452a7b2ec1bea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3562b37c4c53288acae452a7b2ec1bea">&#9670;&#160;</a></span>Books</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_book.html">Book</a>&gt; DataAccessLayer.DataContext.Books</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Книги. </p>
+
+</div>
+</div>
+<a id="ab7ce05ac456cf154896f7b573b47d5d1" name="ab7ce05ac456cf154896f7b573b47d5d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7ce05ac456cf154896f7b573b47d5d1">&#9670;&#160;</a></span>BookTypes</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_book_type.html">BookType</a>&gt; DataAccessLayer.DataContext.BookTypes</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Типы изданий. </p>
+
+</div>
+</div>
+<a id="a513f2e5335b4a0ee63d64b57f7dec66f" name="a513f2e5335b4a0ee63d64b57f7dec66f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a513f2e5335b4a0ee63d64b57f7dec66f">&#9670;&#160;</a></span>Cabinets</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_cabinet.html">Cabinet</a>&gt; DataAccessLayer.DataContext.Cabinets</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Шкафы. </p>
+
+</div>
+</div>
+<a id="a9162a71f8967c602acf07d724a32c4d0" name="a9162a71f8967c602acf07d724a32c4d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9162a71f8967c602acf07d724a32c4d0">&#9670;&#160;</a></span>Categories</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_category.html">Category</a>&gt; DataAccessLayer.DataContext.Categories</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Категории. </p>
+
+</div>
+</div>
+<a id="aef0014edba76396415e3bbddab3ce59f" name="aef0014edba76396415e3bbddab3ce59f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef0014edba76396415e3bbddab3ce59f">&#9670;&#160;</a></span>Cities</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_city.html">City</a>&gt; DataAccessLayer.DataContext.Cities</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Города. </p>
+
+</div>
+</div>
+<a id="a7ac40e16738809cba0fb99d7205e3cd3" name="a7ac40e16738809cba0fb99d7205e3cd3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ac40e16738809cba0fb99d7205e3cd3">&#9670;&#160;</a></span>Colors</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_color.html">Color</a>&gt; DataAccessLayer.DataContext.Colors</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Цвета. </p>
+
+</div>
+</div>
+<a id="a72f45edc5f2f349b1bc4fe08c2935168" name="a72f45edc5f2f349b1bc4fe08c2935168"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72f45edc5f2f349b1bc4fe08c2935168">&#9670;&#160;</a></span>Editors</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_editor.html">Editor</a>&gt; DataAccessLayer.DataContext.Editors</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Редакторы. </p>
+
+</div>
+</div>
+<a id="a6afd1f7598b077fb82fb20a11bbe3973" name="a6afd1f7598b077fb82fb20a11bbe3973"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6afd1f7598b077fb82fb20a11bbe3973">&#9670;&#160;</a></span>Genres</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_genre.html">Genre</a>&gt; DataAccessLayer.DataContext.Genres</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Жанры. </p>
+
+</div>
+</div>
+<a id="a90340a482126019aa8d0dedda401b7c6" name="a90340a482126019aa8d0dedda401b7c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90340a482126019aa8d0dedda401b7c6">&#9670;&#160;</a></span>Items</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_item.html">Item</a>&gt; DataAccessLayer.DataContext.Items</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Экземпляры книг. </p>
+
+</div>
+</div>
+<a id="a65a344f4f1b85a4d694e4792ededf886" name="a65a344f4f1b85a4d694e4792ededf886"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65a344f4f1b85a4d694e4792ededf886">&#9670;&#160;</a></span>Languages</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_language.html">Language</a>&gt; DataAccessLayer.DataContext.Languages</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Языки. </p>
+
+</div>
+</div>
+<a id="ab53df5a21f8abebc25e3a0a501d9c410" name="ab53df5a21f8abebc25e3a0a501d9c410"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab53df5a21f8abebc25e3a0a501d9c410">&#9670;&#160;</a></span>Manuscripts</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_manuscript.html">Manuscript</a>&gt; DataAccessLayer.DataContext.Manuscripts</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Рукописи. </p>
+
+</div>
+</div>
+<a id="af54c9b2aa827c07bb2a3c269558a94b6" name="af54c9b2aa827c07bb2a3c269558a94b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af54c9b2aa827c07bb2a3c269558a94b6">&#9670;&#160;</a></span>Persons</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_person.html">Person</a>&gt; DataAccessLayer.DataContext.Persons</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Персоны. </p>
+
+</div>
+</div>
+<a id="a3bae6547991278db2c41668a056caeec" name="a3bae6547991278db2c41668a056caeec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3bae6547991278db2c41668a056caeec">&#9670;&#160;</a></span>Publishers</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_publisher.html">Publisher</a>&gt; DataAccessLayer.DataContext.Publishers</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Издательства. </p>
+
+</div>
+</div>
+<a id="a71efd45c7c825d8898dce62b9372fba4" name="a71efd45c7c825d8898dce62b9372fba4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71efd45c7c825d8898dce62b9372fba4">&#9670;&#160;</a></span>Reviewers</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_reviewer.html">Reviewer</a>&gt; DataAccessLayer.DataContext.Reviewers</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Рецензенты. </p>
+
+</div>
+</div>
+<a id="ad93e36c1b900a128b22259efc80c957d" name="ad93e36c1b900a128b22259efc80c957d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad93e36c1b900a128b22259efc80c957d">&#9670;&#160;</a></span>Rooms</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_room.html">Room</a>&gt; DataAccessLayer.DataContext.Rooms</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Комнаты. </p>
+
+</div>
+</div>
+<a id="a4e867037b953a2a3d5fb189f8ce2d305" name="a4e867037b953a2a3d5fb189f8ce2d305"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e867037b953a2a3d5fb189f8ce2d305">&#9670;&#160;</a></span>Serias</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_seria.html">Seria</a>&gt; DataAccessLayer.DataContext.Serias</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Серии. </p>
+
+</div>
+</div>
+<a id="a8db35d15397150976d8149caeeda40c9" name="a8db35d15397150976d8149caeeda40c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8db35d15397150976d8149caeeda40c9">&#9670;&#160;</a></span>Shelves</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_shelf.html">Shelf</a>&gt; DataAccessLayer.DataContext.Shelves</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Полки. </p>
+
+</div>
+</div>
+<a id="a040de611bca0eed553453649ed625971" name="a040de611bca0eed553453649ed625971"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a040de611bca0eed553453649ed625971">&#9670;&#160;</a></span>Streets</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_street.html">Street</a>&gt; DataAccessLayer.DataContext.Streets</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Улицы. </p>
+
+</div>
+</div>
+<a id="ad2194318fd088fda3547ade5b14f315e" name="ad2194318fd088fda3547ade5b14f315e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2194318fd088fda3547ade5b14f315e">&#9670;&#160;</a></span>Tags</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_tag.html">Tag</a>&gt; DataAccessLayer.DataContext.Tags</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Теги. </p>
+
+</div>
+</div>
+<a id="a34183131c6a7d2323c573dc23004f3ea" name="a34183131c6a7d2323c573dc23004f3ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34183131c6a7d2323c573dc23004f3ea">&#9670;&#160;</a></span>Translations</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">DbSet&lt;<a class="el" href="class_domain_1_1_translator.html">Translator</a>&gt; DataAccessLayer.DataContext.Translations</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Переводчики. </p>
+
+</div>
+</div>
+<hr/>Объявления и описания членов класса находятся в файле:<ul>
+<li>DataAccessLayer/<a class="el" href="_data_context_8cs.html">DataContext.cs</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Создано системой&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+</small></address>
+</body>
+</html>

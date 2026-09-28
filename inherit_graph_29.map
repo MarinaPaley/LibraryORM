@@ -1,0 +1,7 @@
+<map id="Иерархия классов. Графический вид." name="Иерархия классов. Графический вид.">
+<area shape="rect" id="Node000000" href="$class_repository_1_1_abstract_1_1_base_repository.html" title=" " alt="" coords="5,5,292,45"/>
+<area shape="rect" id="Node000001" href="$class_repository_1_1_author_repository.html" title="Репозиторий для класса Author." alt="" coords="340,45,547,70"/>
+<area shape="poly" id="edge85_Node000000_Node000001" title=" " alt="" coords="306,40,340,43,340,49,305,45"/>
+<area shape="rect" id="Node000002" href="$interface_repository_1_1_abstract_1_1_i_author_repository.html" title="Интерфейс для репозитория Автор." alt="" coords="49,69,248,109"/>
+<area shape="poly" id="edge86_Node000002_Node000001" title=" " alt="" coords="261,74,339,66,340,71,262,80"/>
+</map>
