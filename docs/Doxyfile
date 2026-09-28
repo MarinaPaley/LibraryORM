@@ -1,0 +1,45 @@
+# ============================================
+# Минимальный Doxyfile для C# проекта
+# ============================================
+
+# --- Проект ---
+PROJECT_NAME           = "Домашняя библиотека"
+OUTPUT_LANGUAGE        = Russian
+DOXYFILE_ENCODING      = UTF-8
+
+# --- Откуда брать код ---
+# Точка означает "корень репозитория, откуда запущен doxygen"
+INPUT                  = .
+RECURSIVE              = YES
+
+# --- Какие файлы искать ---
+FILE_PATTERNS          = *.cs \
+                         *.md
+
+# --- Что игнорировать (ОЧЕНЬ ВАЖНО!) ---
+EXCLUDE_PATTERNS       = */bin/* \
+                         */obj/* \
+                         */.git/* \
+                         */.github/* \
+                         */docs/*
+
+# --- Куда сохранять результат ---
+OUTPUT_DIRECTORY       = docs
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+
+# --- Графы и диаграммы ---
+HAVE_DOT               = YES
+
+# --- Поведение ---
+EXTRACT_ALL            = YES
+JAVADOC_AUTOBRIEF      = YES
+MARKDOWN_SUPPORT       = YES
+CASE_SENSE_NAMES       = NO
+
+# --- Отключить лишние форматы (ускоряет сборку) ---
+GENERATE_LATEX         = NO
+GENERATE_RTF           = NO
+GENERATE_MAN           = NO
+GENERATE_XML           = NO
+GENERATE_DOCBOOK       = NO

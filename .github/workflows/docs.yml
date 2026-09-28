@@ -1,0 +1,64 @@
+name: Build and Deploy Documentation
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      # Триггерим сборку при изменении любого проекта, решения или документации
+      - 'Domain/**'
+      - 'docs/**'
+      - '.github/workflows/docs.yml'
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy-docs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Install Doxygen and Graphviz
+        run: sudo apt-get update && sudo apt-get install -y doxygen graphviz
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Сборка всего решения целиком
+      - name: Build .NET Solution
+        run: dotnet build Solution.sln --configuration Release
+
+      - name: Generate Doxygen Documentation
+        run: doxygen docs/Doxyfile
+
+      - name: Convert .mmd files to SVG
+        run: |
+          mkdir -p docs/html/diagrams
+          if [ -d "docs/mmd" ] && [ "$(ls -A docs/mmd/*.mmd 2>/dev/null)" ]; then
+            npm install -g @mermaid-js/mermaid-cli
+            for file in docs/mmd/*.mmd; do
+              filename=$(basename "$file" .mmd)
+              echo "Обработка: $filename.mmd"
+              npx mmdc -i "$file" -o "docs/html/diagrams/$filename.svg" -b transparent
+            done
+          else
+            echo "Нет .mmd файлов для конвертации."
+          fi
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/html
+          publish_branch: gh-pages
+          keep_files: false
