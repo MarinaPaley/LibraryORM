@@ -62,12 +62,21 @@ jobs:
         run: |
           echo '{"args": ["--no-sandbox", "--disable-setuid-sandbox"]}' > puppeteer-config.json
 
+      - name: Создание папки для PNG
+        run: mkdir -p docs/html/UML
+
       - name: Удаление старого PNG (если есть)
-        run: rm -f UML/UML.png
+        run: rm -f docs/html/UML/UML.png
 
       - name: Рендеринг MMD в PNG
-        run: mmdc -i UML/UML.mmd -o UML/UML.png -b white -s 3 -p puppeteer-config.json
-
+        run: mmdc -i docs/mmd/UML.mmd -o docs/html/UML/UML.png -b white -s 3 -p puppeteer-config.json
+        
+      - name: Сохранение PNG в репозиторий (Auto-commit)
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: auto-render diagram [skip ci]"
+          file_pattern: docs/html/UML/UML.png
+            
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
