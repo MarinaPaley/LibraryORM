@@ -40,7 +40,7 @@ namespace Domain
         /// </summary>
         /// <param name="book"> Рукопись.</param>
         /// <returns> <see langword="true"/>, если добавили, иначе - <see langword="false"/>.</returns>
-        public bool AddManuscropt(Manuscript book)
+        public bool AddManuscript(Manuscript book)
         {
             return book is not null
                 && this.Manuscripts.Add(book)

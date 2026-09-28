@@ -1,0 +1,114 @@
+classDiagram
+    class Entity~T~ {
+        +Guid Id
+    }
+    class ValueObject {
+        +Equals()
+    }
+
+    class Person {
+        +string Name
+        +string? Email
+        +string? Phone
+    }
+
+    class Author {
+        +string? Pseudonym
+    }
+    class Translator {
+        +string? Language
+    }
+    class Editor {
+        +string? Role
+    }
+
+    class Book {
+        +int Year
+        +string? Isbn
+    }
+    class Manuscript {
+        +string Title
+    }
+    class Item {
+        +string Condition
+    }
+
+    class Room {
+        +string Name
+    }
+    class Cabinet {
+        +string Label
+    }
+    class Shelf {
+        +int Number
+    }
+
+    class Publisher {
+        +string Name
+    }
+    class Genre {
+        +string Name
+    }
+
+    class City {
+        +string Name
+    }
+    class Street {
+        +string Name
+    }
+    class Address {
+        +string House
+        +string? Building
+        +string? Apartment
+    }
+
+    class Dimensions {
+        +decimal Height
+        +decimal Width
+        +decimal Thickness
+        +string Unit
+    }
+
+    Entity <|-- Person
+    Entity <|-- Author
+    Entity <|-- Translator
+    Entity <|-- Editor
+    Entity <|-- Book
+    Entity <|-- Manuscript
+    Entity <|-- Item
+    Entity <|-- Room
+    Entity <|-- Cabinet
+    Entity <|-- Shelf
+    Entity <|-- Publisher
+    Entity <|-- Genre
+    Entity <|-- City
+    Entity <|-- Street
+    Entity <|-- Address
+    ValueObject <|-- Dimensions
+
+    Author --> Person : 1
+    Translator --> Person : 1
+    Editor --> Person : 1
+
+    Book --> Manuscript : *..*
+
+    Manuscript --> Author : авторы *..*
+    Manuscript --> Translator : переводчики *..*
+
+    Book --> Editor : редактор 0..1
+
+    Room *-- Cabinet : 1..*
+    Cabinet *-- Shelf : 1..*
+    Item --> Book : 1
+    Item --> Shelf : 1
+
+    Room --> Address : находится по 1 адресу
+    Address --> Room : имеет 0..* комнат
+
+    Book o-- Dimensions : 0..1
+    Book --> Publisher : 1
+    Book --> Genre : *..*
+
+    Street --> City : в 1 городе
+    Address --> Street : на 1 улице
+    Publisher --> Address : имеет 1 адрес

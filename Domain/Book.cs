@@ -19,7 +19,7 @@ namespace Domain
         /// </summary>
         /// <param name="title"> Название. </param>
         /// <param name="pages"> Количество страниц. </param>
-        /// <param name="ibsn"> Код <c>ISBN</c>. </param>
+        /// <param name="isbn"> Код <c>ISBN</c>. </param>
         /// <param name="bookType"> Тип книги. </param>
         /// <param name="publisher"> Издательство.</param>
         /// <param name="year"> Год издания. </param>
@@ -42,7 +42,7 @@ namespace Domain
         public Book(
             string? title,
             int pages,
-            string ibsn,
+            string isbn,
             BookType bookType,
             Publisher publisher,
             int year,
@@ -65,7 +65,7 @@ namespace Domain
                 throw new ArgumentOutOfRangeException(nameof(volume));
             }
 
-            this.ISBN = ibsn.TrimOrNull();
+            this.ISBN = isbn.TrimOrNull();
             this.Manuscripts = manuscripts ?? throw new ArgumentNullException(nameof(manuscripts));
 
             this.Title = title;
@@ -97,7 +97,7 @@ namespace Domain
         /// </summary>
         /// <param name="title"> Название.</param>
         /// <param name="pages"> Количество страниц. </param>
-        /// <param name="ibsn"> Код <c>ISBN</c>. </param>
+        /// <param name="isbn"> Код <c>ISBN</c>. </param>
         /// <param name="bookType"> Тип издания. </param>
         /// <param name="publisher"> Издательство. </param>
         /// <param name="year"> Год издания. </param>
@@ -114,7 +114,7 @@ namespace Domain
         public Book(
             string title,
             int pages,
-            string ibsn,
+            string isbn,
             BookType bookType,
             Publisher publisher,
             int year,
@@ -129,7 +129,7 @@ namespace Domain
             : this(
                    title,
                    pages,
-                   ibsn,
+                   isbn,
                    bookType,
                    publisher,
                    year,
@@ -166,7 +166,7 @@ namespace Domain
         public int Pages { get; }
 
         /// <summary>
-        /// Код isbn.
+        /// Код <c>ISBN</c>.
         /// </summary>
         public string? ISBN { get; }
 
