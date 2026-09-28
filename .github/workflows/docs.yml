@@ -55,19 +55,18 @@ jobs:
       - name: Generate Doxygen Documentation
         run: doxygen docs/Doxyfile
 
-      - name: Convert .mmd files to SVG
+      - name: Установка Mermaid CLI
+        run: npm install -g @mermaid-js/mermaid-cli
+
+      - name: Создание конфига для обхода sandbox
         run: |
-          mkdir -p docs/html/diagrams
-          if [ -d "docs/mmd" ] && [ "$(ls -A docs/mmd/*.mmd 2>/dev/null)" ]; then
-            npm install -g @mermaid-js/mermaid-cli
-            for file in docs/mmd/*.mmd; do
-              filename=$(basename "$file" .mmd)
-              echo "Обработка: $filename.mmd"
-              npx mmdc -i "$file" -o "docs/html/diagrams/$filename.svg" -b transparent
-            done
-          else
-            echo "Нет .mmd файлов для конвертации."
-          fi
+          echo '{"args": ["--no-sandbox", "--disable-setuid-sandbox"]}' > puppeteer-config.json
+
+      - name: Удаление старого PNG (если есть)
+        run: rm -f UML/UML.png
+
+      - name: Рендеринг MMD в PNG
+        run: mmdc -i UML/UML.mmd -o UML/UML.png -b white -s 3 -p puppeteer-config.json
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
