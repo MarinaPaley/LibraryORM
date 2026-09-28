@@ -8,6 +8,7 @@ on:
       # Триггерим сборку при изменении любого проекта, решения или документации
       - 'Domain/**'
       - 'docs/**'
+      - '.cspell.json'
       - '.github/workflows/docs.yml'
   workflow_dispatch:
 
@@ -21,11 +22,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup .NET 10
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '10.0.x'
-
       - name: Install Doxygen and Graphviz
         run: sudo apt-get update && sudo apt-get install -y doxygen graphviz
 
@@ -34,9 +30,27 @@ jobs:
         with:
           node-version: '20'
 
-      # Сборка всего решения целиком
-      - name: Build .NET Solution
-        run: dotnet build Solution.sln --configuration Release
+      # --- НОВЫЙ ШАГ: Установка cspell и словарей ---
+      - name: Install cspell and language dictionaries
+        run: |
+          npm install -g cspell \
+            @cspell/dict-ru_ru \
+            @cspell/dict-en_us
+          cspell link add @cspell/dict-ru_ru
+          cspell link add @cspell/dict-en_us
+
+      # --- НОВЫЙ ШАГ: Проверка орфографии ---
+      - name: Run spellcheck
+        run: |
+          echo "🔍 Проверка орфографии в коде и документации..."
+          cspell lint \
+            "Domain/**/*.cs" \
+            "docs/**/*.md" \
+            "docs/**/*.mmd" \
+            --config .cspell.json \
+            --no-progress \
+            --show-context \
+            --show-suggestions
 
       - name: Generate Doxygen Documentation
         run: doxygen docs/Doxyfile

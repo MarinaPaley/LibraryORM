@@ -1,0 +1,11 @@
+DTO
+ORM
+API
+CRUD
+nullable
+async
+LINQ
+ISBN
+RRGGBB
+RRGGBBAA
+seria
