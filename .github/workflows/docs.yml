@@ -20,17 +20,17 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install Doxygen and Graphviz
         run: sudo apt-get update && sudo apt-get install -y doxygen graphviz
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '22'
+          cache: 'npm'
 
-      # --- НОВЫЙ ШАГ: Установка cspell и словарей ---
       - name: Install cspell and language dictionaries
         run: |
           npm install -g cspell \
@@ -39,14 +39,9 @@ jobs:
           cspell link add @cspell/dict-ru_ru
           cspell link add @cspell/dict-en_us
 
-      # --- НОВЫЙ ШАГ: Проверка орфографии ---
       - name: Run spellcheck
         run: |
-          echo "🔍 Проверка орфографии в коде и документации..."
           cspell lint \
-            "Domain/**/*.cs" \
-            "docs/**/*.md" \
-            "docs/**/*.mmd" \
             --config .cspell.json \
             --no-progress \
             --show-context \

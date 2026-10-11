@@ -54,6 +54,7 @@ namespace DataAccessLayer.Tests.Abstract
         [OneTimeTearDown]
         public void OneTimeTearDown() => this.Dispose();
 
+        /// <inheritdoc/>
         public void Dispose() => this.DataContext?.Dispose();
     }
 }
