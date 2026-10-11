@@ -22,6 +22,9 @@ namespace Domain
         {
         }
 
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="BookType"/>.
+        /// </summary>
         [Obsolete("For ORM only")]
         private BookType()
             : base("Не задано")

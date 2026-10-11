@@ -1,4 +1,4 @@
-﻿// <copyright file="CityTest.cs" company="Филипченко Марина Алексеевна">
+﻿// <copyright file="CityTests.cs" company="Филипченко Марина Алексеевна">
 // Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
@@ -12,11 +12,12 @@ namespace Domain.Tests
     /// Модульные тесты для класса <see cref="City"/>.
     /// </summary>
     [TestFixture]
-    public sealed class CityTest
+    public sealed class CityTests
     {
         [Test]
         public void Ctor_ValidData_Success()
         {
+            // Arrange, Act & Assert
             Assert.DoesNotThrow(() => _ = new City("City"));
         }
 
@@ -24,15 +25,16 @@ namespace Domain.Tests
         [TestCase("")]
         public void Ctor_BadData_Throws(string? name)
         {
+            // Arrange, Act & Assert
             Assert.Throws<ArgumentNullException>(() => _ = new City(name!));
         }
 
         [TestCase("City", "City", true)]
         [TestCase("City", "Town", false)]
-        public void Equals_Success(string thirst, string second, bool expected)
+        public void Equals_Success(string first, string second, bool expected)
         {
             // Arrange
-            var left = new City(thirst);
+            var left = new City(first);
             var right = new City(second);
 
             // Act

@@ -1,4 +1,4 @@
-﻿// <copyright file="CategoryTest.cs" company="Филипченко Марина Алексеевна">
+﻿// <copyright file="CategoryTests.cs" company="Филипченко Марина Алексеевна">
 // Copyright (c) Филипченко Марина Алексеевна 2026. Library.
 // </copyright>
 
@@ -9,14 +9,16 @@ namespace Domain.Tests
     using NUnit.Framework;
 
     [TestFixture]
-    public sealed class CategoryTest
+    public sealed class CategoryTests
     {
         private static readonly ColorCode ColorCode = new ColorCode("#FF0000");
+
         private static readonly Color Color = new Color("Red", ColorCode);
 
         [Test]
         public void Ctor_ValidData_Success()
         {
+            // Arrange, Act & Assert
             Assert.DoesNotThrow(() => _ = new Category("Category", Color));
         }
 
@@ -24,6 +26,7 @@ namespace Domain.Tests
         [TestCase("")]
         public void Ctor_BadData_Throws(string? name)
         {
+            // Arrange, Act & Assert
             Assert.Throws<ArgumentNullException>(() => _ = new Category(name!, Color));
         }
 

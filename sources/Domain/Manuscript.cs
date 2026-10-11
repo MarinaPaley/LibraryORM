@@ -20,9 +20,9 @@ namespace Domain
         /// Инициализирует новый экземпляр класса <see cref="Manuscript"/>.
         /// </summary>
         /// <param name="name"> Название произведения. </param>
-        /// <param name="authors"> Авторы.</param>
+        /// <param name="authors"> Авторы. </param>
         /// <param name="date"> Дата написания. </param>
-        /// <param name="languages"> Язык.</param>
+        /// <param name="languages"> Язык. </param>
         /// <param name="origin"> Оригинальное название. </param>
         /// <exception cref="ArgumentNullException"> Если авторы или жанры <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException"> Если количество страниц равно ли меньше нуля.</exception>
@@ -34,16 +34,17 @@ namespace Domain
             string? origin = null)
             : base(name, origin)
         {
+            ArgumentNullException.ThrowIfNull(authors);
+            ArgumentNullException.ThrowIfNull(languages);
             this.Dates = date;
-            this.Languages = languages ?? throw new ArgumentNullException(nameof(languages));
+            this.Languages = new HashSet<Language>(languages, NamedEntityComparer<Language>.Instance);
 
             if (authors.Count == 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(authors));
             }
 
-            this.authors = this.authors = new HashSet<Author>(authors, PersonComparer<Author>.Instance)
-                ?? throw new ArgumentNullException(nameof(authors));
+            this.authors = new HashSet<Author>(authors, PersonComparer<Author>.Instance);
 
             foreach (var author in this.Authors)
             {
