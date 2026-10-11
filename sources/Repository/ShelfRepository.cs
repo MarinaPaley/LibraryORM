@@ -16,7 +16,7 @@ namespace Repository
     /// <summary>
     /// Репозиторий для класса <see cref="Shelf"/>.
     /// </summary>
-    public sealed class ShelfRepository : BaseRepository<Shelf, ShelfRepository>, IShelfRepository
+    public sealed class ShelfRepository : BaseRepository<Shelf>, IShelfRepository
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="ShelfRepository"/>.

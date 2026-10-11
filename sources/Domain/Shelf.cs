@@ -55,7 +55,7 @@ namespace Domain
         public void AddBook(Item item)
         {
             this.Items.Add(item);
-            item!.Shelf = this;
+            item.Shelf = this;
         }
 
         /// <summary>

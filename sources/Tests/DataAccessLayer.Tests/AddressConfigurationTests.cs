@@ -40,7 +40,7 @@ namespace DataAccessLayer.Tests
                 .First(a => a.Id == address.Id);
 
             Assert.That(result, Is.Not.Null);
-            Assert.That(result!.ToString(), Is.EqualTo(address.ToString()));
+            Assert.That(result.ToString(), Is.EqualTo(address.ToString()));
         }
     }
 }

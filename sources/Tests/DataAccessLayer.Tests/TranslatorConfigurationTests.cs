@@ -23,22 +23,22 @@ namespace DataAccessLayer.Tests
             var person = new Person(new Name("Лозинский", "Михаил"));
             var translator = new Translator(person);
 
+            // act
             _ = this.DataContext.Add(translator);
             _ = this.DataContext.SaveChanges();
             this.DataContext.ChangeTracker.Clear();
 
-            // act
             var result = this.DataContext
                 .Set<Translator>()
                 .Include(t => t.Person)
                 .First(t => t.Id == translator.Id);
 
             // assert
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
-                Assert.That(result!.Person.FullName, Is.EqualTo(translator.Person.FullName));
+                Assert.That(result.Person.FullName, Is.EqualTo(translator.Person.FullName));
                 Assert.That(result, Is.InstanceOf<Translator>());
-            });
+            }
         }
     }
 }

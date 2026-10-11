@@ -61,7 +61,7 @@ namespace Domain
         {
             if (shelf is not null)
             {
-                shelf!.Cabinet = this;
+                shelf.Cabinet = this;
                 return this.Shelves.Add(shelf);
             }
 

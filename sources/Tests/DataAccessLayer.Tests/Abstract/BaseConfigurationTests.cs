@@ -16,6 +16,8 @@ namespace DataAccessLayer.Tests.Abstract
     /// </summary>
     internal abstract class BaseConfigurationTests : IDisposable
     {
+        private bool disposed; // 1. Добавляем флаг, чтобы избежать двойного вызова Dispose
+
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="BaseConfigurationTests"/>.
         /// </summary>
@@ -48,13 +50,31 @@ namespace DataAccessLayer.Tests.Abstract
             this.DataContext.ChangeTracker.Clear();
         }
 
-        /// <summary>
-        /// Освобождает ресурсы после выполнения всех тестов в классе.
-        /// </summary>
-        [OneTimeTearDown]
-        public void OneTimeTearDown() => this.Dispose();
-
         /// <inheritdoc/>
-        public void Dispose() => this.DataContext?.Dispose();
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this); // 2. Стандартная практика, даже если финализатора нет
+        }
+
+        /// <summary>
+        /// Освобождает управляемые ресурсы. Может быть переопределен в классах-наследниках.
+        /// </summary>
+        /// <param name="disposing"> Если <see langword="true"/>, освобождаются управляемые ресурсы. </param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (this.disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                // 3. Освобождаем только управляемые ресурсы
+                this.DataContext?.Dispose();
+            }
+
+            this.disposed = true;
+        }
     }
 }

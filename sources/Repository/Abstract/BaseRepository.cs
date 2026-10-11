@@ -18,20 +18,18 @@ namespace Repository.Abstract
     /// Базовый класс репозиториев.
     /// </summary>
     /// <typeparam name="TEntity"> Целевой тип сущности. </typeparam>
-    /// <typeparam name="TRepository"> Целевой тип репозитория. </typeparam>
-    public abstract class BaseRepository<TEntity, TRepository> : IRepository<TEntity>
+    public abstract class BaseRepository<TEntity> : IRepository<TEntity>
         where TEntity : class, IEntity
-        where TRepository : BaseRepository<TEntity, TRepository>
     {
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="BaseRepository{TEntity,TRepository}"/>.
+        /// Инициализирует новый экземпляр класса <see cref="BaseRepository{TEntity}"/>.
         /// </summary>
         /// <param name="dataContext"> Контекст доступа к данным. </param>
         /// <param name="logger"> Логгер. </param>
         /// <exception cref="ArgumentNullException">
         /// В случае если <paramref name="dataContext"/> или <paramref name="logger"/> – <see langword="null"/>.
         /// </exception>
-        protected BaseRepository(DataContext dataContext, ILogger<TRepository> logger)
+        protected BaseRepository(DataContext dataContext, ILogger logger)
         {
             this.DataContext = dataContext
                 ?? throw new ArgumentNullException(nameof(dataContext));
@@ -48,7 +46,7 @@ namespace Repository.Abstract
         /// <summary>
         /// Логгер.
         /// </summary>
-        protected ILogger<TRepository> Logger { get; }
+        protected ILogger Logger { get; }
 
         /// <inheritdoc/>
         public async Task<TEntity> CreateAsync(TEntity entity, bool saveNow = true)

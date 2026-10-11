@@ -36,7 +36,7 @@ namespace DataAccessLayer.Tests
                 .First(a => a.Id == author.Id);
 
             Assert.That(result, Is.Not.Null);
-            Assert.That(result!.Person.FullName, Is.EqualTo(author.Person.FullName));
+            Assert.That(result.Person.FullName, Is.EqualTo(author.Person.FullName));
         }
     }
 }

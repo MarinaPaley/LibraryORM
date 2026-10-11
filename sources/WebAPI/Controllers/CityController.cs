@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
     [Produces(MediaTypeNames.Application.Json)]
     [Route(CityController.ControllerUrl)]
     public sealed class CityController
-        : BaseController<CityRepository, City, CityCreateModel, CityUpdateModel, CityOutModel, CityController>
+        : BaseController<CityRepository, City, CityCreateModel, CityUpdateModel, CityOutModel>
     {
         private const string ControllerUrl = "api/cities";
 

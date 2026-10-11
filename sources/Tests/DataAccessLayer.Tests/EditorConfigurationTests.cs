@@ -20,23 +20,26 @@ namespace DataAccessLayer.Tests
         [Test]
         public void AddEntityToDatabase_Success()
         {
+            // arrange
             var person = new Person(new Name("Горький", "Максим"));
             var editor = new Editor(person);
 
+            // act
             _ = this.DataContext.Add(editor);
             _ = this.DataContext.SaveChanges();
             this.DataContext.ChangeTracker.Clear();
 
+            // assert
             var result = this.DataContext
                 .Set<Editor>()
                 .Include(e => e.Person)
                 .First(e => e.Id == editor.Id);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
-                Assert.That(result!.Person.FullName, Is.EqualTo(editor.Person.FullName));
+                Assert.That(result.Person.FullName, Is.EqualTo(editor.Person.FullName));
                 Assert.That(result, Is.InstanceOf<Editor>());
-            });
+            }
         }
     }
 }
