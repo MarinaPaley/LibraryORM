@@ -4,6 +4,11 @@
   "enableGlobDot": false,
   "useGitignore": true,
   "words": [],
+  "files": [
+    "sources/Domain/**/*.cs",
+    "docs/**/*.md",
+    "docs/**/*.mmd"
+  ],
   "ignorePaths": [
     "bin/**",
     "obj/**",
