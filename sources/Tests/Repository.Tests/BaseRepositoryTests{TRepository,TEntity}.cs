@@ -20,7 +20,7 @@ namespace Repository.Tests
     /// <typeparam name="TRepository"> Целевой тип тестируемого репозитория. </typeparam>
     /// <typeparam name="TEntity"> Целевой тип сущности тестируемого репозитория. </typeparam>
     internal abstract class BaseRepositoryTests<TRepository, TEntity>
-        where TRepository : BaseRepository<TEntity, TRepository>
+        where TRepository : BaseRepository<TEntity>
         where TEntity : class, IEntity
     {
         private readonly SqliteConnection sharedConnection;

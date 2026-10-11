@@ -55,6 +55,11 @@ jobs:
       - name: Convert .mmd files to SVG
         run: |
           mkdir -p docs/html/diagrams
+
+          # 1. Создаем конфиг для обхода sandbox в CI
+          echo '{"args": ["--no-sandbox", "--disable-setuid-sandbox"]}' > puppeteer-config.json
+
+          # 2. Ищем файлы
           shopt -s nullglob
           mmd_files=(docs/mmd/*.mmd)
 
@@ -63,7 +68,14 @@ jobs:
             for file in "${mmd_files[@]}"; do
               filename=$(basename "$file" .mmd)
               echo "Обработка: $filename.mmd"
-              npx --yes @mermaid-js/mermaid-cli -i "$file" -o "docs/html/diagrams/$filename.svg" -b transparent
+
+              # 3. ВАЖНО: добавлен флаг -p puppeteer-config.json
+              npx --yes @mermaid-js/mermaid-cli \
+                -i "$file" \
+                -o "docs/html/diagrams/$filename.svg" \
+                -b transparent \
+                -p puppeteer-config.json
+
             done
           else
             echo "Нет .mmd файлов для конвертации."

@@ -16,7 +16,7 @@ namespace Repository
     /// <summary>
     /// Репозиторий для класса <see cref="Book"/>.
     /// </summary>
-    public sealed class BookRepository : BaseRepository<Book, BookRepository>, IBookRepository
+    public sealed class BookRepository : BaseRepository<Book>, IBookRepository
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="BookRepository"/>.
@@ -54,7 +54,7 @@ namespace Repository
         }
 
         /// <inheritdoc/>
-        public Task<List<Shelf>> GetShelvesByManucriptNameAsync(string title)
+        public Task<List<Shelf>> GetShelvesByManuscriptNameAsync(string title)
         {
             return this.GetAll()
                 .Where(book => book.Manuscripts.Any(manuscript => manuscript.Name.Value == title))

@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
     [Produces(MediaTypeNames.Application.Json)]
     [Route(ShelfController.ControllerUrl)]
     public sealed class ShelfController
-        : BaseController<ShelfRepository, Shelf, ShelfCreateModel, ShelfUpdateModel, ShelfOutModel, ShelfController>
+        : BaseController<ShelfRepository, Shelf, ShelfCreateModel, ShelfUpdateModel, ShelfOutModel>
     {
         private const string ControllerUrl = "api/shelves";
 

@@ -16,7 +16,7 @@ namespace Repository
     /// <summary>
     /// Репозиторий для класса <see cref="Street"/>.
     /// </summary>
-    public sealed class StreetRepository : BaseRepository<Street, StreetRepository>, IStreetRepository
+    public sealed class StreetRepository : BaseRepository<Street>, IStreetRepository
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="StreetRepository"/>.

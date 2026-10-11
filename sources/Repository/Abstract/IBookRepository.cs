@@ -32,7 +32,7 @@ namespace Repository.Abstract
         /// </summary>
         /// <param name="title"> Название рукописи. </param>
         /// <returns> Полки. </returns>
-        Task<List<Shelf>> GetShelvesByManucriptNameAsync(string title);
+        Task<List<Shelf>> GetShelvesByManuscriptNameAsync(string title);
 
         /// <summary>
         /// Найти название книги по идентификатору.

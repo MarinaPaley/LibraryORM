@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
     [Produces(MediaTypeNames.Application.Json)]
     [Route(StreetController.ControllerUrl)]
     public sealed class StreetController
-        : BaseController<StreetRepository, Street, StreetCreateModel, StreetUpdateModel, StreetOutMode, StreetController>
+        : BaseController<StreetRepository, Street, StreetCreateModel, StreetUpdateModel, StreetOutMode>
     {
         private const string ControllerUrl = "api/streets";
 

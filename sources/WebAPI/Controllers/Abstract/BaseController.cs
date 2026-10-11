@@ -24,20 +24,18 @@ namespace WebAPI.Controllers.Abstract
     /// <typeparam name="TCreateModel"> Целевой тип СОЗДАВАЕМОЙ модели. </typeparam>
     /// <typeparam name="TUpdateModel" > Целевой тип ИЗМЕНЯЕМОЙ модели. </typeparam>
     /// <typeparam name="TOutModel"> Целевой тип ВЫХОДНОЙ модели. </typeparam>
-    /// <typeparam name="TController"> Целевой тип контроллера. </typeparam>
     [ApiController]
-    public abstract class BaseController<TRepository, TEntity, TCreateModel, TUpdateModel, TOutModel, TController> : ControllerBase
-        where TRepository : BaseRepository<TEntity, TRepository>
+    public abstract class BaseController<TRepository, TEntity, TCreateModel, TUpdateModel, TOutModel> : ControllerBase
+        where TRepository : BaseRepository<TEntity>
         where TEntity : Entity<TEntity>
         where TCreateModel : class, ICreateModel
         where TUpdateModel : class, IUpdateModel
         where TOutModel : class, IOutModel
-        where TController : BaseController<TRepository, TEntity, TCreateModel, TUpdateModel, TOutModel, TController>
     {
         private readonly string controllerUrl;
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="BaseController{TRepository, TEntity, TCreateModel, TUpdateModel, TOutModel, TController}"/>.
+        /// Инициализирует новый экземпляр класса <see cref="BaseController{TRepository, TEntity, TCreateModel, TUpdateModel, TOutModel}"/>.
         /// </summary>
         /// <param name="repository"> Репозиторий. </param>
         /// <param name="mapper"> Маппер. </param>
@@ -54,7 +52,7 @@ namespace WebAPI.Controllers.Abstract
         protected BaseController(
             TRepository repository,
             IMapper mapper,
-            ILogger<TController> logger,
+            ILogger logger,
             string controllerUrl)
         {
             this.Repository = repository ?? throw new ArgumentNullException(nameof(repository));
@@ -79,7 +77,7 @@ namespace WebAPI.Controllers.Abstract
         /// <summary>
         /// Логгер.
         /// </summary>
-        protected ILogger<TController> Logger { get; }
+        protected ILogger Logger { get; }
 
         /// <summary>
         /// Показывает все сущности.

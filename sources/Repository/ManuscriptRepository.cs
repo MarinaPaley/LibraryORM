@@ -16,7 +16,7 @@ namespace Repository
     /// <summary>
     /// Репозиторий для класса <see cref="Manuscript"/>.
     /// </summary>
-    public sealed class ManuscriptRepository : BaseRepository<Manuscript, ManuscriptRepository>, IManuscriptRepository
+    public sealed class ManuscriptRepository : BaseRepository<Manuscript>, IManuscriptRepository
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="ManuscriptRepository"/>.

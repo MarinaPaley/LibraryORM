@@ -46,7 +46,7 @@ namespace Domain.Abstract
         public override bool Equals(TEntity? other)
         {
             return base.Equals(other)
-                && (((this.OriginName is null) && (other!.OriginName is null))
+                && (((this.OriginName is null) && (other.OriginName is null))
                 || ((this.OriginName is not null) && this.OriginName.Equals(other?.OriginName)));
         }
 

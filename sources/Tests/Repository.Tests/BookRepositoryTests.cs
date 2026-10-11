@@ -186,7 +186,7 @@ namespace Repository.Tests
             _ = await this.DataContext.SaveChangesAsync();
 
             // act
-            var actual = await this.Repository.GetShelvesByManucriptNameAsync(toFind);
+            var actual = await this.Repository.GetShelvesByManuscriptNameAsync(toFind);
 
             // assert
             Assert.That(actual, Is.EquivalentTo(expected));

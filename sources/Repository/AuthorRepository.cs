@@ -17,7 +17,7 @@ namespace Repository
     /// <summary>
     /// Репозиторий для класса <see cref="Author"/>.
     /// </summary>
-    public sealed class AuthorRepository : BaseRepository<Author, AuthorRepository>, IAuthorRepository
+    public sealed class AuthorRepository : BaseRepository<Author>, IAuthorRepository
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="AuthorRepository"/>.

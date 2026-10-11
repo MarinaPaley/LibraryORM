@@ -131,8 +131,8 @@ namespace Domain.Tests
             Assert.That(manuscript.Dates, Is.Not.Null);
             using (Assert.EnterMultipleScope())
             {
-                Assert.That(manuscript.Dates!.From, Is.EqualTo(from));
-                Assert.That(manuscript.Dates!.To, Is.EqualTo(to));
+                Assert.That(manuscript.Dates.From, Is.EqualTo(from));
+                Assert.That(manuscript.Dates.To, Is.EqualTo(to));
             }
         }
 
@@ -149,8 +149,9 @@ namespace Domain.Tests
                 "Хамелеон", language, date, date, null, author);
 
             // assert
-            Assert.That(manuscript.Dates!.From, Is.EqualTo(manuscript.Dates!.To));
-            Assert.That(manuscript.Dates!.From, Is.EqualTo(date));
+            Assert.That(manuscript.Dates, Is.Not.Null);
+            Assert.That(manuscript.Dates.From, Is.EqualTo(manuscript.Dates.To));
+            Assert.That(manuscript.Dates.From, Is.EqualTo(date));
         }
 
         [Test]
