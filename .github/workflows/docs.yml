@@ -17,6 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pages: write
+      id-token: write
 
     steps:
       - name: Checkout repository
@@ -50,32 +52,31 @@ jobs:
       - name: Generate Doxygen Documentation
         run: doxygen docs/Doxyfile
 
-      - name: Установка Mermaid CLI
-        run: npm install -g @mermaid-js/mermaid-cli
-
-      - name: Создание конфига для обхода sandbox
+      - name: Convert .mmd files to SVG
         run: |
-          echo '{"args": ["--no-sandbox", "--disable-setuid-sandbox"]}' > puppeteer-config.json
+          mkdir -p docs/html/diagrams
+          shopt -s nullglob
+          mmd_files=(docs/mmd/*.mmd)
 
-      - name: Создание папки для PNG
-        run: mkdir -p docs/html/UML
+          if [ ${#mmd_files[@]} -gt 0 ]; then
+            echo "Найдено ${#mmd_files[@]} .mmd файлов. Начинаем конвертацию..."
+            for file in "${mmd_files[@]}"; do
+              filename=$(basename "$file" .mmd)
+              echo "Обработка: $filename.mmd"
+              npx --yes @mermaid-js/mermaid-cli -i "$file" -o "docs/html/diagrams/$filename.svg" -b transparent
+            done
+          else
+            echo "Нет .mmd файлов для конвертации."
+          fi
 
-      - name: Удаление старого PNG (если есть)
-        run: rm -f docs/html/UML/UML.png
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
-      - name: Рендеринг MMD в PNG
-        run: mmdc -i docs/mmd/UML.mmd -o docs/html/UML/UML.png -b white -s 3 -p puppeteer-config.json
-        
-      - name: Сохранение PNG в репозиторий (Auto-commit)
-        uses: stefanzweifel/git-auto-commit-action@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          commit_message: "chore: auto-render diagram [skip ci]"
-          file_pattern: docs/html/UML/UML.png
-            
+          path: './docs/html'
+
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/html
-          publish_branch: gh-pages
-          keep_files: false
+        id: deployment
+        uses: actions/deploy-pages@v4
