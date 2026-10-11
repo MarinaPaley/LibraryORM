@@ -17,11 +17,14 @@ FILE_PATTERNS          = *.cs \
                          *.md
 
 # --- Что игнорировать (ОЧЕНЬ ВАЖНО!) ---
+# Будут проигнорированы все папки с именем Migrations!
 EXCLUDE_PATTERNS       = */bin/* \
                          */obj/* \
                          */.git/* \
                          */.github/* \
-                         */docs/*
+                         */docs/* \
+                         */Migrations/* \
+                         */migrations/*
 
 # --- Куда сохранять результат ---
 OUTPUT_DIRECTORY       = docs
