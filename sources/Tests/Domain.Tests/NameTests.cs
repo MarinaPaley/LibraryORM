@@ -16,41 +16,47 @@ namespace Domain.Tests
     public sealed class NameTests
     {
         /// <summary>
-        /// Тест на конструктор с правильными данными.
+        /// Проверяет, что конструктор <see cref="Name"/> успешно создает объект с валидными данными.
         /// </summary>
         [Test]
         public void Ctor_NotNullData_Success()
         {
+            // Arrange, Act & Assert
             Assert.DoesNotThrow(() => _ = new Name("Толстой", "Лев", "Николаевич"));
         }
 
         /// <summary>
-        /// Тест на конструктор с правильными параметрами.
+        /// Проверяет, что конструктор <see cref="Name"/> допускает передачу null или валидного отчества.
         /// </summary>
-        /// <param name="patronicName"> Отчество.</param>
+        /// <param name="patronymicName"> Отчество (может быть null). </param>
         [TestCase("Николаевич")]
         [TestCase(null)]
-        public void Ctor_ValidPatronicName_DoesNotThrow(string? patronicName)
+        public void Ctor_ValidPatronymicName_DoesNotThrow(string? patronymicName)
         {
-            Assert.DoesNotThrow(() => _ = new Name("Толстой", "Лев", patronicName));
+            // Arrange, Act & Assert
+            Assert.DoesNotThrow(() => _ = new Name("Толстой", "Лев", patronymicName));
         }
 
         /// <summary>
-        /// Тест на конструктор с <see langword="null"/> значениями.
+        /// Проверяет, что конструктор <see cref="Name"/> выбрасывает исключение при невалидных имени или фамилии.
         /// </summary>
-        /// <param name="familyName"> Фамилия.</param>
-        /// <param name="firstName"> Имя.</param>
+        /// <param name="familyName"> Фамилия. </param>
+        /// <param name="firstName"> Имя. </param>
         [TestCase(null, "")]
         [TestCase("", null)]
         [TestCase(" Антон ", "")]
         [TestCase("", " ")]
         public void Ctor_WrongData_ExpectedException(string? familyName, string? firstName)
         {
+            // Arrange, Act & Assert
             Assert.Throws<ArgumentNullException>(() => _ = new Name(familyName!, firstName!));
         }
 
+        /// <summary>
+        /// Проверяет, что два разных имени не равны друг другу.
+        /// </summary>
         [Test]
-        public void Equals_SameNames_True()
+        public void Equals_DifferentNames_ReturnsFalse()
         {
             // Arrange
             var name1 = new Name("Толстой", "Лев", "Николаевич");
@@ -61,10 +67,10 @@ namespace Domain.Tests
         }
 
         /// <summary>
-        /// Сравнение двух "разных" имен, т.к. с точки зрения программирования они разные.
+        /// Проверяет, что имена с разным отчеством не равны друг другу.
         /// </summary>
         [Test]
-        public void Equals_SimilarAuthorsDiffernetPatronicName_False()
+        public void Equals_DifferentPatronymicName_ReturnsFalse()
         {
             // Arrange
             var name1 = new Name("Толстой", "Лев", "Николаевич");
@@ -74,27 +80,48 @@ namespace Domain.Tests
             Assert.That(name1, Is.Not.EqualTo(name2));
         }
 
+        /// <summary>
+        /// Проверяет корректность строкового представления имени.
+        /// </summary>
+        /// <param name="patronymicName"> Отчество (может быть null). </param>
+        /// <param name="expected"> Ожидаемая строка. </param>
         [TestCase("Николаевич", "Толстой Лев Николаевич")]
         [TestCase(null, "Толстой Лев")]
-        public void ToString_VallidData_Success(string? patronicName, string expected)
+        public void ToString_ValidData_Success(string? patronymicName, string expected)
         {
-            // arrange
-            var author = new Name("Толстой", "Лев", patronicName);
+            // Arrange
+            var name = new Name("Толстой", "Лев", patronymicName);
 
-            // act
-            var actual = author.ToString();
+            // Act
+            var actual = name.ToString();
 
-            // assert
+            // Assert
             Assert.That(actual, Is.EqualTo(expected));
         }
 
-        [TestCaseSource(nameof(ValidNames))]
+        /// <summary>
+        /// Проверяет корректность работы оператора равенства (==) для различных комбинаций имен.
+        /// </summary>
+        /// <param name="name1"> Первое имя. </param>
+        /// <param name="name2"> Второе имя. </param>
+        /// <returns> Результат работы оператора ==. </returns>
+        [TestCaseSource(nameof(ValidNamesForEquals))]
         public bool EqualsOperator_ValidData_Success(Name? name1, Name? name2) => name1 == name2;
 
-        [TestCaseSource(nameof(ValidNames))]
-        public bool NotEqualsOperator_ValidData_Success(Name? name1, Name? name2) => name1 == name2;
+        /// <summary>
+        /// Проверяет корректность работы оператора неравенства (!=) для различных комбинаций имен.
+        /// </summary>
+        /// <param name="name1"> Первое имя. </param>
+        /// <param name="name2"> Второе имя. </param>
+        /// <returns> Результат работы оператора !=. </returns>
+        [TestCaseSource(nameof(ValidNamesForNotEquals))]
+        public bool NotEqualsOperator_ValidData_Success(Name? name1, Name? name2) => name1 != name2;
 
-        private static IEnumerable<TestCaseData> ValidNames()
+        /// <summary>
+        /// Предоставляет тестовые данные для проверки оператора равенства (==).
+        /// </summary>
+        /// <returns> Коллекция тестовых данных с ожидаемыми результатами. </returns>
+        private static IEnumerable<TestCaseData> ValidNamesForEquals()
         {
             yield return new TestCaseData(
                     new Name("Толстой", "Лев", "Николаевич"),
@@ -115,6 +142,33 @@ namespace Domain.Tests
                     null,
                     new Name("Пушкин", "Александр", "Сергеевич"))
                 .Returns(false);
+        }
+
+        /// <summary>
+        /// Предоставляет тестовые данные для проверки оператора неравенства (!=).
+        /// </summary>
+        /// <returns> Коллекция тестовых данных с ожидаемыми результатами. </returns>
+        private static IEnumerable<TestCaseData> ValidNamesForNotEquals()
+        {
+            yield return new TestCaseData(
+                    new Name("Толстой", "Лев", "Николаевич"),
+                    new Name("Толстой", "Лев", "Николаевич"))
+                .Returns(false); // Равны, поэтому != вернет false
+
+            yield return new TestCaseData(
+                    new Name("Толстой", "Лев", "Николаевич"),
+                    new Name("Пушкин", "Александр", "Сергеевич"))
+                .Returns(true); // Разные, поэтому != вернет true
+
+            yield return new TestCaseData(
+                    new Name("Толстой", "Лев", "Николаевич"),
+                    null)
+                .Returns(true);
+
+            yield return new TestCaseData(
+                    null,
+                    new Name("Пушкин", "Александр", "Сергеевич"))
+                .Returns(true);
         }
     }
 }

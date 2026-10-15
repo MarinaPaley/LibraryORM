@@ -8,6 +8,7 @@ namespace Domain.Tests
     using System.Collections.Generic;
     using Domain;
     using NUnit.Framework;
+    using TestDataProvider;
 
     /// <summary>
     /// Модульные тесты для класса <see cref="Shelf"/>.
@@ -15,25 +16,39 @@ namespace Domain.Tests
     [TestFixture]
     public sealed class ShelfTests
     {
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Shelf"/> успешно создает объект с валидными данными.
+        /// </summary>
         [Test]
         public void Ctor_ValidData_Success()
         {
-            Assert.DoesNotThrow(() => _ = new Shelf("Полка 1"));
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestData.ValidShelf().WithName("Полка 1").Build());
         }
 
+        /// <summary>
+        /// Проверяет, что конструктор <see cref="Shelf"/> выбрасывает исключение при передаче null.
+        /// </summary>
         [Test]
         public void Ctor_NullData_ExpectedException()
         {
-            Assert.Throws<ArgumentNullException>(() => _ = new Shelf(null!));
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(() => new Shelf(null!));
         }
 
+        /// <summary>
+        /// Проверяет логику равенства двух экземпляров <see cref="Shelf"/>.
+        /// </summary>
+        /// <param name="name1"> Название первой полки. </param>
+        /// <param name="name2"> Название второй полки. </param>
+        /// <param name="expected"> Ожидаемый результат сравнения. </param>
         [TestCase("1", "1", true)]
         [TestCase("1", "2", false)]
         public void Equals_ValidData_Success(string name1, string name2, bool expected)
         {
             // Arrange
-            var shelf1 = new Shelf(name1);
-            var shelf2 = new Shelf(name2);
+            var shelf1 = TestData.ValidShelf().WithName(name1).Build();
+            var shelf2 = TestData.ValidShelf().WithName(name2).Build();
 
             // Act
             var actual = shelf1.Equals(shelf2);
@@ -42,12 +57,15 @@ namespace Domain.Tests
             Assert.That(actual, Is.EqualTo(expected));
         }
 
+        /// <summary>
+        /// Проверяет, что метод ToString возвращает корректную строку для полки без книг.
+        /// </summary>
         [Test]
         public void ToString_NoBook_Success()
         {
             // Arrange
             const string expected = "Полка: Полка 1";
-            var shelf = new Shelf("Полка 1");
+            var shelf = TestData.ValidShelf().WithName("Полка 1").Build();
 
             // Act
             var actual = shelf.ToString();
@@ -56,6 +74,9 @@ namespace Domain.Tests
             Assert.That(actual, Is.EqualTo(expected));
         }
 
+        /// <summary>
+        /// Проверяет, что метод ToString возвращает корректную строку для полки с книгами.
+        /// </summary>
         [Test]
         public void ToString_WithBooks_Success()
         {
@@ -63,25 +84,59 @@ namespace Domain.Tests
             const string expected = "Полка: Полка 1 | Книги: Анна Каренина: [Толстой Лев Николаевич], " +
                 "12 стульев: [Ильф Илья, Петров Евгений]";
 
-            var shelf = new Shelf("Полка 1");
-            Person tolstoy = new (new Name("Толстой", "Лев", "Николаевич"));
-            Author author1 = new (tolstoy);
-            Person ilf = new (new Name("Ильф", "Илья"));
-            Person petrov = new (new Name("Петров", "Евгений"));
-            Author author2 = new (ilf);
-            Author author3 = new (petrov);
-            var language = new HashSet<Language>() { new ("Русский") };
-            var publisher = new Publisher("Издательство");
-            var bookType = new BookType("Книга");
+            var shelf = TestData.ValidShelf().WithName("Полка 1").Build();
 
-            var manuscript1 = new Manuscript("Анна Каренина", language, new HashSet<Author>() { author1 });
-            var manuscript2 = new Manuscript("12 стульев", language, new HashSet<Author>() { author2, author3 });
+            // Создаем авторов через TestDataProvider
+            Person tolstoy = TestData.ValidPerson()
+                .WithFamilyName("Толстой")
+                .WithFirstName("Лев")
+                .WithPatronymicName("Николаевич");
+            Author author1 = TestData.ValidAuthor().WithPerson(tolstoy);
 
-            var book1 = new Book(null, 250, "123", bookType, publisher, 1925, new HashSet<Manuscript>() { manuscript1 });
-            var book2 = new Book(null, 250, "12345", bookType, publisher, 1925, new HashSet<Manuscript>() { manuscript2 });
+            Person ilf = TestData.ValidPerson().WithFamilyName("Ильф").WithFirstName("Илья");
+            Person petrov = TestData.ValidPerson().WithFamilyName("Петров").WithFirstName("Евгений");
+            Author author2 = TestData.ValidAuthor().WithPerson(ilf);
+            Author author3 = TestData.ValidAuthor().WithPerson(petrov);
 
-            var item1 = new Item(book1);
-            var item2 = new Item(book2);
+            // Создаем зависимые сущности
+            Language language = TestData.ValidLanguage().WithName("Русский");
+            Publisher publisher = TestData.ValidPublisher().WithName("Издательство");
+            BookType bookType = TestData.ValidBookType().WithName("Книга");
+
+            // Создаем рукописи
+            Manuscript manuscript1 = TestData.ValidManuscript()
+                .WithName("Анна Каренина")
+                .WithLanguages(new HashSet<Language> { language })
+                .WithAuthors(new HashSet<Author> { author1 });
+
+            Manuscript manuscript2 = TestData.ValidManuscript()
+                .WithName("12 стульев")
+                .WithLanguages(new HashSet<Language> { language })
+                .WithAuthors(new HashSet<Author> { author2, author3 });
+
+            // Создаем книги
+            Book book1 = TestData.ValidBook()
+                .WithTitle(null)
+                .WithPages(250)
+                .WithISBN("123")
+                .WithBookType(bookType)
+                .WithPublisher(publisher)
+                .WithYear(1925)
+                .WithManuscripts(new HashSet<Manuscript> { manuscript1 });
+
+            Book book2 = TestData.ValidBook()
+                .WithTitle(null)
+                .WithPages(250)
+                .WithISBN("12345")
+                .WithBookType(bookType)
+                .WithPublisher(publisher)
+                .WithYear(1925)
+                .WithManuscripts(new HashSet<Manuscript> { manuscript2 });
+
+            // Создаем экземпляры книг и добавляем на полку
+            var item1 = TestData.ValidItem().WithBook(book1);
+            var item2 = TestData.ValidItem().WithBook(book2);
+
             shelf.AddBook(item1);
             shelf.AddBook(item2);
 
@@ -92,70 +147,80 @@ namespace Domain.Tests
             Assert.That(actual, Is.EqualTo(expected));
         }
 
-        [TestCaseSource(nameof(Books))]
-        public void AddBook_Book_Success(Book book, bool expected)
+        /// <summary>
+        /// Проверяет успешное добавление книги на полку.
+        /// </summary>
+        [Test]
+        public void AddBook_Book_Success()
         {
             // Arrange
-            var shelf = new Shelf("Полка 1");
+            var book = TestData.ValidBook().Build();
+            var shelf = TestData.ValidShelf().WithName("Полка 1").Build();
+            var item = TestData.ValidItem().WithBook(book).Build();
 
-            var item = new Item(book);
+            // Act
             shelf.AddBook(item);
 
-            // Act & Assert
-            Assert.That(shelf.Items.Contains(item), Is.EqualTo(expected));
+            // Assert
+            Assert.That(shelf.Items.Contains(item), Is.True);
         }
 
+        /// <summary>
+        /// Проверяет корректное удаление книги с полки, включая граничные случаи.
+        /// </summary>
         [Test]
         public void RemoveBook_ValidData_Success()
         {
             // Arrange
-            var shelf = new Shelf("Полка 1");
-            var language = new HashSet<Language>() { new ("Русский") };
-            var publisher = new Publisher("Издательство");
-            var author = new Author(new Person(new Name("Толстой", "Лев")));
-            var bookType = new BookType("Книга");
-            var manuscript1 = new Manuscript("Анна Каренина", language, new HashSet<Author>() { author });
-            var manuscript2 = new Manuscript("12 стульев", language, new HashSet<Author>() { author });
+            var shelf = TestData.ValidShelf().WithName("Полка 1").Build();
 
-            var book = new Book(null, 1234, "12345", bookType, publisher, 2026, new HashSet<Manuscript>() { manuscript1 });
-            var item1 = new Item(book);
-            var other = new Book(null, 1234, "12345", bookType, publisher, 2026, new HashSet<Manuscript>() { manuscript2 });
-            var item2 = new Item(other);
+            Language language = TestData.ValidLanguage().WithName("Русский");
+            Publisher publisher = TestData.ValidPublisher().WithName("Издательство");
+            BookType bookType = TestData.ValidBookType().WithName("Книга");
+
+            Person authorPerson = TestData.ValidPerson().WithFamilyName("Толстой").WithFirstName("Лев");
+            Author author = TestData.ValidAuthor().WithPerson(authorPerson);
+
+            Manuscript manuscript1 = TestData.ValidManuscript()
+                .WithName("Анна Каренина")
+                .WithLanguages(new HashSet<Language> { language })
+                .WithAuthors(new HashSet<Author> { author });
+
+            Manuscript manuscript2 = TestData.ValidManuscript()
+                .WithName("12 стульев")
+                .WithLanguages(new HashSet<Language> { language })
+                .WithAuthors(new HashSet<Author> { author });
+
+            Book book = TestData.ValidBook()
+                .WithTitle(null)
+                .WithPages(1234)
+                .WithISBN("12345")
+                .WithBookType(bookType)
+                .WithPublisher(publisher)
+                .WithYear(2026)
+                .WithManuscripts(new HashSet<Manuscript> { manuscript1 });
+
+            Book otherBook = TestData.ValidBook()
+                .WithTitle(null)
+                .WithPages(1234)
+                .WithISBN("12345")
+                .WithBookType(bookType)
+                .WithPublisher(publisher)
+                .WithYear(2026)
+                .WithManuscripts(new HashSet<Manuscript> { manuscript2 });
+
+            var item1 = TestData.ValidItem().WithBook(book);
+            var item2 = TestData.ValidItem().WithBook(otherBook);
+
             shelf.AddBook(item1);
 
             // Act & Assert
             using (Assert.EnterMultipleScope())
             {
-                Assert.That(shelf.RemoveBook(item1), Is.True);
-                Assert.That(shelf.RemoveBook(null!), Is.False);
-                Assert.That(shelf.RemoveBook(item2), Is.False);
+                Assert.That(shelf.RemoveBook(item1), Is.True, "Удаление существующей книги должно вернуть true");
+                Assert.That(shelf.RemoveBook(null!), Is.False, "Удаление null должно вернуть false");
+                Assert.That(shelf.RemoveBook(item2), Is.False, "Удаление книги, которой нет на полке, должно вернуть false");
             }
-        }
-
-        private static IEnumerable<TestCaseData> Books()
-        {
-            yield return new TestCaseData(
-                new Book(
-                    null,
-                    1234,
-                    "12345",
-                    new BookType("Книга"),
-                    new Publisher("Издательство"),
-                    2026,
-                    new HashSet<Manuscript>()
-                    {
-                        new (
-                            "Анна Каренина",
-                            new HashSet<Language>()
-                            {
-                                new ("Русский"),
-                            },
-                            new HashSet<Author>()
-                            {
-                                new (new Person(new Name("Толстой", "Лев"))),
-                            }),
-                    }),
-                true);
         }
     }
 }
