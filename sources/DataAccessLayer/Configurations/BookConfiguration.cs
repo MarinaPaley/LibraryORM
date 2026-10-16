@@ -33,11 +33,18 @@ namespace DataAccessLayer.Configurations
                 .HasMaxLength(25)
                 .HasComment("ISBN");
 
-            _ = builder.HasMany(book => book.Publishers)
-                .WithMany(publisher => publisher.Books);
+            _ = builder.HasOne(book => book.Publisher)
+                .WithMany(publisher => publisher.Books)
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired(true);
 
             _ = builder.HasOne(book => book.Editor)
                 .WithMany(editor => editor.Books)
+                .OnDelete(DeleteBehavior.SetNull)
+                .IsRequired(false);
+
+            _ = builder.HasOne(book => book.Illustrator)
+                .WithMany(illustrator => illustrator.Books)
                 .OnDelete(DeleteBehavior.SetNull)
                 .IsRequired(false);
 
@@ -52,7 +59,7 @@ namespace DataAccessLayer.Configurations
 
             _ = builder.HasOne(book => book.BookType)
                 .WithMany(type => type.Books)
-                .OnDelete(DeleteBehavior.SetNull)
+                .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
 
             _ = builder.Property(book => book.Doi)
@@ -66,6 +73,18 @@ namespace DataAccessLayer.Configurations
             _ = builder.Property(book => book.Volume)
                 .IsRequired(false)
                 .HasComment("Том");
+
+            _ = builder.Property(book => book.Year)
+                .IsRequired(true)
+                .HasComment("Год издания");
+
+            _ = builder.Property(book => book.IsConvolutus)
+                .IsRequired(true)
+                .HasComment("Сшита из нескольких журналов");
+
+            _ = builder.Property(book => book.Quality)
+                .IsRequired(true)
+                .HasComment("Качество печати");
         }
     }
 }

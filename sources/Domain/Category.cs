@@ -37,6 +37,7 @@ namespace Domain
             : base("Не задано")
         {
         }
+
 #pragma warning restore CS8618
 
         /// <summary>
@@ -53,7 +54,7 @@ namespace Domain
         public override bool Equals(Category? other)
         {
             return ReferenceEquals(this, other)
-                || NamedEntityComparer<Category>.Instance.Equals(this, other);
+                || BilingualNamedEntityComparer<Category>.Instance.Equals(this, other);
         }
 
         /// <inheritdoc/>
