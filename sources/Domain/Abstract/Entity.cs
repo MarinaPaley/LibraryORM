@@ -36,15 +36,17 @@ namespace Domain.Abstract
         {
             return other is not null
                 && this.GetType() == other.GetType()
+                && this.Id != Guid.Empty
+                && other.Id != Guid.Empty
                 && this.Id == other.Id;
         }
 
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            // Используем хеш-код самого объекта в памяти, а не его mutable-свойств.
-            // Это гарантирует стабильность хеш-кода на протяжении всего жизненного цикла объекта.
-            return System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(this);
+#pragma warning disable S3249
+            return this.Id == Guid.Empty ? base.GetHashCode() : this.Id.GetHashCode();
+#pragma warning restore S3249
         }
     }
 }

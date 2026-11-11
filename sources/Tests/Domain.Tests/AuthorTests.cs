@@ -205,6 +205,31 @@ namespace Domain.Tests
             Assert.That(author.Manuscripts.Contains(manuscript!), Is.EqualTo(expected));
         }
 
+        [Test]
+        public void TryAdd_TwoSameManuscripts_AddedOne()
+        {
+            // Arrange
+            var author = TestData.ValidAuthor().Build();
+            var manuscript1 = TestData
+                .ValidManuscript()
+                .WithAuthors(new HashSet<Author> { author })
+                .Build();
+            var manuscript2 = TestData
+                .ValidManuscript()
+                .WithAuthors(new HashSet<Author> { author })
+                .Build();
+
+            // Act
+            var actual = author.Manuscripts.Count;
+
+            // Assert
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(actual, Is.EqualTo(1));
+                Assert.That(manuscript1.Equals(manuscript2!), Is.True);
+            }
+        }
+
         /// <summary>
         /// Предоставляет тестовые данные для проверки двусторонней связи с рукописью.
         /// </summary>
