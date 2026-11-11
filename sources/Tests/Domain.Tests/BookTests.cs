@@ -601,6 +601,17 @@ namespace Domain.Tests
             Assert.That(book.Equals("not a book"), Is.False);
         }
 
+        [Test]
+        public void Equals_SimilarBooks_AreEquals()
+        {
+            // Arrange
+            var book1 = TestData.ValidBook().Build();
+            var book2 = TestData.ValidBook().Build();
+
+            // Act & Assert
+            Assert.That(book1.Equals(book2), Is.True);
+        }
+
         // ==========================================
         // Equals: логика сравнения с учётом ISBN
         // ==========================================
